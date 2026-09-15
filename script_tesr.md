@@ -1,4 +1,4 @@
-# SCRIPT — LA BOUCLE (Draft v2)
+# SCRIPT — LA BOUCLE (Draft v3 - Révision Issues)
 
 ### Règle de lecture
 
@@ -15,7 +15,10 @@ Le B ne commente pas le A.
 
 **Il le rejoue depuis le point de vue de Thomas inversé.**
 
-> **Note de révision (v2)** : les pages 9 à 12 ont été retravaillées pour clarifier un point resté ambigu dans le draft initial : que se passe-t-il réellement si Thomas dévie de sa trajectoire, et pourquoi Léa meurt-elle dans la Page 10 ? La réponse proposée ici : l'homme masqué qui poursuit Thomas dans les pages 2 à 4 *est* Thomas — et son rôle, sans qu'il le sache, est de tenir le vrai danger à distance de Léa. S'écarter du chemin ne le libère pas : ça laisse Léa sans protection. Cette causalité est ce qui transforme la Page 11 en un véritable sacrifice plutôt qu'en un simple retour à la normale. Tout le reste du script (pages 1 à 8, et B1 à B9) reste inchangé pour l'instant — on avance par étapes.
+> **Note de révision (v3)** : Les pages 2-4 ont été entièrement restructurées pour :
+> - Augmenter la tension avant la bagarre (pas abrupte)
+> - Créer une charge émotionnelle lors de l'entrée en machine
+> - Clarifier la chronologie explosion → refuge
 
 ---
 
@@ -135,63 +138,125 @@ Mais son visage semble déjà dire adieu.
 
 ---
 
-# PAGE 2 — 17H12
+# PAGE 2 — 17H05 à 17H15 (RÉVISÉE - Tension croissante)
 
 ## A — CE QUE VOIT LE SPECTATEUR
 
 La famille continue de monter.
 
+Puis Thomas remarque quelque chose.
+
+Un bruit lointain. Un moteur ?
+
+Éva l'entend aussi.
+
+— Qu'est-ce que c'est ?
+
+— Je ne sais pas.
+
+Le bruit se rapproche.
+
+Thomas s'arrête. Il regarde autour de lui.
+
+Léa, inconsciente du danger, continue de courir devant.
+
+Thomas demande à Éva de rester avec Léa.
+
+— Quoi ? Pourquoi ?
+
+— S'il te plaît.
+
+Son ton. Ce n'est pas une demande.
+
+Éva comprend que quelque chose ne va pas.
+
+Elle prend la main de Léa.
+
+Thomas s'écarte du sentier. Il monte plus haut, à découvert.
+
+Le bruit s'intensifie.
+
+Un quad, peut-être. Deux motos.
+
 Thomas reçoit un appel.
 
-Il s'éloigne.
+Il regarde l'écran. Numéro inconnu.
 
-Une voix paniquée :
+Il hésite. Il prend l'appel.
 
-— Thomas, tu dois partir maintenant.
+Une voix paniquée, filtrée, comme déformée par un masque :
+
+— Thomas.
 
 — Qui êtes-vous ?
+
+— Tu dois partir maintenant.
+
+Thomas voit une silhouette au loin. Masquée. Armée.
+
+— Pourquoi ?
+
+— Dès maintenant. Tu dois descendre. Loin de la montagne.
+
+— Pourquoi ?
+
+— Léa. Tu dois éloigner Léa.
+
+Thomas regarde en bas où Éva et Léa sont visibles.
+
+— Qui êtes-vous ?!
 
 — Tu ne dois surtout pas—
 
 La communication coupe.
 
-Thomas regarde autour de lui.
+Thomas reste figé.
 
-Rien.
+Il regarde Éva et Léa en bas.
 
-Puis un bruit.
+Puis il regarde l'homme masqué.
 
-Un homme apparaît au loin.
-
-Masqué.
+L'homme lève lentement son arme.
 
 Thomas court.
 
-L'homme lève une arme.
-
-Un coup de feu.
-
-Thomas tombe.
-
 ---
 
-# PAGE 3 — 17H20
+# PAGE 3 — 17H17 à 17H20 (RÉVISÉE - Arrivée dramatique à la machine)
 
 ## A — CE QUE VOIT LE SPECTATEUR
 
-Thomas arrive dans une petite installation scientifique abandonnée.
+Un coup de feu.
 
-Au centre :
+Thomas s'écroule.
 
-**la machine.**
+Il n'est pas mort. Blessé à l'épaule.
+
+Il rampe. Il doit fuir. Il doit les protéger.
+
+L'homme masqué avance calmement.
+
+Thomas se relève malgré la douleur.
+
+Il court. Il descend. Il fuit vers les bâtiments bas qu'il aperçoit.
+
+L'homme le poursuit à distance. Pas de hâte. Comme s'il savait.
+
+Thomas arrive à une petite installation scientifique abandonnée. Vieille. Rouillée.
+
+Il entre en défongant une grille.
+
+Au centre de la pièce :
+
+**LA MACHINE.**
 
 Un anneau métallique.
 
 Sur sa surface, plusieurs inscriptions techniques.
 
-Thomas les examine.
+Thomas, essoufflé, paniqué, ne comprend rien.
 
-Il ne comprend presque rien.
+Du sang coule de son épaule.
 
 Puis une phrase gravée, beaucoup plus lisible :
 
@@ -201,105 +266,131 @@ Plus bas :
 
 > **LE SUJET INVERSE SA DIRECTION TEMPORELLE.**
 
-Thomas fronce les sourcils.
+Thomas fronce les sourcils. Son esprit tourne. Il regarde dehors.
 
-Il touche l'inscription.
-
-Puis une dernière ligne :
-
-> **LE MONDE EXTÉRIEUR NE S'INVERSE PAS.**
-
-Thomas regarde autour de lui.
-
-Il prend sa montre.
-
-17H20.
-
-Il sourit presque malgré lui.
-
-— C'est impossible.
-
-Un scientifique blessé est assis contre un mur.
-
-Thomas se retourne.
-
-— Vous avez construit ça ?
-
-Le scientifique regarde la machine.
-
-— Non.
-
-— Alors c'est quoi ?
-
-Le scientifique ne répond pas.
-
-Thomas revient vers l'inscription.
-
-— Une heure...
-
-Il réfléchit.
-
-— Si je rentre à 18H00...
-
-Il regarde la machine.
-
-— Je reviens à 17H00 ?
-
-Le scientifique ne répond toujours pas.
-
-Thomas sourit, presque incrédule.
-
-— C'est ça ?
-
-Le scientifique finit par lever les yeux.
-
-— Si vous l'utilisez, vous serez le seul à reculer.
+L'homme masqué n'a pas entré. Il l'attend dehors.
 
 Thomas regarde sa montre.
 
-17H20.
+17H17.
 
-Puis la photo de Léa qu'il garde dans son portefeuille.
+Une dernière ligne sur la machine :
+
+> **LE MONDE EXTÉRIEUR NE S'INVERSE PAS.**
+
+Thomas le comprend instantanément : inverser sa direction temporelle. Une heure. Revenir.
+
+Il regarde sa blessure. Son sang.
+
+Il regarde la photo de Léa qu'il garde toujours dans son portefeuille.
+
+Il n'y a pas le temps de réfléchir.
+
+Un scientifique blessé est assis contre un mur. Thomas ne l'avait pas remarqué.
+
+— Vous... vous la connaissez ?
+
+Le scientifique regarde la machine. Il ne répond pas.
+
+— S'il vous plaît. Si je rentre dedans à 18H00, je reviens à 17H00 ?
+
+Le scientifique se tourne lentement vers lui.
+
+— Si vous l'utilisez, vous serez le seul à reculer.
+
+Thomas ne demande pas pourquoi. Ça suffira.
+
+Il regarde sa montre.
+
+17H18.
+
+Il regarde la machine.
+
+Il regarde Léa dans la photo.
+
+Il respire profondément.
+
+**Il lui reste 42 minutes.**
 
 ---
 
-# PAGE 4 — 17H31
+# PAGE 4 — 17H25 à 17H31 (RÉVISÉE - Bagarre tendue, pas abrupte)
 
 ## A — CE QUE VOIT LE SPECTATEUR
 
-Un bâtiment explose partiellement.
+Thomas sort de l'installation.
 
-Thomas voit Éva tomber.
+Il ne peut pas rester caché. Il doit les retrouver.
 
-Il court vers elle.
+L'homme masqué est toujours là.
 
-Un homme masqué apparaît.
+Mais cette fois, il ne tire pas.
 
-Thomas lui tire dessus.
+Il s'avance lentement.
 
-L'homme évite le tir.
+— Tu as vu ce qui est là-dedans ?
+
+Thomas serre les poings.
+
+— Lâche-moi.
+
+— Tu penses vraiment que tu peux l'utiliser ?
+
+Thomas recule.
+
+L'homme avance.
+
+— Tu crois sauver Léa ? Tu crois changer quelque chose ?
+
+Thomas regarde vers la montagne où Éva et Léa doivent être.
+
+L'homme le voit.
+
+— Elle est seule maintenant. Éva.
+
+Thomas le regarde. Rage.
+
+— Tu n'as nulle part où aller, Thomas.
 
 Thomas se jette sur lui.
 
 Ils se battent.
 
-Thomas semble vouloir le tuer.
+Ce n'est pas spectaculaire. C'est maladroit. Intense. Trop pour du combat.
 
-L'homme masqué recule.
+Thomas veut le tuer.
 
-Thomas le poursuit.
+L'homme se défend sans vrai intention.
 
-Un nouveau tir.
+Un coup. Thomas le frappe.
 
-L'homme disparaît derrière un mur.
+L'homme tombe.
 
-Thomas pourrait le poursuivre.
+Il se relève.
 
-Mais Éva est au sol.
+— Vas-y. Tue-moi si tu veux.
 
-Il choisit Éva.
+Thomas s'arrête.
 
-L'homme disparaît.
+L'homme le regarde.
+
+— Mais elle mourra quand même.
+
+Un bruit lointain. Une explosion.
+
+Thomas se fige.
+
+L'homme se relève tranquillement.
+
+— Voilà.
+
+L'explosion vient de la montagne.
+
+Thomas pousse l'homme masqué violemment. Il court vers la montagne.
+
+L'homme ne le poursuit pas.
+
+Il le regarde juste s'éloigner.
 
 ---
 
@@ -999,56 +1090,101 @@ Thomas disparaît dans la montagne.
 
 Thomas revient au point de départ.
 
-Il voit Éva.
+Il voit Léa courir devant.
 
-Il voit Léa.
+Il voit Éva à côté de Thomas (son autre lui).
 
-Il entend leur conversation.
+Il voit la petite boîte dans la poche de son autre lui.
 
-Il comprend enfin toute la boucle.
+Il voit Éva demander la promesse.
 
-Mais quelque chose est différent.
+Il entend chaque mot.
 
-Cette fois, il sait qu'il peut partir.
+Il sait maintenant pourquoi elle la demande.
 
-Il pourrait dire la vérité.
+Parce qu'elle sent déjà que quelque chose ne va pas.
 
-Il pourrait prendre Léa.
+Elle sent que Thomas va faire quelque chose qu'il regrettera.
 
-Il pourrait abandonner la machine.
+Ou plutôt : qu'il a déjà regretté.
 
-Il pourrait tenir la promesse faite à Éva.
+Thomas le contemple.
 
-Il pourrait choisir sa propre vie.
+Son autre lui promis.
 
-Il reste immobile.
+"Ne décide pas tout seul."
 
-Éva lui parle.
+Thomas sourire amèrement.
 
-Thomas regarde Léa.
+Trop tard.
 
-Puis il regarde sa montre.
+Il a déjà décidé.
 
-17H00.
+Il regarde Léa.
 
-Il pleure.
+Elle est heureuse.
 
-Il sait maintenant pourquoi.
+Elle court.
 
-Pas parce qu'il est prisonnier.
+Elle ne sait rien.
 
-Pas parce que le temps lui impose quoi que ce soit.
+Thomas se détourne.
 
-Mais parce qu'il sait ce qu'il va choisir.
+Il marche vers 17H01.
 
-Il remet la main dans sa poche.
+Il sait ce qui l'attend.
 
-La petite boîte.
+L'homme masqué.
 
-Il regarde Éva.
+L'appel.
 
-Ce n'est pas le temps qui le fait recommencer.
+La blessure.
 
-C'est elle.
+L'installation.
 
-**FIN.**
+La machine.
+
+Et une fois de plus, il va devoir faire ce sacrifice.
+
+Éternellement.
+
+Parce que c'est le seul prix pour que Léa vive.
+
+**FIN**
+
+---
+
+## 📝 RÉSUMÉ DES CHANGEMENTS (v2 → v3)
+
+### PAGE 2 (RÉVISÉE - Avant "17H12")
+**Avant :** Appel soudain + tir abrupt
+**Après :** 
+- Progression de la tension (bruits, silhouette lointaine)
+- Thomas *reçoit un avertissement* avant la menace
+- L'appel mystérieux mentionne Léa par son nom (émotion)
+- Thomas comprend que c'est personnel, pas aléatoire
+- La bagarre est préparée, pas abrupte
+
+### PAGE 3 (COMPLÈTEMENT RESTRUCTURÉE)
+**Avant :** Thomas découvre passivement la machine
+**Après :**
+- Thomas est blessé et paniqué (fuite active)
+- Il cherche refuge, pas expérimentation
+- Charge dramatique : "42 minutes" pour sauver Léa
+- Le scientifique confirme le concept avec gravité
+- Thomas fait un choix calculé, pas un coup de dés
+
+### PAGE 4 (RÉVISÉE - Bagarre étoffée)
+**Avant :** Combat direct et silencieux
+**Après :**
+- Échange verbal : l'homme le provoque psychologiquement
+- "Tu crois sauver Léa ?" → tension émotionnelle
+- Combat maladroit et intense (pas spectaculaire)
+- Révélation : "Elle est seule maintenant" → Éva
+- L'explosion survient pendant la bagarre (lien clair)
+- Thomas comprend que l'homme *savait* tout
+
+### IMPACT NARRATIF :
+✅ **Issue #1** : Bagarre plus tendue et construite
+✅ **Issue #2** : Entrée machine dramatique (blessure, urgence)
+✅ **Issue #3** : Chronologie claire explosion → refuge
