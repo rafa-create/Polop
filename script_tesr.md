@@ -508,7 +508,7 @@ Il continue vers 17h31.
 
 ---
 
-## SCÈNE 15 — 17H31
+## SCÈNE 15 — 17H31 (LE COMBAT INVERSÉ)
 
 Thomas (inverse) descend.
 
@@ -520,19 +520,37 @@ Thomas (inverse) se cache.
 
 Il sait exactement ce qui va arriver.
 
+**Il comprend enfin :**
+
+En temps inversé, ce qui s'apparente à un combat défensif va se transformer en quelque chose de fatal en temps normal. Les coups qu'il va porter au tueur vont se "refermer" en remontant le temps — mais laisser une trace négative, une marque temporelle.
+
+Quand le temps reviendra à la normale, cette trace devient une **hémorragie interne**. Le tueur s'effondrera de l'intérieur.
+
 Il voit, dans ce mouvement inversé, le moment où le tir va partir.
 
 Il pourrait changer la trajectoire.
 
-Au dernier instant, il tire à côté — volontairement — pour laisser la suite se dérouler.
+Au dernier instant, il intercepte le tueur. 
 
-Il comprend que briser ce moment briserait aussi la ligne qui protège Léa.
+Le combat se déploie en temps inversé. C'est étrange — les mouvements sont lents, ralentis, comme en apesanteur. Thomas (inverse) s'efforce de blesser l'homme masqué au ventre, aux poumons. Les coups paraissent se refermer au ralenti, se guérir.
+
+Le tueur, dans son sens, se sent "guéri". Revigoré.
+
+Mais Thomas (inverse) sait que c'est une illusion temporelle.
 
 Il baisse son arme.
 
-Thomas (normal) poursuit sa course et disparaît.
+Le tueur disparaît, reprenant sa trajectoire normale.
 
-C'était une trajectoire : deux versions du même homme traversant le même lieu dans deux directions temporelles différentes.
+Thomas (normal), pour qui tout cela se joue à l'envers, ne voit pas ce combat. Il voit juste son autre lui disparaître.
+
+**Thomas (inverse) vient de signer la mort du tueur sans le vouloir.**
+
+C'était inévitable. C'était le seul moyen.
+
+Thomas (inverse) poursuit sa course et disparaît.
+
+C'était une trajectoire : deux versions du même homme traversant le même lieu dans deux directions temporelles différentes. Et la géométrie du temps a transformé la défense en meurtre.
 
 ---
 
@@ -628,6 +646,16 @@ Il regarde sa montre.
 
 Il est presque revenu.
 
+Il pense au tueur. À ce qu'il a fait sans le faire vraiment.
+
+Il pense à Éva qui lui a promis : "Ne décide pas tout seul."
+
+Et le temps inversé a décidé pour lui.
+
+Il est un fantôme. Un tueur invisible. Un sauveur sans visage.
+
+Il est piégé dans une logique temporelle qu'il ne peut pas briser.
+
 ---
 
 # ÉPILOGUE — 17H00 (LE RETOUR)
@@ -668,6 +696,12 @@ Il sait exactement ce qui va se passer.
 
 À chaque instant.
 
+Mais maintenant, il sait quelque chose de plus : il a tué.
+
+En temps inversé, sans vraiment le vouloir, il a tué l'homme masqué.
+
+Il ne le sait pas encore consciemment. Mais c'est écrit dans sa chair.
+
 Il regarde sa montre. 17h00.
 
 Éva le regarde.
@@ -696,9 +730,21 @@ Il pourrait sortir de la boucle.
 
 Il a le choix.
 
+Mais s'il refuse d'entrer dans la machine...
+
+S'il refuse de descendre en temps inversé...
+
+Le tueur ne tombera pas.
+
+Le tueur restera vivant.
+
+Et Léa mourra.
+
 Il regarde Léa.
 
 Il pense à ce moment : elle était terrorisée. Elle était en danger.
+
+Elle ne le savait pas, mais elle était protégée par quelque chose d'invisible. Par son autre lui, descendant à l'envers, combattant un homme qu'il ne voyait pas.
 
 Il regarde Éva.
 
@@ -712,6 +758,8 @@ Il a une heure avant que tout bascule.
 
 Il a une heure avant qu'il n'existe plus pour eux.
 
+Il a une heure avant que le tueur monte la montagne.
+
 Il a une heure avant que la machine tombe.
 
 Avant qu'il rentre dedans.
@@ -720,17 +768,37 @@ Avant qu'il inverse son temps.
 
 Avant qu'il redescende cette montagne.
 
+Avant qu'il croise le tueur.
+
+Avant qu'il le blesse fatalement, sans le vouloir.
+
 Avant qu'il remonte.
 
 Avant qu'il revienne.
 
 Avant qu'il choisisse.
 
+Il comprend l'architecture du temps : **il est prisonnier d'un paradoxe.**
+
+Pour que Léa vive, le tueur doit mourir.
+
+Pour que le tueur meure de cette façon particulière, Thomas doit combattre en temps inversé.
+
+Pour combattre en temps inversé, il doit entrer dans la machine.
+
+Pour entrer dans la machine, il doit refaire la boucle.
+
+Éternellement.
+
+Il n'y a pas d'échappatoire. Pas de timeline alternative. Pas de choix.
+
 Il serre la main d'Éva.
 
 — Je t'aime.
 
 Éva sourit.
+
+Mais Thomas sait quelque chose qu'elle ne saura jamais : qu'il vient de faire un choix qui n'est pas vraiment un choix. Qu'il est en train de sacrifier son libre arbitre pour qu'elle vive sans le savoir.
 
 Léa court devant.
 
@@ -750,13 +818,19 @@ L'installation cachée, quelque part plus haut.
 
 La machine, qui attend.
 
+Le tueur, qui monte.
+
 Les 60 minutes qui vont se dérouler.
+
+Le combat invisible.
+
+La mort invisible.
 
 La boucle.
 
 L'infini.
 
-Le choix.
+Le choix qui n'en est pas un.
 
 La descente d'Éva et Léa commence.
 
@@ -770,9 +844,15 @@ Mais il n'est pas mort.
 
 Il est juste piégé.
 
-Dans une heure qui recommence.
+Dans une géométrie temporelle qu'il ne peut pas briser.
 
-Éternellement.
+En remontant le temps à l'envers, encore et encore.
+
+En tuant un homme sans vraiment le faire.
+
+En sauvant sa fille sans qu'elle le sache.
+
+En se sacrifiant sans jamais pouvoir l'avouer.
 
 La montagne.
 
@@ -780,6 +860,20 @@ La lumière.
 
 Le silence.
 
+Et quelque part au-dessus, 17h05, 17h10, 17h15... le tueur monte.
+
+Inexorable.
+
+Inévitable.
+
+Vers la machine qui tombe.
+
+Vers le combat qui va le tuer.
+
+Vers la boucle qui recommence.
+
 ---
 
 **FIN**
+
+(Ou plutôt, commencement d'une éternité.)
