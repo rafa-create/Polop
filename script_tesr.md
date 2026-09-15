@@ -2,9 +2,13 @@
 
 ---
 
-# SCÈNE 1 — 17H00 (RETOUR INVERSÉ - CHOQUÉ)
+# ACTE 1 — 17H00 À 18H00
+
+## SCÈNE 1 — 17H00 (LE RETOUR CHOQUÉ)
 
 Thomas, Éva et Léa commencent à monter le sentier.
+
+Thomas regarde obsessionnellement sa montre. 17h00.
 
 Léa court quelques mètres devant eux.
 
@@ -14,7 +18,7 @@ Thomas la regarde intensément.
 
 — Ça va ? Tu stresses ?
 
-Thomas ne répond pas immédiatement. Il regarde sa montre.
+Thomas ne répond pas immédiatement. Il regarde sa montre à nouveau.
 
 — Non.
 
@@ -30,7 +34,7 @@ Un silence.
 
 — Tu sais ce que tu m'as dit hier ?
 
-Thomas ne répond pas. Il regarde de nouveau sa montre. 17h02.
+Thomas ne répond pas. Il regarde sa montre. 17h02.
 
 — Que si tu pouvais revenir en arrière pour changer une seule chose de sa vie...
 
@@ -72,7 +76,7 @@ Elle prend sa main.
 
 — Promets-moi quelque chose.
 
-Thomas la regarde, comme s'il voulait dire quelque chose d'important.
+Thomas la regarde comme s'il voulait dire quelque chose d'important.
 
 — Si un jour tu dois choisir entre sauver Léa et nous sauver tous les trois...
 
@@ -80,7 +84,7 @@ Elle hésite.
 
 — Ne décide pas tout seul.
 
-Thomas serre sa main plus fort. Il veut répondre mais s'en abstient. Au lieu de cela, il hoche la tête.
+Thomas serre sa main. Il veut répondre mais s'en abstient. Il hoche la tête.
 
 — Promis.
 
@@ -96,6 +100,14 @@ Thomas regarde sa montre à nouveau. 17h05.
 
 Ils reprennent leur marche.
 
+Léa rit.
+
+— Mec, c'est bon, c'est pas grave si tu mets pas la montée sur Strava !
+
+Éva sourit.
+
+— Sérieux, tu stresses trop.
+
 Thomas met la main dans sa poche. Une petite boîte.
 
 Ses yeux se remplissent de larmes.
@@ -106,7 +118,7 @@ Son expression dit : je ne sais pas si je reverrai ce moment après aujourd'hui.
 
 ---
 
-# SCÈNE 2 — 17H12
+## SCÈNE 2 — 17H12
 
 Thomas reçoit un appel alors qu'ils continuent de monter.
 
@@ -138,7 +150,7 @@ Thomas tombe, touché au flanc.
 
 ---
 
-# SCÈNE 3 — 17H20 (LA MACHINE)
+## SCÈNE 3 — 17H20 (LA MACHINE)
 
 Thomas titube en descendant légèrement le sentier, loin de sa famille et du chaos.
 
@@ -196,7 +208,7 @@ Il doit descendre. Il ne sait pas pourquoi. Il le sait juste.
 
 ---
 
-# SCÈNE 4 — 17H31
+## SCÈNE 4 — 17H31
 
 Un bâtiment s'effondre partiellement plus haut sur le sentier.
 
@@ -232,7 +244,7 @@ L'homme disparaît.
 
 ---
 
-# SCÈNE 5 — 17H40
+## SCÈNE 5 — 17H40
 
 Thomas retrouve Éva.
 
@@ -262,7 +274,7 @@ Il doit remonter.
 
 ---
 
-# SCÈNE 6 — 17H47
+## SCÈNE 6 — 17H47
 
 Thomas retrouve Léa près du sommet.
 
@@ -288,7 +300,7 @@ Mais Thomas regarde vers le sommet. Vers l'installation. Vers la machine.
 
 ---
 
-# SCÈNE 7 — 17H53
+## SCÈNE 7 — 17H53
 
 Thomas descend avec Léa.
 
@@ -312,7 +324,7 @@ Thomas continue.
 
 ---
 
-# SCÈNE 8 — 17H56
+## SCÈNE 8 — 17H56
 
 Thomas descend seul maintenant. Léa est en sécurité plus bas.
 
@@ -332,7 +344,7 @@ Il descend.
 
 ---
 
-# SCÈNE 9 — 18H00 (BASCULEMENT)
+## SCÈNE 9 — 18H00 (LE BASCULEMENT)
 
 Thomas se tient devant la machine. Elle s'est immobilisée sur un replat.
 
@@ -382,9 +394,71 @@ Il comprend.
 
 Il ouvre les yeux.
 
+La machine disparaît de ses mains.
+
+Il regarde autour de lui.
+
+Tout change.
+
 ---
 
-# SCÈNE 9 (INVERSÉE) — 18H00 → 17H00
+# INTERMÈDE — APRÈS 18H00 (DÉCOUVERTE)
+
+## SCÈNE 10 — LA DISPARITION
+
+Éva et Léa continuent leur descente.
+
+Éva appelle Thomas.
+
+— Thomas ? Où tu es ?
+
+Rien.
+
+Elle l'appelle à nouveau.
+
+Léa la regarde.
+
+— Maman, où il est ?
+
+Éva commence à chercher.
+
+Elle descend le sentier. Puis elle regarde vers le vide.
+
+La falaise.
+
+Elle voit les rochers en bas.
+
+Elle comprend.
+
+Elle reste immobile quelques secondes.
+
+Puis elle pleure.
+
+Elle pleure en silence en tenant Léa.
+
+Léa ne comprend pas.
+
+— Maman ?
+
+Éva la serre contre elle.
+
+— On redescend. Juste nous deux.
+
+Elles commencent à descendre ensemble.
+
+Éva regarde sa montre. 18h05.
+
+Elle pense à la boîte. La bague qu'il allait lui proposer.
+
+Elle descend. Lentement. En pleurant.
+
+Léa descend à côté d'elle, confuse, silencieuse.
+
+---
+
+# ACTE 2 — 18H00 À 17H00 (LE CŒUR INVERSÉ)
+
+## SCÈNE 11 — 18H00 (THOMAS INVERSÉ - L'ENTRÉ DANS LA MACHINE)
 
 Thomas est dans la machine.
 
@@ -416,19 +490,11 @@ Il comprend.
 
 Il vit réellement chaque seconde dans l'autre direction.
 
-Il marche.
+Il sort de la machine.
 
-Un homme passe devant lui.
+Il commence à descendre la montagne.
 
-Pour Thomas, l'homme semble reculer.
-
-Une voiture au loin recule vers sa position.
-
-Une porte se referme avant qu'il ne la touche.
-
-Il avance malgré tout.
-
-Son corps est le seul élément qui suit sa propre flèche temporelle.
+Un sentier différent. Pas celui qu'il a pris en montant.
 
 Il regarde sa montre.
 
@@ -438,21 +504,11 @@ Il murmure :
 
 — Ça marche.
 
-Il descend la montagne. Un sentier différent. Pas celui qu'il a pris en montant.
-
-Il voit Léa. Elle recule dans le temps. Elle s'éloigne à reculons.
-
-Il la regarde sans intervenir.
-
-Il comprend. Son autre lui doit la retrouver exactement comme il l'a retrouvée.
-
-Il continue.
-
 ---
 
-# SCÈNE 8 (INVERSÉE) — 17H53
+## SCÈNE 12 — 17H53 (CROISEMENT - LA RENCONTRE)
 
-Thomas continue de descendre, à l'envers.
+Thomas continue de descendre en temps inversé.
 
 Pour lui, les événements sont étranges.
 
@@ -464,6 +520,8 @@ La neige remonte.
 
 Un morceau de métal qui avait explosé se reforme.
 
+Il continue.
+
 Il repasse par l'endroit où il vient de voir Léa.
 
 Il la voit s'éloigner à reculons, ses larmes remontant vers ses yeux.
@@ -472,19 +530,77 @@ Il ne peut rien dire.
 
 Il continue.
 
-Il pense à la machine.
+**Mais alors :**
 
-Il vient de comprendre quelque chose :
+Éva et Léa apparaissent, marchant à l'envers vers le bas de la montagne.
 
-**il est en train de fabriquer son propre chemin.**
+Thomas les voit. Elles le voient.
+
+Pendant un instant : leurs yeux se croisent.
+
+Éva voit Thomas. Là. Devant elle.
+
+Mais pas comme avant.
+
+Quelque chose est différent.
+
+Ses traits sont figés. Ses mouvements sont stranges.
+
+Éva ouvre la bouche pour parler.
+
+Mais Thomas continue son chemin.
+
+Il descend.
+
+Éva le regarde partir. Confuse. Déchirée.
+
+Léa ne comprend pas ce qui se passe.
+
+Éva la tire par la main.
+
+— Viens. On doit continuer.
+
+Elles continuent à descendre.
+
+Thomas continue à descendre de son côté.
+
+Deux trajectoires qui s'éloignent.
 
 ---
 
-# SCÈNE 7 (INVERSÉE) — 17H47
+## SCÈNE 13 — 17H47
+
+Thomas descend seul maintenant.
+
+Il pense à Éva. À ce regard qu'il a vu dans ses yeux.
+
+Il comprend quelque chose de terrible :
+
+**il est en train de fabriquer son propre chemin.**
+
+Il continue.
+
+Il pense à la machine.
+
+Il pense à la notice.
+
+60 minutes.
+
+Inverse ta direction temporelle.
+
+Le monde extérieur ne s'inverse pas.
+
+Il descend.
+
+---
+
+## SCÈNE 14 — 17H40
 
 Thomas continue.
 
-Il aperçoit des ombres. Éva. Léa.
+Il aperçoit des ombres. Des formes.
+
+Éva. Léa.
 
 Mais il ne peut pas rester.
 
@@ -496,11 +612,11 @@ Il continue vers 17h31.
 
 ---
 
-# SCÈNE 6 (INVERSÉE) — 17H40
+## SCÈNE 15 — 17H31
 
 Thomas descend.
 
-Il voit son autre lui. Le Thomas normal. Qui monte avec Léa.
+Il voit son autre lui. Le Thomas normal. Qui court après l'homme masqué.
 
 Il se cache.
 
@@ -526,35 +642,7 @@ Deux versions du même homme qui traversaient le même lieu dans deux directions
 
 ---
 
-# SCÈNE 5 (INVERSÉE) — 17H31
-
-Thomas continue.
-
-Il voit Éva.
-
-Il voit son autre lui courir.
-
-Il voit son propre visage.
-
-Il comprend.
-
-**L'homme qu'il poursuivait était lui.**
-
-Thomas reste immobile quelques secondes.
-
-Puis il fait quelque chose de très simple :
-
-il s'éloigne.
-
-Il laisse son autre lui poursuivre Éva.
-
-Parce qu'il sait que s'il intervient autrement...
-
-Léa meurt.
-
----
-
-# SCÈNE 4 (INVERSÉE) — 17H20
+## SCÈNE 16 — 17H20
 
 Thomas arrive près de l'installation.
 
@@ -612,15 +700,17 @@ Puis il comprend ce qu'il n'avait pas encore compris :
 
 Il laisse la machine tomber.
 
+Elle bascule vers la pente.
+
 ---
 
-# SCÈNE 3 (INVERSÉE) — 17H12
+## SCÈNE 17 — 17H12
 
 Thomas est presque arrivé.
 
 17h12.
 
-Il voit son autre lui. Qui court. Qui fuit.
+Il voit son autre lui. Qui court. Qui fuit après l'appel paniqué.
 
 Thomas le regarde.
 
@@ -646,15 +736,15 @@ Thomas disparaît dans la montagne.
 
 ---
 
-# SCÈNE 2 (INVERSÉE) — 17H05
+## SCÈNE 18 — 17H05
 
 Thomas remonte la montagne, à l'envers.
 
 Éva et Léa descendent normalement sur un sentier différent.
 
-Elles ne le voient pas.
+Elles ne le voient plus.
 
-Pour elles, Thomas a juste disparu à un moment.
+Pour elles, Thomas a disparu.
 
 Thomas continue.
 
@@ -662,31 +752,55 @@ Il regarde sa montre.
 
 17h02.
 
+Il est presque revenu.
+
 ---
 
-# SCÈNE 1 (INVERSÉE) — 17H00 (RETOUR — CHOQUÉ)
+# ÉPILOGUE — 17H00 (LE RETOUR)
+
+## SCÈNE 19 — 17H00 (DE RETOUR AU POINT DE DÉPART)
 
 17h00.
 
 Thomas revient au point de départ.
 
-Il voit Éva. Il voit Léa.
+Éva et Léa y sont aussi.
 
-Il entend leur conversation.
+Elles viennent juste d'arriver.
 
-Il comprend enfin toute la boucle.
+Elles ont retrouvé leur temps normal.
 
-Mais quelque chose est différent.
+Thomas a retrouvé son temps normal.
 
-Cette fois, il sait qu'il peut partir. Il pourrait dire la vérité. Il pourrait prendre Léa. Il pourrait abandonner la machine. Il pourrait tenir la promesse faite à Éva. Il pourrait choisir sa propre vie.
+Tout le monde est à 17h00.
 
-Il reste immobile.
+Au même endroit.
+
+Au même moment.
+
+Thomas regarde Éva. Il regarde Léa.
+
+Il vient de comprendre ce qui s'est passé.
+
+Il vient de revivre toute la boucle.
+
+Il vient de voir le futur.
+
+Il sait exactement ce qui va se passer.
+
+À chaque pas.
+
+À chaque mot.
+
+À chaque instant.
+
+Il regarde sa montre. 17h00.
 
 Éva le regarde.
 
-— Ça va ?
+— Ça va ? Tu stresses ?
 
-Thomas ne répond pas immédiatement. Il regarde sa montre obsessionnellement.
+Thomas ne répond pas immédiatement. Il regarde sa montre.
 
 Léa rit.
 
@@ -694,49 +808,59 @@ Léa rit.
 
 Éva sourit.
 
-— Sérieux, tu stresses trop.
+Thomas les regarde.
 
-Thomas la regarde. Il la voit vraiment pour la première fois depuis qu'il est revenu.
+Longtemps.
 
-Il ne parle pas beaucoup. Il est encore sous le choc. Il cherche ses mots.
+Il pourrait partir. Tout lui dire. Les prendre par la main et descendre.
 
-— Je... je stresse pas.
+Il pourrait fuir.
 
-— Tu mens mal, dit Éva en souriant.
+Il pourrait casser la trajectoire.
 
-Thomas essaie de sourire. C'est forcé.
+Il pourrait sortir de la boucle.
 
-Elle le regarde attentivement. Quelque chose n'est pas normal. Mais elle ne dit rien.
+Il a le choix.
 
-Ils reprennent leur marche.
+Il regarde Léa.
 
-Thomas regarde sa montre. 17h01.
+Il pense à ce moment : elle était terrorisée. Elle était en danger.
 
-Une heure. Il a une heure.
+Il regarde Éva.
 
-Il met la main dans sa poche.
+Il pense à ce moment : elle était blessée. Elle l'appelait.
 
-La petite boîte.
+Il regarde sa montre à nouveau. 17h01.
 
-Il regarde Éva. Puis Léa qui court devant.
+Une heure.
 
-Ses yeux se remplissent de larmes.
+Il a une heure avant que tout bascule.
 
-Le spectateur croit comprendre : il va lui demander sa main.
+Il a une heure avant qu'il n'existe plus pour eux.
 
-Mais son visage semble dire quelque chose de plus profond.
+Il a une heure avant que la machine tombe.
 
-Il sait ce qu'il doit faire.
+Avant qu'il rentre dedans.
 
-Il sait pourquoi.
+Avant qu'il inverse son temps.
 
-Et il sait que c'est le seul choix qu'il peut vraiment faire.
+Avant qu'il redescende cette montagne.
+
+Avant qu'il remonte.
+
+Avant qu'il revienne.
+
+Avant qu'il choisisse.
 
 Il serre la main d'Éva.
 
 — Je t'aime.
 
 Éva sourit.
+
+Léa court devant.
+
+— Vous venez ?
 
 Ils commencent à monter la montagne.
 
@@ -752,7 +876,37 @@ L'installation cachée, quelque part plus haut.
 
 La machine, qui attend.
 
+Les 60 minutes qui vont se dérouler.
+
+La boucle.
+
+L'infini.
+
+Le choix.
+
+La descente d'Éva et Léa commence.
+
+Elles descendent seules.
+
+Sans Thomas.
+
+Elles pensent qu'il est mort.
+
+Mais il n'est pas mort.
+
+Il est juste piégé.
+
+Dans une heure qui recommence.
+
+Éternellement.
+
+La montagne.
+
+La lumière.
+
+Le silence.
+
 ---
 
-FIN
+**FIN**
 
