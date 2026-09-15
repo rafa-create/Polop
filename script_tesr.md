@@ -1,879 +1,1067 @@
-# LA BOUCLE
+LA BOUCLE
 
----
+TABLEAU CAUSAL DÉFINITIF
 
-# ACTE 1 — 17H00 À 18H00
+Heure objective	Thomas normal	Thomas inversé	Cause exacte
+17h00	Thomas, Éva et Léa arrivent au début du sentier. Léa plaisante sur Strava.	Thomas inversé termine son heure personnelle. Son temps redevient normal.	Le cycle se referme au même instant.
+17h05	Thomas promet à Éva de lui parler lorsqu’un choix difficile se présentera.	Thomas inversé observe Éva et Léa depuis l’écart du sentier.	Son état inversé l’empêche de tenir cette promesse de manière normale.
+17h10	Thomas voit une pierre près du rocher.	Thomas inversé ramasse la pierre et la pose exactement à cet endroit.	La pierre est déjà présente lorsque Thomas normal arrive.
+17h12	Thomas reçoit un appel d’une voix étrange.	Thomas inversé appelle Thomas normal et prononce quelques mots à l’envers pour être compris.	Le téléphone transmet la voix dans le sens inverse pour Thomas normal.
+17h20	Léa pose le pied sur l’escalier. La plaque métallique cède.	Thomas inversé retire une cale provisoire qui maintenait la plaque en place.	La structure, déjà fragilisée par une goupille usée, n’est plus retenue lorsque Léa monte sur l’escalier.
+17h25	Léa est coincée sur la plateforme inférieure. Elle voit l’homme masqué.	Thomas inversé descend par l’accès technique, retire la barre et met Léa en sécurité.	Léa survit à la chute et identifie son sauveteur comme une silhouette masquée.
+17h30	Thomas et Éva retrouvent Léa. Elle raconte qu’un homme masqué l’a sauvée.	Thomas inversé quitte la plateforme par l’accès technique et rejoint les hauteurs.	Thomas normal apprend l’existence de l’homme masqué sans savoir qu’il s’agit de lui.
+17h35	Thomas décide de retourner vers la machine.	Thomas inversé observe Thomas normal et Éva à distance.	Thomas normal prend la décision qui le conduira à la machine.
+17h40	Thomas remonte seul vers la machine.	Thomas inversé poursuit son trajet vers les événements antérieurs.	Les deux états de Thomas occupent successivement les mêmes lieux.
+17h50	Thomas examine la machine.	Thomas inversé se trouve déjà plus bas, hors de son champ de perception.	La machine reste au sommet et n’agit pas encore.
+17h59	Thomas attend devant la machine.	Thomas inversé poursuit son trajet vers 17h00.	L’activation n’a pas lieu avant l’heure exacte.
+18h00	Thomas entre dans la machine.	Thomas inversé sort immédiatement de la machine et commence son trajet vers 17h00.	L’inversion de son temps personnel commence.
 
-## SCÈNE 1 — 17H00 (LE RETOUR CHOQUÉ)
+⸻
 
-Thomas, Éva et Léa commencent à monter le sentier.
+CORRECTION STRUCTURELLE
 
-Thomas regarde obsessionnellement sa montre. 17h00.
+La boucle comporte trois mouvements :
 
-Léa court quelques mètres devant eux.
+1. 17h00 → 18h00 : le temps normal.
+2. 18h00 → 17h00 : le parcours inversé de Thomas.
+3. 17h00 : le retour au point de départ et le raccord final.
 
-Thomas la regarde intensément.
+La montée n’est jamais rejouée après le retour de Thomas à 17h00.
 
-Éva marche à côté de lui. Elle le remarque.
+⸻
 
-— Ça va ? Tu stresses ?
+VERSION CORRIGÉE DU SCRIPT
 
-Thomas ne répond pas immédiatement. Il regarde sa montre à nouveau.
+ACTE I — LE TEMPS NORMAL
 
-— Non.
+17H00 — LE DÉBUT DU SENTIER
 
-— Tu mens mal.
+Thomas, Éva et Léa arrivent au début d’un sentier de montagne.
 
-Thomas essaie de sourire. C'est forcé.
+Le soleil descend entre les arbres.
 
-Éva regarde Léa.
+Léa marche déjà quelques mètres devant eux, son téléphone à la main.
 
-— Elle grandit trop vite.
+LÉA
 
-Un silence.
+Mec, c’est bon, c’est pas grave si tu mets pas la montée sur Strava !
 
-— Tu sais ce que tu m'as dit hier ?
+ÉVA
 
-Thomas ne répond pas. Il regarde sa montre. 17h02.
+Tu sais qu’on peut aussi monter une montagne sans la publier ?
 
-— Que si tu pouvais revenir en arrière pour changer une seule chose de sa vie...
+LÉA
+
+Oui, mais après, comment les gens vont savoir que j’ai souffert ?
+
+ÉVA
+
+Ils pourraient ne jamais le savoir.
+
+LÉA
+
+C’est justement ça qui m’inquiète.
+
+Éva sourit.
+
+Thomas reste immobile une seconde.
+
+Il regarde sa montre.
+
+Puis le sommet.
+
+Éva se retourne.
+
+ÉVA
+
+Ça va ?
+
+THOMAS
+
+Oui.
+
+Il rejoint Éva et Léa.
+
+Ils commencent à monter.
+
+⸻
+
+17H05 — LA PROMESSE
+
+Léa s’arrête pour prendre une photo.
+
+Thomas reste quelques mètres derrière avec Éva.
+
+Il semble chercher ses mots.
+
+ÉVA
+
+Tu me caches quelque chose.
+
+THOMAS
+
+Non.
+
+ÉVA
+
+Tu me regardes comme si tu voulais me dire quelque chose depuis une heure.
 
 Thomas regarde Léa.
 
-— Je sais.
+THOMAS
 
-— Tu le ferais.
+Je réfléchis.
 
-— Oui.
+ÉVA
 
-— Même si ça voulait dire perdre tout le reste ?
+À quoi ?
 
-Thomas reste silencieux. Son regard est ailleurs.
+THOMAS
 
-Éva le regarde attentivement.
+À vous deux.
 
-— Thomas.
+Un silence.
 
-Il se tourne vers elle lentement.
+THOMAS
 
-— Si c'était elle ou tout le reste...
+Si un jour tu dois faire un choix difficile…
 
-Il regarde Léa qui court devant.
+Il hésite.
 
-— Ce ne serait pas un choix.
+THOMAS
 
-Éva fronce légèrement les sourcils.
+Tu m’en parles.
 
-— C'est justement ce qui me fait peur chez toi.
+ÉVA
 
-Thomas baisse les yeux.
+Même si c’est compliqué ?
 
-— Pourquoi ?
+THOMAS
 
-— Parce que tu crois que l'amour donne le droit de tout sacrifier.
+Surtout si c’est compliqué.
 
-Elle prend sa main.
+Éva lui prend la main.
 
-— Promets-moi quelque chose.
+ÉVA
 
-Thomas la regarde comme s'il voulait dire quelque chose d'important.
+Promets-moi.
 
-— Si un jour tu dois choisir entre sauver Léa et nous sauver tous les trois...
+THOMAS
 
-Elle hésite.
-
-— Ne décide pas tout seul.
-
-Thomas serre sa main. Il veut répondre mais s'en abstient. Il hoche la tête.
-
-— Promis.
-
-Léa se retourne.
-
-— Vous venez ?
-
-Thomas regarde sa montre à nouveau. 17h05.
-
-Éva le pousse doucement.
-
-— Allez, viens.
+Promis.
 
 Ils reprennent leur marche.
 
-Léa rit.
+Thomas garde la main d’Éva quelques secondes avant de la lâcher.
 
-— Mec, c'est bon, c'est pas grave si tu mets pas la montée sur Strava !
+⸻
 
-Éva sourit.
+17H10 — LA PIERRE
 
-— Sérieux, tu stresses trop.
+Léa s’arrête près d’un rocher.
 
-Thomas met la main dans sa poche. Une petite boîte.
+LÉA
 
-Ses yeux se remplissent de larmes.
+Éva, viens voir. On dirait vraiment un visage.
 
-Il regarde Éva, puis Léa.
+Éva la rejoint.
 
-Son expression dit : je ne sais pas si je reverrai ce moment après aujourd'hui.
+Thomas reste derrière.
 
----
+Une pierre sombre est posée près du pied du rocher.
 
-## SCÈNE 2 — 17H12
+Thomas la regarde.
 
-Thomas reçoit un appel alors qu'ils continuent de monter.
+Un bref vertige le traverse.
 
-Il s'éloigne du groupe.
+ÉVA
 
-Une voix paniquée au téléphone :
+Tu viens ?
 
-— Thomas, tu dois partir maintenant.
+THOMAS
 
-— Qui êtes-vous ?
+Oui.
 
-— Tu ne dois surtout pas—
+Il rejoint les deux femmes.
 
-La communication coupe.
+LÉA
 
-Thomas regarde autour de lui. La montagne est vide.
+Tu vois le nez ?
 
-Puis un bruit.
+THOMAS
 
-Un homme apparaît au loin. Masqué.
+Oui.
 
-Thomas court.
+LÉA
 
-L'homme lève une arme.
+Tu dis ça parce que tu veux qu’on avance.
 
-Un coup de feu claque.
+THOMAS
 
-Thomas tombe, touché au flanc.
+Un peu.
 
----
+Ils prennent une photo.
 
-## SCÈNE 3 — 17H20 (LA MACHINE AU SOMMET)
+Thomas regarde l’écran.
 
-Thomas titube, la douleur au flanc le brûle. Il monte un dernier ressaut et atteint le sommet.
+Éva et Léa sourient.
 
-À l'abri d'un muret, une ouverture donne sur une petite installation. Sur la plateforme, face au vide, la machine : un anneau métallique posé au centre.
+⸻
 
-Thomas s'appuie contre la pierre. Sa vision se trouble.
+17H15 — LA PLATEFORME
 
-Il sort machinalement une petite pochette en cuir et la range dans sa poche — la notice : il l'a prise avec lui lorsqu'il est monté.
+Ils atteignent une ancienne plateforme métallique.
 
-Il approche de la machine, la main tremblante.
+À côté, un petit bâtiment technique est accroché à la montagne.
 
-Les inscriptions sont gravées, nettes cette fois.
+Une machine imposante occupe une partie de la plateforme.
 
-DURÉE MAXIMALE : 60 MINUTES
+Elle est couverte de poussière.
 
-LE SUJET INVERSE SA DIRECTION TEMPORELLE
+Un bourdonnement très faible émane de sa structure.
 
-LE MONDE EXTÉRIEUR NE S'INVERSE PAS
+Thomas s’arrête.
 
-Il n'a pas le temps de tout comprendre.
+ÉVA
 
-Il pose la main sur l'anneau comme pour se raccrocher.
+Tu la connais ?
 
-Un frottement, un déplacement : la plateforme, mal scellée, bascule sous son poids. Thomas ne la pousse pas volontairement — l'équilibre se rompt.
+THOMAS
 
-La machine dévale la pente. Elle tombe. Elle ressort plus bas, près du point de départ.
+Non.
 
-Thomas reste figé, haletant.
+Léa tourne autour de la machine.
 
-Il ne sait pas pourquoi il a le besoin impérieux de redescendre, de retrouver son temps normal.
+LÉA
 
-Il sait juste qu'il doit descendre.
+C’est une vieille antenne ?
 
----
+THOMAS
 
-## SCÈNE 4 — 17H31
+Peut-être.
 
-Un bâtiment s'effondre partiellement plus haut sur le sentier.
+Éva remarque une armoire métallique entrouverte contre le bâtiment.
 
-Thomas voit Éva tomber.
+À l’intérieur : une veste sombre, un masque de protection, une lampe frontale et du matériel de sécurité ancien.
 
-Il court vers elle.
+ÉVA
 
-Un homme masqué apparaît.
+On ne touche à rien.
 
-Thomas lui tire dessus. L'homme évite.
+LÉA
 
-Thomas se jette sur lui.
+Je ne touche jamais à rien.
 
-Ils se battent.
+Éva la regarde.
 
-Thomas semble vouloir le tuer.
+LÉA
 
-L'homme masqué recule.
+Enfin, presque jamais.
 
-Thomas le poursuit.
+Thomas pose la main sur la machine.
 
-Un nouveau tir.
+Le bourdonnement augmente.
 
-L'homme disparaît derrière un mur.
+Il retire sa main.
 
-Thomas pourrait le poursuivre.
+THOMAS
 
-Mais Éva est au sol.
+Elle fonctionne encore.
 
-Il s'arrête. Il choisit Éva.
+ÉVA
 
-L'homme disparaît.
+Alors ne touche plus à rien.
 
----
+Thomas regarde la machine.
 
-## SCÈNE 5 — 17H40
+Une petite plaque métallique, fixée sur le côté, porte des symboles effacés.
 
-Thomas retrouve Éva.
+Il ne peut pas les lire.
 
-Elle est vivante. Ébranlée.
+⸻
 
-Mais Léa a disparu.
+17H20 — L’ACCIDENT
 
-Thomas panique.
+Léa s’approche d’un ancien escalier métallique qui descend vers une plateforme inférieure.
 
-— Où est-elle ?
+Une plaque horizontale relie l’escalier à la plateforme.
 
-Éva ne sait pas.
+Sous la plaque, une goupille de sécurité est rouillée.
 
-Thomas cherche partout.
+Une petite cale métallique la maintient encore en place.
 
-Une radio grésille.
+LÉA
 
-— Si tu veux la revoir...
+Je vais prendre la vallée !
 
-Silence.
+ÉVA
 
-— ...va au sommet.
+Pas trop près du bord !
 
-Thomas regarde la montagne.
+LÉA
 
-Il doit remonter.
+Je fais attention !
 
----
+Léa pose un pied sur la première marche.
 
-## SCÈNE 6 — 17H47
+Puis sur la plaque.
 
-Thomas retrouve Léa près du sommet.
+La structure grince.
 
-Elle est terrorisée.
+La plaque s’enfonce légèrement.
 
-Il la prend dans ses bras.
+La goupille rouillée se déforme.
 
-— Pourquoi tu pleures ?
+Léa avance.
 
-Thomas sourit malgré ses larmes.
+La cale glisse hors de son logement.
 
-— Parce que je suis content de te voir.
+La plaque bascule.
 
-Il pense à la machine, quelque part au sommet.
+La rambarde tremble.
 
-Il pense à Éva, blessée, plus bas.
+LÉA
 
-— On redescend.
+Papa !
 
-Ils commencent à redescendre.
+Thomas se retourne.
 
-Mais Thomas regarde vers le sommet. Vers l'installation. Vers la machine.
+Il se précipite.
 
----
+Léa passe derrière la rambarde et tombe sur la plateforme inférieure.
 
-## SCÈNE 7 — 17H53
+Thomas arrive au bord.
 
-Thomas descend avec Léa.
+THOMAS
 
-Il remarque quelque chose d'étrange.
+Léa !
 
-De la neige semble remonter légèrement.
+Un bruit sourd résonne plus bas.
 
-Une pierre qui vient de tomber semble revenir vers sa position initiale.
+Thomas descend deux marches.
 
-Thomas s'arrête.
+L’escalier se déforme sous son poids.
 
-Il comprend qu'il traverse une zone où quelque chose ne fonctionne pas normalement.
+Éva le retient par le bras.
 
-Plus bas : un homme. Silhouette. Masque.
+ÉVA
 
-Thomas se cache avec Léa.
+Non ! Il faut faire le tour !
 
-L'homme disparaît.
+Thomas regarde en contrebas.
 
-Thomas continue.
+Il aperçoit un morceau de la plateforme.
 
----
+Léa ne bouge pas.
 
-## SCÈNE 8 — 17H56
+THOMAS
 
-Thomas descend seul maintenant. Léa est en sécurité plus bas.
+Léa !
 
-Il aperçoit, plus bas sur la pente, la machine immobilisée sur un replat — celle qui est tombée depuis le sommet.
+LÉA
 
-18H00 approche.
+Papa !
 
-Il regarde sa montre. 17h58.
+Éva tire Thomas vers le sentier de contournement.
 
-Il doit faire quelque chose. Il doit la retrouver avant 18h.
+⸻
 
-Il voit quelque chose scintiller près de la plateforme.
+17H25 — LA PLATEFORME INFÉRIEURE
 
-Il descend.
+Thomas et Éva contournent la structure par un sentier étroit.
 
----
+La plateforme inférieure est séparée du sentier par une paroi métallique.
 
-## SCÈNE 9 — 18H00 (LE BASCULEMENT)
+Léa est coincée sous une barre tombée de la rambarde.
 
-Thomas se tient devant la machine. Elle s'est immobilisée sur le replat, près du point de départ.
+LÉA
 
-Il est épuisé. Sa blessure le brûle.
+Papa !
 
-Sa montre affiche 18h00.
+Thomas cherche un accès.
 
-Il ne sait pas pourquoi, mais il sait qu'il doit faire quelque chose avec cette machine.
+Éva regarde autour d’elle.
 
-Il la regarde.
+ÉVA
 
-Il pense à la notice dans sa poche. Aux paroles nettes : 60 minutes. Inverse.
+Il doit y avoir un passage.
 
-Il pose les mains sur l'anneau, pris par l'urgence.
+Léa tourne la tête.
 
-Il ne sait pas exactement ce qu'il fait.
+Derrière elle, une silhouette masquée apparaît.
 
-La machine démarre.
+Elle porte la veste sombre de l’armoire.
 
-Une goutte de sang glisse sur sa peau — puis remonte dans sa plaie. La chair se recolle.
+Ses mouvements sont saccadés, comme s’il avançait à rebours.
 
-Thomas ouvre les yeux, confus : il pense d'abord que c'est un dispositif de soin.
+Léa se fige.
 
-Il n'a pas encore compris que le temps entier autour de lui se reconstruit à l'envers.
+L’homme s’agenouille.
 
-Il sort de la machine.
+Il saisit la barre.
 
-Il commence à redescendre la montagne pour retrouver son temps normal — il sait seulement qu'en bas, le monde aura le bon ordre et qu'il pourra retrouver Éva.
+Il tire.
 
----
+La barre se soulève.
 
-# INTERMÈDE — APRÈS 18H00 (DÉCOUVERTE)
+Léa dégage sa jambe.
 
-## SCÈNE 10 — LA DISPARITION (PARALLÈLE)
+L’homme la tire vers une zone sûre.
 
-Pendant que Thomas vit son expérience à la machine, Éva et Léa le cherchent.
+LÉA
 
-Elles fouillent le sentier, appellent son nom, parcourent les zones où la roche est brisée.
+Vous êtes qui ?
 
-Elles ne trouvent que des traces qui semblent s'effacer.
+Il ne répond pas.
 
-Les images s'enchaînent en parallèle : Thomas dans la machine, puis vivant des événements qu'il n'a pas encore compris ; Éva et Léa qui cherchent, qui s'épuisent.
+Il regarde vers le sommet.
 
-Après de longues minutes, Éva se tient au bord du sentier, regarde le vide et pleure. Elle serre Léa contre elle.
+Puis vers le passage technique.
 
-— On redescend. Juste nous deux.
+LÉA
 
-Elles descendent ensemble, persuadées que Thomas est tombé. Pour le spectateur, la chronologie montre que Thomas est en réalité vivant et inverse son temps ; pour elles, il est perdu.
+Attendez !
 
-Éva regarde sa montre. 18h05.
+La silhouette recule et disparaît derrière la paroi.
 
----
+Thomas et Éva trouvent enfin l’accès à la plateforme.
 
-# ACTE 2 — 18H00 À 17H00 (LE CŒUR INVERSÉ)
+Léa court vers eux.
 
-## SCÈNE 11 — 18H00 (THOMAS (NORMAL) DANS LA MACHINE / THOMAS (INVERSE) SORT)
+⸻
 
-Thomas (normal) est dans la machine. Il ferme les yeux.
+17H30 — LE RETOUR DE LÉA
 
-La machine démarre.
+Thomas prend Léa dans ses bras.
 
-Le son se décompose.
+THOMAS
 
-Le monde semble respirer à l'envers.
+Tu vas bien ?
 
-Thomas (normal) ouvre les yeux.
+LÉA
 
-18h00 devient 17h59.
+Oui.
 
-Il regarde sa main. Une goutte de sang quitte sa peau, puis remonte et rentre dans sa plaie.
+ÉVA
 
-Il reste immobile.
+Tu es blessée ?
 
-Il pense d'abord que la machine le soigne.
+LÉA
 
-Il sort de la machine (pour lui c'est le début d'un mouvement qui, pour d'autres, ressemble à l'inversion).
+Un peu.
 
-Thomas (inverse) commence alors à redescendre la montagne. Il emprunte un sentier qui n'est pas exactement celui de la montée.
+Éva examine sa jambe.
 
-Il regarde sa montre.
+THOMAS
 
-17h58.
+Qu’est-ce qui s’est passé ?
 
-Il murmure :
+Léa regarde derrière elle.
 
-— Ça marche.
+LÉA
 
----
+Un gars m’a sauvée.
 
-## SCÈNE 12 — 17H53 (CROISEMENT - LA RENCONTRE)
+ÉVA
 
-Thomas (inverse) continue de descendre en temps inversé.
+Quel gars ?
 
-Pour lui, les événements sont étranges.
+LÉA
 
-Une pierre revient dans sa main.
+Je sais pas.
 
-Une trace de pas disparaît derrière lui.
+THOMAS
 
-La neige remonte.
+Il t’a parlé ?
 
-Un morceau de métal qui avait explosé se reforme.
+LÉA
 
-Il continue.
+Je crois.
 
-Il repasse par l'endroit où il vient de voir Léa.
+ÉVA
 
-Il la voit s'éloigner à reculons, ses larmes remontant vers ses yeux.
+Comment ça ?
 
-Il ne peut rien dire.
+LÉA
 
-Il ne peut rien entendre.
+Il marchait à l’envers.
 
-Pour lui, tout est inversé.
+Thomas regarde la paroi métallique.
 
-Mais alors :
+Puis la plateforme supérieure.
 
-Une silhouette apparaît à travers la brume.
+Dans l’armoire, au loin, la veste et le masque ont disparu.
 
-Puis une deuxième.
+Thomas revient vers Léa.
 
-Éva et Léa.
+THOMAS
 
-Leurs gestes sont inversés : visuellement, elles semblent remonter vers le sommet, comme si on voyait une vidéo renversée.
+Il ressemblait à quoi ?
 
-Leurs mouvements sont saccadés, leurs lèvres bougent des sons déformés, incompréhensibles.
+LÉA
 
-Thomas (inverse) les voit. Leurs yeux se croisent brièvement.
+Je sais pas.
 
-Éva le regarde. Elle voit une silhouette étrange et muette.
+Elle cherche.
 
-Léa est confuse.
+LÉA
 
-Pendant une demi‑seconde, leurs trajectoires se frôlent — un instant où les deux temporalités se touchent puis s'éloignent.
+Il avait ta taille.
 
-Thomas (inverse) continue sa descente (pour lui normale).
+Thomas ne répond pas.
 
-Éva et Léa semblent, à l'œil, remonter vers la crête.
+⸻
 
-Deux trajectoires qui ne peuvent jamais se synchroniser.
+17H35 — LA DÉCISION
 
----
+Éva appelle les secours.
 
-## SCÈNE 13 — 17H47
+ÉVA
 
-Thomas (inverse) descend seul maintenant.
+Oui, bonjour. Il y a eu un accident sur le sentier nord. Notre fille est tombée d’une plateforme. Elle est consciente. Nous sommes près du sommet.
 
-Il pense à Éva. À ce regard qu'il a vu dans ses yeux.
+Thomas regarde vers la machine.
 
-Il comprend quelque chose de terrible :
+Léa reproduit le geste du sauveteur.
 
-**il est en train de fabriquer son propre chemin.**
+LÉA
 
-Il continue.
+Il a tiré comme ça.
 
-Il pense à la machine.
+Thomas observe son mouvement.
 
-Il pense à la notice dans sa poche.
+Il regarde la veste absente.
 
-60 minutes.
+Puis le masque manquant.
 
-Inverse ta direction temporelle.
+Il pose la main sur sa paume.
 
-Le monde extérieur ne s'inverse pas.
+Une petite coupure y est apparue, probablement causée par le bord métallique de la machine lorsqu’il l’a touchée.
 
-Il descend.
+Éva raccroche.
 
----
+ÉVA
 
-## SCÈNE 14 — 17H40
+Les secours arrivent.
 
-Thomas (inverse) continue.
+Thomas ne répond pas.
 
-Il aperçoit des ombres. Des formes.
+ÉVA
 
-Éva. Léa.
+Thomas ?
 
-Mais il ne peut pas rester.
+THOMAS
 
-Il avance.
+Je dois remonter.
 
-Il comprend progressivement que chaque événement qu'il croyait subir est quelque chose qu'il est maintenant en train de provoquer.
+ÉVA
 
-Il continue vers 17h31.
+Pourquoi ?
 
----
+THOMAS
 
-## SCÈNE 15 — 17H31 (LE COMBAT INVERSÉ)
+Je dois vérifier quelque chose.
 
-Thomas (inverse) descend.
+ÉVA
 
-Il voit son autre lui — Thomas (normal) — courir vers l'homme masqué.
+Tu viens de retrouver Léa.
 
-La course de Thomas (normal) a des mouvements inversés pour Thomas (inverse) : on devine une course reparamétrée, comme si elle avait été filmée et renversée.
+THOMAS
 
-Thomas (inverse) se cache.
+Je sais.
 
-Il sait exactement ce qui va arriver.
+ÉVA
 
-**Il comprend enfin :**
+Alors reste avec nous.
 
-En temps inversé, ce qui s'apparente à un combat défensif va se transformer en quelque chose de fatal en temps normal. Les coups qu'il va porter au tueur vont se "refermer" en remontant le temps — mais laisser une trace négative, une marque temporelle.
+Thomas regarde Éva.
 
-Quand le temps reviendra à la normale, cette trace devient une **hémorragie interne**. Le tueur s'effondrera de l'intérieur.
+La promesse revient dans son regard.
 
-Il voit, dans ce mouvement inversé, le moment où le tir va partir.
+Il pourrait lui parler.
 
-Il pourrait changer la trajectoire.
+Mais il ne sait pas comment formuler ce qu’il soupçonne.
 
-Au dernier instant, il intercepte le tueur. 
+THOMAS
 
-Le combat se déploie en temps inversé. C'est étrange — les mouvements sont lents, ralentis, comme en apesanteur. Thomas (inverse) s'efforce de blesser l'homme masqué au ventre, aux poumons. Les coups paraissent se refermer au ralenti, se guérir.
+Fais-moi confiance.
 
-Le tueur, dans son sens, se sent "guéri". Revigoré.
+Éva le fixe.
 
-Mais Thomas (inverse) sait que c'est une illusion temporelle.
+ÉVA
 
-Il baisse son arme.
+Je te fais confiance. Mais reviens.
 
-Le tueur disparaît, reprenant sa trajectoire normale.
+Thomas acquiesce.
 
-Thomas (normal), pour qui tout cela se joue à l'envers, ne voit pas ce combat. Il voit juste son autre lui disparaître.
+Il remonte seul.
 
-**Thomas (inverse) vient de signer la mort du tueur sans le vouloir.**
+⸻
 
-C'était inévitable. C'était le seul moyen.
+17H50 — LA MACHINE
 
-Thomas (inverse) poursuit sa course et disparaît.
+Thomas revient sur la plateforme supérieure.
 
-C'était une trajectoire : deux versions du même homme traversant le même lieu dans deux directions temporelles différentes. Et la géométrie du temps a transformé la défense en meurtre.
+Le bourdonnement de la machine est plus fort.
 
----
+Il ouvre le panneau latéral.
 
-## SCÈNE 16 — 17H20
+À l’intérieur, une chambre circulaire est entourée de symboles gravés.
 
-Thomas (inverse) arrive près de l'installation.
+Aucune indication n’est lisible.
 
-Il reconnaît la machine.
+Thomas passe la main sur le bord du panneau.
 
-Il voit son autre lui — Thomas (normal) — arriver, blessé, à moitié sonné.
+Le métal lui entaille la paume.
 
-Thomas (inverse) pourrait parler, intervenir.
+Il retire sa main.
 
-Mais il sait que cela changerait tout.
+Une goutte de sang tombe sur la surface circulaire.
 
-Il attend.
+La machine réagit.
 
-Il observe la machine.
+Une lumière faible traverse ses parois.
 
-Il se souvient des inscriptions :
+Thomas regarde vers le bas.
 
-DURÉE MAXIMALE : 60 MINUTES.
+Éva et Léa sont près du sentier.
 
-LE SUJET INVERSE SA DIRECTION TEMPORELLE.
+Léa est debout.
 
-LE MONDE EXTÉRIEUR NE S'INVERSE PAS.
+Thomas ouvre l’armoire métallique.
 
-Il comprend qu'il ne revient pas dans un passé abstrait mais dans CE passé‑là.
+La veste et le masque sont toujours là.
 
-Il voit la machine, immobile sur le replat.
+Il les regarde.
 
-Puis, dans son sens à lui, la machine commence à remonter — comme aspirée — et se replace sur la plateforme au sommet.
+Puis regarde la plateforme inférieure.
 
-Thomas (inverse) comprend la boucle : l'utilisation initiale de Thomas (normal) a provoqué, par inadvertance, la chute de la machine ; dans l'autre sens, la machine remonte pour retrouver sa place.
+Il pose la main sur son épaule.
 
-Il ne peut pas empêcher que son autre lui pose la main sur l'anneau.
+La douleur est vive.
 
-Il sait que c'est cet enchainement qui va, à la fois, le sauver et le piéger.
+Il ferme les yeux.
 
-Il reste immobile, regardant la machine basculer d'elle‑même vers le bord dans le sens où la chronologie se referme.
+THOMAS
 
-La machine bascule et tombe.
+S’il y a une autre façon…
 
----
+Un silence.
 
-## SCÈNE 17 — 17H12
+THOMAS
 
-Thomas (inverse) est presque arrivé.
+Aide-moi.
 
-17h12.
+Il pose les deux mains sur la machine.
 
-Il voit son autre lui — Thomas (normal) — qui fuit après l'appel paniqué.
+Le bourdonnement augmente.
 
-Thomas (inverse) le regarde.
+Sa montre indique 17H59.
 
-Il lève son arme.
+Les secondes avancent.
 
-Il pourrait tirer directement.
+18H00.
 
-Il ne le fait pas.
+La lumière envahit la structure.
 
-Il tire à côté.
+Thomas entre dans la chambre centrale.
 
-Thomas (normal) court vers la montagne.
+Son épaule heurte le cadre métallique.
 
-Thomas (inverse) baisse son arme.
+La lumière se referme autour de lui.
 
-Il vient de comprendre que tout dépend de cette course.
+⸻
 
-Il murmure :
+ACTE II — THOMAS INVERSÉ
 
-— Vas‑y.
+18H00 — L’INVERSION
 
-Thomas (inverse) disparaît dans la montagne.
+La lumière s’éteint.
 
----
+Thomas ressort immédiatement de la machine.
 
-## SCÈNE 18 — 17H05
+Il tombe à genoux.
 
-Thomas (inverse) remonte la montagne, à l'envers.
+Le monde est silencieux.
 
-Éva et Léa descendent normalement sur un sentier différent.
+Sa coupure se referme.
 
-Elles ne le voient plus.
+Une goutte de sang remonte vers sa paume.
 
-Pour elles, Thomas a disparu.
+Il porte la main à son épaule.
 
-Thomas (inverse) continue.
+La douleur diminue.
 
-Il regarde sa montre.
+Sa montre fonctionne à rebours.
 
-17h02.
+Thomas lève les yeux.
 
-Il est presque revenu.
+Éva et Léa s’éloignent de la plateforme.
 
-Il pense au tueur. À ce qu'il a fait sans le faire vraiment.
+Elles descendent réellement le sentier.
 
-Il pense à Éva qui lui a promis : "Ne décide pas tout seul."
+Pour Thomas, leurs gestes semblent se dérouler à reculons.
 
-Et le temps inversé a décidé pour lui.
+Il regarde ses mains.
 
-Il est un fantôme. Un tueur invisible. Un sauveur sans visage.
+Puis la machine.
 
-Il est piégé dans une logique temporelle qu'il ne peut pas briser.
+Il se relève.
 
----
+⸻
 
-# ÉPILOGUE — 17H00 (LE RETOUR)
+17H55 — L’ARMOIRE
 
-## SCÈNE 19 — 17H00 (DE RETOUR AU POINT DE DÉPART)
+Thomas se dirige vers l’armoire métallique.
 
-17h00.
+La veste et le masque semblent revenir vers leur place.
 
-Thomas (normal) revient au point de départ.
+Il tend la main.
 
-Éva et Léa y sont aussi.
+Les objets se déplacent dans le sens inverse de son geste.
 
-Elles viennent juste d'arriver.
+Thomas les saisit.
 
-Elles ont retrouvé leur temps normal.
+Il enfile la veste.
 
-Thomas (normal) a retrouvé son temps normal.
+Puis le masque.
 
-Tout le monde est à 17h00.
+Dans une plaque métallique, son reflet lui renvoie une silhouette étrangère.
 
-Au même endroit.
+Il touche son épaule.
 
-Au même moment.
+La blessure se referme lentement.
 
-Thomas regarde Éva. Il regarde Léa.
+Un bruit métallique attire son attention.
 
-Il vient de comprendre ce qui s'est passé.
+La plaque de l’escalier revient vers sa position précédente.
 
-Il vient de revivre toute la boucle.
+La cale métallique glisse vers son logement.
 
-Il vient de voir le futur.
+Thomas regarde la structure.
 
-Il sait exactement ce qui va se passer.
+Il ne comprend pas encore.
 
-À chaque pas.
+⸻
 
-À chaque mot.
+17H30 — LA PLATEFORME
 
-À chaque instant.
+Thomas descend par un passage technique situé derrière le bâtiment.
 
-Mais maintenant, il sait quelque chose de plus : il a tué.
+La plateforme inférieure se recompose autour de lui.
 
-En temps inversé, sans vraiment le vouloir, il a tué l'homme masqué.
+Léa apparaît au sol, puis revient sous la barre métallique.
 
-Il ne le sait pas encore consciemment. Mais c'est écrit dans sa chair.
+Thomas s’agenouille.
 
-Il regarde sa montre. 17h00.
+Il saisit la barre.
 
-Éva le regarde.
+Il tire.
 
-— Ça va ? Tu stresses ?
+Le mouvement est difficile.
 
-Thomas ne répond pas immédiatement. Il regarde sa montre.
+La barre se dégage.
 
-Léa rit.
+Léa est libérée.
 
-— Mec, c'est bon, c'est pas grave si tu mets pas la montée sur Strava !
+Thomas la tire vers une zone sûre.
 
-Éva sourit.
+Elle lève les yeux vers lui.
 
-Thomas les regarde.
+LÉA
 
-Longtemps.
+Vous êtes qui ?
 
-Il pourrait partir. Tout lui dire. Les prendre par la main et descendre.
+Thomas essaie de parler.
 
-Il pourrait fuir.
+THOMAS
 
-Il pourrait casser la trajectoire.
+Léa…
 
-Il pourrait sortir de la boucle.
+Pour elle, le son est incompréhensible.
 
-Il a le choix.
+Elle recule.
 
-Mais s'il refuse d'entrer dans la machine...
+Thomas regarde vers le sommet.
 
-S'il refuse de descendre en temps inversé...
+Il désigne la machine.
 
-Le tueur ne tombera pas.
+Puis le passage technique.
 
-Le tueur restera vivant.
+Il recule.
 
-Et Léa mourra.
+Léa le suit du regard.
 
-Il regarde Léa.
+Thomas disparaît derrière la paroi.
 
-Il pense à ce moment : elle était terrorisée. Elle était en danger.
+⸻
 
-Elle ne le savait pas, mais elle était protégée par quelque chose d'invisible. Par son autre lui, descendant à l'envers, combattant un homme qu'il ne voyait pas.
+17H25 — LE CROISEMENT
 
-Il regarde Éva.
+Thomas remonte vers la plateforme supérieure.
 
-Il pense à ce moment : elle était blessée. Elle l'appelait.
+Il aperçoit Éva et Thomas normal qui descendent vers la plateforme inférieure.
 
-Il regarde sa montre à nouveau. 17h01.
+Il s’arrête.
 
-Une heure.
+Thomas normal avance avec Éva.
 
-Il a une heure avant que tout bascule.
+Il reconnaît sa propre veste.
 
-Il a une heure avant qu'il n'existe plus pour eux.
+Sa propre démarche.
 
-Il a une heure avant que le tueur monte la montagne.
+Son propre visage.
 
-Il a une heure avant que la machine tombe.
+Thomas inversé porte une main au masque.
 
-Avant qu'il rentre dedans.
+Thomas normal ne le voit pas.
 
-Avant qu'il inverse son temps.
+Thomas inversé prononce le nom d’Éva.
 
-Avant qu'il redescende cette montagne.
+THOMAS INVERSÉ
 
-Avant qu'il croise le tueur.
+Éva…
 
-Avant qu'il le blesse fatalement, sans le vouloir.
+Pour Éva, le son est inversé et incompréhensible.
 
-Avant qu'il remonte.
+Elle se retourne.
 
-Avant qu'il revienne.
+Elle ne voit qu’une silhouette masquée qui recule derrière la structure.
 
-Avant qu'il choisisse.
+Thomas disparaît.
 
-Il comprend l'architecture du temps : **il est prisonnier d'un paradoxe.**
+Éva rejoint Léa.
 
-Pour que Léa vive, le tueur doit mourir.
+Thomas reste immobile derrière la paroi.
 
-Pour que le tueur meure de cette façon particulière, Thomas doit combattre en temps inversé.
+Il regarde son autre lui prendre Léa dans ses bras.
 
-Pour combattre en temps inversé, il doit entrer dans la machine.
+⸻
 
-Pour entrer dans la machine, il doit refaire la boucle.
+17H20 — LA CALE
 
-Éternellement.
+Thomas atteint l’escalier métallique.
 
-Il n'y a pas d'échappatoire. Pas de timeline alternative. Pas de choix.
+La plaque revient vers sa position stable.
 
-Il serre la main d'Éva.
+La cale métallique remonte vers sa main.
 
-— Je t'aime.
+Il la saisit.
 
-Éva sourit.
+Il regarde la goupille rouillée.
 
-Mais Thomas sait quelque chose qu'elle ne saura jamais : qu'il vient de faire un choix qui n'est pas vraiment un choix. Qu'il est en train de sacrifier son libre arbitre pour qu'elle vive sans le savoir.
+Elle est déjà déformée.
 
-Léa court devant.
+La cale ne peut pas tenir seule.
 
-— Vous venez ?
+Thomas cherche un endroit où la replacer.
 
-Ils commencent à monter la montagne.
+Il aperçoit une rainure sous la plaque.
 
-La lumière baisse lentement.
+Il y glisse la cale.
 
-La caméra s'éloigne.
+La plaque se stabilise.
 
-La famille.
+Thomas retire sa main.
 
-La montagne.
+La cale reste en place.
 
-L'installation cachée, quelque part plus haut.
+Il regarde l’escalier.
 
-La machine, qui attend.
+Un bruit de pas résonne plus haut.
 
-Le tueur, qui monte.
+Thomas normal et Éva approchent.
 
-Les 60 minutes qui vont se dérouler.
+Thomas inversé se plaque contre la structure.
 
-Le combat invisible.
+Thomas normal passe sans le voir.
 
-La mort invisible.
+Thomas regarde la cale.
 
-La boucle.
+Puis la plaque.
 
-L'infini.
+Il comprend que, dans quelques instants, la cale sera retirée par son propre mouvement inversé.
 
-Le choix qui n'en est pas un.
+Il recule.
 
-La descente d'Éva et Léa commence.
+⸻
 
-Elles descendent seules.
+17H12 — L’APPEL
 
-Sans Thomas.
+Thomas regarde son téléphone.
 
-Elles pensent qu'il est mort.
+Il compose son propre numéro.
 
-Mais il n'est pas mort.
+Le téléphone de Thomas normal sonne.
 
-Il est juste piégé.
+Thomas normal décroche.
 
-Dans une géométrie temporelle qu'il ne peut pas briser.
+THOMAS NORMAL
 
-En remontant le temps à l'envers, encore et encore.
+Allô ?
 
-En tuant un homme sans vraiment le faire.
+Thomas inversé entend sa voix normalement.
 
-En sauvant sa fille sans qu'elle le sache.
+Il sait que Thomas normal entendra la sienne à l’envers.
 
-En se sacrifiant sans jamais pouvoir l'avouer.
+Il articule lentement les mots dans le sens inverse.
 
-La montagne.
+THOMAS INVERSÉ
 
-La lumière.
+Tu dois monter.
 
-Le silence.
+Thomas normal comprend partiellement.
 
-Et quelque part au-dessus, 17h05, 17h10, 17h15... le tueur monte.
+THOMAS NORMAL
 
-Inexorable.
+Qui est-ce ?
 
-Inévitable.
+Thomas regarde vers la plateforme inférieure.
 
-Vers la machine qui tombe.
+THOMAS INVERSÉ
 
-Vers le combat qui va le tuer.
+Elle est vivante.
 
-Vers la boucle qui recommence.
+Thomas normal se tourne vers Léa.
 
----
+THOMAS NORMAL
 
-**FIN**
+Léa ?
 
-(Ou plutôt, commencement d'une éternité.)
+Thomas inversé serre le téléphone.
+
+Il pourrait tout expliquer.
+
+Il pourrait dire qu’il est l’homme masqué.
+
+Il pourrait dire que la machine l’a inversé.
+
+Mais les mots restent bloqués.
+
+Il cesse de parler à l’envers.
+
+THOMAS INVERSÉ
+
+Je ne peux pas te laisser partir.
+
+Pour Thomas normal, la phrase devient un son incompréhensible.
+
+THOMAS NORMAL
+
+Quoi ?
+
+Thomas inversé entend la peur dans sa propre voix.
+
+Il ne répond plus.
+
+L’appel se coupe.
+
+Il baisse le téléphone.
+
+⸻
+
+17H05 — LE DERNIER REGARD
+
+Thomas suit Éva et Léa à distance.
+
+Elles descendent réellement le sentier.
+
+Pour lui, elles semblent remonter.
+
+Éva s’arrête.
+
+Elle regarde autour d’elle.
+
+Thomas se tient derrière un arbre.
+
+Il pourrait sortir.
+
+Il pourrait essayer de lui parler.
+
+Mais il sait qu’elle ne comprendrait pas.
+
+Léa appelle sa mère.
+
+LÉA
+
+Maman, tu viens ?
+
+Éva se retourne.
+
+ÉVA
+
+Oui.
+
+Elles continuent.
+
+Thomas pose une main contre l’arbre.
+
+Il regarde Éva disparaître derrière les branches.
+
+⸻
+
+17H00 — LE RETOUR
+
+L’aiguille de la montre ralentit.
+
+Elle s’arrête.
+
+Puis repart dans le sens normal.
+
+Le silence se brise.
+
+Thomas tombe à genoux.
+
+Sa respiration revient.
+
+Il regarde ses mains.
+
+La coupure a disparu.
+
+Il regarde la machine.
+
+Puis le sentier.
+
+Au loin, une voix familière.
+
+LÉA
+
+Mec, c’est bon, c’est pas grave si tu mets pas la montée sur Strava !
+
+Thomas relève la tête.
+
+Il ne voit pas encore Léa.
+
+Il reconnaît la phrase.
+
+Éva apparaît au début du sentier.
+
+Elle se retourne vers lui.
+
+ÉVA
+
+Ça va ?
+
+Thomas la regarde.
+
+La promesse est toujours là, entre eux.
+
+Il ne répond pas tout de suite.
+
+Éva lui tend la main.
+
+Thomas la prend.
+
+La caméra reste sur leurs mains.
+
+Le même bourdonnement très faible qu’au début apparaît dans le son.
+
+Thomas lève les yeux vers le sommet.
+
+Coupe sur la première image du film : le sentier, les arbres, la lumière descendante.
+
+La montée n’est pas rejouée.
+
+Le film s’arrête avant le premier pas.
+
+FIN
