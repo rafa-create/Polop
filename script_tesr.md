@@ -150,61 +150,39 @@ Thomas tombe, touché au flanc.
 
 ---
 
-## SCÈNE 3 — 17H20 (LA MACHINE)
+## SCÈNE 3 — 17H20 (LA MACHINE AU SOMMET)
 
-Thomas titube en descendant légèrement le sentier, loin de sa famille et du chaos.
+Thomas titube, la douleur au flanc le brûle. Il monte un dernier ressaut et atteint le sommet.
 
-Sa blessure au flanc le brûle.
+À l'abri d'un muret, une ouverture donne sur une petite installation. Sur la plateforme, face au vide, la machine : un anneau métallique posé au centre.
 
-Il pousse une porte rouillée cachée dans les rochers.
+Thomas s'appuie contre la pierre. Sa vision se trouble.
 
-À l'intérieur : une installation à l'abandon, à flanc de montagne.
+Il sort machinalement une petite pochette en cuir et la range dans sa poche — la notice : il l'a prise avec lui lorsqu'il est monté.
 
-Au centre : la machine.
+Il approche de la machine, la main tremblante.
 
-Un anneau métallique, posé sur une plateforme, tout au bord d'une ouverture donnant sur la pente.
+Les inscriptions sont gravées, nettes cette fois.
 
-Thomas s'appuie contre le mur. Sa vision se brouille.
+DURÉE MAXIMALE : 60 MINUTES
 
-Il regarde l'anneau.
+LE SUJET INVERSE SA DIRECTION TEMPORELLE
 
-Il pense : *un hôpital. Un caisson. Quelque chose qui soigne.*
+LE MONDE EXTÉRIEUR NE S'INVERSE PAS
 
-Il s'approche.
+Il n'a pas le temps de tout comprendre.
 
-Des inscriptions, gravées sur le métal.
+Il pose la main sur l'anneau comme pour se raccrocher.
 
-Il essaie de lire. Les mots se mélangent.
+Un frottement, un déplacement : la plateforme, mal scellée, bascule sous son poids. Thomas ne la pousse pas volontairement — l'équilibre se rompt.
 
-DUR... 60 MIN...
+La machine dévale la pente. Elle tombe. Elle ressort plus bas, près du point de départ.
 
-LE SUJET INVERSE...
+Thomas reste figé, haletant.
 
-Il ne comprend pas vraiment. Les mots lui échappent.
+Il ne sait pas pourquoi il a le besoin impérieux de redescendre, de retrouver son temps normal.
 
-Il a besoin que ça s'arrête.
-
-Il pose la main sur l'anneau.
-
-Il avance un pied à l'intérieur.
-
-La plateforme bascule.
-
-Elle glisse vers l'ouverture.
-
-Thomas essaie de la retenir.
-
-Trop tard.
-
-Elle tombe, disparaît dans la pente.
-
-Silence.
-
-Thomas regarde sa main, vide.
-
-Il regarde en bas de la montagne.
-
-Il doit descendre. Il ne sait pas pourquoi. Il le sait juste.
+Il sait juste qu'il doit descendre.
 
 ---
 
@@ -288,7 +266,7 @@ Thomas sourit malgré ses larmes.
 
 — Parce que je suis content de te voir.
 
-Il pense à la machine, quelque part en contrebas.
+Il pense à la machine, quelque part au sommet.
 
 Il pense à Éva, blessée, plus bas.
 
@@ -328,9 +306,7 @@ Thomas continue.
 
 Thomas descend seul maintenant. Léa est en sécurité plus bas.
 
-L'installation est là. Il voit la plateforme vide.
-
-La machine n'est plus là. Elle est tombée plus tôt. C'est lui qui l'a fait tomber.
+Il aperçoit, plus bas sur la pente, la machine immobilisée sur un replat — celle qui est tombée depuis le sommet.
 
 18H00 approche.
 
@@ -338,7 +314,7 @@ Il regarde sa montre. 17h58.
 
 Il doit faire quelque chose. Il doit la retrouver avant 18h.
 
-Il voit quelque chose scintiller plus bas sur la pente.
+Il voit quelque chose scintiller près de la plateforme.
 
 Il descend.
 
@@ -346,7 +322,7 @@ Il descend.
 
 ## SCÈNE 9 — 18H00 (LE BASCULEMENT)
 
-Thomas se tient devant la machine. Elle s'est immobilisée sur un replat.
+Thomas se tient devant la machine. Elle s'est immobilisée sur le replat, près du point de départ.
 
 Il est épuisé. Sa blessure le brûle.
 
@@ -356,113 +332,53 @@ Il ne sait pas pourquoi, mais il sait qu'il doit faire quelque chose avec cette 
 
 Il la regarde.
 
-Il pense à la notice. Aux paroles floues. 60 minutes. Inverse.
+Il pense à la notice dans sa poche. Aux paroles nettes : 60 minutes. Inverse.
 
-Il pose les mains sur l'anneau.
+Il pose les mains sur l'anneau, pris par l'urgence.
 
-Il ne sait pas ce qu'il fait.
+Il ne sait pas exactement ce qu'il fait.
 
-Il ferme les yeux.
+La machine démarre.
 
-Il appuie.
+Une goutte de sang glisse sur sa peau — puis remonte dans sa plaie. La chair se recolle.
 
-Silence.
+Thomas ouvre les yeux, confus : il pense d'abord que c'est un dispositif de soin.
 
-Puis :
+Il n'a pas encore compris que le temps entier autour de lui se reconstruit à l'envers.
 
-**18h00.**
+Il sort de la machine.
 
-17h59.
-
-17h58.
-
-17h57.
-
-Les événements commencent à se reconstruire devant lui.
-
-Mais à l'envers.
-
-Il voit une explosion se refabriquer.
-
-Des objets revenir à leur place.
-
-La montagne se refaire devant lui.
-
-Il comprend.
-
-**Il vit réellement le temps à l'envers.**
-
-Il ouvre les yeux.
-
-La machine disparaît de ses mains.
-
-Il regarde autour de lui.
-
-Tout change.
+Il commence à redescendre la montagne pour retrouver son temps normal — il sait seulement qu'en bas, le monde aura le bon ordre et qu'il pourra retrouver Éva.
 
 ---
 
 # INTERMÈDE — APRÈS 18H00 (DÉCOUVERTE)
 
-## SCÈNE 10 — LA DISPARITION
+## SCÈNE 10 — LA DISPARITION (PARALLÈLE)
 
-Éva et Léa continuent leur descente.
+Pendant que Thomas vit son expérience à la machine, Éva et Léa le cherchent.
 
-Éva appelle Thomas.
+Elles fouillent le sentier, appellent son nom, parcourent les zones où la roche est brisée.
 
-— Thomas ? Où tu es ?
+Elles ne trouvent que des traces qui semblent s'effacer.
 
-Rien.
+Les images s'enchaînent en parallèle : Thomas dans la machine, puis vivant des événements qu'il n'a pas encore compris ; Éva et Léa qui cherchent, qui s'épuisent.
 
-Elle l'appelle à nouveau.
-
-Léa la regarde.
-
-— Maman, où il est ?
-
-Éva commence à chercher.
-
-Elle descend le sentier. Puis elle regarde vers le vide.
-
-La falaise.
-
-Elle voit les rochers en bas.
-
-Elle comprend.
-
-Elle reste immobile quelques secondes.
-
-Puis elle pleure.
-
-Elle pleure en silence en tenant Léa.
-
-Léa ne comprend pas.
-
-— Maman ?
-
-Éva la serre contre elle.
+Après de longues minutes, Éva se tient au bord du sentier, regarde le vide et pleure. Elle serre Léa contre elle.
 
 — On redescend. Juste nous deux.
 
-Elles commencent à descendre ensemble.
+Elles descendent ensemble, persuadées que Thomas est tombé. Pour le spectateur, la chronologie montre que Thomas est en réalité vivant et inverse son temps ; pour elles, il est perdu.
 
 Éva regarde sa montre. 18h05.
-
-Elle pense à la boîte. La bague qu'il allait lui proposer.
-
-Elle descend. Lentement. En pleurant.
-
-Léa descend à côté d'elle, confuse, silencieuse.
 
 ---
 
 # ACTE 2 — 18H00 À 17H00 (LE CŒUR INVERSÉ)
 
-## SCÈNE 11 — 18H00 (THOMAS INVERSÉ - L'ENTRÉ DANS LA MACHINE)
+## SCÈNE 11 — 18H00 (THOMAS (NORMAL) DANS LA MACHINE / THOMAS (INVERSE) SORT)
 
-Thomas est dans la machine.
-
-Il ferme les yeux.
+Thomas (normal) est dans la machine. Il ferme les yeux.
 
 La machine démarre.
 
@@ -470,31 +386,19 @@ Le son se décompose.
 
 Le monde semble respirer à l'envers.
 
-Thomas ouvre les yeux.
+Thomas (normal) ouvre les yeux.
 
 18h00 devient 17h59.
 
-Il regarde sa main.
+Il regarde sa main. Une goutte de sang quitte sa peau, puis remonte et rentre dans sa plaie.
 
-Une goutte de sang quitte sa peau.
+Il reste immobile.
 
-Elle remonte.
+Il pense d'abord que la machine le soigne.
 
-Elle rentre dans sa plaie.
+Il sort de la machine (pour lui c'est le début d'un mouvement qui, pour d'autres, ressemble à l'inversion).
 
-Thomas reste immobile.
-
-Il comprend.
-
-**Ce n'est pas une vidéo inversée.**
-
-Il vit réellement chaque seconde dans l'autre direction.
-
-Il sort de la machine.
-
-Il commence à descendre la montagne.
-
-Un sentier différent. Pas celui qu'il a pris en montant.
+Thomas (inverse) commence alors à redescendre la montagne. Il emprunte un sentier qui n'est pas exactement celui de la montée.
 
 Il regarde sa montre.
 
@@ -508,7 +412,7 @@ Il murmure :
 
 ## SCÈNE 12 — 17H53 (CROISEMENT - LA RENCONTRE)
 
-Thomas continue de descendre en temps inversé.
+Thomas (inverse) continue de descendre en temps inversé.
 
 Pour lui, les événements sont étranges.
 
@@ -532,9 +436,7 @@ Il ne peut rien entendre.
 
 Pour lui, tout est inversé.
 
-Il continue.
-
-**Mais alors :**
+Mais alors :
 
 Une silhouette apparaît à travers la brume.
 
@@ -542,113 +444,29 @@ Puis une deuxième.
 
 Éva et Léa.
 
-Elles marchent vers le haut de la montagne, mais à l'envers — leurs mouvements sont saccadés, inversés.
+Leurs gestes sont inversés : visuellement, elles semblent remonter vers le sommet, comme si on voyait une vidéo renversée.
 
-Pour Thomas, c'est comme les voir en vidéo inversée.
+Leurs mouvements sont saccadés, leurs lèvres bougent des sons déformés, incompréhensibles.
 
-Éva marche. Mais elle recule. Ses gestes sont à l'envers.
+Thomas (inverse) les voit. Leurs yeux se croisent brièvement.
 
-Elle appelle quelque chose. Ses paroles arrivent déformées, étirées, incompréhensibles — comme du son inversé.
+Éva le regarde. Elle voit une silhouette étrange et muette.
 
-Thomas les voit.
+Léa est confuse.
 
-Leurs yeux se croisent brièvement.
+Pendant une demi‑seconde, leurs trajectoires se frôlent — un instant où les deux temporalités se touchent puis s'éloignent.
 
-Éva le regarde. Elle le voit.
+Thomas (inverse) continue sa descente (pour lui normale).
 
-Mais pas clairement.
+Éva et Léa semblent, à l'œil, remonter vers la crête.
 
-Elle voit une silhouette. Un mouvement bizarre. Un homme qui se déplace d'une manière étrange.
-
-Elle voit ses lèvres bouger, mais aucun son ne lui parvient.
-
-Ou plutôt : un son étrange, déformé, à l'envers. Un gémissement incompréhensible.
-
-Thomas continue. Il descend normalement (pour lui).
-
-Mais pour Éva, il semble se déplacer bizarrement.
-
-Il semble figer puis accélérer.
-
-Il semble glisser plus qu'il ne marche.
-
-Éva essaie de dire quelque chose.
-
-Sa voix sort étirée, grave, inversée :
-
-— ...hcamroj '...sap al ét ecnese al se ém ér al...
-
-Incompréhensible.
-
-Léa la tire par la main.
-
-— Maman, qu'est-ce que c'est ?
-
-Mais sa voix aussi est bizarre. Déformée.
-
-Thomas et Éva/Léa se croisent.
-
-Pendant une demi-seconde : un instant où leurs trajectoires se touchent.
-
-Puis ils s'éloignent.
-
-Thomas descend (normalement pour lui).
-
-Éva remonte (normalement pour elle).
-
-Deux mouvements inversés l'un envers l'autre.
-
-Éva se retourne en marchant à l'envers.
-
-Elle essaie encore de l'appeler.
-
-Mais rien ne passe.
-
-Le décalage temporel les isole complètement.
-
-Léa regarde aussi.
-
-Confuse.
-
-Comme si elle voyait un fantôme.
-
-Ou un rêve.
-
-Éva serre la main de Léa plus fort.
-
-— Viens. On doit continuer.
-
-Elles continuent à remonter (visuellement), mais en descendant réellement.
-
-Thomas continue à descendre.
-
-Deux trajectoires qui s'éloignent.
-
-Deux temporalités qui ne peuvent jamais se toucher.
-
-Éva regarde une dernière fois derrière elle.
-
-L'homme a disparu.
-
-Elle pleure.
-
-Elle ne sait pas ce qu'elle a vu.
-
-Elle ne sait pas si c'était réel.
-
-Léa ne comprend pas.
-
-— Maman, qui c'était ?
-
-Éva ne répond pas.
-
-Elle continue.
+Deux trajectoires qui ne peuvent jamais se synchroniser.
 
 ---
 
 ## SCÈNE 13 — 17H47
 
-Thomas descend seul maintenant.
+Thomas (inverse) descend seul maintenant.
 
 Il pense à Éva. À ce regard qu'il a vu dans ses yeux.
 
@@ -660,7 +478,7 @@ Il continue.
 
 Il pense à la machine.
 
-Il pense à la notice.
+Il pense à la notice dans sa poche.
 
 60 minutes.
 
@@ -674,7 +492,7 @@ Il descend.
 
 ## SCÈNE 14 — 17H40
 
-Thomas continue.
+Thomas (inverse) continue.
 
 Il aperçoit des ombres. Des formes.
 
@@ -692,49 +510,47 @@ Il continue vers 17h31.
 
 ## SCÈNE 15 — 17H31
 
-Thomas descend.
+Thomas (inverse) descend.
 
-Il voit son autre lui. Le Thomas normal. Qui court après l'homme masqué.
+Il voit son autre lui — Thomas (normal) — courir vers l'homme masqué.
 
-Il se cache.
+La course de Thomas (normal) a des mouvements inversés pour Thomas (inverse) : on devine une course reparamétrée, comme si elle avait été filmée et renversée.
 
-Thomas avance.
+Thomas (inverse) se cache.
 
 Il sait exactement ce qui va arriver.
 
-Il voit son autre lui courir après l'homme masqué.
+Il voit, dans ce mouvement inversé, le moment où le tir va partir.
 
-Il se place simplement là où le tir va manquer.
+Il pourrait changer la trajectoire.
 
-**Le coup de feu part.**
+Au dernier instant, il tire à côté — volontairement — pour laisser la suite se dérouler.
 
-Thomas inversé continue.
+Il comprend que briser ce moment briserait aussi la ligne qui protège Léa.
 
-Puis il disparaît.
+Il baisse son arme.
 
-Ce n'était pas un combat.
+Thomas (normal) poursuit sa course et disparaît.
 
-C'était une trajectoire.
-
-Deux versions du même homme qui traversaient le même lieu dans deux directions temporelles différentes.
+C'était une trajectoire : deux versions du même homme traversant le même lieu dans deux directions temporelles différentes.
 
 ---
 
 ## SCÈNE 16 — 17H20
 
-Thomas arrive près de l'installation.
+Thomas (inverse) arrive près de l'installation.
 
 Il reconnaît la machine.
 
-Il voit son autre lui arriver. Blessé. Sonné.
+Il voit son autre lui — Thomas (normal) — arriver, blessé, à moitié sonné.
 
-Thomas pourrait lui parler.
+Thomas (inverse) pourrait parler, intervenir.
 
 Mais il sait que cela changerait tout.
 
 Il attend.
 
-Il regarde la machine.
+Il observe la machine.
 
 Il se souvient des inscriptions :
 
@@ -744,53 +560,33 @@ LE SUJET INVERSE SA DIRECTION TEMPORELLE.
 
 LE MONDE EXTÉRIEUR NE S'INVERSE PAS.
 
-Il comprend.
+Il comprend qu'il ne revient pas dans un passé abstrait mais dans CE passé‑là.
 
-Il ne revient pas dans un passé abstrait.
+Il voit la machine, immobile sur le replat.
 
-Il revient exactement dans **ce passé-là**.
+Puis, dans son sens à lui, la machine commence à remonter — comme aspirée — et se replace sur la plateforme au sommet.
 
-Il voit la machine, en bas de la pente, immobile.
+Thomas (inverse) comprend la boucle : l'utilisation initiale de Thomas (normal) a provoqué, par inadvertance, la chute de la machine ; dans l'autre sens, la machine remonte pour retrouver sa place.
 
-Puis — dans son sens à lui — elle remonte.
+Il ne peut pas empêcher que son autre lui pose la main sur l'anneau.
 
-Elle glisse vers le haut, comme aspirée, et vient se reposer sur la plateforme.
+Il sait que c'est cet enchainement qui va, à la fois, le sauver et le piéger.
 
-Thomas s'approche.
+Il reste immobile, regardant la machine basculer d'elle‑même vers le bord dans le sens où la chronologie se referme.
 
-Il pose les mains sur l'anneau.
-
-Il la pousse.
-
-Elle bascule vers le bord.
-
-Il sait qu'à l'instant précis où elle basculera, son autre lui — blessé, à peine conscient — sera en train de poser la main dessus, croyant qu'elle va le soigner.
-
-Il ne peut pas l'arrêter.
-
-Il ne veut pas l'arrêter.
-
-Thomas pense à Léa.
-
-Puis il comprend ce qu'il n'avait pas encore compris :
-
-**s'il casse la trajectoire, il change aussi ce qui sauve Léa.**
-
-Il laisse la machine tomber.
-
-Elle bascule vers la pente.
+La machine bascule et tombe.
 
 ---
 
 ## SCÈNE 17 — 17H12
 
-Thomas est presque arrivé.
+Thomas (inverse) est presque arrivé.
 
 17h12.
 
-Il voit son autre lui. Qui court. Qui fuit après l'appel paniqué.
+Il voit son autre lui — Thomas (normal) — qui fuit après l'appel paniqué.
 
-Thomas le regarde.
+Thomas (inverse) le regarde.
 
 Il lève son arme.
 
@@ -800,23 +596,23 @@ Il ne le fait pas.
 
 Il tire à côté.
 
-Son autre lui court vers la montagne.
+Thomas (normal) court vers la montagne.
 
-Thomas baisse son arme.
+Thomas (inverse) baisse son arme.
 
 Il vient de comprendre que tout dépend de cette course.
 
 Il murmure :
 
-— Vas-y.
+— Vas‑y.
 
-Thomas disparaît dans la montagne.
+Thomas (inverse) disparaît dans la montagne.
 
 ---
 
 ## SCÈNE 18 — 17H05
 
-Thomas remonte la montagne, à l'envers.
+Thomas (inverse) remonte la montagne, à l'envers.
 
 Éva et Léa descendent normalement sur un sentier différent.
 
@@ -824,7 +620,7 @@ Elles ne le voient plus.
 
 Pour elles, Thomas a disparu.
 
-Thomas continue.
+Thomas (inverse) continue.
 
 Il regarde sa montre.
 
@@ -840,7 +636,7 @@ Il est presque revenu.
 
 17h00.
 
-Thomas revient au point de départ.
+Thomas (normal) revient au point de départ.
 
 Éva et Léa y sont aussi.
 
@@ -848,7 +644,7 @@ Elles viennent juste d'arriver.
 
 Elles ont retrouvé leur temps normal.
 
-Thomas a retrouvé son temps normal.
+Thomas (normal) a retrouvé son temps normal.
 
 Tout le monde est à 17h00.
 
