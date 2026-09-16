@@ -1,99 +1,84 @@
 LA BOUCLE
 
-SCRIPT COMPLET — VERSION DE TRAVAIL
-
-Dialogues intégrés
+Script complet — Version de travail V7
 
 ⸻
 
-1. RÈGLES FONDAMENTALES
+A — LE TEMPS NORMAL
 
-* Le film commence à 16h58.
-* La première traversée de Léa sur le pont a lieu avant 17h00.
-* À 17h00, Thomas est normal et la boucle commence.
-* Thomas inversé vivra ensuite cette même période dans l’autre direction temporelle.
-* À 18h00, Thomas met la bague dans la grotte.
-* Son temps personnel s’inverse : 18h00 → 17h00.
-* À 17h00, l’inversion s’arrête.
-* La bague tombe dans le précipice lors de sa rencontre avec son double.
-* Il n’existe qu’une seule réalité.
-* Il n’y a ni deuxième timeline, ni univers parallèle, ni modification du passé.
-* Thomas choisit de poursuivre la boucle, mais le film ne tranche jamais entre choix réel et déterminisme.
-* Chaque événement doit pouvoir être compris différemment lors d’une deuxième vision.
+16h58 → 18h00
 
 ⸻
 
-2. 16H58 — LA PREMIÈRE TRAVERSÉE
+A1 — 16h58 — LA RANDONNÉE
 
 EXT. MONTAGNE — FIN D’APRÈS-MIDI
 
-Éva, Thomas et Léa avancent sur un sentier.
+Thomas, Éva et Léa avancent sur le flanc de la montagne.
 
-Un petit pont de fortune traverse un passage rocheux au-dessus du vide.
+Une randonnée familiale.
 
-À côté, un passage naturel permet de contourner le précipice par la roche.
+Le relief est naturel, ouvert.
 
-Léa aperçoit le pont.
+Plus loin, la montagne forme un creux.
 
-LÉA
+Un chemin suit ce creux et longe le flanc.
 
-Je peux passer par là ?
+Il est plus long, plus irrégulier, mais sûr.
 
-Thomas regarde le pont.
+Un petit pont permet de couper à travers le creux.
 
-THOMAS
+Le pont est un raccourci.
 
-Oui, mais tu fais attention.
+Une partie de son cordage est légèrement abîmée.
 
-Léa sourit.
+Personne ne s’en inquiète.
 
-Elle s’engage sur le pont.
+Le groupe arrive par le flanc de la montagne.
 
-Thomas reste légèrement en retrait avec Éva.
+Léa remarque le pont.
 
-Léa traverse.
+Sans rien demander, elle quitte le chemin et s’engage seule sur le pont.
 
-Elle arrive de l’autre côté.
+Thomas et Éva continuent d’avancer sans réagir immédiatement.
 
-Elle regarde Thomas.
+Thomas regarde sa montre.
 
-LÉA
+Léa traverse entièrement le pont.
 
-C’est bon !
+Elle rejoint l’autre côté.
 
-Thomas lui fait signe.
+Le pont reste derrière elle.
 
-Léa regarde derrière elle.
+Un détail discret :
 
-Elle semble déjà envisager de revenir par le même chemin.
+un nœud est déjà visible sur le cordage.
 
-Thomas remarque quelque chose sur le pont.
-
-Une corde est abîmée.
-
-Il ne dit rien.
-
-Il regarde Léa.
+Personne ne le remarque.
 
 ⸻
 
-3. 17H00 — LA BOUCLE COMMENCE
+A2 — 17h00 — LE POINT DE DÉPART
 
-Léa se prépare à revenir.
+Léa est de l’autre côté.
 
-Thomas regarde le pont.
+Le groupe se reforme.
+
+Quelques instants.
+
+Léa regarde le pont.
+
+Thomas la voit se diriger vers le pont.
+
+Avant qu’elle ne s’y engage, il lui dit directement :
 
 THOMAS
 
-Non.
+Ne traverse pas par là.
 
 Léa s’arrête.
 
-THOMAS
-
-Ne reprends pas le pont.
-
-Il montre le passage rocheux.
+Thomas indique le chemin qui suit le creux.
 
 THOMAS
 
@@ -103,117 +88,119 @@ Léa regarde le chemin.
 
 LÉA
 
-Mais c’est plus long.
-
-THOMAS
-
-C’est plus sûr.
-
-Léa souffle, puis sourit.
-
-LÉA
-
-D’accord, chef.
-
-Elle revient par la roche.
-
-Éva regarde Thomas.
-
-ÉVA
-
-Tu dramatises.
-
-Thomas regarde le pont.
-
-THOMAS
-
-Peut-être.
-
-Éva sourit.
-
-Ils reprennent leur marche.
-
-⸻
-
-4. LE DÉTAIL DU NŒUD
-
-Sur la corde du pont :
-
-un petit nœud.
-
-Il est déjà là.
-
-Personne ne le remarque.
-
-Personne n’en parle.
-
-Le spectateur peut éventuellement le voir.
-
-À la deuxième vision, il comprendra que Thomas inversé le fera plus tard.
-
-⸻
-
-5. 17H00 — LE MYSTÈRE
-
-Quelques mètres plus loin, Thomas ralentit.
-
-Un bruit vient d’en contrebas.
-
-Il se retourne.
-
-ÉVA
-
-Quoi ?
-
-Thomas écoute.
-
-THOMAS
-
-J’ai cru entendre quelque chose.
-
-Il regarde vers le bas.
-
-ÉVA
-
-Thomas…
-
-THOMAS
-
-J’arrive.
-
-Il descend légèrement du sentier.
-
-[À DÉTAILLER]
-
-Motif exact qui attire Thomas.
-
-Position exacte du rocher.
-
-Position exacte du Thomas inversé.
-
-⸻
-
-6. 17H00 → 17H10 — LA PROMESSE
-
-Thomas rejoint Éva et Léa.
-
-Ils reprennent la montée.
-
-Léa avance quelques mètres devant eux.
-
-Éva marche à côté de Thomas.
-
-Un silence.
-
-ÉVA
-
-Ça va ?
+C’est plus long.
 
 THOMAS
 
 Oui.
 
-Elle le regarde.
+Elle part.
+
+Elle emprunte le chemin sûr qui suit le creux et le flanc de la montagne.
+
+Thomas la regarde s’éloigner.
+
+C’est le moment exact que Thomas inversé retrouvera plus tard en marche arrière.
+
+⸻
+
+A3 — LA MONTRE
+
+Le groupe reprend sa randonnée.
+
+Thomas consulte régulièrement sa montre.
+
+Éva le remarque.
+
+ÉVA
+
+Tu regardes encore l’heure ?
+
+THOMAS
+
+Non.
+
+ÉVA
+
+Thomas.
+
+THOMAS
+
+Je regarde ma montre.
+
+Léa sourit.
+
+LÉA
+
+C’est pareil.
+
+Éva rit.
+
+Thomas regarde à nouveau sa montre.
+
+⸻
+
+A4 — STRAVA
+
+ÉVA
+
+C’est bon, c’est pas grave si tu mets pas la montée sur Strava.
+
+THOMAS
+
+J’ai pas dit que je la mettais sur Strava.
+
+ÉVA
+
+Tu regardes ta montre toutes les trente secondes.
+
+LÉA
+
+Après, comment les gens vont savoir qu’on a souffert ?
+
+Ils rient.
+
+Thomas regarde Éva.
+
+Puis Léa.
+
+Un moment simple.
+
+⸻
+
+A5 — LA BOÎTE ET LES LARMES
+
+Ils continuent.
+
+Thomas ralentit légèrement.
+
+Sa main descend vers sa poche.
+
+Il touche la petite boîte.
+
+Il ne la sort pas.
+
+Il regarde Éva.
+
+Puis Léa.
+
+Son visage change.
+
+Ses yeux se remplissent légèrement de larmes.
+
+Il détourne le regard.
+
+Éva le remarque.
+
+ÉVA
+
+Ça va ?
+
+Thomas essuie discrètement le coin de son œil.
+
+THOMAS
+
+Oui.
 
 ÉVA
 
@@ -223,41 +210,41 @@ Thomas sourit.
 
 THOMAS
 
-Je suis toujours bizarre.
+Je sais.
 
-Éva sourit.
+Éva lui sourit.
 
-Ils continuent.
+Thomas garde la main sur la poche.
 
-Après quelques secondes :
+La boîte est toujours là.
 
-ÉVA
+DOUBLE LECTURE
 
-Tu te souviens de ce que tu m’as promis ?
+Premier visionnage : Thomas est ému parce qu’il s’apprête à demander Éva en mariage.
 
-Thomas la regarde.
+Deuxième visionnage : les larmes prennent un autre sens. Thomas est déjà traversé par l’émotion de ce qu’il va perdre.
 
-THOMAS
+⸻
 
-Ça dépend.
+A6 — LA PROMESSE
+
+Éva marche à côté de Thomas.
+
+Un moment calme.
 
 ÉVA
 
 Si un jour tu dois faire un choix difficile…
 
-Elle hésite.
+Thomas la regarde.
 
 ÉVA
 
 Tu m’en parles.
 
-Thomas regarde Léa.
-
-Puis Éva.
-
 THOMAS
 
-Oui.
+D’accord.
 
 ÉVA
 
@@ -267,241 +254,177 @@ THOMAS
 
 Promis.
 
-Éva lui serre brièvement la main.
-
-Léa se retourne.
-
-LÉA
-
-Vous venez ?
-
-THOMAS
-
-Oui.
-
-Léa repart.
-
-Thomas regarde Éva une dernière seconde.
-
-⸻
-
-7. LA BOÎTE
-
-Thomas glisse la main dans sa poche.
-
-Il touche une petite boîte.
-
-Il ne la sort pas complètement.
-
-Il regarde Éva.
-
-Puis Léa.
-
-Il sourit.
-
-Mais quelque chose dans son regard semble déjà ailleurs.
-
-⸻
-
-8. ~17H10 — LA PIERRE
-
-Le groupe arrive dans une zone plus rocheuse.
-
-Thomas passe près d’un rocher.
-
-Une pierre se détache.
-
-Elle tombe.
-
-Thomas s’arrête.
-
-Il regarde autour de lui.
-
-ÉVA
-
-Quoi ?
-
-THOMAS
-
-Rien.
-
-Un silence.
-
-THOMAS
-
-J’ai cru voir un truc.
-
-Éva regarde.
-
-Rien.
-
-ÉVA
-
-T’es vraiment bizarre aujourd’hui.
-
-Thomas sourit.
-
-THOMAS
-
-Je sais.
-
 Ils continuent.
 
-⸻
+La phrase semble anodine.
 
-9. 17H10 → 17H50 — LA MONTÉE
-
-La randonnée continue.
-
-Léa avance.
-
-Éva et Thomas parlent de choses ordinaires.
-
-Le paysage devient plus sauvage.
-
-Le vent se lève.
-
-Thomas regarde parfois sa montre.
-
-ÉVA
-
-Arrête de regarder l’heure.
-
-Thomas baisse les yeux vers sa montre.
-
-THOMAS
-
-J’ai rien dit.
-
-ÉVA
-
-Justement.
-
-Thomas sourit.
+Elle ne l’est pas.
 
 ⸻
 
-10. LE SOMMET SE RAPPROCHE
+A7 — LA PIERRE
 
-Léa aperçoit le sommet.
+Thomas marche légèrement derrière.
 
-LÉA
+Son pied heurte une pierre.
 
-On est bientôt arrivés ?
+La pierre bascule au bord du chemin et tombe dans le creux.
 
-ÉVA
+Thomas s’arrête une fraction de seconde pour la regarder disparaître.
 
-Encore un peu.
-
-LÉA
-
-Vous dites ça depuis une heure.
-
-THOMAS
-
-C’est parce que tu marches trop vite.
-
-LÉA
-
-Non.
-
-Elle repart.
+Éva se retourne vers lui.
 
 ÉVA
 
-Elle tient ça de toi.
+J’espère qu’il n’y avait personne en dessous.
 
-Thomas regarde Éva.
+Thomas regarde vers le bas.
 
 THOMAS
 
-Malheureusement.
+Il n’y avait personne.
 
-Ils sourient.
+Éva reprend sa marche.
+
+Thomas reste un instant à observer le creux, puis rejoint Éva et Léa.
 
 ⸻
 
-11. ~17H50 — LE DÉPART DE THOMAS
+A8 — LA RANDONNÉE CONTINUE
 
-Thomas ralentit.
+Le soleil baisse.
 
-Il regarde quelque chose plus loin.
+Thomas consulte encore sa montre.
 
-THOMAS
+Éva et Léa avancent devant.
 
-Je vais regarder un truc.
+La distance entre eux augmente légèrement.
 
-Éva s’arrête.
+⸻
 
-ÉVA
+A9 — 17h50 — THOMAS PREND DE L’AVANCE
 
-Quoi ?
+Thomas regarde sa montre.
 
-THOMAS
+Il observe le chemin principal, puis un sentier secondaire qui descend légèrement sur le flanc de la montagne.
 
-Je sais pas.
+Ce sentier rejoint plus bas la zone du creux, à proximité du pont.
 
-Un sourire.
+Il est praticable, mais moins direct pour Éva et Léa.
 
-THOMAS
+Thomas s’engage sur ce chemin.
 
-J’arrive.
+Éva se retourne.
 
 ÉVA
 
 Tu vas où ?
 
+Thomas se retourne vers elles.
+
+THOMAS
+
+Je vais regarder un truc.
+
+ÉVA
+
+Quoi ?
+
 THOMAS
 
 Deux minutes.
 
-Éva hésite.
-
 ÉVA
+
+On t’attend.
+
+THOMAS
+
+Non, avancez.
+
+Il regarde Éva.
+
+Puis Léa.
+
+THOMAS
 
 Deux minutes.
 
-Thomas lui sourit.
+Thomas continue à descendre par le sentier secondaire.
 
-Il s’éloigne.
+Éva et Léa poursuivent sur le chemin principal, sans le suivre.
 
-Léa continue de marcher.
+Thomas prend ainsi de l’avance sur elles.
 
-Éva reste quelques secondes à regarder Thomas.
-
-Puis elle suit Léa.
+Il disparaît progressivement derrière le relief.
 
 ⸻
 
-12. ~17H55 — LA GROTTE
+A10 — LE NŒUD
 
-Thomas découvre une ouverture dans la roche.
+EXT. CREUX DE LA MONTAGNE — VERS 17h52
 
-Elle est presque invisible depuis le sentier.
+Thomas arrive dans la zone du pont avant Éva et Léa.
 
 Il regarde autour de lui.
 
-Personne.
+Le pont est légèrement en contrebas.
 
-Il entre.
+Le cordage est détendu.
 
-Quelques mètres plus loin, l’entrée disparaît derrière la roche.
+Le nœud visible depuis le chemin est mal fixé.
 
-Thomas continue.
+Thomas s’approche.
 
-Il se retrouve légèrement désorienté.
+Il remet le cordage en place.
 
-Il sort ses écouteurs.
+Il refait soigneusement le nœud.
 
-Il lance de la musique.
+Il vérifie sa solidité.
 
-Il avance.
+Un geste simple.
+
+Il ne sait pas forcément pourquoi il prend le temps de le faire.
+
+Il regarde vers le chemin principal.
+
+Éva et Léa ne sont pas encore visibles.
+
+Thomas repart par le chemin qui suit le creux et le flanc de la montagne.
+
+Il laisse le pont derrière lui.
+
+Le nœud est maintenant exactement dans l’état où le spectateur l’a déjà aperçu au début du film.
 
 ⸻
 
-13. 17H55 → 17H58 — ÉVA ET LÉA CHERCHENT
+A11 — THOMAS DISPARAÎT
 
-Éva se retourne.
+Thomas continue sur le chemin inférieur.
+
+Le relief devient plus accidenté.
+
+Il aperçoit une ouverture dans la roche.
+
+Une petite grotte.
+
+Il s’en approche.
+
+Derrière lui, très loin, Éva et Léa apparaissent sur le chemin principal.
+
+Thomas ne les voit pas.
+
+Il entre dans la grotte.
+
+⸻
+
+A12 — 17h55 — THOMAS NE REVIENT PAS
+
+Quelques minutes passent.
+
+Éva regarde derrière elle.
+
+Thomas n’est plus visible.
 
 ÉVA
 
@@ -509,331 +432,569 @@ Thomas ?
 
 Pas de réponse.
 
-Elle appelle plus fort.
+Elle s’arrête.
 
-ÉVA
-
-Thomas !
-
-Léa regarde autour d’elle.
+Léa se retourne.
 
 LÉA
 
-Il était où ?
+Il est où ?
+
+Éva regarde autour.
 
 ÉVA
 
 Je sais pas.
 
-Elles reviennent sur leurs pas.
-
-LÉA
-
-Il va nous faire croire qu’il s’est perdu.
-
-Éva ne sourit pas.
+Elle revient sur quelques mètres.
 
 ÉVA
 
 Thomas !
 
-Dans la grotte, Thomas continue d’avancer.
+Silence.
 
-La musique couvre les appels.
-
-Il ne les entend pas.
-
-⸻
-
-14. LA DISPARITION
-
-Éva et Léa cherchent autour du sentier.
-
-Elles ne voient aucune entrée.
-
-Elles regardent vers le précipice.
+Léa commence à chercher elle aussi.
 
 LÉA
 
-Tu crois qu’il est tombé ?
+Thomas !
 
-Éva ne répond pas.
+Rien.
 
-Elle regarde longtemps.
+Éva regarde le relief.
 
-ÉVA
-
-On redescend.
-
-LÉA
-
-Mais—
-
-ÉVA
-
-On appelle les secours.
-
-Elles commencent à redescendre.
-
-Thomas, dans la grotte, ne sait rien.
+Elle essaie de comprendre où il a pu aller.
 
 ⸻
 
-15. ~17H58 — LA BAGUE
+A13 — LA RECHERCHE
 
-Thomas avance.
+Éva et Léa se séparent légèrement pour regarder autour.
 
-Au fond de la grotte, quelque chose attire son regard.
+Éva appelle encore.
 
-Une simple bague.
+ÉVA
 
-Il la ramasse.
-
-Il la retourne entre ses doigts.
-
-Il ne comprend pas d’où elle vient.
-
-Il la met à son doigt.
-
-⸻
-
-16. 18H00 — L’INVERSION
+Thomas !
 
 Silence.
+
+Léa revient vers elle.
+
+LÉA
+
+Je le vois pas.
+
+Éva commence à s’inquiéter.
+
+Elle regarde vers la zone où Thomas s’est éloigné.
+
+ÉVA
+
+On va redescendre.
+
+LÉA
+
+Pourquoi ?
+
+ÉVA
+
+Chercher de l’aide.
+
+Léa comprend que la situation est devenue sérieuse.
+
+Elles redescendent par le chemin principal.
+
+⸻
+
+A14 — LA DESCENTE
+
+Éva et Léa redescendent le flanc de la montagne.
+
+Elles ne prennent pas le sentier secondaire emprunté par Thomas.
+
+Elles suivent le chemin principal, plus large et plus sûr.
+
+Éva regarde régulièrement derrière elle.
+
+Elle espère apercevoir Thomas.
+
+Rien.
+
+ÉVA
+
+Thomas !
+
+Toujours rien.
+
+Elles continuent à descendre.
+
+Cette décision est importante :
+
+Éva et Léa quittent la zone au moment où Thomas est isolé dans la grotte.
+
+Leur trajectoire les éloigne du pont et de la grotte.
+
+⸻
+
+A15 — LA GROTTE
+
+INT. GROTTE — VERS 17h55
+
+Thomas avance seul.
+
+Il a perdu ses repères.
+
+Il aperçoit une ouverture.
+
+Il entre.
+
+Il entend très faiblement quelque chose à l’extérieur.
+
+Éva ?
+
+Il se retourne.
+
+Puis sort ses écouteurs.
+
+Il lance de la musique.
+
+Le son extérieur disparaît.
+
+Il avance plus profondément.
+
+Éva et Léa sont maintenant trop loin pour être entendues.
+
+Thomas ne sait pas qu’elles sont en train de redescendre chercher des secours.
+
+⸻
+
+A16 — 17h58 — LE RING
+
+Thomas découvre l’anneau au sol.
+
+Un anneau simple.
+
+Aucune inscription.
+
+Aucun symbole.
+
+Il le prend.
+
+Le regarde.
+
+Hésite.
+
+Puis le met naturellement au doigt.
+
+⸻
+
+A17 — 18h00 — L’INVERSION
 
 Une goutte tombe.
 
 Puis remonte.
 
-Thomas la regarde.
+Thomas écoute la musique.
 
-Il retire un écouteur.
+Un fragment mélodique se répète de façon étrange.
 
-La musique semble étrange.
-
-Il le remet.
-
-La musique est inversée.
+Une note semble revenir en arrière.
 
 Thomas fronce les sourcils.
 
-Il touche son écouteur.
+Il retire un écouteur.
 
-THOMAS
+La musique s’interrompt d’un côté, mais continue dans l’autre.
 
-Putain…
+Il reste immobile, déstabilisé.
 
-Il retire les deux.
+Il remet l’écouteur.
 
-Le silence.
+Le même fragment revient.
 
-Il les remet.
+Thomas comprend seulement que quelque chose ne va pas avec la musique.
 
-La musique revient.
+Il retire alors les deux écouteurs.
 
-Toujours inversée.
+Le silence de la grotte revient.
 
-Thomas regarde autour de lui.
+Il regarde les écouteurs, puis la grotte autour de lui.
 
-Une autre goutte remonte.
+Une goutte d’eau remonte.
 
-Son visage change.
+Thomas la suit des yeux.
 
-Ce n’est pas les écouteurs.
+Une poussière remonte également.
 
-C’est le monde.
+Un petit caillou revient vers sa position initiale.
+
+Il regarde sa montre.
 
 18h00.
 
+Il comprend progressivement que l’étrangeté qu’il attribuait d’abord à la musique vient en réalité de lui-même.
+
+La musique n’était pas simplement déformée :
+
+elle était inversée parce que son temps personnel était inversé.
+
+Il retire l’anneau.
+
+Rien.
+
+Il le remet.
+
+L’inversion continue.
+
 ⸻
 
-17. 18H00 → 17H00 — L’INVERSION
+B — LE TEMPS INVERSÉ
+
+18h00 → 17h00
+
+⸻
+
+B1 — SORTIE DE LA GROTTE
 
 Thomas sort de la grotte.
 
-Son temps personnel s’écoule à rebours.
+Il garde les écouteurs dans sa main.
 
-Le monde semble fonctionner dans l’autre direction.
+Il n’ose plus les remettre.
 
-Les feuilles remontent vers les branches.
+Le monde semble se reconstruire autour de lui.
 
-Un oiseau revient vers son perchoir.
+Une goutte remonte vers la roche.
 
-Un son semble se reconstruire avant sa cause.
+La poussière retourne vers le sol.
 
-Thomas regarde sa montre.
+Un petit bruit se défait dans le silence.
 
-17h58.
+Thomas avance.
 
-Il respire.
+Après quelques pas, il remet prudemment un seul écouteur.
 
-Il comprend qu’il est réellement en train de remonter le temps.
+La musique est toujours inversée.
+
+Cette fois, il comprend que ce n’est pas un problème de fichier ou d’écouteur.
+
+Il retire immédiatement l’écouteur.
+
+Il le garde dans sa main.
 
 Il avance.
 
 ⸻
 
-18. ~17H10 — LA PIERRE
+B2 — 17h55 — ÉVA ET LÉA SONT HORS DE SA TRAJECTOIRE
 
-Thomas traverse la zone rocheuse.
+Thomas avance dans la partie basse du relief.
 
-Il marche.
+Il entend quelque chose.
 
-Une pierre se détache.
+Au loin, très au-dessus de lui, Éva et Léa remontent le chemin principal en marche arrière.
 
-Il s’arrête.
+Elles cherchent Thomas.
 
-Il comprend que son mouvement est en train de provoquer quelque chose.
+Mais elles ne peuvent pas le voir.
 
-Il ne cherche pas à le faire.
+Le chemin principal est séparé du sentier inférieur par une arête rocheuse et un décrochement du terrain.
 
-Il continue.
+Thomas est dissimulé derrière cette arête.
 
-La pierre tombe.
+Depuis le chemin principal, il est totalement hors de leur champ de vision.
 
-Pour lui, le phénomène semble se produire dans l’autre sens.
-
-Il ne s’arrête pas.
-
-⸻
-
-19. ~17H02 — LE PONT
-
-Thomas arrive devant le pont.
-
-La corde est cassée.
+Depuis sa position, il peut seulement apercevoir par instants leurs silhouettes au-dessus du relief.
 
 Il s’arrête.
 
-Il regarde.
+Éva appelle.
 
-Il hésite une seconde.
+Dans son temps inversé, le son lui parvient déformé.
 
-Puis il attrape la corde.
+Thomas comprend qu’elles sont là, mais il ne peut pas les rejoindre sans remonter vers leur trajectoire.
 
-Il fait un nœud.
+Il reste caché.
 
-Simplement.
+Il ne leur répond pas.
 
-Sans précipitation.
+Il ne fait aucun geste vers elles.
 
-Il termine.
+Éva et Léa poursuivent leur déplacement en marche arrière, comme si elles remontaient exactement le chemin qu’elles viennent de descendre.
 
-Il regarde le pont.
+Elles disparaissent derrière le relief.
 
-Puis le passage rocheux.
+Thomas attend encore un instant.
 
-Il choisit la roche.
+Puis il reprend son propre trajet.
 
-Il continue.
+Éva et Léa ne voient jamais Thomas inversé.
+
+Thomas inversé ne traverse jamais leur trajectoire.
+
+Le relief les sépare constamment.
 
 ⸻
 
-20. LÉA SUR LE PONT
+B3 — LA PIERRE
 
-Thomas arrive de l’autre côté.
+Thomas arrive dans la zone où il avait marché normalement.
 
 Il s’arrête.
 
-Il regarde derrière lui.
+Au-dessus du creux, la pierre qu’il avait fait tomber dans son temps normal se remet en mouvement.
 
-Léa est sur le pont.
+Elle s’élève depuis le bas du ravin et remonte vers sa position initiale, en hauteur.
 
-Elle traverse en arrière dans sa perception.
+Thomas la voit passer.
 
-Thomas regarde la corde.
+Il lève les yeux.
 
-Le nœud.
+La pierre reprend exactement l’endroit d’où elle était tombée.
 
-Puis Léa.
+Thomas comprend progressivement que ce qu’il observe est la conséquence inversée de son propre geste.
 
-Il comprend.
+Dans son temps normal, il avait heurté la pierre et l’avait fait tomber.
 
-Son geste vient de permettre cette traversée.
+Dans son temps inversé, il voit cette même pierre s’envoler pour reprendre sa place en hauteur.
 
-Il reste immobile.
+Au loin, au-dessus de l’arête rocheuse, Éva et Léa continuent de remonter la montagne en marche arrière.
 
-Il ne peut pas intervenir.
+Elles restent hors de sa trajectoire.
 
-Léa arrive de l’autre côté.
+Thomas ne les rejoint pas.
 
-⸻
+Il ne leur parle pas.
 
-21. LA RENCONTRE
+Il poursuit son propre trajet.
 
-Thomas se retourne.
+La pierre se remet en place.
 
-Il continue.
+Le geste d’Éva lui revient :
 
-Un rocher lui masque le sentier.
+« J’espère qu’il n’y avait personne en dessous. »
 
-Il passe derrière.
+Thomas regarde le creux.
 
-De l’autre côté :
-
-Thomas normal.
-
-Ils avancent l’un vers l’autre.
-
-Thomas inversé tente de dévier.
-
-Thomas normal fait un mouvement similaire.
-
-Ils se percutent légèrement.
-
-La bague glisse.
-
-Thomas la regarde tomber.
-
-Elle roule.
-
-Puis disparaît dans le précipice.
+Cette fois, il comprend qu’il n’y avait effectivement personne.
 
 ⸻
 
-22. 17H00 — LE RETOUR
+B4 — LE PONT
 
-Silence.
+Thomas arrive au creux de la montagne.
+
+Le pont est légèrement abîmé.
+
+Le cordage est détendu.
+
+Thomas s’approche.
+
+Il remet le cordage en place.
+
+Il refait le nœud.
+
+Geste simple.
+
+Il ne sait pas forcément pourquoi.
+
+Puis il repart.
+
+Il ne prend pas le pont.
+
+Il emprunte le chemin sûr qui suit le creux et le flanc de la montagne.
+
+⸻
+
+B5 — LÉA EST HORS DE SA TRAJECTOIRE
+
+Thomas avance sur le chemin sûr.
+
+Il sait que Léa se trouve quelque part sur cette trajectoire, mais il ne la voit pas.
+
+Le relief forme une séparation naturelle entre eux.
+
+Léa remonte le chemin en marche arrière, de l’autre côté d’une arête rocheuse.
+
+Un décrochement du terrain masque entièrement Thomas.
+
+Léa ne peut pas l’apercevoir.
+
+Thomas ne peut pas la voir directement non plus.
+
+Il perçoit seulement, par moments, le bruit inversé de ses pas et le déplacement d’une ombre derrière la roche.
+
+Il s’arrête derrière un bloc rocheux.
+
+Léa poursuit sa trajectoire en marche arrière, hors de son champ de vision.
+
+Elle ne passe jamais devant lui.
+
+Elle ne le voit pas.
+
+Thomas attend qu’elle ait dépassé la zone.
+
+Puis il reprend sa route.
+
+La trajectoire de Léa et celle de Thomas inversé restent parallèles mais séparées par le relief.
+
+Ils ne se rencontrent jamais.
+
+Thomas inversé ne voit pas Léa traverser le pont.
+
+Il ne voit pas non plus Léa passer devant lui sur le chemin.
+
+⸻
+
+B6 — LA COMPRÉHENSION PROGRESSIVE
+
+Thomas continue.
+
+Les éléments qu’il reconnaît se multiplient.
+
+La pierre.
+
+Le pont.
+
+Le chemin.
+
+Les appels déformés d’Éva.
+
+Les traces de passage de Léa, sans jamais voir Léa elle-même.
+
+Il comprend progressivement :
+
+il ne regarde pas un autre événement.
+
+Il regarde les événements qu’il vient de vivre.
+
+Mais à l’envers.
+
+Il comprend aussi que certains détails qu’il croyait avoir simplement subis ont été causés par lui.
+
+Il n’a pas encore la vision complète.
+
+Le relief lui révèle les correspondances sans jamais lui offrir une vision totale.
+
+Il comprend que les autres personnages ont continué leur propre trajectoire pendant son inversion, mais que leurs chemins ne se sont jamais directement croisés.
+
+⸻
+
+B7 — LA RENCONTRE DES DEUX THOMAS
+
+Thomas inversé arrive près d’un passage rocheux.
+
+Le passage est étroit.
+
+Une paroi rocheuse masque une partie du chemin.
+
+Thomas normal apparaît de l’autre côté.
+
+Les deux trajectoires se croisent.
+
+Ils se voient.
+
+Un mouvement instinctif des deux côtés.
+
+Un léger contact.
+
+Le ring quitte le doigt de Thomas inversé.
+
+Il tombe vers le précipice.
 
 L’inversion cesse.
 
-Thomas redevient normal.
+Thomas inversé disparaît de la trajectoire.
 
-Le monde reprend son cours.
+Thomas normal reste seul.
 
-Le Thomas normal qui se trouvait déjà là n’est plus présent.
+Il regarde sa main.
 
-Thomas reste immobile.
+Le ring n’y est pas.
 
-Il regarde autour de lui.
+Silence.
 
-Puis le pont.
-
-Léa arrive.
+[À DÉTAILLER : mécanique physique précise de la rencontre et du contact.]
 
 ⸻
 
-23. LÉA — LE CHOIX DU CHEMIN
+B8 — 17h00 — RETOUR À L’ÉTAT NORMAL
 
-Léa arrive de l’autre côté.
+Thomas reprend ses esprits.
 
-Elle s’apprête à revenir.
+Il est redevenu normal.
+
+Il regarde autour de lui.
+
+Il reconnaît immédiatement le lieu.
+
+Il voit Léa.
+
+Elle vient de terminer le chemin sûr qui suit le creux.
+
+Elle revient vers eux.
+
+Thomas comprend.
+
+Son regard se pose sur le pont.
+
+Puis sur le nœud.
+
+Puis sur Léa.
+
+Il comprend que le nœud qu’il vient de faire dans son temps inversé existait déjà lorsqu’il l’avait vu auparavant.
+
+Il comprend qu’il était lui-même présent dans les événements qu’il avait vécus.
+
+Son visage se transforme.
+
+Il est profondément ému.
+
+Il regarde sa main.
+
+Le ring a disparu.
+
+Puis il regarde Éva.
+
+Elle est là.
+
+Puis Léa.
+
+Elle est là.
+
+Thomas respire difficilement.
+
+Éva remarque son émotion.
+
+ÉVA
+
+Ça va ?
 
 Thomas la regarde.
 
-Il comprend exactement ce qu’il voit.
+La même question.
 
 THOMAS
 
-Ne reprends pas le pont.
+Oui.
+
+Mais cette fois, nous savons pourquoi ses yeux brillent.
+
+Léa arrive.
+
+Thomas la voit se diriger vers le pont.
+
+Avant qu’elle ne s’y engage, il lui dit directement :
+
+THOMAS
+
+Ne traverse pas par là.
 
 Léa s’arrête.
 
-LÉA
-
-Encore ?
-
-Thomas désigne le chemin rocheux.
+Thomas désigne le chemin sûr.
 
 THOMAS
 
@@ -843,333 +1004,179 @@ Léa soupire.
 
 LÉA
 
-C’est long.
+C’est plus long.
 
 THOMAS
 
-Je sais.
+Oui.
 
-Léa prend le chemin.
+Éva observe Thomas.
 
-Thomas la suit.
+Elle ne comprend pas.
 
-Il jette un dernier regard au pont.
+Thomas regarde Éva.
 
-⸻
+Sa main va instinctivement vers sa poche.
 
-24. LA BOUCLE EST DÉSORMAIS COMPRISE PAR THOMAS
+La boîte est toujours là.
 
-Thomas vient de comprendre quelque chose que le spectateur ne comprend pas encore complètement.
-
-Il sait :
-
-* qu’il va retourner dans la grotte ;
-* qu’il va trouver la bague ;
-* qu’il va l’enfiler ;
-* qu’il va s’inverser ;
-* qu’il va faire le nœud ;
-* qu’il va rencontrer son double ;
-* qu’il va perdre la bague.
-
-Mais le film ne lui fait pas verbaliser tout cela.
-
-Il continue de marcher avec Éva et Léa.
-
-⸻
-
-25. LA PROPOSITION
-
-Thomas met la main dans sa poche.
-
-La boîte.
-
-Il la sort légèrement.
+Ses yeux se remplissent de nouveau.
 
 Il regarde Éva.
 
-Elle sourit à Léa.
-
-Thomas ouvre presque la boîte.
-
-Puis la referme.
-
-Éva remarque son geste.
-
-ÉVA
-
-Quoi ?
-
-Thomas la regarde.
-
-Un sourire.
-
-THOMAS
-
-Rien.
-
-Il remet la boîte dans sa poche.
-
-⸻
-
-26. LE DERNIER ÉCHANGE
-
-Ils continuent à marcher.
-
-Éva marche à côté de lui.
-
-ÉVA
-
-Tu voulais me dire quelque chose ?
-
-Thomas la regarde.
-
-Un silence.
-
-THOMAS
-
-Pas maintenant.
-
-Éva le regarde.
-
-Elle sourit légèrement.
-
-ÉVA
-
-D’accord.
-
-Ils continuent.
-
-Thomas regarde Léa.
-
-Puis Éva.
-
-⸻
-
-27. ~17H50 — LE DÉPART
-
-Thomas ralentit.
-
-Il regarde la montagne.
-
-Puis Éva.
-
-THOMAS
-
-Je vais regarder un truc.
-
-Éva le regarde.
-
-Cette fois, son regard change à peine.
-
-ÉVA
-
-Deux minutes.
-
-Thomas sourit.
-
-THOMAS
-
-Deux minutes.
-
-Il s’éloigne.
-
-Éva le regarde partir.
-
-⸻
-
-28. ~17H55 — LA GROTTE
-
-Thomas retrouve l’entrée.
-
-Cette fois, il sait exactement où elle se trouve.
-
-Il entre.
-
-Il met ses écouteurs.
-
-La musique commence.
-
-Il avance.
-
-Il ne se retourne pas.
-
-⸻
-
-29. 18H00 — LA BAGUE
-
-Thomas arrive au fond de la grotte.
-
-Il trouve la bague.
-
-Il la regarde.
-
-Cette fois, il sait exactement ce qu’elle va provoquer.
-
-Il la met.
-
-18h00.
-
-La goutte remonte.
-
-La musique s’inverse.
-
-Thomas ferme les yeux.
-
-Puis les rouvre.
-
-⸻
-
-30. LA BOUCLE
-
-La boucle recommence.
-
-Le film ne montre pas toute la répétition.
-
-Seulement quelques fragments :
-
-La pierre.
-
-Le pont.
-
-Le nœud.
-
-Léa.
-
-Le double.
-
-La bague.
-
-Le précipice.
-
-17h00.
-
-⸻
-
-31. DERNIÈRE IMAGE
-
-Retour sur quelques secondes du début.
-
-Léa.
-
-Éva.
-
-Thomas.
-
-La montagne.
-
-Thomas regarde la boîte dans sa poche.
-
-Puis sa main.
-
-Puis Éva.
-
 Puis Léa.
+
+Puis le chemin.
+
+Le même instant que celui que nous avons déjà vu.
+
+Mais Thomas n’est plus le même.
+
+Il sait.
 
 Il ne sort pas la boîte.
 
-Il ne propose pas.
-
-Il continue à marcher.
+Il ne dit rien.
 
 CUT.
 
-FIN.
+⸻
+
+FIN
+
+Le film s’arrête exactement à ce moment.
+
+Il ne montre pas la suite.
+
+Il ne montre pas une deuxième randonnée.
+
+Il ne montre pas un nouveau cycle.
+
+Il ne montre pas Thomas repartir.
+
+Le spectateur comprend que cette scène de 17h00 est simultanément :
+
+* la fin du parcours inversé de Thomas ;
+* le moment déjà vu au début du film ;
+* le point de départ de la suite que le film ne montrera pas.
+
+Pour connaître cette suite, il faut revoir le film.
 
 ⸻
 
-32. DOUBLE LECTURE DES DIALOGUES
+RÈGLES DE DOUBLE LECTURE
 
-« C’est plus sûr. »
+La montre
 
-Première vision : simple prudence de père.
+Premier visionnage : Thomas regarde souvent l’heure.
 
-Deuxième vision : Thomas sait ce qui va arriver sur le pont.
+Deuxième : le spectateur comprend qu’il surveillait inconsciemment le temps qui allait déterminer son destin.
 
-« Tu m’en parles. »
+Les larmes
 
-Première vision : conseil amoureux.
+Premier visionnage : Thomas est ému parce qu’il s’apprête à demander Éva en mariage.
 
-Deuxième vision : Thomas sait qu’il va devoir prendre une décision qu’il ne pourra pas réellement partager avec Éva.
+Deuxième : elles peuvent être comprises comme l’émotion de quelqu’un qui, sans encore comprendre pourquoi, est déjà au bord de perdre cette vie.
 
-« Promis ? »
+Le « Deux minutes »
 
-Première vision : petite promesse de couple.
+Premier visionnage : simple phrase avant que Thomas s’éloigne.
 
-Deuxième vision : promesse tragiquement impossible à tenir dans les termes où Éva l’entend.
+Deuxième : véritable séparation de Thomas avec Éva et Léa.
 
-« Deux minutes. »
+Le détour de Thomas
 
-Première vision : Thomas fait simplement un détour.
+Premier visionnage : Thomas prend simplement de l’avance pour regarder quelque chose avant de rejoindre les autres.
 
-Deuxième vision : il sait qu’il va partir vers la grotte.
+Deuxième : ce détour lui permet d’atteindre le pont avant Éva et Léa, de réparer le nœud, puis de rejoindre la grotte. Le geste qu’il accomplit dans son temps normal est ainsi exactement celui qu’il reproduira plus tard dans son temps inversé.
 
-« Pas maintenant. »
+La pierre
 
-Première vision : il repousse une conversation.
+Premier visionnage : Thomas heurte une pierre et la fait tomber dans le creux. Éva lui dit :
 
-Deuxième vision : il sait qu’il ne peut plus lui dire ce qu’il avait prévu de lui dire.
+« J’espère qu’il n’y avait personne en dessous. »
+
+La scène semble être un détail léger de randonnée.
+
+Deuxième : Thomas inversé voit la pierre s’envoler depuis le bas du ravin pour reprendre sa place en hauteur. Il comprend qu’il observe son propre geste à l’envers.
+
+Éva et Léa restent sur le chemin principal, séparées de lui par le relief. Elles ne voient jamais Thomas inversé.
+
+La musique et les écouteurs
+
+Premier visionnage : après avoir mis l’anneau, Thomas entend une musique étrange. Il retire un écouteur parce que la mélodie semble déformée, comme si elle se répétait ou se déroulait dans le mauvais sens. Le spectateur peut croire à un problème de fichier, d’écouteur ou de perception.
+
+Deuxième visionnage : la musique était réellement jouée à l’envers parce que le temps personnel de Thomas était déjà inversé. Le retrait de l’écouteur n’est donc pas arbitraire : il constitue le premier indice sensoriel de l’inversion.
+
+Le pont
+
+Premier visionnage : un raccourci légèrement dangereux.
+
+Deuxième : Thomas comprend qu’il est lui-même à l’origine du nœud qui était déjà présent.
+
+Le chemin sûr
+
+Premier visionnage : simple choix de randonnée.
+
+Deuxième : c’est la trajectoire que Thomas inversé reconstitue sans jamais voir directement Léa. Le relief masque leurs trajectoires respectives.
+
+La recherche d’Éva et Léa
+
+Premier visionnage : réaction naturelle à la disparition de Thomas.
+
+Deuxième : Thomas inversé perçoit leurs appels et leurs déplacements en sens inverse, mais reste séparé d’elles par l’arête rocheuse et le relief. Elles ne le voient jamais.
+
+La promesse
+
+Premier visionnage : promesse affective banale entre Éva et Thomas.
+
+Deuxième : elle résonne avec le choix que Thomas a finalement fait.
+
+La boîte
+
+Premier visionnage : symbole d’un futur heureux.
+
+Deuxième : symbole du futur auquel Thomas renonce.
 
 ⸻
 
-33. PRINCIPES DE DIALOGUE
+ÉLÉMENTS INTERDITS / SUPPRIMÉS
 
-Les dialogues ne doivent jamais expliquer :
-
-* l’inversion ;
-* la boucle ;
-* la causalité ;
-* la décision finale.
-
-Ils doivent faire exister :
-
-* la relation Thomas / Éva ;
-* la relation Thomas / Léa ;
-* la complicité familiale ;
-* les habitudes ;
-* les petits conflits ;
-* l’humour léger ;
-* les silences.
-
-Le sous-texte doit faire le travail dramatique.
-
-Les phrases importantes doivent pouvoir être entendues de deux manières.
+* Pas de deuxième timeline.
+* Pas de multivers.
+* Pas de réalité alternative.
+* Pas de changement du passé.
+* Pas de tueur.
+* Pas de personnage masqué.
+* Pas de machine temporelle complexe.
+* Pas d’explication scientifique lourde.
+* Pas de téléphone comme élément causal.
+* Pas de blessures servant à expliquer la boucle.
+* Pas de dialogue expliquant au spectateur comment fonctionne l’inversion.
+* Pas de phrase affirmant que Thomas « pouvait s’échapper ».
+* Pas de deuxième montée complète montrée après 17h00.
+* Pas de redémarrage explicite du film après la fin.
+* Éva et Léa ne doivent jamais arriver au pont avant que Thomas ait eu le temps de réparer le nœud.
+* Thomas doit toujours prendre de l’avance par un chemin secondaire avant de rejoindre la zone du pont.
+* Le détour de Thomas ne doit pas être présenté comme une nouvelle disparition incohérente : il doit être clairement motivé par son besoin de regarder quelque chose et par son habitude de prendre de l’avance.
+* Léa ne doit jamais passer directement devant Thomas inversé.
+* Éva et Léa ne doivent jamais voir Thomas inversé.
+* Thomas inversé doit rester hors de leur trajectoire et de leur champ de vision.
+* Le relief, les arêtes rocheuses et les différences de niveau doivent constamment séparer Thomas inversé de Léa, d’Éva et de leurs trajectoires.
+* Thomas inversé ne doit jamais voir Léa traverser le pont.
+* Thomas inversé ne doit jamais avoir de contact avec Léa ou Éva.
+* La seule rencontre directe de Thomas inversé est celle avec Thomas normal.
 
 ⸻
 
-34. ÉLÉMENTS À DÉTAILLER
+POINTS ENCORE À DÉTAILLER
 
-PONT
-
-* [À DÉTAILLER] Pourquoi Léa choisit le pont la première fois.
-* [À DÉTAILLER] Pourquoi elle veut revenir par le pont.
-* [À DÉTAILLER] Géographie précise.
-* [À DÉTAILLER] Position des trois personnages.
-* [À DÉTAILLER] Position du Thomas inversé.
-* [À DÉTAILLER] Trajectoire vers le rocher.
-* [À DÉTAILLER] Rencontre exacte avec Thomas normal.
-
-PIERRE
-
-* [À DÉTAILLER] Mécanique exacte.
-* [À DÉTAILLER] Conséquence éventuelle.
-
-GROTTE
-
-* [À DÉTAILLER] Géographie.
-* [À DÉTAILLER] Pourquoi Thomas s’y perd.
-* [À DÉTAILLER] Emplacement de la bague.
-* [À DÉTAILLER] Pourquoi Éva et Léa ne voient pas l’entrée.
-
-INVERSION
-
-* [À DÉTAILLER] Règles sonores.
-* [À DÉTAILLER] Règles physiques.
-* [À DÉTAILLER] Perception des personnes normales.
-* [À DÉTAILLER] Contact entre les deux Thomas.
-* [À DÉTAILLER] Disparition du Thomas normal.
-
-ÉMOTION
-
-* [À DÉTAILLER] Intensité du dernier échange avec Éva.
-* [À DÉTAILLER] Moment exact où Thomas renonce à la proposition.
-* [À DÉTAILLER] Dernière image.
+1. Géométrie exacte de la rencontre des deux Thomas.
+2. Mécanique exacte de la disparition du Thomas inversé.
+3. Correspondance précise entre la recherche d’Éva/Léa à 17h55 et leur perception par Thomas inversé, sans qu’elles puissent le voir.
+4. Position exacte de la grotte par rapport au chemin principal, au sentier secondaire, au creux et aux arêtes rocheuses.
+5. Chronométrage précis entre 17h50, 17h52, 17h55, 17h58 et 18h00.
+6. Mise en scène exacte du détour de Thomas afin que le spectateur comprenne qu’il descend par un autre chemin et arrive au pont avant Éva et Léa.
+7. Mise en scène des zones de masquage : arêtes, blocs rocheux, différences de niveau et angles morts.
+8. Mise en scène exacte des transitions temporelles si le film est réalisé en plan-séquence omniscient.
+9. Vérification de continuité afin que Thomas inversé reste toujours physiquement hors de la trajectoire de Léa et d’Éva.
