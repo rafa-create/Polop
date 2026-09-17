@@ -139,3 +139,114 @@ Et ChatGPT pourrait devenir le **cerveau de conception** :
 C'est donc cette architecture que je garderais comme **objectif final du projet**.
 
 Quand tu reviendras avec un modèle plus puissant, on pourra reprendre exactement à **PHASE 1 — Script V8**, puis avancer méthodiquement jusqu'à la simulation Unreal complète.
+
+---
+
+# MISE À JOUR — RÈGLES VALIDÉES POUR LA V8
+
+Cette section complète la feuille de route à partir des décisions prises après la V7.
+
+## 1. Règle fondamentale de l'inversion
+
+Le monde reste **le même monde**.
+
+Il n'existe pas de deuxième réalité ni de deuxième décor créé pour la partie B.
+
+La partie B doit être la même réalité physique observée dans l'autre sens temporel.
+
+La cohérence globale doit fonctionner :
+
+* en lecture normale ;
+* en lecture inversée ;
+* et dans la compréhension causale des deux lectures.
+
+La règle qui fait foi est donc la cohérence de l'ensemble, et non une explication ponctuelle donnée par un personnage.
+
+## 2. Interactions normal / inversé
+
+Limiter autant que possible les interactions directes entre éléments normaux et éléments inversés.
+
+Lorsqu'une interaction est indispensable, elle doit être définie par une causalité physique claire et vérifiable dans les deux sens temporels.
+
+On évite donc d'introduire des phénomènes qui nécessiteraient une longue explication pour être compris.
+
+## 3. Événements naturels réversibles
+
+La boucle ne doit pas être constituée uniquement d'actions conscientes de Thomas.
+
+Des événements naturels peuvent participer à la causalité :
+
+* branche qui tombe ;
+* feuille qui tombe puis reprend naturellement sa position en lecture inversée ;
+* eau ;
+* poussière ;
+* pierre ;
+* petits mouvements du décor ;
+* traces ou blessures dont l'évolution peut être observée dans les deux directions.
+
+Ces événements doivent donner l'impression d'appartenir naturellement au monde, et non d'avoir été ajoutés uniquement pour expliquer la boucle.
+
+## 4. Caméra omnisciente
+
+La caméra reste **omnisciente**.
+
+Elle peut quitter Thomas, suivre Éva et Léa, anticiper un événement ou revenir dans un espace déjà montré.
+
+Elle ne doit cependant pas devenir une caméra « magique » qui ignore les contraintes physiques du lieu.
+
+Son déplacement doit rester compatible avec la géographie et avec le principe de plan-séquence.
+
+## 5. Pause de Thomas
+
+Lors de la pause pipi, Thomas **ne descend pas vers le pont et ne voit pas le pont**.
+
+La pause a lieu **en hauteur**, à proximité du chemin, dans une zone naturelle proche d'un précipice.
+
+Une entrée de grotte peut être présente à proximité, mais elle reste dissimulée et n'est pas présentée comme une révélation artificielle.
+
+Éva peut lui lancer une remarque légère du type :
+
+> « Attention, il faudrait pas qu'une rafale de vent te fasse tomber dans le précipice pendant le pipi. »
+
+Cette scène doit rester cohérente avec la géographie générale : le pont se trouve beaucoup plus bas.
+
+## 6. Eau et caméra
+
+L'eau peut participer à la logique de l'inversion.
+
+Une image validée comme principe de mise en scène est la caméra omnisciente observant / accompagnant un mouvement d'eau qui peut être compris naturellement dans les deux sens temporels.
+
+Ce principe doit être utilisé comme élément de mise en scène et de sensation, pas comme démonstration scientifique.
+
+## 7. La musique
+
+La musique est un indice sensoriel majeur de l'inversion.
+
+Elle doit pouvoir être perçue comme étrange avant que Thomas comprenne que le problème vient de son rapport au temps.
+
+La musique ne doit toutefois pas devenir une explication verbale de la mécanique.
+
+## 8. Pause pipi et géographie
+
+La pause en hauteur ne doit pas être utilisée pour rapprocher artificiellement Thomas du pont.
+
+Le pont reste en contrebas et la séparation verticale doit être maintenue dans toutes les cartes et simulations futures.
+
+## 9. Critère de validation V8
+
+Une scène n'est pas validée simplement parce qu'elle « fonctionne à l'endroit ».
+
+Elle doit satisfaire simultanément quatre tests :
+
+1. **Lecture normale** — la scène est naturelle et compréhensible.
+2. **Lecture inversée** — le même événement reste cohérent lorsqu'il est parcouru en sens inverse.
+3. **Lecture causale** — les deux lectures expliquent ensemble pourquoi les événements se produisent.
+4. **Lecture cinématographique** — la caméra, le son et les personnages peuvent réellement traverser l'espace sans révéler artificiellement le mécanisme.
+
+## 10. Priorité de travail actuelle
+
+Avant toute modélisation détaillée d'Unreal :
+
+**SCRIPT V8 → CARTE SPATIO-TEMPORELLE → TRAJECTOIRES A/B → PLAN-SÉQUENCE V1 → TEST DE COHÉRENCE → UNREAL**
+
+Le prochain travail concret doit donc porter en priorité sur la **V8 du scénario et sa carte spatio-temporelle**, puis seulement sur la prévisualisation 4D.
