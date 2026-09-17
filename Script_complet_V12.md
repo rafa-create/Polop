@@ -573,4 +573,32 @@ Thomas hésite encore une fraction de seconde.
 
 Puis il les suit.
 
-COUPURE.
+La musique dramatique prend alors de l’ampleur. Pas comme une victoire : comme la révélation silencieuse de l’immensité de ce qu’il vient d’accepter.
+
+La caméra reste un instant derrière Thomas, Éva et Léa qui remontent le chemin.
+
+Puis elle commence un lent dézoom, continu, presque impossible.
+
+La famille devient plus petite dans le cadre.
+
+Le chemin apparaît dans son ensemble. Puis le creux. Le pont. Le flanc rocheux. Plus haut, la zone du précipice et de la caverne.
+
+En un seul mouvement, la caméra révèle le territoire entier de la boucle : les lieux que le spectateur vient de parcourir séparément appartiennent tous au même espace.
+
+Le dézoom continue encore.
+
+Un effet visuel très discret apparaît dans le paysage : pendant une fraction de seconde, certains mouvements naturels semblent hésiter entre leurs deux directions — poussière, feuilles, herbes — comme si l’image portait simultanément la trace des deux lectures du temps.
+
+Ce n’est pas un nouvel événement physique et ce n’est pas une nouvelle règle de l’inversion : c’est un geste purement cinématographique, presque subliminal, de la caméra omnisciente.
+
+Puis tout redevient parfaitement normal.
+
+Très loin maintenant, Thomas marche derrière Éva et Léa.
+
+La musique atteint son point culminant.
+
+La montagne les absorbe presque entièrement dans le cadre.
+
+COUPURE NETTE.
+
+NOIR.
