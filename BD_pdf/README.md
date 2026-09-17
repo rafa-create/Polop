@@ -2,7 +2,9 @@
 
 ## Statut actuel
 
-**PHASE 1 TERMINÉE — storyboard exhaustif V12 contrôlé. AUCUNE IMAGE AVANT APPROBATION EXPLICITE.**
+**PHASE 2 EN COURS — production image case par case.**
+
+`CASE_001` à `CASE_018` ont été validées dans la conversation de production. `CASE_019` a été générée mais attend encore sa validation finale après génération. Les PNG ne sont pas encore stockés dans le dépôt ; voir `BD_pdf/images/README.md` et `BD_pdf/05_REGISTRE_CASES.md` pour l'état exact.
 
 La source de vérité narrative est `Script_complet_V12.md`. La BD ne corrige pas, ne complète pas et ne réinterprète pas silencieusement le scénario.
 
@@ -22,13 +24,21 @@ En cas de contradiction, le document supérieur gagne. Le storyboard ne peut jam
 
 La seconde passe V12 est consignée à la fin du storyboard. Les validations humaines/3D encore nécessaires concernent principalement : géométrie zone rocheuse/caverne, mécanique réversible du mousqueton, chorégraphie de fermeture à 17h00, worldline mécanique de l'anneau et verrouillage des références visuelles.
 
-## Workflow Phase 2 — seulement après approbation
+## Workflow Phase 2
 
 La production se fait **une case à la fois**, strictement dans l'ordre.
 
-Pour chaque case : relire V12 et sa fiche dans `04_STORYBOARD_DETAILLE.md`, consulter les références validées et la continuité, présenter brièvement la case, attendre explicitement **« go »**, générer une seule image sans texte, contrôler contre V12, puis seulement après validation enregistrer `BD_pdf/images/case_XXX.png` et mettre à jour son statut (`À VALIDER`, `VALIDÉE`, `À REFAIRE`).
+Pour chaque case : relire V12 et sa fiche dans `04_STORYBOARD_DETAILLE.md`, consulter les références validées et la continuité, présenter brièvement la case, attendre explicitement **« go »**, générer une seule image sans texte, contrôler contre V12, puis seulement après validation enregistrer le binaire canonique sous `BD_pdf/images/case_XXX.png` et mettre à jour son statut (`À VALIDER`, `VALIDÉE`, `À REFAIRE`).
 
 Une case validée devient une référence obligatoire pour toutes les suivantes. Ne jamais passer automatiquement à la suivante.
+
+### Continuité visuelle déjà verrouillée
+
+- style manga cinématographique cohérent ;
+- Léa a 12 ans ;
+- le pont est un tablier de planches tenu/suspendu par des cordes, sans structure rigide ajoutée comme support ;
+- configuration P1 : pont accroché, cordage sous tension normale, mousqueton fixé ;
+- aucun dialogue, bulle, cartouche, numéro ou texte dans les images sources.
 
 ## Règles non négociables
 
