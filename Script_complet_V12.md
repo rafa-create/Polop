@@ -389,17 +389,13 @@ B6 — 17h01 — LE NŒUD
 
 Thomas atteint la zone du pont peu avant 17h00.
 
-Le cordage est revenu à son état antérieur, mais le point d’attache demande le geste qui appartient déjà à cette histoire.
+Le cordage est revenu à son état antérieur.
 
-Thomas s’approche. Il prend le cordage et effectue un seul geste continu sur le nœud.
+Thomas s’approche du point d’attache et effectue un seul geste continu sur le nœud. Le film ne le présente ni comme une réparation du passé ni comme un « défaire puis refaire » : ce geste appartient simplement à l’unique histoire du pont.
 
-Le scénario ne décrit pas ce geste comme « défaire puis refaire » et ne prétend pas que Thomas modifie une histoire existante : il accomplit simplement l’action qui, dans cette histoire unique, appartient à l’état du pont.
+À 17h01, dans la trajectoire personnelle inversée de Thomas, son geste laisse le point d’attache dans l’état qui, en lecture normale de l’histoire, permet au pont d’être utilisable à 17h00 puis à 16h59.
 
-À la fin de son geste personnel, le cordage est dans l’état qui correspond, dans le temps normal, au pont utilisable juste avant 17h00.
-
-Thomas vérifie brièvement la tension et lâche.
-
-Il regarde le pont, puis prend le chemin rocheux du flanc.
+Thomas vérifie brièvement la tension et lâche. Il regarde le pont, puis prend le chemin rocheux du flanc.
 
 [À DÉTAILLER — chorégraphie physique exacte du geste du nœud à valider dans les deux sens avant verrouillage définitif.]
 
