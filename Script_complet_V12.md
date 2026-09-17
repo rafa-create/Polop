@@ -392,31 +392,41 @@ Il n’a pas entendu leurs appels.
 
 ⸻
 
-A16 — 17h58 — L’ARRIVÉE DE L’ANNEAU
+A16 — 17h58 — L’ANNEAU ARRIVE DANS SA MAIN
 
-Thomas avance dans la caverne sans raison particulière de regarder vers le plafond.
+Thomas avance dans la caverne. Pour franchir un passage étroit et se stabiliser, il pose naturellement une main contre la paroi, près de l’arrivée d’une étroite fissure rocheuse.
 
-Un bruit sec au-dessus de lui.
+Il ne regarde pas sa main. Il n’attend rien.
+
+Un mouvement attire son attention dans la fissure.
+
+Un anneau simple surgit selon une trajectoire qui paraît impossible : il remonte les derniers reliefs de la roche et vient terminer directement son mouvement dans la paume de Thomas.
 
 CLAC.
 
-Il lève les yeux.
+Par réflexe, Thomas referme les doigts.
 
-Un anneau simple vient d’achever un mouvement spectaculaire vers le haut et de se loger dans un petit recoin rocheux du plafond, près de l’arrivée d’une étroite fissure naturelle.
+Il reste immobile une seconde.
 
-Thomas reste immobile, surpris. Il vient de voir un objet se déplacer dans un sens qui paraît impossible.
+Puis il retire sa main de la paroi et l’ouvre.
 
-Il parvient à récupérer l’anneau et l’observe dans sa main.
+L’anneau est là.
 
-L’anneau est déjà inversé. Il n’est pas soumis à une gravité dirigée vers le plafond : le mouvement que Thomas vient d’observer est la lecture, dans le temps normal, d’une trajectoire qui doit être physiquement ordinaire lorsqu’elle est parcourue dans le sens temporel propre de l’anneau.
+Thomas l’observe, surpris. Il vient de recevoir dans sa propre main un objet qui semblait remonter vers lui.
 
-Thomas le manipule simplement entre ses doigts, intrigué par son comportement, sans répéter une démonstration qui ferait croire à une règle d’antigravité.
+L’anneau est déjà inversé. Il n’est pas soumis à une gravité dirigée vers le haut : ce que Thomas vient de voir est la lecture inversée d’une trajectoire qui, dans le sens temporel propre de l’anneau, est une descente mécanique ordinaire.
+
+Thomas le manipule simplement entre ses doigts. Aucun lâcher répété, aucune démonstration d’antigravité.
 
 Il regarde sa montre.
 
 Il garde l’anneau avec lui.
 
-[À DÉTERMINER — dans le sens temporel propre de l’anneau, un événement simple doit le déloger initialement de ce recoin afin qu’il puisse ensuite tomber normalement et parcourir sa trajectoire vers 17h00. Ne rien expliciter dans le film si aucune cause naturelle et satisfaisante n’est trouvée.]
+La position de sa main n’a pas été provoquée par l’anneau : Thomas s’appuyait déjà sur la paroi. Au premier visionnage, l’arrivée dans sa paume paraît donc être un hasard impossible.
+
+La même action possède pourtant une seconde lecture : parcourue dans le sens temporel propre de l’anneau, la fermeture réflexe de la main devient une ouverture, et la « réception » de l’objet devient Thomas qui le libère volontairement au point exact où commence sa descente vers 17h00.
+
+[À VALIDER EN 3D — position exacte de la paume, sortie de la fissure et vitesse finale : l’arrivée de l’anneau dans la main en lecture A doit être exactement réversible en un lâcher/libération mécanique simple par Thomas dans le sens propre de l’anneau.]
 
 ⸻
 
@@ -536,7 +546,7 @@ Un gros relief rocheux borde ici le chemin et peut masquer brièvement deux pers
 
 ⸻
 
-B8 — LES DEUX THOMAS / LA PERTE DE L’ANNEAU
+B8 — LES DEUX THOMAS / LA POCHE / LE RETOUR AU TEMPS NORMAL
 
 Thomas inversé aperçoit Thomas normal.
 
@@ -548,45 +558,37 @@ Le relief qui, dans A2, permettait à la caméra de rester naturellement avec L�
 
 Thomas inversé heurte légèrement la roche au moment où les deux trajectoires se frôlent. La percussion est petite, presque banale : rien qui ressemble à un choc spectaculaire.
 
-L’anneau se détache de son doigt et est projeté contre le flanc de la montagne.
+Au même instant, l’anneau termine sa propre trajectoire descendante et entre / tombe dans une poche ouverte de Thomas. Ce mouvement n’est pas magique : dans le sens temporel propre de l’anneau, il constitue simplement la fin de la trajectoire mécanique commencée lorsque Thomas l’a libéré plus haut.
 
-En lecture normale, l’anneau semble alors repartir vers le haut. Il ne s’agit pas d’une gravité inversée : l’anneau est déjà inversé et le monde normal observe sa trajectoire dans le sens opposé à son évolution propre.
+Thomas retrouve alors le sens normal du temps. Sa mémoire reste continue : il se souvient de l’heure qu’il vient personnellement de parcourir de 18h00 à 17h00.
 
-Sa vitesse et le terrain rendent toute poursuite inutile. Thomas le suit seulement du regard quelques instants.
+L’anneau, lui, ne change pas d’orientation temporelle avec Thomas. Il conserve sa temporalité propre.
 
-La perte de l’anneau coïncide avec la fin de son inversion. Thomas retrouve le sens normal du temps. Sa mémoire reste continue : il se souvient de l’heure qu’il vient personnellement de parcourir de 18h00 à 17h00.
-
-Le film n’établit pas qu’un simple retrait volontaire de l’anneau suffirait à sortir de l’inversion. Le seul événement observé reste ce point composé : convergence des deux Thomas, percussion contre la roche, perte de l’anneau et retour de Thomas au temps normal.
+En lecture normale de l’événement, exactement le même mouvement apparaîtra comme l’anneau qui sort / tombe de la poche au moment de la percussion puis repart vers le haut de la montagne.
 
 Thomas reprend naturellement sa place dans la scène de 17h00 et se dirige vers Éva et Léa.
 
-[À VALIDER EN 3D — géométrie exacte du rocher, positions simultanées des deux Thomas, percussion, continuité des trajectoires et raccord permettant à A2 de rester centré naturellement sur Léa sans montrer le point de fermeture.]
+[À VALIDER EN 3D — géométrie exacte du rocher, positions simultanées des deux Thomas, percussion, orientation de la poche et continuité de la trajectoire de l’anneau. Dans le sens propre de l’anneau : entrée mécanique dans la poche. En lecture normale : sortie exacte de cette même poche.]
 
 ⸻
 
-B8 BIS — LA TRAJECTOIRE DE L’ANNEAU
+B8 BIS — LA WORLDLINE DE L’ANNEAU : MAIN EN HAUT ↔ POCHE EN BAS
 
-La caméra omnisciente peut quitter Thomas et suivre l’anneau.
+La caméra omnisciente peut révéler par fragments la trajectoire unique de l’anneau.
 
-Dans la lecture normale du monde, l’anneau remonte rapidement le flanc de la montagne. Cette remontée n’est jamais présentée comme une force dirigée vers le haut : elle doit être exactement la lecture inversée d’une trajectoire mécanique ordinaire dans le sens temporel propre de l’anneau.
+La règle de construction est désormais fixe : la trajectoire doit d’abord être conçue dans le sens temporel propre de l’anneau, là où sa mécanique est ordinaire.
 
-Il ricoche et glisse le long du relief. Chaque mouvement ascendant visible doit pouvoir devenir, lorsqu’on retourne la séquence, une chute, un rebond ou un glissement physiquement plausible sous la gravité normale.
+Dans ce sens : Thomas ouvre/libère l’anneau depuis sa main dans la caverne vers 17h58. L’anneau tombe sous la gravité, descend par la fissure et le relief, avec le minimum de contacts nécessaires — chutes libres courtes, rebonds simples, très peu de friction — puis poursuit sa descente jusqu’au point de fermeture de 17h00, où sa trajectoire se termine dans la poche ouverte de Thomas.
 
-Il atteint une petite ouverture naturelle dans la roche, suffisamment étroite pour ne pas constituer un passage humain, et s’y engouffre.
+La lecture normale du monde montre exactement cette animation à l’envers : l’anneau sort de la poche de Thomas à 17h00, semble remonter rapidement le flanc, franchit les reliefs et la fissure en sens inverse, débouche dans la caverne et termine sa remontée directement dans la paume de Thomas vers 17h58.
 
-La caméra révèle que cette fissure communique avec la caverne située plus haut dans la montagne.
+Il n’existe aucun état intermédiaire où l’anneau attend dans un recoin. Il n’existe aucune impulsion spontanée, aucune gravité inversée et aucune seconde instance de l’objet.
 
-L’anneau poursuit son trajet dans cette cheminée rocheuse et débouche dans la caverne.
+L’anneau de la poche, l’anneau qui remonte la montagne, l’anneau qui arrive dans la main et l’anneau porté à 18h00 sont un seul et même objet sur une seule worldline.
 
-Il achève alors spectaculairement sa trajectoire vers le haut et vient se loger avec un bruit sec dans le petit recoin du plafond : exactement l’événement qui, à 17h58 dans A16, attire le regard de Thomas vers le haut.
+La double lecture est intentionnelle : au premier visionnage, Thomas semble recevoir l’anneau par hasard. Dans le sens propre de l’anneau, ce même geste devient Thomas qui le lâche volontairement, sachant que l’objet doit rejoindre 17h00 et participer à la boucle qui protège Léa.
 
-L’anneau de 17h00 et celui de 17h58 sont donc un seul et même objet. Il reste inversé pendant toute cette trajectoire et lorsqu’il est découvert par Thomas.
-
-Le film n’explique pas encore ce qui, dans le sens temporel propre de l’anneau, le déloge initialement de ce recoin. Cette cause peut rester hors champ si aucune solution simple et naturelle n’est trouvée.
-
-[À VALIDER EN 3D — trajectoire complète de l’anneau du point de percussion jusqu’au recoin de la caverne. Chaque rebond, glissement, passage dans la fissure et arrivée doit rester cohérent lorsqu’on lit le mouvement dans les deux directions, sans introduire d’antigravité ni de force ad hoc.]
-
-[À DÉTERMINER — origine de la chute de l’anneau dans son sens temporel propre : quel événement simple le déloge du recoin ? Ne rien dire dans le film si aucune solution satisfaisante n’est trouvée.]
+[À VALIDER EN 3D — worldline complète main → fissure/relief → poche. Chaque position, vitesse, rebond et contact doit être identique dans les deux lectures. Si l’entrée directe dans la poche impose une géométrie impossible, modifier la poche, le vêtement ou l’angle du choc plutôt que la logique générale de la worldline.]
 
 ⸻
 
@@ -598,7 +600,7 @@ La musique devient dramatique, retenue, sans transformer la scène en explicatio
 
 Cette fois, la caméra privilégie Thomas. Elle reste suffisamment proche de lui pour rendre lisibles ses regards, ses silences et le choc de son retour au temps normal, tout en conservant Éva et Léa dans le même espace.
 
-Thomas regarde brièvement vers le flanc où l’anneau vient de repartir dans sa trajectoire. Puis Léa. Puis le pont et son mousqueton.
+Thomas jette un bref regard vers sa poche, puis vers le flanc où l’anneau repart — dans la lecture normale du monde — vers le haut de la montagne. Puis Léa. Puis le pont et son mousqueton.
 
 ÉVA
 Léa, reviens. C’est pas le bon chemin.
