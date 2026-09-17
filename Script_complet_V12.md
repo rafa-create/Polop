@@ -232,7 +232,9 @@ Au premier visionnage, ce mouvement de caméra n’a pas encore d’explication.
 
 A10 — 17h50 — LA PAUSE
 
-Le vrai chemin continue en hauteur. À quelques mètres, le relief masque partiellement une petite cavité rocheuse. Le précipice est proche.
+Le vrai chemin continue en hauteur. À quelques mètres se trouve une petite zone rocheuse fermée : quelques dizaines de mètres carrés entre la paroi et le précipice. Depuis le chemin, aucune autre sortie n’est visible.
+
+L’entrée de la caverne existe dans cette zone, mais son angle est masqué par un décrochement rocheux. Depuis le sentier, elle se confond avec une partie sombre de la paroi.
 
 THOMAS
 Je vais faire une pause pipi.
@@ -243,7 +245,7 @@ Maintenant ?
 THOMAS
 Deux minutes.
 
-Thomas s’écarte de quelques mètres, sans descendre vers le pont.
+Thomas s’écarte de quelques mètres et entre dans cette petite zone, sans descendre vers le pont.
 
 Éva le regarde partir, amusée.
 
@@ -259,31 +261,39 @@ Il va vraiment faire pipi ?
 ÉVA
 Apparemment.
 
-Éva et Léa continuent lentement sur le vrai chemin. Aucun changement musical dramatique. Aucun gros plan inquiétant sur le vide.
+Éva et Léa restent sur le vrai chemin, près de l’unique passage par lequel Thomas devrait revenir. Elles ne repartent pas immédiatement.
+
+Aucun changement musical dramatique. Aucun gros plan inquiétant sur le vide.
 
 ⸻
 
-A11 — 17h52 — LA ZONE DE LA CAVERNE
+A11 — 17h52 / 17h54 — L’ATTENTE
 
-Thomas reste dans la zone haute près du chemin. L’entrée de la caverne est partiellement cachée derrière les rochers.
+Éva et Léa attendent encore. Elles parlent quelques instants, tranquillement.
 
-La caméra ne montre pas Thomas y entrer et ne précise pas s’il l’a remarquée par hasard ou s’il savait où elle se trouvait.
+Leur position leur permet de garder naturellement dans leur champ la sortie de la petite zone rocheuse et le chemin descendant. Elles ne surveillent pas Thomas comme des gardes, mais il ne pourrait pas ressortir et redescendre sans passer devant elles.
 
-Éva et Léa poursuivent leur progression.
+La caméra reste avec elles suffisamment longtemps pour que cette continuité soit claire. Pas d’ellipse permettant à Thomas de les contourner.
+
+Léa regarde vers l’endroit où son père est parti.
+
+LÉA
+Il est long, son pipi.
+
+Éva sourit d’abord, puis regarde à son tour.
+
+ÉVA
+Thomas ?
+
+Pas de réponse.
+
+L’entrée de la caverne n’est toujours pas identifiée comme un passage. La caméra ne montre pas Thomas y entrer et ne précise pas s’il l’a trouvée par hasard ou s’il savait où elle se trouvait.
 
 ⸻
 
 A12 — 17h55 — L’ABSENCE
 
-Léa se retourne.
-
-LÉA
-Il est où papa ?
-
-Éva regarde derrière elle. Thomas n’est plus visible.
-
-ÉVA
-Il était derrière nous.
+Éva et Léa reviennent vers la petite zone rocheuse.
 
 ÉVA
 Thomas !
@@ -293,24 +303,51 @@ Papa !
 
 Aucune réponse.
 
+Elles voient immédiatement que l’espace est limité : la paroi, quelques rochers, le précipice. Thomas ne peut pas avoir continué dans une autre direction visible.
+
+Éva regarde derrière elle vers le chemin qu’elles viennent de surveiller. Personne n’est passé.
+
+Son inquiétude change de nature.
+
 ⸻
 
 A13 — LA RECHERCHE
 
-Éva et Léa reviennent légèrement sur leurs pas. Elles cherchent autour du chemin et des rochers. La caverne reste cachée par le relief.
+Éva entre dans la zone avec Léa. Elles vérifient réellement les quelques endroits accessibles derrière les rochers.
 
-Éva regarde le précipice.
+La recherche est courte précisément parce que l’espace est petit. Il n’y a pas des centaines de mètres carrés à fouiller.
+
+La caverne reste naturellement manquée : son ouverture est masquée par l’angle du décrochement rocheux et, depuis leur trajectoire, se lit comme une continuité sombre de la paroi.
+
+ÉVA
+Thomas !
+
+Rien.
+
+Éva regarde de nouveau la petite zone vide.
+
+Puis le seul chemin par lequel Thomas aurait pu revenir.
+
+Puis le précipice.
+
+La caméra laisse ce raisonnement devenir visible avant tout dialogue.
+
+Léa suit son regard.
 
 LÉA
 Tu crois qu’il est tombé ?
 
-Éva ne répond pas. Elle appelle encore Thomas.
+Éva ne répond pas.
 
-La peur s’installe progressivement.
+La phrase lancée quelques minutes plus tôt — « Va pas te casser la gueule quand même » — prend rétrospectivement un autre poids, sans être répétée.
 
 ⸻
 
 A14 — DESCENDRE
+
+Éva regarde une dernière fois la zone. Puis le vide.
+
+Elle a désormais trois informations concrètes : Thomas n’est pas dans le petit espace, il n’a pas pu partir vers une autre direction visible, et il n’a pas pu redescendre par le chemin sans qu’elles le voient.
 
 ÉVA
 On va redescendre.
@@ -323,19 +360,31 @@ D’accord.
 
 Éva et Léa commencent à descendre par le vrai chemin.
 
+Leur décision ne vient pas d’un abandon de la recherche : la géographie leur fait craindre que Thomas ait chuté.
+
 ⸻
 
 A15 — 17h57 / 17h58 — LA CAVERNE
 
-La caméra accompagne Éva et Léa quelques instants, puis les quitte et revient vers la zone rocheuse.
+La caméra accompagne Éva et Léa quelques instants dans leur descente.
 
-Elle révèle Thomas déjà à l’intérieur de la caverne.
+Puis elle les quitte.
+
+Elle revient vers la petite zone rocheuse qu’elles viennent d’inspecter et adopte un angle qu’elles n’ont jamais eu pendant leur recherche.
+
+Le décrochement de la paroi révèle alors l’entrée de la caverne.
+
+La caméra y pénètre et découvre Thomas déjà à l’intérieur.
 
 On ne l’a pas vu entrer.
 
+La révélation ne signifie pas qu’Éva et Léa ont mal cherché : l’entrée était simplement illisible depuis leurs lignes de vue.
+
 Ses écouteurs sont toujours dans ses oreilles. Il regarde sa montre : 17h58.
 
-Il n’entend pas Éva et Léa.
+Il n’a pas entendu leurs appels.
+
+[À VALIDER EN 3D — géométrie exacte de la petite zone, ligne de vue d’Éva/Léa sur l’unique retour au chemin et angle du décrochement permettant à l’entrée de la caverne d’être naturellement manquée puis révélée par la caméra omnisciente.]
 
 ⸻
 
