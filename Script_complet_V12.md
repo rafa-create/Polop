@@ -263,6 +263,12 @@ Deux minutes.
 
 Thomas s’écarte de quelques mètres et entre dans cette petite zone, sans descendre vers le pont.
 
+À l’abri des regards, il ralentit devant un décrochement sombre de la paroi. Quelque chose dans la forme du rocher retient simplement son attention. Il regarde une seconde dans cette direction.
+
+La caméra ne révèle pas encore ce qu’il voit et revient naturellement vers Éva et Léa. Rien ne signale un phénomène ni ne semble appeler Thomas.
+
+Au premier visionnage, ce bref arrêt peut n’être qu’une curiosité de randonneur. Au second, il peut aussi se relire comme la reconnaissance d’un endroit où Thomas sait qu’il doit se retrouver. Le film ne tranche pas.
+
 Éva le regarde partir, amusée.
 
 ÉVA
@@ -303,7 +309,7 @@ Thomas ?
 
 Pas de réponse.
 
-L’entrée de la caverne n’est toujours pas identifiée comme un passage. La caméra ne montre pas Thomas y entrer et ne précise pas s’il l’a trouvée par hasard ou s’il savait où elle se trouvait.
+L’entrée de la caverne n’est toujours pas identifiée comme un passage. La caméra ne montre pas Thomas y entrer : elle a seulement montré qu’un détail banal de la paroi avait retenu son attention avant de revenir vers Éva et Léa.
 
 ⸻
 
@@ -388,13 +394,15 @@ Puis elle les quitte.
 
 Elle revient vers la petite zone rocheuse qu’elles viennent d’inspecter et adopte un angle qu’elles n’ont jamais eu pendant leur recherche.
 
-Le décrochement de la paroi révèle alors l’entrée de la caverne.
+Le décrochement de la paroi révèle alors l’entrée de la caverne : c’est la même zone sombre qui avait brièvement retenu le regard de Thomas.
 
-La caméra y pénètre et découvre Thomas déjà à l’intérieur.
+La caméra y pénètre et découvre Thomas déjà à l’intérieur, seulement à quelques pas de l’entrée. Il n’a pas entrepris une longue exploration et rien ne l’a attiré jusque-là : il a simplement regardé dans l’ouverture puis avancé assez pour découvrir la petite cavité.
 
 On ne l’a pas vu entrer.
 
 La révélation ne signifie pas qu’Éva et Léa ont mal cherché : l’entrée était simplement illisible depuis leurs lignes de vue.
+
+La motivation reste volontairement à double lecture. Thomas peut avoir avancé par curiosité naturelle ; après la fin du film, le même déplacement peut aussi être compris comme la reproduction d’une trajectoire qu’il vient déjà de vivre. Aucun signe ne décide à sa place.
 
 Ses écouteurs sont toujours dans ses oreilles. Il regarde sa montre : 17h58.
 
@@ -406,9 +414,9 @@ Il n’a pas entendu leurs appels.
 
 A16 — 17h58 → 18h00 — L’ANNEAU
 
-Thomas avance dans la caverne.
+Thomas avance de quelques pas supplémentaires dans la caverne.
 
-Dans une fissure rocheuse, un mouvement impossible attire son attention.
+Ce n’est qu’alors que, dans une fissure rocheuse, un mouvement impossible attire son attention.
 
 Un anneau simple remonte progressivement les reliefs de la roche. Il ne vole pas : chaque petit bond semble être l’exact inverse d’une chute et de rebonds mécaniques ordinaires.
 
@@ -426,7 +434,7 @@ Thomas tend finalement la main vers sa trajectoire.
 
 ⸻
 
-A17 — 18h00 — LE CONTACT / L’INVERSION
+A17 — 18h00 — LE CONTACT / LE RETOURNEMENT
 
 Thomas regarde sa montre : 18h00 pile.
 
@@ -435,6 +443,10 @@ Au même instant, ses doigts touchent l’anneau.
 CONTACT.
 
 Le film associe fortement ce premier contact à la bascule, sans expliquer la nature de l’objet ni l’origine du phénomène.
+
+À cet instant exact, il n’apparaît aucun second Thomas. Il n’y a ni duplication, ni corps qui se sépare, ni nouvelle occurrence qui surgit dans la grotte. Il n’y a qu’un Thomas au point où sa worldline cesse d’avancer vers le futur objectif et repart vers son propre passé.
+
+Pour Thomas, son temps propre continue sans coupure. Pour le monde extérieur, sa trajectoire temporelle vient de faire demi-tour à 18h00.
 
 Le monde autour de Thomas change de lecture temporelle.
 
@@ -448,9 +460,13 @@ Désormais Thomas et l’anneau partagent la même orientation temporelle : ce q
 
 Thomas est inversé.
 
+Dès qu’il quitte 18h00 pour revenir vers 17h59, la conséquence géométrique existe : pour chaque instant objectif entre 17h00 et 18h00, une occurrence de Thomas avance normalement vers 18h00 tandis qu’une autre occurrence du même Thomas revient de 18h00 vers 17h00. Elles ne sont pas créées par duplication ; ce sont deux points de la même worldline repliée.
+
+Le film n’a pas besoin de montrer cette coexistence au moment du contact. Il la révélera progressivement dans la géographie.
+
 L’origine de l’anneau, la raison exacte de son état et la portée générale du contact restent inconnues.
 
-[À VALIDER EN 3D — le contact doit être l’intersection naturelle entre la main de Thomas et la worldline mécanique de l’anneau. Aucun arrêt ni attente de l’objet avant 18h00.]
+[À VALIDER EN 3D — le contact doit être l’intersection naturelle entre la main de Thomas et la worldline mécanique de l’anneau. Aucun arrêt ni attente de l’objet avant 18h00. Le retournement temporel de Thomas ne doit produire aucun effet visuel de duplication.]
 
 ⸻
 
@@ -468,6 +484,8 @@ Derrière lui, l’anneau poursuit dans la fissure une descente qui paraît dés
 
 Il avance vers 17h00.
 
+À mesure qu’il revient sous 18h00, Thomas normal n’a pas disparu de l’histoire. À ces mêmes heures objectives, il existe encore ailleurs sur la montagne, en train d’accomplir la randonnée qui le conduira plus tard à la grotte. La caméra ne le révèle pas encore frontalement.
+
 ⸻
 
 B2 — ÉVA ET LÉA
@@ -480,15 +498,23 @@ Thomas est déjà en aval de leur position. Le relief les sépare. Elles ne le v
 
 ⸻
 
-B3 — LA PIERRE
+B3 — LA PIERRE / DEUX OCCURRENCES
 
 La petite pierre quitte le sol et remonte vers son origine.
 
 Thomas inversé la suit du regard.
 
-La caméra la suit à son tour et remonte vers Thomas normal, plus haut dans le relief. Pendant quelques secondes, la caméra adopte subtilement l’autre lecture temporelle : le geste de Thomas normal devient lisible, puis la caméra revient vers Thomas inversé.
+La caméra la suit à son tour et remonte vers Thomas normal, plus haut dans le relief.
 
-Aucune nouvelle règle physique n’est introduite : seule la narration visuelle change de point de lecture.
+Pour la première fois depuis le retournement de 18h00, la caméra rend la coexistence explicite sans aucun effet de duplication : Thomas inversé est bien présent plus bas dans la montagne, tandis que Thomas normal est simultanément ici, à un autre point de sa propre histoire.
+
+Pendant quelques secondes, la caméra adopte subtilement la lecture temporelle de Thomas normal. Son geste devient lisible : son pied déloge la pierre dans le déroulement ordinaire de la randonnée.
+
+La caméra peut laisser la géographie contenir les deux trajectoires sans nécessairement cadrer les deux Thomas dans le même plan. Le spectateur doit pouvoir comprendre progressivement : Thomas inversé n’a pas remplacé Thomas normal ; il est revenu dans l’heure où son occurrence normale existe encore.
+
+Puis la caméra revient vers Thomas inversé.
+
+Aucune nouvelle règle physique n’est introduite : seule la narration visuelle change de point de lecture. Cette coexistence est la conséquence directe du retournement de la worldline à 18h00 et prépare sa fermeture à 17h00.
 
 ⸻
 
