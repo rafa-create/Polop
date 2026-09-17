@@ -4,87 +4,45 @@ Source de vérité : `Script_complet_V12.md`.
 
 ## Statut
 
-Le scénario est désormais considéré comme verrouillé pour lancer la préparation de la BD.
+**Découpage macro remplacé comme outil opérationnel par `04_STORYBOARD_DETAILLE.md`.** Le présent fichier reste la vue d'ensemble des mouvements et du rythme. En cas d'écart, V12 puis `03_CASES_REGLES.md` puis `02_BIBLE_VISUELLE.md` puis le storyboard détaillé gouvernent.
 
-La BD doit raconter l'histoire à un lecteur qui n'a pas lu le scénario. Elle ne doit ni simplifier la logique de la boucle, ni ajouter des explications absentes du film. Les ambiguïtés volontaires du scénario restent ambiguës.
+Le storyboard Phase 1 couvre désormais tout le film en **96 cases stables**, projetées sur **29 pages narratives**. Une couverture pourra porter le total final à 30 pages si cette pagination est conservée.
 
 ## Règles de découpage
 
-- Produire les illustrations case par case.
-- Ajouter dialogues, cartouches et bruitages lors de la mise en page, jamais dans l'image générée.
-- Ne pas inventer de dialogue.
-- Ne pas transformer les indications de mise en scène du scénario en narration explicative.
-- Préserver les scènes ordinaires : elles donnent sa valeur émotionnelle au puzzle.
-- Les heures n'apparaissent visuellement que lorsqu'elles sont utiles à la compréhension de la BD.
-- Le mousqueton, la pierre, la feuille, la montre, la caverne et l'anneau doivent être lisibles sans devenir des « indices de thriller ».
-- Léa reste représentée comme une enfant dans un contexte familial et de randonnée, sans aucune représentation inappropriée.
+- Une case = un instant visuel principal.
+- Illustrations produites une par une, dans l'ordre `CASE_001` → `CASE_096`.
+- Dialogues, cartouches et bruitages ajoutés seulement au montage final, jamais dans l'image source.
+- Aucun dialogue, événement, objet causal, heure ou phénomène inventé.
+- Ne pas transformer les indications de mise en scène en narration explicative.
+- Préserver les scènes ordinaires et les ambiguïtés de V12.
+- Mousqueton, pierre, feuille, montre, caverne et anneau doivent être lisibles sans traitement d'« indice de thriller ».
+- La lumière suit l'heure objective, y compris dans le temps inversé.
 
-## Structure proposée
+## Structure consolidée
 
-Le nombre de pages n'est pas une contrainte fixe. La première estimation est d'environ **24 à 30 pages**, couverture comprise. Le rythme prime sur le nombre de pages.
+### Mouvement I — temps normal, 16h58 → 17h30
 
-### Mouvement I — 16h58 → 17h30 : randonnée ordinaire
+`CASE_001` à `CASE_035` : randonnée, pont P1 et CLAC, retour de Léa à 17h00 avec fermeture cachée, avertissement de Thomas, famille, barre de céréales, montre/Strava, géographie, feuille, creux, pierre, moment Éva–Thomas, puis pont P2 à 17h30.
 
-Objectif : installer la famille, la géographie et les éléments qui seront relus plus tard.
+### Mouvement II — 17h50 → 18h00
 
-Pages prévues :
+`CASE_036` à `CASE_059` : pause, géographie fermée de la zone rocheuse, attente sans ellipse, absence, recherche, peur de chute, descente, révélation par changement d'angle de la caverne, Thomas à 17h58, anneau à 17h59, contact à 18h00 et retournement sans duplication.
 
-1. **Couverture** — LA BOUCLE. Montagne, chemin et creux ; aucune explication du mécanisme.
-2. **16h58 / randonnée** — Thomas, Éva, Léa ; vrai chemin ; pont annexe ; Léa s'engage sur le pont.
-3. **Le CLAC** — traversée de Léa ; cordage tendu ; mousqueton accroché qui frappe naturellement la roche ; retour de Léa vers le groupe.
-4. **17h00** — Éva rappelle Léa ; Thomas reste hors du centre d'attention quelques secondes ; il revient dans le cadre et interdit à Léa de reprendre le pont ; chemin du flanc.
-5. **La famille** — « On est obligés de monter ? », plaisanteries, barre de céréales, relation familiale.
-6. **Montre / Strava** — Thomas regarde l'heure ; Éva et Léa le taquinent ; son retrait reste discret.
-7. **Géographie / feuille** — grande case de respiration : vrai chemin, pont en contrebas, chemin rocheux ; feuille qui tombe.
-8. **Creux / pierre** — échange familial puis pierre délogée par Thomas et chute dans le vide.
-9. **Moment Éva–Thomas** — passage étroit, Éva prend son bras puis le lâche ; moment purement humain.
-10. **17h30 / pont** — aperçu en contrebas : cordage détendu et mousqueton décroché. Pas d'explication.
+### Mouvement III — temps inversé, 18h00 → 17h00
 
-### Mouvement II — 17h50 → 18h00 : disparition et caverne
+`CASE_060` à `CASE_081` : sortie de caverne, Éva/Léa à rebours et séparées par le relief, pierre et coexistence des deux Thomas, feuille, pont P2, geste réversible du mousqueton P2→P1 dans le temps propre inversé, convergence, fermeture à 17h00 et fragments de worldline de l'anneau.
 
-Objectif : faire passer progressivement la randonnée familiale au mystère concret.
+### Mouvement IV — retour 17h00 et fermeture émotionnelle
 
-11. **17h50 / pause** — zone rocheuse fermée ; Thomas annonce sa pause ; Éva et Léa restent sur le chemin ; Thomas remarque le décrochement sombre.
-12. **17h52–17h54 / attente** — continuité claire avec Éva et Léa ; Thomas ne peut pas ressortir par le chemin sans être vu.
-13. **17h55 / absence** — appel de Thomas ; retour dans la petite zone ; personne.
-14. **Recherche** — rochers, paroi, précipice ; la caverne reste invisible depuis leur trajectoire ; Léa demande s'il est tombé.
-15. **Descendre** — Éva comprend la géographie et décide d'aller chercher de l'aide.
-16. **17h57–17h58 / révélation de la caverne** — changement d'angle ; l'ouverture devient enfin visible ; Thomas est à quelques pas à l'intérieur.
-17. **Anneau / 18h00** — découverte de l'anneau et bascule. Cette transition doit avoir de l'espace et ne pas être comprimée.
-
-### Mouvement III — 18h00 → 17h00 : Thomas inversé
-
-Objectif : faire comprendre progressivement que Thomas parcourt les événements dans l'autre sens sans transformer la BD en diagramme explicatif.
-
-18. **Premier pas** — Thomas sort de la caverne dans le monde inversé. Les premiers phénomènes doivent être observables avant d'être compris.
-19. **La nature à rebours** — événements ordinaires inversés ; Thomas vérifie sa montre et son environnement.
-20. **La pierre** — relecture de la pierre : ce qui était un détail banal acquiert une seconde signification.
-21. **La feuille / famille** — relecture des éléments vus dans le premier mouvement ; présence de la famille sur sa trajectoire sans casser la logique spatiale.
-22. **Le pont** — Thomas arrive au pont avec le mousqueton décroché ; la séquence doit rendre physiquement compréhensible la relation entre l'état du pont et son parcours inversé.
-23. **Approche de 17h00** — les correspondances deviennent de plus en plus serrées ; Thomas comprend qu'il approche du point où sa trajectoire rejoint son propre passé.
-24. **Les deux Thomas** — rencontre / convergence. La géographie et l'identité des deux Thomas doivent être immédiatement lisibles sans code graphique artificiel.
-25. **L'anneau / fermeture** — l'anneau participe au point de fermeture, mais l'ordre exact des contacts reste volontairement non attribué si le scénario ne le tranche pas.
-26. **17h00 / retour au temps normal** — raccord avec la scène déjà vue : Léa revient vers le pont ; Thomas sait désormais concrètement que le mousqueton est sur le point de devenir dangereux.
-
-### Mouvement IV — fermeture émotionnelle
-
-27. **Ne reprends pas le pont** — relecture complète de la scène de 17h00 avec le nouveau savoir du lecteur.
-28. **On continue** — retour à Éva et Léa, aux phrases ordinaires et à la montée. La boucle est comprise mais la scène reste humaine avant tout.
-29. **Fin / respiration** — selon le raccord exact du scénario final : image de clôture sans schéma explicatif dans le corps de la BD.
+`CASE_082` à `CASE_096` : relecture exacte de A2 avec nouveau point de vue, Léa détournée du pont, hésitation sur la montée, petite boîte non ouverte/non proposée, Thomas qui suit Éva et Léa, dézoom territorial et fin.
 
 ## Principe de relecture
 
-Les pages du temps inversé doivent faire écho visuellement aux pages du temps normal. Quand une scène revient, on privilégie :
+Les scènes vues deux fois doivent partager la même géographie, les mêmes repères rocheux, les mêmes états physiques au même instant objectif et une lumière cohérente. Les axes peuvent être complémentaires afin d'ajouter l'information que V12 autorise lors de la seconde lecture, jamais avant.
 
-- le même lieu reconnaissable ;
-- un axe de caméra complémentaire plutôt qu'une copie exacte ;
-- les mêmes repères rocheux ;
-- la même position physique des objets au même instant ;
-- une lumière cohérente avec l'heure objective ;
-- une action qui complète l'information au lieu de la commenter.
+## Verrou avant images
 
-Le lecteur doit pouvoir revenir aux premières pages et constater que la solution était compatible avec ce qu'il avait vu.
+Les points marqués « À VALIDER EN 3D » dans V12 restent ouverts : caverne/axes de recherche, mécanique du mousqueton, fermeture des deux Thomas + anneau, worldline complète de l'anneau. Les références visuelles prévues par `02_BIBLE_VISUELLE.md` doivent aussi être verrouillées avant les cases concernées.
 
-## Étape suivante
-
-Créer la **bible de continuité visuelle** avant toute illustration définitive : personnages, vêtements, accessoires, géographie, pont, caverne, anneau, états du mousqueton, lumière et conventions graphiques.
+**Aucune image ne doit être générée avant l'approbation explicite de la Phase 1.**
