@@ -45,6 +45,8 @@ Presque naturellement, la caméra quitte un instant la famille : le pont, le cor
 
 A2 — 17h00 — LE RETOUR DE LÉA
 
+La musique reste légère, dans la continuité naturelle de la randonnée.
+
 Léa, toujours de l’autre côté du creux, veut rejoindre Thomas et Éva et revient vers le pont.
 
 ÉVA
@@ -52,7 +54,9 @@ Léa, reviens. C’est pas le bon chemin.
 
 Léa s’arrête.
 
-La caméra reste d’abord avec Éva et Léa. Thomas entre progressivement dans le cadre. Il regarde le pont, puis le précipice en contrebas, puis Léa.
+La caméra omnisciente privilégie Éva et Léa. Thomas existe dans l’espace et entre progressivement dans le cadre, mais la caméra ne cherche pas son émotion et ne souligne pas ses silences.
+
+Thomas regarde le pont, puis le précipice en contrebas, puis Léa.
 
 THOMAS
 Ne reprends pas le pont.
@@ -86,12 +90,14 @@ C’était ton idée.
 LÉA
 Trop tard.
 
-Thomas reste silencieux. Son regard demeure sur la montée.
+La caméra reste principalement avec Léa et Éva. La phrase passe comme une petite remarque familiale.
+
+Thomas reste silencieux. Son hésitation est présente mais n’est pas dramatisée.
 
 ÉVA
 Puis on sait jamais ce qu’on pourrait rater.
 
-Thomas la regarde.
+Thomas la regarde, mais la caméra ne s'attarde pas sur sa réaction.
 
 Éva a déjà repris sa marche.
 
@@ -101,7 +107,7 @@ Moi, je sais. Une montée horrible.
 ÉVA
 Allez.
 
-Thomas reste immobile une seconde.
+Éva et Léa repartent dans une énergie légère. Thomas reste immobile une seconde, en retrait du centre d'attention.
 
 Puis il les suit.
 
@@ -477,9 +483,11 @@ Thomas revient au temps normal.
 
 B9 — 17h00 — LE RETOUR
 
-Exactement le même espace, les mêmes positions et les mêmes actions que dans A2. Seul le choix de la caméra change.
+Exactement le même espace, les mêmes positions, les mêmes dialogues et les mêmes actions que dans A2. Seuls le regard de la caméra et la musique changent la lecture.
 
-Cette fois, elle reste davantage avec Thomas.
+La musique devient dramatique, retenue, sans transformer la scène en explication.
+
+Cette fois, la caméra privilégie Thomas. Elle reste suffisamment proche de lui pour rendre lisibles ses regards, ses silences et le choc de son retour au temps normal, tout en conservant Éva et Léa dans le même espace.
 
 Il regarde le précipice où l’anneau vient de disparaître dans sa trajectoire personnelle. Puis Léa. Puis le pont et son nœud.
 
@@ -488,7 +496,7 @@ Léa, reviens. C’est pas le bon chemin.
 
 Léa s’arrête.
 
-Thomas regarde le pont, puis le précipice, puis Léa.
+La caméra reste avec Thomas lorsqu'il regarde le pont, puis le précipice, puis Léa.
 
 THOMAS
 Ne reprends pas le pont.
@@ -511,7 +519,7 @@ Tu pouvais pas lui dire ça avant ?
 
 Thomas ne répond pas.
 
-Cette fois, la caméra reste assez longtemps pour rendre visible son émotion. Ses yeux se remplissent de larmes.
+La caméra ne le quitte pas. Ses yeux se remplissent de larmes.
 
 Il vient de traverser l’heure qui conduit à ce moment. Il comprend que le pont que Léa a déjà utilisé à 16h59 était sûr parce que son propre geste inversé de 17h01 faisait déjà partie de cette même histoire.
 
@@ -528,20 +536,20 @@ C’était ton idée.
 LÉA
 Trop tard.
 
-Thomas reste silencieux. Cette fois, son hésitation est pleinement lisible.
+Cette fois, la caméra reste sur Thomas. La phrase de Léa ne ressemble plus à une simple plaisanterie : son hésitation devient pleinement lisible.
 
 ÉVA
 Puis on sait jamais ce qu’on pourrait rater.
 
-Thomas regarde Éva.
-
-Elle a déjà repris sa marche.
+Thomas regarde Éva. La caméra saisit sa réaction pendant qu'Éva, inconsciente du double sens de sa phrase, reprend déjà sa marche.
 
 LÉA
 Moi, je sais. Une montée horrible.
 
 ÉVA
 Allez.
+
+Éva et Léa repartent. La caméra reste avec Thomas et les laisse s'éloigner légèrement dans la profondeur.
 
 Thomas reste immobile une seconde.
 
