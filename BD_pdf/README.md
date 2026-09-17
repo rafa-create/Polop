@@ -2,119 +2,85 @@
 
 ## Statut actuel
 
-**En attente de verrouillage du scénario.**
+**Scénario verrouillé — production case par case autorisée.**
 
-La production définitive de la BD ne doit pas commencer tant que le scénario de **LA BOUCLE** n'est pas considéré comme suffisamment stable et cohérent, en particulier concernant la chronologie, la boucle temporelle, la géographie des lieux et les événements qui doivent se répondre entre le temps normal et le temps inversé.
+La source de vérité narrative est `Script_complet_V12.md`. La BD ne corrige pas, ne complète pas et ne réinterprète pas silencieusement le scénario.
 
-L'objectif n'est pas de figer trop tôt des images qui devraient ensuite être refaites à chaque modification du scénario.
+Ordre d'autorité :
 
-## Objectif de la BD
+1. `Script_complet_V12.md` — bible narrative absolue.
+2. `BD_pdf/03_CASES_REGLES.md` — méthode stricte de traduction en cases.
+3. `BD_pdf/02_BIBLE_VISUELLE.md` — continuité visuelle.
+4. `BD_pdf/01_DECOUPAGE.md` — structure générale des planches.
 
-Créer un **PDF propre, lisible et partageable** permettant de faire découvrir l'histoire avant de passer à la simulation / prévisualisation 3D puis au tournage.
+En cas de contradiction, le document supérieur gagne.
 
-La BD ne doit pas être un simple résumé illustré du scénario. Elle doit mettre l'histoire en scène et permettre à une personne qui ne connaît pas le projet de :
+## Objectif
 
-- comprendre l'histoire sans explication extérieure ;
-- ressentir la progression émotionnelle et le mystère ;
-- comprendre la géographie de la montagne et les déplacements ;
-- suivre la logique temporelle normale et inversée ;
-- remarquer les indices sans comprendre immédiatement leur signification ;
-- comprendre la révélation finale ;
-- pouvoir relire les premières pages avec une nouvelle compréhension ;
-- se représenter mentalement le film potentiel.
+Créer un **PDF propre, lisible et partageable** permettant de découvrir l'histoire avant la simulation / prévisualisation 3D puis le tournage.
 
-## Pipeline prévu
+Une personne qui n'a jamais lu le scénario doit pouvoir comprendre l'histoire par la BD, ressentir la révélation puis relire les premières scènes avec une nouvelle compréhension, sans que la BD ait ajouté une explication absente du film.
 
-Une fois le scénario verrouillé :
+## Workflow validé
 
-1. **Analyse du scénario final**
-   - séquences et scènes ;
-   - chronologie exacte ;
-   - géographie ;
-   - positions et déplacements des personnages ;
-   - objets et événements récurrents ;
-   - indices, révélations et correspondances temporelles.
+La production se fait **une case à la fois**.
 
-2. **Découpage BD**
-   - déterminer le nombre de pages selon le rythme réel de l'histoire ;
-   - définir la fonction dramatique de chaque page ;
-   - définir les cases, cadrages, transitions, silences et dialogues ;
-   - identifier les pages ou doubles pages qui méritent davantage d'espace.
+Pour chaque case :
 
-3. **Verrouillage de la continuité visuelle**
-   - design définitif de Thomas, Éva et Léa ;
-   - vêtements et accessoires constants ;
-   - références fixes pour les lieux ;
-   - carte claire de la montagne ;
-   - pont, chemin principal, chemin du flanc, précipice et caverne spatialement cohérents ;
-   - lumière et heure de la journée cohérentes.
+1. relire le passage correspondant de V12 ;
+2. préparer la fiche précise de la case selon `03_CASES_REGLES.md` ;
+3. présenter cette fiche à l'utilisateur ;
+4. attendre explicitement **« go »** ;
+5. générer uniquement cette case, sans texte incrusté ;
+6. contrôler la case contre V12 et la continuité ;
+7. la corriger ou la marquer `VALIDÉE` ;
+8. seulement ensuite préparer la case suivante.
 
-4. **Production case par case**
+Les images validées sont numérotées `case_001`, `case_002`, etc. Une case validée devient une référence de continuité pour toutes les suivantes.
 
-   Les illustrations finales seront produites **case par case**, et non sous forme de pages complètes générées d'un seul coup.
+## Règles non négociables
 
-   Cette méthode doit permettre un meilleur contrôle de :
-   - la continuité des personnages ;
-   - la composition ;
-   - la géographie ;
-   - la chronologie ;
-   - les détails importants ;
-   - les expressions ;
-   - les éléments naturels ;
-   - la cohérence entre une scène normale et sa relecture temporelle.
+- aucun dialogue inventé ;
+- aucun événement inventé ;
+- aucune modification de chronologie ;
+- aucune explication ajoutée pour faciliter artificiellement la compréhension ;
+- aucune révélation anticipée ;
+- les ambiguïtés volontaires de V12 restent ambiguës ;
+- les indices ordinaires restent ordinaires au premier passage ;
+- Léa est toujours représentée de manière familiale et appropriée ;
+- dialogues, cartouches et bruitages sont composés séparément des illustrations.
 
-5. **Assemblage des planches**
-   - mise en page des cases ;
-   - bulles ajoutées séparément des illustrations ;
-   - typographie française propre ;
-   - bruitages et indications visuelles uniquement lorsque nécessaires ;
-   - contrôle du rythme de lecture.
+## Continuité
 
-6. **Contrôle de la boucle**
+Chaque case doit respecter les références déjà validées pour :
 
-   Avant export final, vérifier systématiquement :
-   - les heures ;
-   - les positions des personnages ;
-   - le sens du temps ;
-   - la pierre ;
-   - la feuille et les autres événements naturels ;
-   - le pont et son cordage ;
-   - la caverne ;
-   - l'anneau ;
-   - les deux Thomas ;
-   - les scènes répétées vues depuis un autre point de vue.
+- Thomas, Éva et Léa ;
+- vêtements, sacs, chaussures, montre et accessoires ;
+- vrai chemin, creux, pont, chemin du flanc, zone rocheuse et caverne ;
+- pont, cordage et mousqueton ;
+- anneau, pierre, feuille et autres objets récurrents ;
+- heure objective et lumière ;
+- positions et trajectoires ;
+- coexistence de Thomas normal et Thomas inversé.
 
-7. **Test lecteur**
+La partie inversée utilise le même monde et la même géographie. Elle ne reçoit pas d'effet fantastique inventé.
 
-   Le test principal est simple :
+## PDF final
 
-   > Une personne qui n'a jamais lu le scénario doit pouvoir lire uniquement la BD, comprendre l'histoire, ressentir la révélation, puis avoir envie de revenir aux premières pages pour vérifier les indices.
+Le PDF n'est **pas assemblé pendant la génération**.
 
-8. **PDF final**
+L'utilisateur demandera explicitement l'assemblage à la fin. À ce moment-là :
 
-   Le document final doit être conçu comme une véritable BD / preuve de concept cinématographique partageable :
-   - couverture **LA BOUCLE** ;
-   - histoire complète sans notes techniques intrusives ;
-   - qualité visuelle homogène ;
-   - pagination propre ;
-   - export PDF haute qualité.
+1. les cases validées seront réparties en planches ;
+2. les dialogues et bruitages exacts seront ajoutés proprement ;
+3. une passe complète de continuité sera faite contre V12 ;
+4. la couverture et la pagination seront finalisées ;
+5. le PDF haute qualité sera exporté.
 
-   Des annexes séparées pourront éventuellement contenir :
-   - carte / schéma de la montagne ;
-   - chronologie 16h58 → 18h00 puis 18h00 → 17h00 ;
-   - schéma de la boucle ;
-   - références utiles pour la prévisualisation 3D et le tournage.
+Des annexes de production pourront ensuite contenir la carte, la chronologie, le schéma de boucle et les références utiles à la 3D, sans interrompre le récit principal.
 
-## Principe de production
+## Principe directeur
 
-**Ne pas sacrifier la cohérence au spectaculaire.**
+**V12 d'abord. Toujours.**
 
-La priorité est :
-
-**scénario cohérent → BD compréhensible → continuité visuelle → émotion → spectacle.**
-
-## Prochaine étape
-
-Pour le moment : **continuer à travailler et valider le scénario.**
-
-La phase de production de la BD commencera lorsque le scénario sera considéré comme verrouillé.
+Une belle case qui contredit le scénario est une mauvaise case. Une case sobre qui traduit exactement l'information, le hors-champ et l'ambiguïté voulus par V12 est la bonne direction.
