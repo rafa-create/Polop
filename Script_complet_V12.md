@@ -27,7 +27,19 @@ Léa aperçoit le pont. Sans prévenir, elle quitte le chemin et s’engage dess
 ÉVA
 Doucement.
 
-Léa traverse. Thomas regarde le pont, puis Léa. Il ne dit rien.
+Léa traverse.
+
+Sous son poids, le cordage se tend légèrement. Le mousqueton accroché à son point d’ancrage vient taper une fois contre la roche.
+
+CLAC.
+
+Son métallique bref, net, naturel. Pas inquiétant. Pas amplifié comme un indice de thriller.
+
+La caméra omnisciente quitte très brièvement Léa pour voir clairement le mousqueton accroché contre la roche au moment du CLAC, puis retrouve immédiatement Léa qui termine sa traversée.
+
+Le spectateur n’a aucune raison de mémoriser consciemment ce détail. Mais l’image et le son associent dès maintenant trois éléments : LÉA — PONT — MOUSQUETON ACCROCHÉ.
+
+Thomas regarde le pont, puis Léa. Il ne dit rien.
 
 De l’autre côté, Léa se retourne.
 
@@ -38,8 +50,6 @@ Vous venez ?
 On arrive. Mais c’est pas le bon chemin, tu sais. Mais je comprends, c’est marrant de prendre le pont, je comprends.
 
 Thomas reste sur le vrai chemin avec Éva. Ils continuent sans traverser.
-
-Presque naturellement, la caméra quitte un instant la famille : le pont, le cordage, le mousqueton. Aucun commentaire. Puis elle revient vers eux.
 
 ⸻
 
@@ -230,7 +240,7 @@ Le cordage est maintenant visiblement détendu. Le mousqueton qui assurait son p
 
 La caméra le montre brièvement, sans commentaire des personnages. La musique reste légère, avec une nuance de mystère presque imperceptible.
 
-Au premier visionnage, ce mouvement de caméra n’a pas encore d’explication. Au second, il permet de relier l’état inutilisable du pont après 17h01 à l'intervention de Thomas inversé au point charnière.
+Le contraste avec 16h59 existe visuellement : le spectateur a déjà vu ce même mousqueton accroché lorsque Léa traversait. Il n’est cependant pas encore obligé de comprendre quand ni pourquoi son état a changé.
 
 ⸻
 
@@ -504,35 +514,37 @@ Thomas aperçoit le pont mais poursuit sa progression vers 17h00. Le film ne don
 
 ⸻
 
-B6 — 17h01 — THOMAS RACCROCHE LE MOUSQUETON
+B6 — 17h01 — LE GESTE QUI SAUVE LÉA
 
 Thomas atteint la zone du pont peu avant 17h00.
 
-Le cordage pend. Le mousqueton est décroché de son point d’ancrage.
+Dans le sens temporel qu’il parcourt, le cordage pend et le mousqueton est décroché de son point d’ancrage.
 
-Thomas s’arrête. Il s’approche.
+Thomas s’arrête. Il regarde le mousqueton. Puis, presque instinctivement, il s’approche.
 
-Il prend le mousqueton et le raccroche physiquement à son point d’ancrage.
+Il effectue un seul geste mécanique, court et simple. Dans son sens temporel, ce geste fait passer le mousqueton de l’état décroché à l’état accroché.
 
-Le geste est court, simple et immédiatement lisible. Pas de nœud complexe, pas de réparation spontanée : Thomas effectue lui-même l’action mécanique.
+Le mousqueton vient toucher la roche.
 
-Il tire brièvement sur le cordage pour vérifier qu’il tient.
+CLAC.
 
-Le pont est de nouveau utilisable dans le sens temporel qu’il est en train de parcourir.
+Exactement la même signature métallique que lorsque Léa traversait à 16h59.
 
-Thomas regarde le résultat. Puis le chemin.
+Thomas s’immobilise.
 
-Il repart par le flanc.
+Le son déclenche le raccord avant même toute explication. Son regard va du mousqueton désormais accroché vers le pont, puis vers la direction où se trouve Léa dans cette histoire.
 
-Dans la chronologie objective, ce geste est le point charnière : avant 17h01, le mousqueton est accroché et le pont est dans l’état sûr que Léa a utilisé vers 16h59 ; après 17h01, le mousqueton est décroché et le cordage pend, comme la caméra le montrera vers 17h30.
+Il comprend — ou commence à comprendre — ce qu’il vient de produire.
 
-Thomas n’a donc pas changé le passé. Son geste a toujours appartenu à l’unique histoire dans laquelle Léa traverse le pont et survit.
+Dans le sens objectif normal, le même événement est exactement l’inverse : avant 17h01, le mousqueton est accroché ; le geste de Thomas inversé apparaît comme son décrochage ; après 17h01, le cordage pend. Aucun tiers n’intervient. Personne ne vient casser ou décrocher le pont entre les deux états.
 
-Première lecture de cette scène : Thomas semble raccrocher le pont pour protéger sa fille.
+Ainsi, le pont que Léa a utilisé à 16h59 était sûr précisément parce que Thomas, en remontant le temps, accomplit à 17h01 le geste dont la lecture inverse produit ensuite l’état décroché montré à 17h30.
 
-Deuxième lecture : Léa avait déjà traversé avant qu’il accomplisse ce geste dans sa propre expérience. Sans le savoir — ou avant d’en mesurer toute la portée — Thomas vient de produire la condition qui avait déjà sauvé Léa.
+Thomas n’a pas changé le passé. Son action faisait déjà partie de l’unique histoire dans laquelle Léa traverse et survit.
 
-[À VALIDER EN 3D — chorégraphie exacte du mousqueton : le geste de Thomas inversé qui paraît le raccrocher doit, vu dans le sens objectif normal et sans coupe, correspondre au passage naturel de l’état accroché avant 17h01 à l’état décroché après 17h01.]
+Le geste doit rester suffisamment simple pour fonctionner dans les deux sens sans donner l’impression d’une manipulation complexe jouée à l’envers.
+
+[À VALIDER EN 3D — forme exacte du mousqueton et de son point d’ancrage, position des doigts et mouvement unique permettant : dans le temps propre de Thomas inversé, DÉCROCHÉ → ACCROCHÉ ; dans le temps objectif normal, exactement le même mouvement retourné, ACCROCHÉ → DÉCROCHÉ. Le CLAC contre la roche doit appartenir au même événement dans les deux lectures.]
 
 ⸻
 
@@ -592,22 +604,46 @@ La double lecture est intentionnelle : au premier visionnage, Thomas semble rece
 
 ⸻
 
-B9 — 17h00 — LE RETOUR
+B9 — 17h00 — LE RETOUR / LE DÉCLIC
 
-Exactement le même espace, les mêmes positions, les mêmes dialogues et les mêmes actions que dans A2. Seuls le regard de la caméra et la musique changent la lecture.
+Exactement le même espace, les mêmes positions, les mêmes dialogues et les mêmes actions que dans A2. Seuls le regard de la caméra, le son et la musique changent la lecture.
 
 La musique devient dramatique, retenue, sans transformer la scène en explication.
 
 Cette fois, la caméra privilégie Thomas. Elle reste suffisamment proche de lui pour rendre lisibles ses regards, ses silences et le choc de son retour au temps normal, tout en conservant Éva et Léa dans le même espace.
 
-Thomas jette un bref regard vers sa poche, puis vers le flanc où l’anneau repart — dans la lecture normale du monde — vers le haut de la montagne. Puis Léa. Puis le pont et son mousqueton.
+Thomas jette un bref regard vers sa poche, puis vers le flanc où l’anneau repart — dans la lecture normale du monde — vers le haut de la montagne.
+
+Puis il voit Léa.
 
 ÉVA
 Léa, reviens. C’est pas le bon chemin.
 
 Léa s’arrête.
 
-La caméra reste avec Thomas lorsqu'il regarde le pont, puis le relief, puis Léa.
+Thomas regarde Léa vivante. Son regard descend vers le pont.
+
+La caméra omnisciente peut alors quitter très brièvement Thomas et retrouver le mousqueton. Le raccord reprend le cadrage simple établi à 16h59 : roche, point d’ancrage, métal.
+
+Dans la bande-son, très brièvement, revient la mémoire du CLAC métallique entendu lorsque Léa traversait. Pas comme un flashback surnaturel ni comme un souvenir magique de Thomas : comme un raccord cinématographique destiné au spectateur.
+
+CLAC.
+
+Très court.
+
+La caméra revient sur Thomas.
+
+LÉA → PONT → MOUSQUETON → THOMAS.
+
+Le lien causal devient lisible sans dialogue explicatif : Léa a traversé ce pont. Le mousqueton était accroché. Thomas vient personnellement de produire cet état dans l’autre sens du temps.
+
+Il comprend que Léa vivante devant lui est la conséquence d’un geste qu’il vient de vivre mais qui appartenait déjà à son passé.
+
+Ce déclic doit permettre au spectateur, même sans reconstruire toute la mécanique temporelle, de comprendre au minimum : **Thomas doit accomplir cette boucle parce que ce qu’il y fait sauve Léa.**
+
+La compréhension plus précise — il ne va pas la sauver, il l’a déjà sauvée — peut n’arriver qu’après coup ou au second visionnage.
+
+Thomas regarde le pont, puis le relief, puis Léa.
 
 THOMAS
 Ne reprends pas le pont.
@@ -632,9 +668,7 @@ Thomas ne répond pas.
 
 La caméra ne le quitte pas. Ses yeux se remplissent de larmes.
 
-Il vient de traverser l’heure qui conduit à ce moment. Il comprend que le pont que Léa a déjà utilisé à 16h59 était sûr parce que son propre geste inversé de 17h01 faisait déjà partie de cette même histoire.
-
-Léa vivante devant lui devient ainsi la preuve concrète de la boucle fermée : son sacrifice futur, dans sa propre expérience, est déjà inscrit dans le passé qu’il vient de vivre.
+Léa vivante devant lui est désormais la preuve concrète de la boucle fermée. Il n’a pas devant lui une possibilité abstraite de la sauver plus tard : il voit le résultat d’une action qu’il sait devoir accomplir.
 
 Quand Léa les rejoint, Thomas regarde le chemin qui monte.
 
@@ -683,6 +717,10 @@ Devant lui, Éva et Léa continuent la montée.
 Thomas hésite encore une fraction de seconde.
 
 Puis il les suit.
+
+Son choix doit être émotionnellement compréhensible dès ce premier visionnage, même si son statut métaphysique reste ouvert : libre choix, acceptation d’une histoire déjà écrite, ou impossibilité de faire autrement.
+
+Ce que le film rend clair n’est pas la réponse philosophique. C’est son motif : il repart parce que la boucle dont il vient de voir la preuve est celle dans laquelle Léa vit.
 
 La musique dramatique prend alors de l’ampleur. Pas comme une victoire : comme la révélation silencieuse de l’immensité de ce qu’il vient d’accepter.
 
