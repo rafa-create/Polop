@@ -18,7 +18,7 @@ Thomas, Éva et Léa avancent sur le vrai chemin de randonnée, sur le flanc de 
 
 Plus bas, dans un creux, un petit pont constitue un passage annexe. Un chemin rocheux plus long longe le flanc du creux.
 
-Le pont est étroit. Son cordage est usé, mais tient.
+Le pont est étroit. Son cordage est usé, mais tient. Un mousqueton simple assure l’un de ses points d’attache.
 
 Éva et Léa parlent et plaisantent. Thomas participe peu. Il est là, légèrement en retrait.
 
@@ -39,7 +39,7 @@ On arrive. Mais c’est pas le bon chemin, tu sais. Mais je comprends, c’est m
 
 Thomas reste sur le vrai chemin avec Éva. Ils continuent sans traverser.
 
-Presque naturellement, la caméra quitte un instant la famille : le pont, le cordage, le nœud. Aucun commentaire. Puis elle revient vers eux.
+Presque naturellement, la caméra quitte un instant la famille : le pont, le cordage, le mousqueton. Aucun commentaire. Puis elle revient vers eux.
 
 ⸻
 
@@ -226,11 +226,11 @@ A9 — 17h30 — LE PONT
 
 Depuis le chemin haut, la caméra peut apercevoir le pont en contrebas.
 
-Le cordage est maintenant visiblement détendu et cassé.
+Le cordage est maintenant visiblement détendu. Le mousqueton qui assurait son point d’attache est décroché.
 
 La caméra le montre brièvement, sans commentaire des personnages. La musique reste légère, avec une nuance de mystère presque imperceptible.
 
-Au premier visionnage, ce mouvement de caméra n’a pas encore d’explication. Au second, il permet de relier l’état cassé du pont après 17h01 à l'intervention de Thomas inversé au point charnière.
+Au premier visionnage, ce mouvement de caméra n’a pas encore d’explication. Au second, il permet de relier l’état inutilisable du pont après 17h01 à l'intervention de Thomas inversé au point charnière.
 
 ⸻
 
@@ -392,23 +392,41 @@ Il n’a pas entendu leurs appels.
 
 ⸻
 
-A16 — 17h58 — L’ANNEAU
+A16 — 17h58 — L’ARRIVÉE DE L’ANNEAU
 
-Thomas remarque alors un anneau simple au plafond de la caverne, logé contre une aspérité rocheuse près de l’arrivée d’une étroite fissure naturelle.
+Thomas avance dans la caverne sans raison particulière de regarder vers le plafond.
 
-Il l’observe, intrigué. Rien dans l’objet n’explique sa présence à cet endroit.
+Un bruit sec au-dessus de lui.
 
-Il parvient à le récupérer, le retourne entre ses doigts, puis le garde dans sa main.
+CLAC.
 
-Au premier visionnage, l’origine de l’anneau reste un mystère. Le film ne signale pas encore qu’il s’agit du même anneau que Thomas perdra au point de fermeture de 17h00.
+Il lève les yeux.
+
+Un anneau simple vient d’achever un mouvement spectaculaire vers le haut et de se loger dans un petit recoin rocheux du plafond, près de l’arrivée d’une étroite fissure naturelle.
+
+Thomas reste immobile, surpris. Il vient de voir un objet se déplacer dans un sens qui paraît impossible.
+
+Il parvient à récupérer l’anneau et l’observe dans sa main.
+
+L’anneau est déjà inversé. Il n’est pas soumis à une gravité dirigée vers le plafond : le mouvement que Thomas vient d’observer est la lecture, dans le temps normal, d’une trajectoire qui doit être physiquement ordinaire lorsqu’elle est parcourue dans le sens temporel propre de l’anneau.
+
+Thomas le manipule simplement entre ses doigts, intrigué par son comportement, sans répéter une démonstration qui ferait croire à une règle d’antigravité.
+
+Il regarde sa montre.
+
+Il garde l’anneau avec lui.
+
+[À DÉTERMINER — dans le sens temporel propre de l’anneau, un événement simple doit le déloger initialement de ce recoin afin qu’il puisse ensuite tomber normalement et parcourir sa trajectoire vers 17h00. Ne rien expliciter dans le film si aucune cause naturelle et satisfaisante n’est trouvée.]
 
 ⸻
 
 A17 — 18h00 — L’INVERSION
 
-Thomas regarde sa montre : 18h00.
+Thomas regarde sa montre : 18h00 pile.
 
 Il met l’anneau à son doigt.
+
+L’anneau était déjà inversé. C’est maintenant Thomas qui rejoint son orientation temporelle.
 
 Une goutte tombe, s’arrête, puis remonte exactement sur sa trajectoire. La poussière et de petits éléments du décor commencent à évoluer à rebours.
 
@@ -464,47 +482,47 @@ Thomas continue vers le passé. Une feuille remonte vers sa branche. De petits �
 
 ⸻
 
-B5 — VERS 17h30 — LE PONT CASSÉ
+B5 — VERS 17h30 — LE PONT DÉCROCHÉ
 
 Thomas arrive à portée visuelle du pont.
 
-Le cordage est cassé et détendu, dans le même état que celui montré par la caméra à 17h30 pendant la randonnée.
+Le cordage est détendu. Son mousqueton est décroché de son point d’ancrage, dans le même état que celui montré par la caméra à 17h30 pendant la randonnée.
 
-Il ne se répare pas spontanément. Il ne se reconstruit pas sous les yeux de Thomas.
+Il ne se raccroche pas spontanément.
 
 Thomas aperçoit le pont mais poursuit sa progression vers 17h00. Le film ne donne encore aucune explication au mouvement de caméra de la première partie.
 
 ⸻
 
-B6 — 17h01 — THOMAS RÉPARE LE CORDAGE
+B6 — 17h01 — THOMAS RACCROCHE LE MOUSQUETON
 
 Thomas atteint la zone du pont peu avant 17h00.
 
-Le cordage est défectueux.
+Le cordage pend. Le mousqueton est décroché de son point d’ancrage.
 
-Thomas s’arrête. Il s’approche du point d’attache.
+Thomas s’arrête. Il s’approche.
 
-Il prend lui-même le cordage et le remet en état. C’est son action physique, et uniquement son action, qui explique l’état utilisable du pont dans la partie de l’histoire située avant 17h01.
+Il prend le mousqueton et le raccroche physiquement à son point d’ancrage.
 
-Le geste reste simple, presque machinal. Thomas ne prononce rien. Le film ne précise pas s’il comprend immédiatement la portée de ce qu’il fait.
+Le geste est court, simple et immédiatement lisible. Pas de nœud complexe, pas de réparation spontanée : Thomas effectue lui-même l’action mécanique.
 
-Il resserre le point d’attache, remet le cordage en place et vérifie brièvement sa tension.
+Il tire brièvement sur le cordage pour vérifier qu’il tient.
 
-Le pont tient.
+Le pont est de nouveau utilisable dans le sens temporel qu’il est en train de parcourir.
 
-Thomas regarde le résultat. Puis il regarde le chemin.
+Thomas regarde le résultat. Puis le chemin.
 
 Il repart par le flanc.
 
-Dans la chronologie objective, ce geste est le point charnière : avant 17h01, le cordage est dans l’état sûr que Léa a déjà utilisé vers 16h59 ; après 17h01, le point d’attache est dans l’état défectueux qui sera visible vers 17h30.
+Dans la chronologie objective, ce geste est le point charnière : avant 17h01, le mousqueton est accroché et le pont est dans l’état sûr que Léa a utilisé vers 16h59 ; après 17h01, le mousqueton est décroché et le cordage pend, comme la caméra le montrera vers 17h30.
 
 Thomas n’a donc pas changé le passé. Son geste a toujours appartenu à l’unique histoire dans laquelle Léa traverse le pont et survit.
 
-Première lecture de cette scène : Thomas semble réparer le pont pour protéger sa fille.
+Première lecture de cette scène : Thomas semble raccrocher le pont pour protéger sa fille.
 
 Deuxième lecture : Léa avait déjà traversé avant qu’il accomplisse ce geste dans sa propre expérience. Sans le savoir — ou avant d’en mesurer toute la portée — Thomas vient de produire la condition qui avait déjà sauvé Léa.
 
-[À DÉTAILLER — chorégraphie physique exacte du geste : construire un mouvement de Thomas inversé qui, vu dans le sens objectif normal, corresponde sans coupe au passage du point d’attache sûr avant 17h01 à son état défectueux après 17h01.]
+[À VALIDER EN 3D — chorégraphie exacte du mousqueton : le geste de Thomas inversé qui paraît le raccrocher doit, vu dans le sens objectif normal et sans coupe, correspondre au passage naturel de l’état accroché avant 17h01 à l’état décroché après 17h01.]
 
 ⸻
 
@@ -532,7 +550,7 @@ Thomas inversé heurte légèrement la roche au moment où les deux trajectoires
 
 L’anneau se détache de son doigt et est projeté contre le flanc de la montagne.
 
-Au lieu de tomber dans le vide, il repart immédiatement le long d’une trajectoire ascendante impossible en lecture normale : l’anneau, toujours pris dans sa propre évolution temporelle, remonte rapidement le relief.
+En lecture normale, l’anneau semble alors repartir vers le haut. Il ne s’agit pas d’une gravité inversée : l’anneau est déjà inversé et le monde normal observe sa trajectoire dans le sens opposé à son évolution propre.
 
 Sa vitesse et le terrain rendent toute poursuite inutile. Thomas le suit seulement du regard quelques instants.
 
@@ -550,19 +568,25 @@ B8 BIS — LA TRAJECTOIRE DE L’ANNEAU
 
 La caméra omnisciente peut quitter Thomas et suivre l’anneau.
 
-L’anneau remonte rapidement le flanc de la montagne. Il ne s’agit pas d’une nouvelle gravité qui attirerait les objets vers le ciel : le film observe un objet inversé parcourant sa propre trajectoire dans le sens opposé à celui du monde normal.
+Dans la lecture normale du monde, l’anneau remonte rapidement le flanc de la montagne. Cette remontée n’est jamais présentée comme une force dirigée vers le haut : elle doit être exactement la lecture inversée d’une trajectoire mécanique ordinaire dans le sens temporel propre de l’anneau.
 
-Il ricoche et glisse le long du relief selon une trajectoire qui devra rester physiquement cohérente lorsqu’elle est lue dans l’autre sens.
+Il ricoche et glisse le long du relief. Chaque mouvement ascendant visible doit pouvoir devenir, lorsqu’on retourne la séquence, une chute, un rebond ou un glissement physiquement plausible sous la gravité normale.
 
 Il atteint une petite ouverture naturelle dans la roche, suffisamment étroite pour ne pas constituer un passage humain, et s’y engouffre.
 
 La caméra révèle que cette fissure communique avec la caverne située plus haut dans la montagne.
 
-L’anneau poursuit son trajet dans cette cheminée rocheuse jusqu’à la caverne. Son mouvement se termine contre une aspérité du plafond, au même emplacement où Thomas le récupère à 17h58 dans A16.
+L’anneau poursuit son trajet dans cette cheminée rocheuse et débouche dans la caverne.
 
-L’anneau de 17h00 et celui de 17h58 sont donc un seul et même objet. Le film ne lui donne aucune origine extérieure : sa trajectoire est elle-même fermée dans la boucle.
+Il achève alors spectaculairement sa trajectoire vers le haut et vient se loger avec un bruit sec dans le petit recoin du plafond : exactement l’événement qui, à 17h58 dans A16, attire le regard de Thomas vers le haut.
 
-[À VALIDER EN 3D — trajectoire complète de l’anneau du point de percussion jusqu’au plafond de la caverne. Chaque rebond, glissement, passage dans la fissure et arrivée doit rester cohérent lorsqu’on lit le mouvement dans les deux directions, sans introduire de force ad hoc.]
+L’anneau de 17h00 et celui de 17h58 sont donc un seul et même objet. Il reste inversé pendant toute cette trajectoire et lorsqu’il est découvert par Thomas.
+
+Le film n’explique pas encore ce qui, dans le sens temporel propre de l’anneau, le déloge initialement de ce recoin. Cette cause peut rester hors champ si aucune solution simple et naturelle n’est trouvée.
+
+[À VALIDER EN 3D — trajectoire complète de l’anneau du point de percussion jusqu’au recoin de la caverne. Chaque rebond, glissement, passage dans la fissure et arrivée doit rester cohérent lorsqu’on lit le mouvement dans les deux directions, sans introduire d’antigravité ni de force ad hoc.]
+
+[À DÉTERMINER — origine de la chute de l’anneau dans son sens temporel propre : quel événement simple le déloge du recoin ? Ne rien dire dans le film si aucune solution satisfaisante n’est trouvée.]
 
 ⸻
 
@@ -574,7 +598,7 @@ La musique devient dramatique, retenue, sans transformer la scène en explicatio
 
 Cette fois, la caméra privilégie Thomas. Elle reste suffisamment proche de lui pour rendre lisibles ses regards, ses silences et le choc de son retour au temps normal, tout en conservant Éva et Léa dans le même espace.
 
-Thomas regarde brièvement vers le flanc où l’anneau vient de repartir dans sa trajectoire. Puis Léa. Puis le pont et son nœud.
+Thomas regarde brièvement vers le flanc où l’anneau vient de repartir dans sa trajectoire. Puis Léa. Puis le pont et son mousqueton.
 
 ÉVA
 Léa, reviens. C’est pas le bon chemin.
