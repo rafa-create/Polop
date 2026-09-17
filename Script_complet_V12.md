@@ -190,6 +190,8 @@ Le cordage est maintenant visiblement détendu et cassé.
 
 La caméra le montre brièvement, sans commentaire des personnages. La musique reste légère, avec une nuance de mystère presque imperceptible.
 
+Au premier visionnage, ce mouvement de caméra n’a pas encore d’explication. Au second, il permet de comprendre que l’état sûr du pont avant 17h01 dépend du geste de Thomas inversé.
+
 ⸻
 
 A10 — 17h50 — LA PAUSE
@@ -371,33 +373,45 @@ Thomas continue vers le passé. Une feuille remonte vers sa branche. De petits �
 
 ⸻
 
-B5 — VERS 17h30 — LE CORDAGE
+B5 — VERS 17h30 — LE PONT CASSÉ
 
 Thomas arrive à portée visuelle du pont.
 
-Le cordage que le spectateur a vu cassé à 17h30 évolue maintenant à rebours : sa rupture se résorbe et les fibres retrouvent progressivement leur état antérieur.
+Le cordage est cassé et détendu, dans le même état que celui montré par la caméra à 17h30 pendant la randonnée.
 
-Thomas observe le phénomène sans intervenir.
+Il ne se répare pas spontanément. Il ne se reconstruit pas sous les yeux de Thomas.
 
-La caméra ne transforme pas ce moment en explication. C’est simplement l’état du pont que Thomas rencontre en progressant de 18h00 vers 17h00.
-
-Il poursuit sa route vers le passé.
+Thomas aperçoit le pont mais poursuit sa progression vers 17h00. Le film ne donne encore aucune explication au mouvement de caméra de la première partie.
 
 ⸻
 
-B6 — 17h01 — LE NŒUD
+B6 — 17h01 — THOMAS RÉPARE LE CORDAGE
 
 Thomas atteint la zone du pont peu avant 17h00.
 
-Le cordage est revenu à son état antérieur.
+Le cordage est toujours défectueux.
 
-Thomas s’approche du point d’attache et effectue un seul geste continu sur le nœud. Le film ne le présente ni comme une réparation du passé ni comme un « défaire puis refaire » : ce geste appartient simplement à l’unique histoire du pont.
+Thomas s’arrête. Il s’approche du point d’attache.
 
-À 17h01, dans la trajectoire personnelle inversée de Thomas, son geste laisse le point d’attache dans l’état qui, en lecture normale de l’histoire, permet au pont d’être utilisable à 17h00 puis à 16h59.
+Il prend lui-même le cordage et le remet en état. C’est son action physique, et uniquement son action, qui rend le pont utilisable dans la partie de l’histoire située avant 17h01.
 
-Thomas vérifie brièvement la tension et lâche. Il regarde le pont, puis prend le chemin rocheux du flanc.
+Le geste reste simple, presque machinal. Thomas ne prononce rien. Le film ne précise pas ce qu’il croit être en train de provoquer.
 
-[À DÉTAILLER — chorégraphie physique exacte du geste du nœud à valider dans les deux sens avant verrouillage définitif.]
+Il resserre le point d’attache, remet le cordage en place et vérifie brièvement sa tension.
+
+Le pont tient.
+
+Thomas regarde le résultat. Puis il regarde le chemin.
+
+Il repart par le flanc.
+
+Dans la chronologie normale du monde, le même événement se lit dans l’autre sens : après 17h01, le point d’attache passe de l’état sûr laissé par Thomas à l’état cassé qui sera visible vers 17h30.
+
+Avant 17h01, en revanche, le pont est utilisable. C’est cet état que Léa a déjà rencontré lorsqu’elle l’a traversé vers 16h59.
+
+Thomas n’a donc pas changé le passé. Son geste à 17h01 a toujours fait partie de l’unique histoire dans laquelle Léa traverse et survit.
+
+[À DÉTAILLER — chorégraphie physique exacte du geste : construire un mouvement de Thomas inversé qui, vu dans le sens objectif normal, corresponde sans coupe à la dégradation du point d’attache après 17h01.]
 
 ⸻
 
@@ -467,7 +481,11 @@ Thomas ne répond pas.
 
 Cette fois, la caméra reste assez longtemps pour rendre visible son émotion. Ses yeux se remplissent de larmes.
 
-Il porte une main à sa poche et sent la petite boîte destinée à Éva. Il la sort légèrement.
+Il vient de traverser l’heure qui conduit à ce moment. Le pont que Léa a utilisé avant 17h00 ne pouvait être sûr que parce que Thomas inversé intervient à 17h01.
+
+Léa vivante devant lui est donc déjà la conséquence de ce qu’il vient personnellement d’accomplir — et la preuve de la boucle qu’il devra continuer à accomplir.
+
+Thomas porte une main à sa poche et sent la petite boîte destinée à Éva. Il la sort légèrement.
 
 Il regarde la boîte.
 
