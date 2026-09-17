@@ -133,6 +133,23 @@ A3 — LA RANDONNÉE
 
 Éva et Léa reprennent leurs échanges. Elles se taquinent. Thomas marche avec elles, écoute, réagit parfois, mais semble légèrement ailleurs.
 
+Léa tend la main vers la poche latérale du sac de Thomas et lui prend sans demander une petite barre de céréales.
+
+Thomas la regarde faire.
+
+THOMAS
+Sérieusement ?
+
+LÉA
+Merci.
+
+ÉVA
+Elle a dit merci.
+
+Léa ouvre déjà la barre. Éva sourit. Thomas secoue légèrement la tête, avec un presque-sourire. Le geste a manifestement quelque chose d’habituel entre eux.
+
+Ils continuent à marcher.
+
 ÉVA
 Ça va ?
 
@@ -231,6 +248,12 @@ Thomas regarde encore le vide avant de les rejoindre.
 A8 — LA RANDONNÉE CONTINUE
 
 La lumière devient plus chaude. Éva et Léa continuent à parler de choses ordinaires. Thomas est avec elles mais reste plus silencieux, plus attentif au temps.
+
+À un passage un peu plus étroit, Éva vient naturellement prendre le bras de Thomas le temps de quelques pas, tout en continuant sa conversation avec Léa. Elle n’en a pas réellement besoin. Elle le lâche ensuite sans y penser et poursuit devant.
+
+Thomas la regarde une seconde après qu’elle l’a déjà lâché, puis reprend sa marche.
+
+Le moment n’a aucune fonction dans le puzzle.
 
 ⸻
 
@@ -506,15 +529,13 @@ Thomas inversé la suit du regard.
 
 La caméra la suit à son tour et remonte vers Thomas normal, plus haut dans le relief.
 
-Pour la première fois depuis le retournement de 18h00, la caméra rend la coexistence explicite sans aucun effet de duplication : Thomas inversé est bien présent plus bas dans la montagne, tandis que Thomas normal est simultanément ici, à un autre point de sa propre histoire.
+Pendant quelques secondes, le geste de Thomas normal redevient lisible dans le déroulement ordinaire de la randonnée : son pied déloge la pierre.
 
-Pendant quelques secondes, la caméra adopte subtilement la lecture temporelle de Thomas normal. Son geste devient lisible : son pied déloge la pierre dans le déroulement ordinaire de la randonnée.
-
-La caméra peut laisser la géographie contenir les deux trajectoires sans nécessairement cadrer les deux Thomas dans le même plan. Le spectateur doit pouvoir comprendre progressivement : Thomas inversé n’a pas remplacé Thomas normal ; il est revenu dans l’heure où son occurrence normale existe encore.
+La caméra ne souligne pas davantage la coexistence et ne cherche pas à en faire formuler immédiatement la théorie au spectateur. La présence de Thomas normal dans cette même géographie suffit.
 
 Puis la caméra revient vers Thomas inversé.
 
-Aucune nouvelle règle physique n’est introduite : seule la narration visuelle change de point de lecture. Cette coexistence est la conséquence directe du retournement de la worldline à 18h00 et prépare sa fermeture à 17h00.
+Aucune nouvelle règle physique n’est introduite : seule la narration visuelle change de point de lecture.
 
 ⸻
 
@@ -556,9 +577,7 @@ Exactement la même signature métallique que lorsque Léa traversait à 16h59.
 
 Thomas s’immobilise.
 
-Le son déclenche le raccord avant même toute explication. Son regard va du mousqueton désormais accroché vers le pont, puis vers la direction où se trouve Léa dans cette histoire.
-
-Il comprend — ou commence à comprendre — ce qu’il vient de produire.
+Son regard va du mousqueton désormais accroché vers le pont. Il n’y a pas d’autre effet destiné à confirmer la connexion.
 
 Dans le sens objectif normal, le même événement est exactement l’inverse : avant 17h01, le mousqueton est accroché ; le geste de Thomas inversé apparaît comme son décrochage ; après 17h01, le cordage pend. Aucun tiers n’intervient. Personne ne vient casser ou décrocher le pont entre les deux états.
 
@@ -566,7 +585,7 @@ Ainsi, le pont que Léa a utilisé à 16h59 était sûr précisément parce que 
 
 Thomas n’a pas changé le passé. Son action faisait déjà partie de l’unique histoire dans laquelle Léa traverse et survit.
 
-Ce que Thomas emporte ensuite vers 17h00 est plus simple qu’une théorie de la boucle : il vient de rencontrer le pont détaché à 17h01. Lorsqu’il retrouvera Léa en orientation normale quelques instants plus tôt, cette connaissance concrète suffira à lui faire comprendre que la fixation est sur le point de devenir dangereuse.
+Ce que Thomas emporte ensuite vers 17h00 est plus simple qu’une théorie de la boucle : il vient de rencontrer le pont détaché à 17h01. Lorsqu’il retrouvera Léa en orientation normale quelques instants plus tôt, cette connaissance concrète suffira à motiver son avertissement.
 
 Le geste doit rester suffisamment simple pour fonctionner dans les deux sens sans donner l’impression d’une manipulation complexe jouée à l’envers.
 
@@ -652,7 +671,7 @@ B9 — 17h00 — LE RETOUR / LE DÉCLIC
 
 Exactement le même espace, les mêmes positions, les mêmes dialogues et les mêmes actions que dans A2. Seuls le regard de la caméra, le son et la musique changent la lecture.
 
-La musique devient dramatique, retenue, sans transformer la scène en explication.
+La musique reste retenue. Elle accompagne l’émotion de Thomas sans annoncer ni expliquer une révélation.
 
 Cette fois, la caméra a révélé la convergence : Thomas inversé, Thomas normal et l’anneau ont occupé le même point de fermeture. Elle ne donne pourtant aucune réponse explicative sur la cause exacte du retour au temps normal.
 
@@ -665,27 +684,11 @@ Léa, reviens. C’est pas le bon chemin.
 
 Léa s’arrête.
 
-Thomas regarde Léa vivante. Son regard descend vers le pont.
+Thomas regarde Léa vivante.
 
-La caméra omnisciente peut alors quitter très brièvement Thomas et retrouver le mousqueton. Le raccord reprend le cadrage simple établi à 16h59 : roche, point d’ancrage, métal.
+Son regard descend brièvement vers le pont. La caméra reste sur lui. Aucun retour sur le mousqueton, aucun rappel sonore du CLAC : A1, A9 et B6 ont déjà donné au spectateur les éléments nécessaires.
 
-Dans la bande-son, très brièvement, revient la mémoire du CLAC métallique entendu lorsque Léa traversait. Pas comme un flashback surnaturel ni comme un souvenir magique de Thomas : comme un raccord cinématographique destiné au spectateur.
-
-CLAC.
-
-Très court.
-
-La caméra revient sur Thomas.
-
-LÉA → PONT → MOUSQUETON → THOMAS.
-
-Le lien causal devient lisible sans dialogue explicatif : Léa a traversé ce pont. Le mousqueton était accroché. Thomas vient personnellement de produire cet état dans l’autre sens du temps. Il vient aussi de rencontrer ce même mousqueton détaché à 17h01 : il sait donc, sans avoir besoin de théoriser la boucle, que la fixation est sur le point de devenir dangereuse.
-
-Sa compréhension peut rester immédiate et concrète : Léa est vivante ; ce pont vient d’être sûr ; quelques instants plus tard, dans l’heure qu’il vient de vivre à rebours, il l’a trouvé décroché et l’a raccroché. Cela suffit à motiver son geste présent et son choix de protéger Léa.
-
-La compréhension plus précise de la boucle fermée — il ne va pas la sauver, son geste faisait déjà partie de l’histoire dans laquelle elle a traversé — peut n’arriver qu’après coup ou au second visionnage.
-
-Thomas regarde le pont, puis le relief, puis Léa.
+Puis Léa fait un mouvement vers le pont.
 
 THOMAS
 Ne reprends pas le pont.
@@ -708,9 +711,7 @@ Tu pouvais pas lui dire ça avant ?
 
 Thomas ne répond pas.
 
-La caméra ne le quitte pas. Ses yeux se remplissent de larmes.
-
-Léa vivante devant lui et l’état imminent du pont lui donnent assez d’éléments pour agir. Le film n’exige pas qu’il ait déjà formulé une théorie complète de la boucle.
+La caméra reste avec lui. L’émotion monte, mais elle n’est pas traduite par une succession de raccords explicatifs.
 
 Quand Léa les rejoint, Thomas regarde le chemin qui monte.
 
@@ -723,12 +724,12 @@ C’était ton idée.
 LÉA
 Trop tard.
 
-Cette fois, la caméra reste sur Thomas. La phrase de Léa ne ressemble plus à une simple plaisanterie : son hésitation devient pleinement lisible.
+Cette fois, la caméra reste sur Thomas. Son hésitation devient lisible sans que la phrase soit soulignée autrement.
 
 ÉVA
 Puis on sait jamais ce qu’on pourrait rater.
 
-Thomas regarde Éva. La caméra saisit sa réaction pendant qu'Éva, inconsciente du double sens de sa phrase, reprend déjà sa marche.
+Thomas regarde Éva. Elle reprend déjà sa marche.
 
 LÉA
 Moi, je sais. Une montée horrible.
@@ -744,13 +745,9 @@ Il porte une main à sa poche et sent la petite boîte destinée à Éva. Il la 
 
 Il regarde la boîte.
 
-Puis la montagne, là où l’anneau vient de repartir.
-
 Puis Éva.
 
 Puis Léa.
-
-La vie qu’il imaginait. La boucle qu’il vient de comprendre. La vie qu’elles vont continuer sans lui.
 
 Il ne propose pas.
 
@@ -760,11 +757,11 @@ Thomas hésite encore une fraction de seconde.
 
 Puis il les suit.
 
-Son choix doit être émotionnellement compréhensible dès ce premier visionnage, même si son statut métaphysique reste ouvert : libre choix, acceptation d’une histoire déjà écrite, ou impossibilité de faire autrement.
+Le film n’explicite pas davantage ce qu’il formule intérieurement. Les événements précédents donnent la causalité ; la boîte, Éva, Léa et son hésitation donnent le coût.
 
-Ce que le film rend clair n’est pas la réponse philosophique. C’est son motif : il repart parce que la boucle dont il vient de voir la preuve est celle dans laquelle Léa vit.
+Le statut de son choix reste ouvert : libre choix, acceptation d’une histoire déjà écrite, ou impossibilité de faire autrement.
 
-La musique dramatique prend alors de l’ampleur. Pas comme une victoire : comme la révélation silencieuse de l’immensité de ce qu’il vient d’accepter.
+La musique prend progressivement de l’ampleur, portée par la séparation à venir plutôt que par la résolution du puzzle.
 
 La caméra reste un instant derrière Thomas, Éva et Léa qui remontent le chemin.
 
