@@ -54,7 +54,11 @@ Léa, reviens. C’est pas le bon chemin.
 
 Léa s’arrête.
 
-La caméra omnisciente privilégie Éva et Léa. Thomas existe dans l’espace et entre progressivement dans le cadre, mais la caméra ne cherche pas son émotion et ne souligne pas ses silences.
+La caméra omnisciente reste avec Léa et Éva. Léa constitue naturellement le centre de l’action : elle revient vers le pont et Éva lui parle.
+
+Pendant ces quelques secondes, Thomas poursuit sa marche près du flanc rocheux, hors du centre d’attention de la caméra. Le point exact où sa trajectoire rencontre celle de Thomas inversé n’est pas montré dans cette première lecture.
+
+Aucun mouvement de caméra ne signale qu’un événement important vient de se produire. Lorsque Thomas revient naturellement dans le cadre, il vient personnellement de terminer la boucle, mais le film ne donne au spectateur aucune raison de le comprendre encore.
 
 Thomas regarde le pont, puis le précipice en contrebas, puis Léa.
 
@@ -390,11 +394,13 @@ Il n’a pas entendu leurs appels.
 
 A16 — 17h58 — L’ANNEAU
 
-Au fond de la caverne, Thomas aperçoit au sol un anneau simple.
+Thomas remarque alors un anneau simple au plafond de la caverne, logé contre une aspérité rocheuse près de l’arrivée d’une étroite fissure naturelle.
 
-Il le ramasse, l’observe, le retourne entre ses doigts. Rien ne paraît particulier.
+Il l’observe, intrigué. Rien dans l’objet n’explique sa présence à cet endroit.
 
-Il le garde dans sa main.
+Il parvient à le récupérer, le retourne entre ses doigts, puis le garde dans sa main.
+
+Au premier visionnage, l’origine de l’anneau reste un mystère. Le film ne signale pas encore qu’il s’agit du même anneau que Thomas perdra au point de fermeture de 17h00.
 
 ⸻
 
@@ -508,25 +514,55 @@ Thomas continue sa progression. Les lieux qu’il a vus pendant la randonnée re
 
 Il se rapproche du point où sa trajectoire croise celle de Thomas normal.
 
+Un gros relief rocheux borde ici le chemin et peut masquer brièvement deux personnes l’une à l’autre selon leur position.
+
 ⸻
 
-B8 — LES DEUX THOMAS
+B8 — LES DEUX THOMAS / LA PERTE DE L’ANNEAU
 
 Thomas inversé aperçoit Thomas normal.
 
-Pour lui, Thomas normal vient vers lui en mouvement inversé.
+Pour lui, Thomas normal vient vers lui en mouvement inversé, au ras du flanc rocheux.
 
-Les deux trajectoires convergent. Une légère percussion se produit.
+Thomas inversé comprend que leurs trajectoires vont converger. Il se tend et tente instinctivement de se décaler contre la roche pour éviter le croisement.
 
-Au même instant, l’anneau se détache du doigt de Thomas inversé et tombe dans le précipice.
+Le relief qui, dans A2, permettait à la caméra de rester naturellement avec Léa masque ici une partie très brève de la rencontre.
 
-Thomas suit l’anneau du regard.
+Thomas inversé heurte légèrement la roche au moment où les deux trajectoires se frôlent. La percussion est petite, presque banale : rien qui ressemble à un choc spectaculaire.
 
-L’événement composé est unique et lisible : contact, perte de l’anneau, fin de l’inversion.
+L’anneau se détache de son doigt et est projeté contre le flanc de la montagne.
 
-Le film n’établit pas la règle générale qu’un retrait volontaire de l’anneau suffirait à sortir de l’inversion.
+Au lieu de tomber dans le vide, il repart immédiatement le long d’une trajectoire ascendante impossible en lecture normale : l’anneau, toujours pris dans sa propre évolution temporelle, remonte rapidement le relief.
 
-Thomas revient au temps normal.
+Sa vitesse et le terrain rendent toute poursuite inutile. Thomas le suit seulement du regard quelques instants.
+
+La perte de l’anneau coïncide avec la fin de son inversion. Thomas retrouve le sens normal du temps. Sa mémoire reste continue : il se souvient de l’heure qu’il vient personnellement de parcourir de 18h00 à 17h00.
+
+Le film n’établit pas qu’un simple retrait volontaire de l’anneau suffirait à sortir de l’inversion. Le seul événement observé reste ce point composé : convergence des deux Thomas, percussion contre la roche, perte de l’anneau et retour de Thomas au temps normal.
+
+Thomas reprend naturellement sa place dans la scène de 17h00 et se dirige vers Éva et Léa.
+
+[À VALIDER EN 3D — géométrie exacte du rocher, positions simultanées des deux Thomas, percussion, continuité des trajectoires et raccord permettant à A2 de rester centré naturellement sur Léa sans montrer le point de fermeture.]
+
+⸻
+
+B8 BIS — LA TRAJECTOIRE DE L’ANNEAU
+
+La caméra omnisciente peut quitter Thomas et suivre l’anneau.
+
+L’anneau remonte rapidement le flanc de la montagne. Il ne s’agit pas d’une nouvelle gravité qui attirerait les objets vers le ciel : le film observe un objet inversé parcourant sa propre trajectoire dans le sens opposé à celui du monde normal.
+
+Il ricoche et glisse le long du relief selon une trajectoire qui devra rester physiquement cohérente lorsqu’elle est lue dans l’autre sens.
+
+Il atteint une petite ouverture naturelle dans la roche, suffisamment étroite pour ne pas constituer un passage humain, et s’y engouffre.
+
+La caméra révèle que cette fissure communique avec la caverne située plus haut dans la montagne.
+
+L’anneau poursuit son trajet dans cette cheminée rocheuse jusqu’à la caverne. Son mouvement se termine contre une aspérité du plafond, au même emplacement où Thomas le récupère à 17h58 dans A16.
+
+L’anneau de 17h00 et celui de 17h58 sont donc un seul et même objet. Le film ne lui donne aucune origine extérieure : sa trajectoire est elle-même fermée dans la boucle.
+
+[À VALIDER EN 3D — trajectoire complète de l’anneau du point de percussion jusqu’au plafond de la caverne. Chaque rebond, glissement, passage dans la fissure et arrivée doit rester cohérent lorsqu’on lit le mouvement dans les deux directions, sans introduire de force ad hoc.]
 
 ⸻
 
@@ -538,14 +574,14 @@ La musique devient dramatique, retenue, sans transformer la scène en explicatio
 
 Cette fois, la caméra privilégie Thomas. Elle reste suffisamment proche de lui pour rendre lisibles ses regards, ses silences et le choc de son retour au temps normal, tout en conservant Éva et Léa dans le même espace.
 
-Il regarde le précipice où l’anneau vient de disparaître dans sa trajectoire personnelle. Puis Léa. Puis le pont et son nœud.
+Thomas regarde brièvement vers le flanc où l’anneau vient de repartir dans sa trajectoire. Puis Léa. Puis le pont et son nœud.
 
 ÉVA
 Léa, reviens. C’est pas le bon chemin.
 
 Léa s’arrête.
 
-La caméra reste avec Thomas lorsqu'il regarde le pont, puis le précipice, puis Léa.
+La caméra reste avec Thomas lorsqu'il regarde le pont, puis le relief, puis Léa.
 
 THOMAS
 Ne reprends pas le pont.
