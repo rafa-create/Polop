@@ -73,7 +73,37 @@ Léa prend le chemin du flanc.
 ÉVA
 Tu pouvais pas lui dire ça avant ?
 
-Thomas ne répond pas. Il regarde Léa, puis repart avec Éva.
+Thomas ne répond pas. Il regarde Léa.
+
+Quand elle les rejoint, Thomas regarde le chemin qui monte.
+
+THOMAS
+On est obligés de monter jusqu’en haut ?
+
+ÉVA
+C’était ton idée.
+
+LÉA
+Trop tard.
+
+Thomas reste silencieux. Son regard demeure sur la montée.
+
+ÉVA
+Puis on sait jamais ce qu’on pourrait rater.
+
+Thomas la regarde.
+
+Éva a déjà repris sa marche.
+
+LÉA
+Moi, je sais. Une montée horrible.
+
+ÉVA
+Allez.
+
+Thomas reste immobile une seconde.
+
+Puis il les suit.
 
 ⸻
 
@@ -487,7 +517,35 @@ Il vient de traverser l’heure qui conduit à ce moment. Il comprend que le pon
 
 Léa vivante devant lui devient ainsi la preuve concrète de la boucle fermée : son sacrifice futur, dans sa propre expérience, est déjà inscrit dans le passé qu’il vient de vivre.
 
-Thomas porte une main à sa poche et sent la petite boîte destinée à Éva. Il la sort légèrement.
+Quand Léa les rejoint, Thomas regarde le chemin qui monte.
+
+THOMAS
+On est obligés de monter jusqu’en haut ?
+
+ÉVA
+C’était ton idée.
+
+LÉA
+Trop tard.
+
+Thomas reste silencieux. Cette fois, son hésitation est pleinement lisible.
+
+ÉVA
+Puis on sait jamais ce qu’on pourrait rater.
+
+Thomas regarde Éva.
+
+Elle a déjà repris sa marche.
+
+LÉA
+Moi, je sais. Une montée horrible.
+
+ÉVA
+Allez.
+
+Thomas reste immobile une seconde.
+
+Il porte une main à sa poche et sent la petite boîte destinée à Éva. Il la sort légèrement.
 
 Il regarde la boîte.
 
@@ -501,8 +559,10 @@ La vie qu’il imaginait. La boucle qu’il vient de comprendre. La vie qu’ell
 
 Il ne propose pas.
 
-La scène reprend exactement le mouvement déjà vu au début : Léa par le flanc, Éva sur le vrai chemin, Thomas avec elle.
+Devant lui, Éva et Léa continuent la montée.
 
-Thomas ne dit rien.
+Thomas hésite encore une fraction de seconde.
+
+Puis il les suit.
 
 COUPURE.
