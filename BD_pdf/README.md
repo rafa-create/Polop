@@ -2,7 +2,7 @@
 
 ## Statut actuel
 
-**Scénario verrouillé — production case par case autorisée.**
+**PHASE 1 TERMINÉE — storyboard exhaustif V12 contrôlé. AUCUNE IMAGE AVANT APPROBATION EXPLICITE.**
 
 La source de vérité narrative est `Script_complet_V12.md`. La BD ne corrige pas, ne complète pas et ne réinterprète pas silencieusement le scénario.
 
@@ -11,76 +11,46 @@ Ordre d'autorité :
 1. `Script_complet_V12.md` — bible narrative absolue.
 2. `BD_pdf/03_CASES_REGLES.md` — méthode stricte de traduction en cases.
 3. `BD_pdf/02_BIBLE_VISUELLE.md` — continuité visuelle.
-4. `BD_pdf/01_DECOUPAGE.md` — structure générale des planches.
+4. `BD_pdf/04_STORYBOARD_DETAILLE.md` — storyboard case par case contrôlé contre V12.
+5. `BD_pdf/01_DECOUPAGE.md` — structure générale des planches.
 
-En cas de contradiction, le document supérieur gagne.
+En cas de contradiction, le document supérieur gagne. Le storyboard ne peut jamais corriger V12.
 
-## Objectif
+## Storyboard Phase 1
 
-Créer un **PDF propre, lisible et partageable** permettant de découvrir l'histoire avant la simulation / prévisualisation 3D puis le tournage.
+`04_STORYBOARD_DETAILLE.md` contient **96 cases stables (`CASE_001` à `CASE_096`)** couvrant tout le film et une projection de **29 pages narratives**. Une couverture pourra être ajoutée au PDF final, soit 30 pages avec couverture si cette pagination est conservée.
 
-Une personne qui n'a jamais lu le scénario doit pouvoir comprendre l'histoire par la BD, ressentir la révélation puis relire les premières scènes avec une nouvelle compréhension, sans que la BD ait ajouté une explication absente du film.
+La seconde passe V12 est consignée à la fin du storyboard. Les validations humaines/3D encore nécessaires concernent principalement : géométrie zone rocheuse/caverne, mécanique réversible du mousqueton, chorégraphie de fermeture à 17h00, worldline mécanique de l'anneau et verrouillage des références visuelles.
 
-## Workflow validé
+## Workflow Phase 2 — seulement après approbation
 
-La production se fait **une case à la fois**.
+La production se fait **une case à la fois**, strictement dans l'ordre.
 
-Pour chaque case :
+Pour chaque case : relire V12 et sa fiche dans `04_STORYBOARD_DETAILLE.md`, consulter les références validées et la continuité, présenter brièvement la case, attendre explicitement **« go »**, générer une seule image sans texte, contrôler contre V12, puis seulement après validation enregistrer `BD_pdf/images/case_XXX.png` et mettre à jour son statut (`À VALIDER`, `VALIDÉE`, `À REFAIRE`).
 
-1. relire le passage correspondant de V12 ;
-2. préparer la fiche précise de la case selon `03_CASES_REGLES.md` ;
-3. présenter cette fiche à l'utilisateur ;
-4. attendre explicitement **« go »** ;
-5. générer uniquement cette case, sans texte incrusté ;
-6. contrôler la case contre V12 et la continuité ;
-7. la corriger ou la marquer `VALIDÉE` ;
-8. seulement ensuite préparer la case suivante.
-
-Les images validées sont numérotées `case_001`, `case_002`, etc. Une case validée devient une référence de continuité pour toutes les suivantes.
+Une case validée devient une référence obligatoire pour toutes les suivantes. Ne jamais passer automatiquement à la suivante.
 
 ## Règles non négociables
 
-- aucun dialogue inventé ;
-- aucun événement inventé ;
+- aucun dialogue, événement, objet causal, heure ou phénomène inventé ;
 - aucune modification de chronologie ;
-- aucune explication ajoutée pour faciliter artificiellement la compréhension ;
+- aucune explication ajoutée ;
 - aucune révélation anticipée ;
-- les ambiguïtés volontaires de V12 restent ambiguës ;
-- les indices ordinaires restent ordinaires au premier passage ;
-- Léa est toujours représentée de manière familiale et appropriée ;
-- dialogues, cartouches et bruitages sont composés séparément des illustrations.
+- ambiguïtés V12 préservées ;
+- indices ordinaires gardés ordinaires au premier passage ;
+- Léa toujours représentée de manière familiale et appropriée ;
+- aucun dialogue, bulle, cartouche, numéro, légende ou texte dans les images sources ;
+- lumière déterminée par l'heure objective, pas par le sens temporel vécu ;
+- Thomas normal et Thomas inversé = même personnage, sans costume distinctif inventé.
 
-## Continuité
+## Continuité critique
 
-Chaque case doit respecter les références déjà validées pour :
-
-- Thomas, Éva et Léa ;
-- vêtements, sacs, chaussures, montre et accessoires ;
-- vrai chemin, creux, pont, chemin du flanc, zone rocheuse et caverne ;
-- pont, cordage et mousqueton ;
-- anneau, pierre, feuille et autres objets récurrents ;
-- heure objective et lumière ;
-- positions et trajectoires ;
-- coexistence de Thomas normal et Thomas inversé.
-
-La partie inversée utilise le même monde et la même géographie. Elle ne reçoit pas d'effet fantastique inventé.
+Doivent rester physiquement compatibles dans les deux lectures : pont, mousqueton, pierre, feuille, caverne, anneau, montre, deux occurrences de Thomas et fermeture de la boucle. Le pont suit strictement P1 (accroché) / P2 (décroché) selon V12 ; l'anneau est une instance unique qui n'attend jamais et n'est pas porté par Thomas pendant son heure inversée.
 
 ## PDF final
 
-Le PDF n'est **pas assemblé pendant la génération**.
-
-L'utilisateur demandera explicitement l'assemblage à la fin. À ce moment-là :
-
-1. les cases validées seront réparties en planches ;
-2. les dialogues et bruitages exacts seront ajoutés proprement ;
-3. une passe complète de continuité sera faite contre V12 ;
-4. la couverture et la pagination seront finalisées ;
-5. le PDF haute qualité sera exporté.
-
-Des annexes de production pourront ensuite contenir la carte, la chronologie, le schéma de boucle et les références utiles à la 3D, sans interrompre le récit principal.
+**Aucun PDF avant demande explicite.** Une fois toutes les cases validées : composer les planches, ajouter séparément les dialogues/bruitages/cartouches exacts de V12, refaire une passe intégrale de continuité, puis exporter.
 
 ## Principe directeur
 
-**V12 d'abord. Toujours.**
-
-Une belle case qui contredit le scénario est une mauvaise case. Une case sobre qui traduit exactement l'information, le hors-champ et l'ambiguïté voulus par V12 est la bonne direction.
+**V12 d'abord. Toujours.** Une belle case qui contredit V12 est une mauvaise case.
