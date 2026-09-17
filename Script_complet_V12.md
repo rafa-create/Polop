@@ -72,7 +72,7 @@ Au même instant, hors du centre d’attention, l’anneau passe également par 
 
 Aucun mouvement de caméra ne signale qu’un événement important vient de se produire. Lorsque Thomas revient naturellement dans le cadre, il vient personnellement de terminer la boucle, mais le film ne donne au spectateur aucune raison de le comprendre encore.
 
-Thomas regarde le pont, puis le précipice en contrebas, puis Léa.
+Thomas voit Léa revenir vers le pont. Son regard se fixe une fraction de seconde sur le point d’ancrage. Dans le temps qu’il vient personnellement de parcourir, il a rencontré ce même mousqueton détaché juste après cet instant. Il n’a pas besoin d’en comprendre toute la mécanique : il sait concrètement que cette fixation est sur le point de devenir dangereuse.
 
 THOMAS
 Ne reprends pas le pont.
@@ -540,6 +540,8 @@ Ainsi, le pont que Léa a utilisé à 16h59 était sûr précisément parce que 
 
 Thomas n’a pas changé le passé. Son action faisait déjà partie de l’unique histoire dans laquelle Léa traverse et survit.
 
+Ce que Thomas emporte ensuite vers 17h00 est plus simple qu’une théorie de la boucle : il vient de rencontrer le pont détaché à 17h01. Lorsqu’il retrouvera Léa en orientation normale quelques instants plus tôt, cette connaissance concrète suffira à lui faire comprendre que la fixation est sur le point de devenir dangereuse.
+
 Le geste doit rester suffisamment simple pour fonctionner dans les deux sens sans donner l’impression d’une manipulation complexe jouée à l’envers.
 
 [À VALIDER EN 3D — forme exacte du mousqueton et de son point d’ancrage, position des doigts et mouvement unique permettant : dans le temps propre de Thomas inversé, DÉCROCHÉ → ACCROCHÉ ; dans le temps objectif normal, exactement le même mouvement retourné, ACCROCHÉ → DÉCROCHÉ. Le CLAC contre la roche doit appartenir au même événement dans les deux lectures.]
@@ -651,13 +653,11 @@ La caméra revient sur Thomas.
 
 LÉA → PONT → MOUSQUETON → THOMAS.
 
-Le lien causal devient lisible sans dialogue explicatif : Léa a traversé ce pont. Le mousqueton était accroché. Thomas vient personnellement de produire cet état dans l’autre sens du temps.
+Le lien causal devient lisible sans dialogue explicatif : Léa a traversé ce pont. Le mousqueton était accroché. Thomas vient personnellement de produire cet état dans l’autre sens du temps. Il vient aussi de rencontrer ce même mousqueton détaché à 17h01 : il sait donc, sans avoir besoin de théoriser la boucle, que la fixation est sur le point de devenir dangereuse.
 
-Il comprend que Léa vivante devant lui est la conséquence d’un geste qu’il vient de vivre mais qui appartenait déjà à son passé.
+Sa compréhension peut rester immédiate et concrète : Léa est vivante ; ce pont vient d’être sûr ; quelques instants plus tard, dans l’heure qu’il vient de vivre à rebours, il l’a trouvé décroché et l’a raccroché. Cela suffit à motiver son geste présent et son choix de protéger Léa.
 
-Ce déclic doit permettre au spectateur, même sans reconstruire toute la mécanique temporelle, de comprendre au minimum : Thomas doit accomplir cette boucle parce que ce qu’il y fait sauve Léa.
-
-La compréhension plus précise — il ne va pas la sauver, il l’a déjà sauvée — peut n’arriver qu’après coup ou au second visionnage.
+La compréhension plus précise de la boucle fermée — il ne va pas la sauver, son geste faisait déjà partie de l’histoire dans laquelle elle a traversé — peut n’arriver qu’après coup ou au second visionnage.
 
 Thomas regarde le pont, puis le relief, puis Léa.
 
@@ -684,7 +684,7 @@ Thomas ne répond pas.
 
 La caméra ne le quitte pas. Ses yeux se remplissent de larmes.
 
-Léa vivante devant lui est désormais la preuve concrète de la boucle fermée. Il n’a pas devant lui une possibilité abstraite de la sauver plus tard : il voit le résultat d’une action qu’il sait devoir accomplir.
+Léa vivante devant lui et l’état imminent du pont lui donnent assez d’éléments pour agir. Le film n’exige pas qu’il ait déjà formulé une théorie complète de la boucle.
 
 Quand Léa les rejoint, Thomas regarde le chemin qui monte.
 
