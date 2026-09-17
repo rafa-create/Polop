@@ -190,7 +190,7 @@ Le cordage est maintenant visiblement détendu et cassé.
 
 La caméra le montre brièvement, sans commentaire des personnages. La musique reste légère, avec une nuance de mystère presque imperceptible.
 
-Au premier visionnage, ce mouvement de caméra n’a pas encore d’explication. Au second, il permet de comprendre que l’état sûr du pont avant 17h01 dépend du geste de Thomas inversé.
+Au premier visionnage, ce mouvement de caméra n’a pas encore d’explication. Au second, il permet de relier l’état cassé du pont après 17h01 à l'intervention de Thomas inversé au point charnière.
 
 ⸻
 
@@ -389,13 +389,13 @@ B6 — 17h01 — THOMAS RÉPARE LE CORDAGE
 
 Thomas atteint la zone du pont peu avant 17h00.
 
-Le cordage est toujours défectueux.
+Le cordage est défectueux.
 
 Thomas s’arrête. Il s’approche du point d’attache.
 
-Il prend lui-même le cordage et le remet en état. C’est son action physique, et uniquement son action, qui rend le pont utilisable dans la partie de l’histoire située avant 17h01.
+Il prend lui-même le cordage et le remet en état. C’est son action physique, et uniquement son action, qui explique l’état utilisable du pont dans la partie de l’histoire située avant 17h01.
 
-Le geste reste simple, presque machinal. Thomas ne prononce rien. Le film ne précise pas ce qu’il croit être en train de provoquer.
+Le geste reste simple, presque machinal. Thomas ne prononce rien. Le film ne précise pas s’il comprend immédiatement la portée de ce qu’il fait.
 
 Il resserre le point d’attache, remet le cordage en place et vérifie brièvement sa tension.
 
@@ -405,13 +405,15 @@ Thomas regarde le résultat. Puis il regarde le chemin.
 
 Il repart par le flanc.
 
-Dans la chronologie normale du monde, le même événement se lit dans l’autre sens : après 17h01, le point d’attache passe de l’état sûr laissé par Thomas à l’état cassé qui sera visible vers 17h30.
+Dans la chronologie objective, ce geste est le point charnière : avant 17h01, le cordage est dans l’état sûr que Léa a déjà utilisé vers 16h59 ; après 17h01, le point d’attache est dans l’état défectueux qui sera visible vers 17h30.
 
-Avant 17h01, en revanche, le pont est utilisable. C’est cet état que Léa a déjà rencontré lorsqu’elle l’a traversé vers 16h59.
+Thomas n’a donc pas changé le passé. Son geste a toujours appartenu à l’unique histoire dans laquelle Léa traverse le pont et survit.
 
-Thomas n’a donc pas changé le passé. Son geste à 17h01 a toujours fait partie de l’unique histoire dans laquelle Léa traverse et survit.
+Première lecture de cette scène : Thomas semble réparer le pont pour protéger sa fille.
 
-[À DÉTAILLER — chorégraphie physique exacte du geste : construire un mouvement de Thomas inversé qui, vu dans le sens objectif normal, corresponde sans coupe à la dégradation du point d’attache après 17h01.]
+Deuxième lecture : Léa avait déjà traversé avant qu’il accomplisse ce geste dans sa propre expérience. Sans le savoir — ou avant d’en mesurer toute la portée — Thomas vient de produire la condition qui avait déjà sauvé Léa.
+
+[À DÉTAILLER — chorégraphie physique exacte du geste : construire un mouvement de Thomas inversé qui, vu dans le sens objectif normal, corresponde sans coupe au passage du point d’attache sûr avant 17h01 à son état défectueux après 17h01.]
 
 ⸻
 
@@ -481,9 +483,9 @@ Thomas ne répond pas.
 
 Cette fois, la caméra reste assez longtemps pour rendre visible son émotion. Ses yeux se remplissent de larmes.
 
-Il vient de traverser l’heure qui conduit à ce moment. Le pont que Léa a utilisé avant 17h00 ne pouvait être sûr que parce que Thomas inversé intervient à 17h01.
+Il vient de traverser l’heure qui conduit à ce moment. Il comprend que le pont que Léa a déjà utilisé à 16h59 était sûr parce que son propre geste inversé de 17h01 faisait déjà partie de cette même histoire.
 
-Léa vivante devant lui est donc déjà la conséquence de ce qu’il vient personnellement d’accomplir — et la preuve de la boucle qu’il devra continuer à accomplir.
+Léa vivante devant lui devient ainsi la preuve concrète de la boucle fermée : son sacrifice futur, dans sa propre expérience, est déjà inscrit dans le passé qu’il vient de vivre.
 
 Thomas porte une main à sa poche et sent la petite boîte destinée à Éva. Il la sort légèrement.
 
