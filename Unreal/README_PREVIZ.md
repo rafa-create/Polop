@@ -123,6 +123,21 @@ Léa pendant l'entrée de Thomas, puis révéler la grotte en A15, et respecter 
 lecture normale → inversée → retour final. Un rapport technique vert ne valide
 pas, à lui seul, cette mise en scène.
 
+L'objectif de réalisation est désormais explicitement un **plan-séquence**.
+Les étapes A/B servent de repères narratifs dans une seule trajectoire caméra.
+La dernière révision remplace les sauts entre cadrages par une interpolation
+continue de la position et du point regardé, avec départs et arrivées amortis.
+Les grands déplacements allongent automatiquement la durée ; 276 secondes était
+la durée de la version précédente à cadrages séparés, plus celle de cette version.
+L'heure objective est également continue aux raccords A1/A2 et A17/B1.
+
+Les contrôles hors Unreal vérifient les raccords exacts, la progression de
+l'interpolation et la continuité des bornes temporelles. Le manifeste exporte
+les écarts aux raccords et la vitesse maximale mesurée de la caméra. Cette nouvelle
+trajectoire n'a pas encore été validée visuellement dans Unreal : les collisions,
+les occultations et l'absence de révélations prématurées restent à contrôler.
+Une interpolation continue ne garantit pas à elle seule un plan-séquence réussi.
+
 ## Reprise du 18 septembre — déplacements et exécution différée
 
 - Correction de `NameError: __file__ is not defined` : Unreal retire cette variable
@@ -195,4 +210,3 @@ outils de contrôle ; il ne charge pas les scripts `old/` ou `reference/`.
 `README_PREVIZ.md` fournit les prérequis et limites, sans être une dépendance du
 code. Cela ne signifie pas qu'un PC vide peut exécuter le fichier seul : Unreal,
 les deux plugins et le Landscape source décrits plus haut restent nécessaires.
-
