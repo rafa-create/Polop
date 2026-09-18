@@ -1,252 +1,125 @@
-Oui. Et ce changement est important : **le tournage réel ne doit commencer qu’après avoir obtenu une simulation suffisamment complète du film dans Unreal Engine**.
+# Feuille de route actuelle — LA BOUCLE / POLOP
 
-Je garde donc comme objectif de workflow : **script → conception 4D → prévisualisation Unreal → validation → tournage**, et non simplement script → storyboard → tournage.
+> Source narrative canonique : `Script_POLOP.md`
+>
+> Workflow : **script → vérité physique → prévisualisation Unreal → validation → tournage réel**.
 
-### Feuille de route de LA BOUCLE
+Cette feuille remplace les anciennes étapes V8 devenues historiques. Le projet dispose déjà d'un terrain procédural, de trajectoires A/B, d'une timeline objective, de POV de contrôle, d'un montage omniscient de travail et de rapports automatiques.
 
-**PHASE 1 — Écriture**
+## PHASE 1 — Reproductibilité
 
-1. Principes fondamentaux validés
-2. **Révision complète du script V7 → V8**
+Objectif : repartir du Git sur un autre ordinateur sans dépendre d'un ancien projet local.
 
-   * rythme
-   * intérêt visuel
-   * accessibilité grand public
-   * double lecture
-   * indices caméra/musique
-   * émotion
-   * suppression des explications inutiles
-3. Audit « enfant / spectateur normal / spectateur puzzle »
-4. Verrouillage du scénario narratif
+- [x] Bible narrative unique : `Script_POLOP.md`.
+- [x] Script Unreal actif unique : `Unreal/previz_polop.py`.
+- [x] Runs générés isolés par `RUN_ID`.
+- [x] `.gitignore` Unreal.
+- [x] `.gitattributes` préparé pour Git LFS.
+- [x] Documentation de l'environnement reproductible.
+- [ ] Projet Unreal bootstrapable depuis zéro — `docs/wait_codex/01_BOOTSTRAP_UNREAL_REPRODUCTIBLE.md`.
+- [ ] Smoke test sur une deuxième machine.
 
-**PHASE 2 — Architecture spatio-temporelle**
-5. Carte complète du lieu
+**Critère de sortie :** `git clone → ouvrir projet → lancer previz_polop.py → obtenir un run + rapport`, sans préparation manuelle cachée.
 
-* montagne
-* creux
-* pont
-* chemin sûr
-* chemin secondaire
-* grotte
-* positions Éva / Léa / Thomas
+## PHASE 2 — Vérité physique
 
-6. Chronologie **17:00 → 18:00 → 17:00**
-7. Trajectoires A / B de chaque personnage
-8. Vérification de toutes les causalités
-9. Résolution des quelques mécaniques encore `[À DÉTAILLER]`
+Avant davantage de polish caméra, verrouiller :
 
-**PHASE 3 — Mise en scène omnisciente**
-10. **Schéma du plan-séquence V1**
-11. Définition de ce que la caméra sait et montre
-12. Placement précis des indices visuels
-13. Architecture musique / sons / silences
-14. Transitions entre espaces et temporalités
-15. Vérification : *le spectateur peut-il ressentir/comprendre sans dialogue explicatif ?*
+- terrain / pont / flanc / routes A et B ;
+- entrée et volume de la grotte ;
+- worldline Thomas normal / inversé ;
+- anneau ;
+- mousqueton ;
+- fermeture à 17h00 ;
+- état physique unique du monde pour chaque heure objective ;
+- interactions inversées indispensables.
 
-**PHASE 4 — Prévisualisation Unreal Engine**
-16. Construire le terrain et la géométrie dans Unreal
-17. Créer les personnages numériques
-18. Créer les deux états temporels de Thomas
-19. Programmer les trajectoires A/B
-20. Programmer les événements physiques :
+Fiche : `docs/wait_codex/04_VERITE_PHYSIQUE_ANNEAU_MOUSQUETON.md`.
 
-* pierre
-* corde
-* nœud
-* pont
-* anneau
-* chute
-* disparition
+**Critère de sortie :** les causalités fonctionnent même si toutes les caméras sont masquées.
 
-21. Construire le **plan-séquence complet**
-22. Simuler caméra + lumière + mouvements + transitions
-23. Intégrer une première bande sonore / musique temporaire
-24. Faire tourner **le film entier en simulation**
+## PHASE 3 — Personnages et performance
 
-**PHASE 5 — “Réalisateur IA”**
-25. Concevoir l'architecture d'un système capable de comprendre :
+Déjà acquis :
+- poses dérivées du temps objectif ;
+- personnages articulés de prévisualisation ;
+- lecture normale/inversée dérivée du même état monde.
 
-* scénario
-* géométrie
-* chronologie
-* trajectoires
-* caméra
-* personnages
-* lumière
-* son
-* contraintes de continuité
+À fiabiliser :
+- dépendance aux assets tutoriels Unreal ;
+- fallback vers proxies ;
+- coût du sampling image par image.
 
-26. Faire de ChatGPT le **cerveau narratif / mise en scène**
-27. Faire d'Unreal le **monde simulé / moteur de vérification**
-28. Mettre en place une boucle :
+Fiche : `docs/wait_codex/03_PERSONNAGES_ASSETS_ET_FALLBACK.md`.
 
-**ChatGPT → instruction de mise en scène → Unreal → simulation → analyse → correction → nouvelle simulation**
+## PHASE 4 — Plan-séquence omniscient
 
-29. À terme, permettre au système de vérifier automatiquement :
+Objectif : caméra continue, physique et lisible, sans révélation prématurée.
 
-* continuité spatiale
-* continuité temporelle
-* visibilité des indices
-* collisions / impossibilités
-* position des personnages
-* cohérence des trajectoires
-* raccords caméra
-* rythme
-* lisibilité émotionnelle
+Automatiser les contrôles :
+- vitesse ;
+- accélération ;
+- obstacles / relief / grotte ;
+- visibilité du sujet ;
+- occultations volontaires vs accidentelles ;
+- rotations excessives.
 
-**PHASE 6 — Validation du film virtuel**
-30. Visionnage du film complet **comme un spectateur**
-31. Visionnage uniquement du point de vue d'un spectateur naïf
-32. Visionnage avec l'objectif « puzzle »
-33. Visionnage en retirant temporairement certains indices
-34. Correction
-35. Nouvelle simulation
-36. **Lock de la prévisualisation Unreal**
+Fiche : `docs/wait_codex/05_VALIDATION_CAMERA_AUTOMATIQUE.md`.
 
-**PHASE 7 — Préparation du tournage réel**
-37. Transformer la simulation en plan de tournage
-38. Storyboard / shot list dérivé de la simulation
-39. Découpage technique
-40. Repérage réel adapté à la géométrie virtuelle
-41. Préparation VFX
-42. Préparation cascade / sécurité
-43. Préparation accessoires et continuité
-44. Répétitions
-45. Tournage
+**Règle :** un raccord à 0 m ne suffit pas à valider une caméra de cinéma.
 
-### Et surtout : ne pas construire Unreal trop tôt
+## PHASE 5 — Film virtuel complet
 
-Je pense que la bonne stratégie est de **ne pas commencer immédiatement à modéliser le décor**.
+Ajouter :
+- A0 rivière → vallée → montagne → famille ;
+- anneau complet ;
+- geste du mousqueton ;
+- événements naturels réversibles ;
+- lumière de travail ;
+- musique / son temporaire ;
+- jeu minimum ;
+- transitions temporelles.
 
-Il faut d'abord verrouiller suffisamment :
+Fiche : `docs/wait_codex/06_FILM_VIRTUEL_COMPLET.md`.
 
-**SCRIPT V8 → CARTE SPATIO-TEMPORELLE → PLAN-SÉQUENCE V1**
+## PHASE 6 — Validation spectateur
 
-Ensuite seulement, on construit Unreal autour de cette architecture.
+Trois lectures obligatoires :
+1. spectateur naïf ;
+2. spectateur puzzle ;
+3. audit causal/physique.
 
-Mais on peut **dès maintenant définir l'architecture du “réalisateur IA”**, indépendamment du décor.
+Puis correction → nouvelle simulation → lock Unreal.
 
-L'idée est particulièrement intéressante pour *LA BOUCLE*, parce que le film possède quelque chose qu'un réalisateur humain aurait du mal à garder parfaitement en tête : **une scène physique unique doit être cohérente simultanément dans deux directions temporelles**.
+## PHASE 7 — Tournage réel
 
-Unreal pourrait devenir notre **laboratoire de vérité** :
-
-> « Est-ce que cette histoire est réellement filmable telle qu'on l'a écrite ? »
-
-Et ChatGPT pourrait devenir le **cerveau de conception** :
-
-> « Si cette scène doit être comprise émotionnellement au premier visionnage et reconstruite causalement au deuxième, où doit regarder la caméra ? »
-
-C'est donc cette architecture que je garderais comme **objectif final du projet**.
-
-Quand tu reviendras avec un modèle plus puissant, on pourra reprendre exactement à **PHASE 1 — Script V8**, puis avancer méthodiquement jusqu'à la simulation Unreal complète.
+À partir de la prévisualisation verrouillée :
+- plan de tournage ;
+- storyboard / shot list ;
+- découpage technique ;
+- repérage réel ;
+- VFX ;
+- sécurité / cascade ;
+- accessoires / continuité ;
+- répétitions ;
+- tournage.
 
 ---
 
-# MISE À JOUR — RÈGLES VALIDÉES POUR LA V8
+## Architecture à préserver
 
-Cette section complète la feuille de route à partir des décisions prises après la V7.
+### COUCHE VÉRITÉ
 
-## 1. Règle fondamentale de l'inversion
+géographie, temps objectif, positions, causalité, anneau, mousqueton, états physiques.
 
-Le monde reste **le même monde**.
+### COUCHE MISE EN SCÈNE
 
-Il n'existe pas de deuxième réalité ni de deuxième décor créé pour la partie B.
+caméra, focale, rythme, occultation, lumière, son, jeu.
 
-La partie B doit être la même réalité physique observée dans l'autre sens temporel.
+Quand quelque chose ne marche pas à l'image, identifier d'abord **la couche responsable**. Une correction de mise en scène ne doit jamais masquer un défaut de vérité physique.
 
-La cohérence globale doit fonctionner :
+## Priorité immédiate
 
-* en lecture normale ;
-* en lecture inversée ;
-* et dans la compréhension causale des deux lectures.
-
-La règle qui fait foi est donc la cohérence de l'ensemble, et non une explication ponctuelle donnée par un personnage.
-
-## 2. Interactions normal / inversé
-
-Limiter autant que possible les interactions directes entre éléments normaux et éléments inversés.
-
-Lorsqu'une interaction est indispensable, elle doit être définie par une causalité physique claire et vérifiable dans les deux sens temporels.
-
-On évite donc d'introduire des phénomènes qui nécessiteraient une longue explication pour être compris.
-
-## 3. Événements naturels réversibles
-
-La boucle ne doit pas être constituée uniquement d'actions conscientes de Thomas.
-
-Des événements naturels peuvent participer à la causalité :
-
-* branche qui tombe ;
-* feuille qui tombe puis reprend naturellement sa position en lecture inversée ;
-* eau ;
-* poussière ;
-* pierre ;
-* petits mouvements du décor ;
-* traces ou blessures dont l'évolution peut être observée dans les deux directions.
-
-Ces événements doivent donner l'impression d'appartenir naturellement au monde, et non d'avoir été ajoutés uniquement pour expliquer la boucle.
-
-## 4. Caméra omnisciente
-
-La caméra reste **omnisciente**.
-
-Elle peut quitter Thomas, suivre Éva et Léa, anticiper un événement ou revenir dans un espace déjà montré.
-
-Elle ne doit cependant pas devenir une caméra « magique » qui ignore les contraintes physiques du lieu.
-
-Son déplacement doit rester compatible avec la géographie et avec le principe de plan-séquence.
-
-## 5. Pause de Thomas
-
-Lors de la pause pipi, Thomas **ne descend pas vers le pont et ne voit pas le pont**.
-
-La pause a lieu **en hauteur**, à proximité du chemin, dans une zone naturelle proche d'un précipice.
-
-Une entrée de grotte peut être présente à proximité, mais elle reste dissimulée et n'est pas présentée comme une révélation artificielle.
-
-Éva peut lui lancer une remarque légère du type :
-
-> « Attention, il faudrait pas qu'une rafale de vent te fasse tomber dans le précipice pendant le pipi. »
-
-Cette scène doit rester cohérente avec la géographie générale : le pont se trouve beaucoup plus bas.
-
-## 6. Eau et caméra
-
-L'eau peut participer à la logique de l'inversion.
-
-Une image validée comme principe de mise en scène est la caméra omnisciente observant / accompagnant un mouvement d'eau qui peut être compris naturellement dans les deux sens temporels.
-
-Ce principe doit être utilisé comme élément de mise en scène et de sensation, pas comme démonstration scientifique.
-
-## 7. La musique
-
-La musique est un indice sensoriel majeur de l'inversion.
-
-Elle doit pouvoir être perçue comme étrange avant que Thomas comprenne que le problème vient de son rapport au temps.
-
-La musique ne doit toutefois pas devenir une explication verbale de la mécanique.
-
-## 8. Pause pipi et géographie
-
-La pause en hauteur ne doit pas être utilisée pour rapprocher artificiellement Thomas du pont.
-
-Le pont reste en contrebas et la séparation verticale doit être maintenue dans toutes les cartes et simulations futures.
-
-## 9. Critère de validation V8
-
-Une scène n'est pas validée simplement parce qu'elle « fonctionne à l'endroit ».
-
-Elle doit satisfaire simultanément quatre tests :
-
-1. **Lecture normale** — la scène est naturelle et compréhensible.
-2. **Lecture inversée** — le même événement reste cohérent lorsqu'il est parcouru en sens inverse.
-3. **Lecture causale** — les deux lectures expliquent ensemble pourquoi les événements se produisent.
-4. **Lecture cinématographique** — la caméra, le son et les personnages peuvent réellement traverser l'espace sans révéler artificiellement le mécanisme.
-
-## 10. Priorité de travail actuelle
-
-Avant toute modélisation détaillée d'Unreal :
-
-**SCRIPT V8 → CARTE SPATIO-TEMPORELLE → TRAJECTOIRES A/B → PLAN-SÉQUENCE V1 → TEST DE COHÉRENCE → UNREAL**
-
-Le prochain travail concret doit donc porter en priorité sur la **V8 du scénario et sa carte spatio-temporelle**, puis seulement sur la prévisualisation 4D.
+1. reproductibilité complète depuis Git ;
+2. vérité physique anneau / mousqueton / fermeture / grotte ;
+3. seulement ensuite polish caméra.
