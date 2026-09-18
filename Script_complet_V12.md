@@ -495,7 +495,7 @@ Le film n’a pas besoin de montrer cette coexistence au moment du contact. Il l
 
 L’origine de l’anneau, la raison exacte de son état et la portée générale du contact restent inconnues.
 
-[À VALIDER EN 3D — le contact doit être l’intersection naturelle entre la main de Thomas et la worldline mécanique de l’anneau. Aucun arrêt ni attente de l’objet avant 18h00. Le retournement temporel de Thomas ne doit produire aucun effet visuel de duplication.]
+[À VALIDER EN 3D — le contact doit être l’intersection naturelle entre la main de Thomas et la worldline mécanique de l’anneau. Aucun arrêt ni attente de l’objet avant 18h00. Le retournement temporel de Thomas ne doit produire aucun effet visuel de duplication. Juste sous 18h00, la géométrie doit permettre à Thomas inversé de voir Thomas normal s’éloigner en marche arrière, tout en garantissant que Thomas normal, orienté vers l’anneau et ne se retournant pas, ne puisse pas voir Thomas inversé sur son axe de sortie.]
 
 ⸻
 
@@ -513,7 +513,17 @@ Derrière lui, l’anneau poursuit la descente amorcée au contact de 18h00 et s
 
 Il avance vers 17h00.
 
-À mesure qu’il revient sous 18h00, Thomas normal n’a pas disparu de l’histoire. À ces mêmes heures objectives, il existe encore ailleurs sur la montagne, en train d’accomplir la randonnée qui le conduira plus tard à la grotte. La caméra ne le révèle pas encore frontalement.
+À mesure qu’il revient sous 18h00, Thomas normal n’a pas disparu de l’histoire. À ces mêmes heures objectives, il existe encore dans les positions antérieures de sa progression vers l’anneau.
+
+Thomas inversé peut alors apercevoir son occurrence normale dans la caverne, en train de s’éloigner de lui en marche arrière — lecture inversée des quelques pas qui conduisaient Thomas normal vers l’anneau avant 18h00.
+
+Thomas inversé s’immobilise une fraction de seconde et le regarde repartir. Il comprend visuellement qu’il vient de revenir dans un instant où il était déjà présent.
+
+Cette visibilité est volontairement asymétrique. Thomas normal, dans la scène A16, reste orienté vers la fissure et l’anneau ; Thomas inversé se trouve déjà derrière lui, sur l’axe de sortie, puis quitte la cavité. Thomas normal ne se retourne jamais au moment où une ligne de vue vers son occurrence inversée pourrait s’ouvrir. Il ne la voit donc pas.
+
+La scène ne doit pas donner l’impression que Thomas inversé se cache. La séparation vient naturellement de l’orientation des corps, de la progression vers / hors de la fissure et de la géométrie de la cavité. La caméra peut rendre le Thomas normal lisible depuis le point de vue de Thomas inversé sans adopter un angle qui aurait existé pour Thomas normal.
+
+Cette première vision du double reste brève et troublante. B3, avec la pierre puis Thomas normal plus haut dans le relief, conserve la fonction de rendre la coexistence pleinement compréhensible.
 
 ⸻
 
