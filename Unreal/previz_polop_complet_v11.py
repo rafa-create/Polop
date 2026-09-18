@@ -34,7 +34,7 @@ import unreal
 #   Saved/POLOP/V11/route_model_v11.json
 #
 # IMPORT DU LANDSCAPE V11 :
-#   Supprimer uniquement le Landscape V08.
+#   Supprimer uniquement le Landscape V10.
 #   Shift+2 -> Landscape -> Import from File
 #   Location UI : X=100800 Y=0 Z=0
 #   Scale       : X=200 Y=200 Z=100
@@ -472,7 +472,7 @@ with open(route_path, "w", encoding="utf-8") as f:
 with open(instructions_path, "w", encoding="utf-8") as f:
     f.write(
         "POLOP V11\n\n"
-        "Supprimer uniquement le Landscape V08 puis importer :\n%s\n\n"
+        "Supprimer uniquement le Landscape V10 puis importer :\n%s\n\n"
         "Location UI X=100800 Y=0 Z=0\n"
         "Rotation 0/0/0\n"
         "Scale X=200 Y=200 Z=100\n"
