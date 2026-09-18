@@ -1,0 +1,36 @@
+# Unreal Engine generated folders
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+.vs/
+.idea/
+.vscode/
+
+# User/local Unreal files
+*.suo
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+
+# Build / IDE output
+Debug/
+DebugGame/
+Development/
+Shipping/
+x64/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.tmp
+*.bak
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Generated POLOP evidence belongs in local Saved/, not Git.
+# Keep source docs/scripts only.
