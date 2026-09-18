@@ -477,9 +477,11 @@ Une goutte qui semblait évoluer normalement pour lui repart sur sa trajectoire.
 
 Thomas retire ses écouteurs. Le son extérieur revient.
 
-L’anneau, lui, ne reçoit aucun effet visible et aucune nouvelle propriété. Il poursuit sa trajectoire.
+Au contact des doigts de Thomas, la trajectoire de l’anneau change immédiatement de direction. Le contact reste sec et matériel : aucun flash, aucune énergie visible. L’anneau repart vers le bas de la fissure et du relief.
 
-Désormais Thomas et l’anneau partagent la même orientation temporelle : ce qui paraissait être une remontée impossible devient, dans le sens que Thomas parcourt maintenant, une descente mécanique naturelle.
+Thomas le voit clairement s’éloigner vers le bas avant de faire son premier pas hors de la cavité. Le film associe ainsi visuellement le contact à deux conséquences simultanées : Thomas repart vers son passé et l’anneau repart vers le bas de la montagne.
+
+Ce changement doit rester lisible comme un événement mécanique au point de contact, sans ajouter de mythologie ni expliquer la nature de l’objet.
 
 Thomas est inversé.
 
@@ -503,7 +505,7 @@ B1 — LE PREMIER PAS
 
 Thomas sort de la caverne. L’eau, la poussière et les mouvements naturels du paysage se recomposent à rebours autour de lui.
 
-Derrière lui, l’anneau poursuit dans la fissure une descente qui paraît désormais naturelle dans l’orientation temporelle de Thomas. Thomas ne le porte pas.
+Derrière lui, l’anneau poursuit la descente amorcée au contact de 18h00 et s’éloigne dans la fissure vers le relief inférieur. Thomas ne le porte pas.
 
 Il avance vers 17h00.
 
@@ -731,9 +733,9 @@ B8 BIS — LA WORLDLINE DE L’ANNEAU : GROTTE ↔ PAROI
 
 La caméra omnisciente peut révéler par fragments la trajectoire unique de l’anneau.
 
-L’anneau reste dans la même orientation temporelle pendant toute la séquence. Le film ne montre jamais sa temporalité comme basculant au contact de Thomas.
+Le film ne formule pas de théorie sur l’orientation temporelle propre de l’anneau. Il montre seulement un fait matériel : à 18h00, le contact avec les doigts de Thomas constitue le point où sa trajectoire spatiale repart vers le bas de la montagne.
 
-La trajectoire doit être construite d’abord dans le sens où Thomas est inversé, de 18h00 vers 17h00 : après le contact dans la grotte, l’anneau descend mécaniquement par la fissure et le relief, avec le minimum de contacts nécessaires — chutes libres courtes, rebonds simples, très peu de friction — jusqu’au point de fermeture contre la paroi vers 17h00.
+La trajectoire doit être construite d’abord dans le sens où Thomas est inversé, de 18h00 vers 17h00 : immédiatement après ce contact, l’anneau descend mécaniquement par la fissure et le relief, avec le minimum de contacts nécessaires — chutes libres courtes, rebonds simples, très peu de friction — jusqu’au point de fermeture contre la paroi vers 17h00.
 
 La lecture objective normale montre exactement cette animation à l’envers : depuis le point de fermeture, l’anneau semble rebondir et remonter le flanc, franchir les reliefs et la fissure, puis rejoindre Thomas dans la grotte à 18h00.
 
