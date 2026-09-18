@@ -26,6 +26,17 @@ V04 :
 
 Le log indique désormais `Mode validation terrain : STRONG`, `PARTIAL` ou `NO_COLLISION`. `NO_COLLISION` signifie que le rendu/import a été accepté mais que la collision n'était pas encore requêtable au moment exact du contrôle ; ce n'est plus traité comme une preuve que la montagne est absente.
 
+## Master V05 — diagnostic automatique de la validation Animation V05
+
+Le pipeline atteint maintenant complètement Animation V05 et confirme que toutes les caméras POLOP actives sont des `PZ_ANIM_*`. V05 historique peut toutefois écrire `AUTO-VALIDATION : FAIL` sans détailler les checks dans le Journal de sortie.
+
+Master V05 lit donc automatiquement `Saved/POLOP/ANIMATION_V05/validation/validation_animation_v02.json`, imprime chaque check en échec sous la forme `VALIDATION FAIL : ...`, puis crée aussi des alias plus clairs :
+
+- `validation_animation_v05.json`
+- `validation_animation_v05.txt`
+
+Cela évite d'avoir à chercher manuellement le fichier de validation après chaque exécution.
+
 ## Compatibilité avec un ancien setup
 
 Le master est prévu pour être relancé sur le niveau actuel sans nettoyage manuel :
