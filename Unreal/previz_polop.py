@@ -1523,6 +1523,15 @@ spawn_box(
     unreal.Rotator(0, 20, 0)
 )
 
+# A low foreground outcrop masks the exact closure from the omniscient
+# approach. It stays beside the walking lane; neither Thomas walks through it.
+spawn_box(
+    "CONVERGENCE_FOREGROUND_ROCK",
+    V(conv_x*100, (conv_y-2.0)*100,
+      (terrain_z_m(conv_x, conv_y-2.0)+1.5)*100),
+    (380, 140, 300), MAT_ROCK, "MicroGeo/Convergence"
+)
+
 # Micro-zone caverne V05 : shell lisible construit sur l'axe entrée -> contact.
 # Largeur intérieure ~4,4 m ; hauteur libre ~3,2 m. Aucune masse n'est placée
 # au centre de l'axe, ce qui garantit une ligne de vue exploitable pour les POV.
