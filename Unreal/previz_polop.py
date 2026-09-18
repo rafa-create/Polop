@@ -17,12 +17,13 @@ Le script nécessite UNE coquille Landscape 1009x1009 déjà présente.
 """
 
 import base64
+import json
 import math
 import os
 import traceback
 import unreal
 
-MASTER_VERSION = "04"
+MASTER_VERSION = "05"
 EXPECTED_LANDSCAPE_LOCATION = unreal.Vector(100800.0, 0.0, 0.0)
 EXPECTED_LANDSCAPE_SCALE = unreal.Vector(200.0, 200.0, 100.0)
 EXPECTED_HEIGHTMAP_SIZE = 1009
@@ -620,6 +621,98 @@ def run_animation_v05_with_legacy_landscape_mapping(landscape):
         )
 
 
+def report_animation_v05_validation():
+    """
+    V05 historique écrit encore ses fichiers sous le nom validation_animation_v02.
+    Le master lit ce rapport et imprime TOUS les checks en échec dans l'Output Log,
+    afin qu'un simple copier-coller du log suffise pour diagnostiquer la suite.
+    """
+    saved_dir = unreal.Paths.convert_relative_path_to_full(
+        unreal.Paths.project_saved_dir()
+    )
+    validation_dir = os.path.join(
+        saved_dir, "POLOP", "ANIMATION_V05", "validation"
+    )
+    legacy_json = os.path.join(
+        validation_dir, "validation_animation_v02.json"
+    )
+    legacy_txt = os.path.join(
+        validation_dir, "validation_animation_v02.txt"
+    )
+
+    if not os.path.exists(legacy_json):
+        warn("Rapport validation V05 introuvable : " + legacy_json)
+        return None
+
+    try:
+        with open(legacy_json, "r", encoding="utf-8") as fh:
+            report = json.load(fh)
+    except Exception as exc:
+        warn("Impossible de lire la validation V05 : %s" % exc)
+        return None
+
+    checks = report.get("checks", [])
+    failed = [
+        item for item in checks
+        if item.get("status") != "OK"
+    ]
+
+    overall = report.get("overall", "UNKNOWN")
+    log(
+        "VALIDATION ANIMATION V05 : %s | %d/%d check(s) en échec."
+        % (overall, len(failed), len(checks))
+    )
+
+    for item in failed:
+        name = item.get("name", "sans_nom")
+        details = {
+            k: v for k, v in item.items()
+            if k not in ("name", "status")
+        }
+        log(
+            "  VALIDATION FAIL : %s | %s"
+            % (name, json.dumps(details, ensure_ascii=False))
+        )
+
+    # Alias V05 plus clair, sans casser le script historique.
+    try:
+        alias_json = os.path.join(
+            validation_dir, "validation_animation_v05.json"
+        )
+        with open(alias_json, "w", encoding="utf-8") as fh:
+            json.dump(report, fh, indent=2, ensure_ascii=False)
+
+        alias_txt = os.path.join(
+            validation_dir, "validation_animation_v05.txt"
+        )
+        lines = [
+            "POLOP — VALIDATION ANIMATION V05",
+            "=" * 72,
+            "OVERALL: " + str(overall),
+            "",
+        ]
+        for item in checks:
+            details = {
+                k: v for k, v in item.items()
+                if k not in ("name", "status")
+            }
+            lines.append(
+                "%-46s %-4s | %s"
+                % (
+                    item.get("name", "sans_nom"),
+                    item.get("status", "?"),
+                    json.dumps(details, ensure_ascii=False),
+                )
+            )
+        with open(alias_txt, "w", encoding="utf-8") as fh:
+            fh.write("\n".join(lines))
+        log("Rapport alias : " + alias_txt)
+    except Exception as exc:
+        warn("Impossible d'écrire l'alias validation V05 : %s" % exc)
+
+    return overall
+
+
 def normalize_animation_camera_focals():
     """
     UE 5.8 n'expose plus set_current_focal_length comme les anciennes versions.
@@ -729,6 +822,7 @@ def main():
     # Reconstruit animation / POV / caverne / Sequencer.
     # Le shim corrige uniquement l'ancienne convention centre/coin de V05.
     run_animation_v05_with_legacy_landscape_mapping(landscape)
+    report_animation_v05_validation()
     normalize_animation_camera_focals()
     validate_animation_camera_authority()
 
