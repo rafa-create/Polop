@@ -68,6 +68,39 @@ V07 ne touche ni au Landscape, ni aux trajectoires, ni au timing. Il corrige uni
 
 Contrôle visuel prioritaire après exécution : **3–4 s** pour le groupe, puis **60–61 s** pour Thomas inversé dans la caverne, et **62 s** pour le contact.
 
+## Master V08 — rapport automatique de cohérence
+
+Le problème observé dans V07 montre une limite importante de l'ancien validateur : les 19 checks Animation pouvaient tester correctement la timeline, les worldlines et les POV tout en laissant passer un problème plus grave de monde 3D — personnage/chemin/grotte suspendus parce que la montagne n'est pas réellement cohérente avec eux.
+
+V08 ajoute donc un **rapport maître par étapes**, écrit automatiquement à chaque exécution :
+
+- `Saved/POLOP/MASTER_V08/report_previz_v08.html`
+- `Saved/POLOP/MASTER_V08/report_previz_v08.txt`
+- `Saved/POLOP/MASTER_V08/report_previz_v08.json`
+
+Le rapport HTML est la version la plus rapide à lire. Il affiche un statut global `OK`, `WARN`, `FAIL` ou `BLOCKED`, puis chaque check avec son étape, ses valeurs et l'action à prendre.
+
+### WORLD GATE bloquant
+
+Avant de créer Animation V05, V08 vérifie désormais :
+
+- transform exact du Landscape V11 ;
+- présence réelle de LandscapeComponents ;
+- emprise XY d'environ 2016 × 2016 m ;
+- présence d'un relief vertical significatif — un Landscape quasi plat est refusé ;
+- lecture du `route_model_v11.json` ;
+- tous les samples des chemins A/B/HAUT/GROTTE/FLANC à l'intérieur de l'emprise Landscape ;
+- extrémité de la route grotte dans la montagne ;
+- surface Landscape réellement trouvée et hauteur cohérente au pont A, sur B, à la jonction haute et dans la zone grotte.
+
+Si un de ces checks échoue en `BLOCKER`, **le script s'arrête avant de générer l'animation et les POV**. Cela évite de perdre du temps à valider des caméras alors que la montagne est absente ou décalée.
+
+Après passage du WORLD GATE, les 19 checks Animation V05 sont importés dans le même rapport, puis le master vérifie aussi que les 11 caméras POLOP sont exclusivement des `PZ_ANIM_*`.
+
+V08 adapte également le seuil historique `pov_eye_offsets_reasonable` à la stratégie anti-occlusion V07 : le décalage ponctuel jusqu'à environ 87 cm est volontaire et le plafond de validation passe à 95 cm.
+
+Le workflow devient donc : **lancer un seul script → ouvrir un seul rapport → ne faire une validation visuelle que si le rapport n'a aucun FAIL**.
+
 ## Compatibilité avec un ancien setup
 
 Le master est prévu pour être relancé sur le niveau actuel sans nettoyage manuel :
