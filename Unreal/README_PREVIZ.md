@@ -9,6 +9,38 @@
 Tous les anciens scripts de construction, validation et animation sont archivés dans `Unreal/old/`. Le script master embarque actuellement la géographie V11 et l'animation V05 validées comme base de travail.
 
 
+## Master V10 — bible unique + runs totalement isolés
+
+Deux corrections structurelles sont actives :
+
+### 1. Bible narrative unique
+
+La source canonique absolue du projet est désormais **`Script_POLOP.md`**.
+
+Les anciennes versions de scénario dans `archive/` sont historiques uniquement. Unreal, la BD, le storyboard et les documents de conception ne doivent plus déclarer `Script_POLOP.md` ou « V12 » comme autorité courante.
+
+### 2. Isolation complète des runs
+
+Chaque exécution possède maintenant son propre identifiant `RUN_ID`.
+
+Content Browser :
+
+- `/Game/POLOP/Generated_V10/Maps/Previz_<run_id>`
+- `/Game/POLOP/Generated_V10/Runs/<run_id>/...`
+
+Fichiers Saved :
+
+- `Saved/POLOP/Runs/<run_id>/keylog.jsonl`
+- `Saved/POLOP/Runs/<run_id>/V11/...`
+- `Saved/POLOP/Runs/<run_id>/ANIMATION_V05/...`
+- `Saved/POLOP/Runs/<run_id>/MASTER_V10/report_previz_v10.{html,txt,json}`
+
+Un run ne doit donc plus écraser le heightmap, la validation ou le rapport d'un run précédent.
+
+Après un run terminé avec succès, le master conserve automatiquement les **12 derniers runs Saved** et les **8 derniers runs Content**. Le nettoyage est limité aux dossiers générés V10 ; `/Game/Main`, les sources et `archive/` ne sont jamais supprimés.
+
+Le plan d'ouverture rivière → vallée → montagne ajouté récemment au scénario est accepté comme évolution narrative, mais n'est pas encore inclus dans la préviz technique de 65 secondes.
+
 ## Master V04 — collision Landscape différée
 
 Le log V03 a confirmé que le nettoyage caméra fonctionne : V11 annonce `CAMERAS REVIEW : 0`. Le blocage suivant venait uniquement des raycasts de validation juste après l'import automatique du heightmap : UE 5.8 peut avoir mis à jour le rendu du Landscape avant que son heightfield Chaos/collision soit immédiatement requêtable.
