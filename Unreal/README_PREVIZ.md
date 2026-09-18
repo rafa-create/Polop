@@ -259,3 +259,43 @@ outils de contrôle ; il ne charge pas les scripts `old/` ou `reference/`.
 `README_PREVIZ.md` fournit les prérequis et limites, sans être une dépendance du
 code. Cela ne signifie pas qu'un PC vide peut exécuter le fichier seul : Unreal,
 les deux plugins et le Landscape source décrits plus haut restent nécessaires.
+
+
+## Checkpoint du cast avant validation physique de #44 — 19 septembre 2026
+
+Source préservée au commit `af7adc856dea20cfd7f4ae412025d42c1fa2ad4a`.
+Le WIP conserve `character_performance`, `prepare_human_cast` et
+`add_human_performances` : positions, orientations et poses squelettiques sont
+échantillonnées depuis le temps objectif partagé. Le film complet avec ce cast
+n'a pas encore été généré ni validé. Ne pas remplacer ce travail par la vue debug.
+
+Le dépôt Git local Unreal n'a qu'un commit initial (`71e13ff`), pas de remote,
+240 assets déjà indexés et 14 fichiers suivis modifiés. Les sources `Unreal/`
+y sont non suivies. Le checkpoint GitHub a donc utilisé le connecteur sans
+embarquer ni réinitialiser cet index. Les assets générés restent locaux.
+
+Préservation locale du code, des deux scripts de reprise, du test sauvegardé et
+de leurs SHA-256 : `Saved/POLOP/Checkpoints/20260919_cast_wip/`.
+Le test modifié en mémoire a été dupliqué sans écraser l'original dans
+`/Game/POLOP/Generated_V10/Runs/20260918_212116_518810/Sequences/LS_CAST_WIP_CHECKPOINT_20260919_012120`.
+Le `LS_CAST_PROBE` original contient quatre bindings articulés. Sa version
+sauvegardée initiale couvrait les frames 0 à 59 ; la version en mémoire termine
+à 61 (borne exclusive), à 30 fps. Ce test va donc jusqu'à 17 h 00 environ,
+pas jusqu'à 17 h 01 : il ne prouve pas encore la convergence.
+
+Audit numérique exécuté dans la session Unreal, sans changement de trajectoire :
+`Saved/POLOP/Runs/20260918_212116_518810/closure_wip_audit.json`.
+À la minute objective 2, les racines des deux Thomas sont à distance zéro, mais
+leurs orientations diffèrent de 180 degrés et leurs phases squelettiques sont
+différentes. À 2,01 min, la séparation des racines n'est encore que de 0,2499 m.
+L'occultation ne valide donc pas l'absence d'interpénétration. Le masquage par
+réduction d'échelle avant 17 h n'est pas une résolution physique de la fermeture.
+L'anneau et un événement explicite de raccord des branches restent absents.
+
+**Statut : WIP conservé, vérité physique non validée.** Avant une refonte,
+clarifier si DEUX → UN désigne la continuité suivie après la bascule alors que
+les deux occurrences subsistent aux mêmes temps objectifs, ou une réduction
+réelle à un seul corps, incompatible en l'état avec la coexistence après 17 h.
+Aucune issue n'est fermée ; aucune sophistication supplémentaire n'a été ajoutée
+pendant cet audit. #41 demeure le prochain chantier global après résolution de
+cette sous-passe immédiate de #44.
