@@ -5341,6 +5341,9 @@ def add_human_performances(sequence, samples):
     final_frame = samples[-1][0]+1
     for name in POV_ORDER:
         info = a["human_cast"][name]
+        # Hidden/off-camera branches must evaluate exactly the same skeleton.
+        info["component"].set_editor_property("visibility_based_anim_tick_option",
+            unreal.VisibilityBasedAnimTickOption.ALWAYS_TICK_POSE_AND_REFRESH_BONES)
         binding = subsystem.add_actors([info["actor"]])[0]
         for track in binding.get_tracks():
             binding.remove_track(track)
@@ -5415,6 +5418,87 @@ def audit_cast_closure():
     if not all(checks.values()):
         raise RuntimeError("Cast closure regression: "+repr(checks))
     return report
+
+
+def validate_cast_closure_evaluation():
+    """Measure actual bones after editor ticks, including hidden/off-camera cast.
+
+    Asynchronous: results are written to cast_closure_evaluated.json and keylog.
+    Requires build_cast_closure_probe(). Leaves its playback paused at frame 300.
+    """
+    a = _ANIMATION
+    previous = a.get("cast_measurement")
+    if previous and previous.get("handle"):
+        unreal.unregister_slate_post_tick_callback(previous["handle"])
+    sequence = a["cast_closure_sequence"]
+    unreal.LevelSequenceEditorBlueprintLibrary.pause()
+    unreal.LevelSequenceEditorBlueprintLibrary.open_level_sequence(sequence)
+    state = dict(frames=[0, 90, 91, 180, 300, 540, 720, 721, 901, 1141, 1261,
+                         1350, 1351, 1441, 1442, 1532, 1533, 1622, 1742, 1982, 2162],
+                 index=0, wait=0.0, pending=False, rows=[])
+    a["cast_measurement"] = state
+
+    def finish():
+        unreal.unregister_slate_post_tick_callback(state["handle"])
+        state["handle"] = None
+
+    def tick(delta):
+        try:
+            if state["index"] == len(state["frames"]):
+                finish()
+                rows = state["rows"]
+                root_error = max(p["root_error_cm"] for row in rows for p in row["actors"].values())
+                visibility_ok = all(p["hidden"] != p["expected"]["visible"]
+                                    for row in rows for p in row["actors"].values())
+                closure_error = max(math.dist(b[:3], row["actors"]["THOMAS_INVERSE"]["bones"][name][:3])
+                                    for row in rows if row["objective_minute"] == 2.0
+                                    for name, b in row["actors"]["THOMAS_NORMAL"]["bones"].items())
+                replay_error = max(math.dist(b[:3], other["actors"][name]["bones"][bone][:3])
+                                   for row in rows for other in rows
+                                   if row["objective_minute"] == other["objective_minute"]
+                                   for name, p in row["actors"].items() for bone, b in p["bones"].items())
+                checks = dict(root_error_cm=root_error, visibility_ok=visibility_ok,
+                              closure_bone_error_cm=closure_error, replay_bone_error_cm=replay_error)
+                passed = visibility_ok and max(root_error, closure_error, replay_error) < 0.02
+                path = os.path.join(RUN_SAVED_ROOT, "cast_closure_evaluated.json")
+                with open(path, "w", encoding="utf-8") as output:
+                    json.dump(dict(status="PASS" if passed else "FAIL", checks=checks, samples=rows,
+                                   scope="cast endpoint and replay only; not full #44 validation"), output, indent=2)
+                journal("cast_closure_evaluated", passed=passed, report=path, checks=checks)
+                unreal.LevelSequenceEditorBlueprintLibrary.set_current_time(300)
+                return
+            frame = state["frames"][state["index"]]
+            if not state["pending"]:
+                unreal.LevelSequenceEditorBlueprintLibrary.set_current_time(frame)
+                state.update(pending=True, wait=0.0)
+                return
+            state["wait"] += delta
+            if state["wait"] < 0.2:
+                return
+            t = a["cast_closure_samples"][frame][1]
+            row = dict(frame=frame, objective_minute=t, actors={})
+            for name, info in a["human_cast"].items():
+                actor, component = info["actor"], info["component"]
+                loc = actor.get_actor_location()
+                scale = actor.get_actor_scale3d()
+                expected = character_performance(name, t)
+                bones = {}
+                for index in range(component.get_num_bones()):
+                    bone = component.get_bone_name(index)
+                    tr = component.get_socket_transform(bone, unreal.RelativeTransformSpace.RTS_WORLD)
+                    bones[str(bone)] = [tr.translation.x, tr.translation.y, tr.translation.z,
+                                        tr.rotation.x, tr.rotation.y, tr.rotation.z, tr.rotation.w]
+                row["actors"][name] = dict(root_cm=[loc.x, loc.y, loc.z], yaw=actor.get_actor_rotation().yaw,
+                    scale=[scale.x, scale.y, scale.z], hidden=actor.get_editor_property("hidden"),
+                    expected=expected, bones=bones,
+                    root_error_cm=math.dist([loc.x, loc.y, loc.z], [v*100 for v in expected["foot"]]))
+            state["rows"].append(row)
+            state.update(index=state["index"]+1, pending=False)
+        except Exception as exc:
+            finish()
+            journal("cast_closure_measurement_failed", error=str(exc), traceback=traceback.format_exc())
+            unreal.log_error(str(exc))
+    state["handle"] = unreal.register_slate_post_tick_callback(tick)
 
 
 def build_cast_closure_probe():
