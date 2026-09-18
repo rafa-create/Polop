@@ -98,14 +98,12 @@ Oui.
 
 Léa prend le chemin du flanc. Ce détour la ramène de B vers A.
 
-Quand elle les rejoint, tous trois reprennent ensuite la montée par A en direction de la zone haute et de la caverne.
-
 ÉVA
 Tu pouvais pas lui dire ça avant ?
 
 Thomas ne répond pas. Il regarde Léa.
 
-Quand elle les rejoint, Thomas regarde le chemin qui monte.
+Quand elle les rejoint sur A, Thomas regarde le chemin A qui monte vers la zone haute et la caverne.
 
 THOMAS
 On est obligés de monter jusqu’en haut ?
@@ -541,7 +539,7 @@ B3, avec la pierre puis la vision de Thomas normal plus haut dans le relief, res
 
 B2 — ÉVA ET LÉA
 
-Plus bas et loin devant lui, Éva et Léa apparaissent sur le vrai chemin.
+Plus bas et loin devant lui, Éva et Léa apparaissent sur le chemin A, le vrai chemin.
 
 Dans le temps objectif elles descendent chercher de l’aide ; pour Thomas inversé, elles semblent remonter leur trajectoire en marche arrière.
 
@@ -713,11 +711,11 @@ CLAC.
 
 Exactement la même signature métallique que lorsque Léa traversait à 16h59.
 
-Thomas franchit ensuite le pont depuis B vers A. Dans le temps objectif, Léa utilise l’autre liaison, le chemin du flanc, pour revenir de B vers A : leurs trajectoires restent séparées. Thomas inversé peut ainsi retrouver A sans rencontrer Léa avant la fermeture.
-
 Thomas s’immobilise.
 
 Son regard va du mousqueton désormais accroché vers le pont. Il n’y a pas d’autre effet destiné à confirmer la connexion.
+
+Thomas franchit ensuite le pont depuis B vers A. Dans le temps objectif, Léa utilise l’autre liaison, le chemin du flanc, pour revenir de B vers A : leurs trajectoires restent séparées. Thomas inversé peut ainsi retrouver A sans rencontrer Léa avant la fermeture.
 
 Dans le sens objectif normal, le même événement est exactement l’inverse : avant 17h01, le mousqueton est accroché ; le geste de Thomas inversé apparaît comme son décrochage ; après 17h01, le cordage pend. Aucun tiers n’intervient. Personne ne vient casser ou décrocher le pont entre les deux états.
 
