@@ -8,6 +8,13 @@
 
 Tous les anciens scripts de construction, validation et animation sont archivés dans `Unreal/old/`. Le script master embarque actuellement la géographie V11 et l'animation V05 validées comme base de travail.
 
+
+## Correctif master V02
+
+Le master V02 corrige les problèmes observés sous Unreal 5.8.2 : réglage de focale des CineCamera via propriété Python, import du heightmap via une Edit Layer valide, RenderTarget linéaire 32F, contrôle de trois hauteurs du relief après import, et marge automatique de quelques centimètres sur le bord X=0 utilisé par le départ de la route A.
+
+Si la validation terrain échoue, le master s'arrête avant de lancer l'animation au lieu de continuer avec un Landscape incohérent.
+
 ## Compatibilité avec un ancien setup
 
 Le master est prévu pour être relancé sur le niveau actuel sans nettoyage manuel :
