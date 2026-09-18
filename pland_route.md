@@ -16,7 +16,7 @@ Objectif : repartir du Git sur un autre ordinateur sans dépendre d'un ancien pr
 - [x] `.gitignore` Unreal.
 - [x] `.gitattributes` préparé pour Git LFS.
 - [x] Documentation de l'environnement reproductible.
-- [ ] Projet Unreal bootstrapable depuis zéro — `docs/wait_codex/01_BOOTSTRAP_UNREAL_REPRODUCTIBLE.md`.
+- [ ] Projet Unreal bootstrapable depuis zéro — GitHub issue **#41**.
 - [ ] Smoke test sur une deuxième machine.
 
 **Critère de sortie :** `git clone → ouvrir projet → lancer previz_polop.py → obtenir un run + rapport`, sans préparation manuelle cachée.
@@ -34,7 +34,7 @@ Avant davantage de polish caméra, verrouiller :
 - état physique unique du monde pour chaque heure objective ;
 - interactions inversées indispensables.
 
-Fiche : `docs/wait_codex/04_VERITE_PHYSIQUE_ANNEAU_MOUSQUETON.md`.
+Issue : **#44** (`wait_codex`).
 
 **Critère de sortie :** les causalités fonctionnent même si toutes les caméras sont masquées.
 
@@ -50,7 +50,7 @@ Déjà acquis :
 - fallback vers proxies ;
 - coût du sampling image par image.
 
-Fiche : `docs/wait_codex/03_PERSONNAGES_ASSETS_ET_FALLBACK.md`.
+Issue : **#43** (`wait_codex`).
 
 ## PHASE 4 — Plan-séquence omniscient
 
@@ -64,7 +64,7 @@ Automatiser les contrôles :
 - occultations volontaires vs accidentelles ;
 - rotations excessives.
 
-Fiche : `docs/wait_codex/05_VALIDATION_CAMERA_AUTOMATIQUE.md`.
+Issue : **#45** (`wait_codex`).
 
 **Règle :** un raccord à 0 m ne suffit pas à valider une caméra de cinéma.
 
@@ -80,7 +80,7 @@ Ajouter :
 - jeu minimum ;
 - transitions temporelles.
 
-Fiche : `docs/wait_codex/06_FILM_VIRTUEL_COMPLET.md`.
+Issue : **#46** (`wait_codex`).
 
 ## PHASE 6 — Validation spectateur
 
