@@ -21,9 +21,10 @@ import json
 import math
 import os
 import traceback
+import zlib
 import unreal
 
-MASTER_VERSION = "05"
+MASTER_VERSION = "06"
 EXPECTED_LANDSCAPE_LOCATION = unreal.Vector(100800.0, 0.0, 0.0)
 EXPECTED_LANDSCAPE_SCALE = unreal.Vector(200.0, 200.0, 100.0)
 EXPECTED_HEIGHTMAP_SIZE = 1009
@@ -575,6 +576,108 @@ def cleanup_non_animation_polop_cameras():
     log("%d ancienne(s) caméra(s) POLOP hors Animation supprimée(s)." % len(doomed))
 
 
+def patched_animation_v05_source():
+    """
+    Décompresse le transport V05 embarqué et applique les deux correctifs UE5.8
+    nécessaires sans réintroduire un deuxième script actif :
+    - POV : le décalage de caméra se fait dans le plan XY, tandis que la direction
+      3D reste uniquement la direction de regard. Cela évite que Thomas inversé,
+      sur une pente/cavité très raide, retombe à ~15 cm du centre de la tête.
+    - validation : les fichiers portent enfin le nom V05 au lieu de l'ancien V02.
+    """
+    wrapper = _SOURCE_V05
+
+    token = 'b64decode("'
+    p0 = wrapper.find(token)
+
+    if p0 < 0:
+        fail("Payload Animation V05 introuvable dans le transport embarqué.")
+
+    p0 += len(token)
+    p1 = wrapper.find('")', p0)
+
+    if p1 < 0:
+        fail("Fin du payload Animation V05 introuvable.")
+
+    payload = wrapper[p0:p1]
+
+    try:
+        source = zlib.decompress(
+            base64.b64decode(payload)
+        ).decode("utf-8")
+    except Exception as exc:
+        fail("Impossible de décompresser Animation V05 : %s" % exc)
+
+    old_block = '''    # Pendant le temps narratif, avance un peu la caméra et ajoute 12 cm de
+    # décalage latéral : plus robuste quand deux personnages convergent.
+    side_sign = -1.0 if actor_name == "THOMAS_NORMAL" else 1.0
+    lateral = (-direction[1], direction[0], 0.0)
+    lateral_len = max(1e-6, math.sqrt(lateral[0]*lateral[0] + lateral[1]*lateral[1]))
+    lateral = (lateral[0]/lateral_len, lateral[1]/lateral_len, 0.0)
+
+    pos = V(
+        foot[0]*100.0 + direction[0]*POV_FORWARD_OFFSET_CM + lateral[0]*12.0*side_sign,
+        foot[1]*100.0 + direction[1]*POV_FORWARD_OFFSET_CM + lateral[1]*12.0*side_sign,
+        foot[2]*100.0 + eye_height_cm + direction[2]*10.0
+    )
+'''
+
+    new_block = '''    # Pendant le temps narratif, la POSITION de la caméra avance dans le plan XY.
+    # La direction 3D reste utilisée pour le REGARD, mais pas pour le décalage du
+    # point de vue. Sinon, sur une pente très raide (cas Thomas inversé vers la
+    # caverne), le décalage de 38 cm s'écrasait presque entièrement sur Z et la
+    # caméra revenait à ~15 cm du centre de la tête.
+    side_sign = -1.0 if actor_name == "THOMAS_NORMAL" else 1.0
+    flat_len = math.hypot(direction[0], direction[1])
+
+    if flat_len < 1e-6:
+        # Cas quasi vertical : reprendre la direction XY du mouvement local.
+        before_flat = eval_actor(actor_name, max(0.0, t-POV_LOOK_AHEAD_SECONDS))
+        after_flat = eval_actor(actor_name, min(SEQUENCE_SECONDS, t+POV_LOOK_AHEAD_SECONDS))
+        fdx = after_flat[0] - before_flat[0]
+        fdy = after_flat[1] - before_flat[1]
+        flat_len = math.hypot(fdx, fdy)
+
+        if flat_len < 1e-6:
+            fdx, fdy, flat_len = 1.0, 0.0, 1.0
+
+        flat_forward = (fdx/flat_len, fdy/flat_len, 0.0)
+    else:
+        flat_forward = (direction[0]/flat_len, direction[1]/flat_len, 0.0)
+
+    lateral = (-flat_forward[1], flat_forward[0], 0.0)
+    pitch_lift_cm = max(-8.0, min(8.0, direction[2]*10.0))
+
+    pos = V(
+        foot[0]*100.0 + flat_forward[0]*POV_FORWARD_OFFSET_CM + lateral[0]*12.0*side_sign,
+        foot[1]*100.0 + flat_forward[1]*POV_FORWARD_OFFSET_CM + lateral[1]*12.0*side_sign,
+        foot[2]*100.0 + eye_height_cm + pitch_lift_cm
+    )
+'''
+
+    if old_block not in source:
+        fail("Bloc POV V05 attendu introuvable : le transport a changé.")
+
+    source = source.replace(old_block, new_block, 1)
+    source = source.replace(
+        "validation_animation_v02.json",
+        "validation_animation_v05.json"
+    )
+    source = source.replace(
+        "validation_animation_v02.txt",
+        "validation_animation_v05.txt"
+    )
+    source = source.replace(
+        "# AUTO-VALIDATION V02 — INTEGREE",
+        "# AUTO-VALIDATION V05 — INTEGREE"
+    )
+
+    log(
+        "Animation V05 patchée en mémoire : POV XY stable + noms validation V05."
+    )
+    return source
+
+
 def run_animation_v05_with_legacy_landscape_mapping(landscape):
     """
     V05 historique lit correctement le heightmap, mais son ancienne conversion
@@ -612,7 +715,7 @@ def run_animation_v05_with_legacy_landscape_mapping(landscape):
     landscape.set_actor_location(compatibility_location, False, False)
 
     try:
-        run_embedded(_SOURCE_V05, "previz_polop_animation_v05.py")
+        run_embedded(patched_animation_v05_source(), "previz_polop_animation_v05.py")
     finally:
         landscape.set_actor_location(real_location, False, False)
         log(
@@ -623,8 +726,7 @@ def run_animation_v05_with_legacy_landscape_mapping(landscape):
 
 def report_animation_v05_validation():
     """
-    V05 historique écrit encore ses fichiers sous le nom validation_animation_v02.
-    Le master lit ce rapport et imprime TOUS les checks en échec dans l'Output Log,
+    Le master lit le rapport V05 et imprime TOUS les checks en échec dans l'Output Log,
     afin qu'un simple copier-coller du log suffise pour diagnostiquer la suite.
     """
     saved_dir = unreal.Paths.convert_relative_path_to_full(
@@ -633,19 +735,27 @@ def report_animation_v05_validation():
     validation_dir = os.path.join(
         saved_dir, "POLOP", "ANIMATION_V05", "validation"
     )
-    legacy_json = os.path.join(
-        validation_dir, "validation_animation_v02.json"
+    validation_json = os.path.join(
+        validation_dir, "validation_animation_v05.json"
     )
-    legacy_txt = os.path.join(
-        validation_dir, "validation_animation_v02.txt"
+    validation_txt = os.path.join(
+        validation_dir, "validation_animation_v05.txt"
     )
 
-    if not os.path.exists(legacy_json):
-        warn("Rapport validation V05 introuvable : " + legacy_json)
+    # Compatibilité avec un ancien run V05 avant Master V06.
+    if not os.path.exists(validation_json):
+        legacy_json = os.path.join(
+            validation_dir, "validation_animation_v02.json"
+        )
+        if os.path.exists(legacy_json):
+            validation_json = legacy_json
+
+    if not os.path.exists(validation_json):
+        warn("Rapport validation V05 introuvable : " + validation_json)
         return None
 
     try:
-        with open(legacy_json, "r", encoding="utf-8") as fh:
+        with open(validation_json, "r", encoding="utf-8") as fh:
             report = json.load(fh)
     except Exception as exc:
         warn("Impossible de lire la validation V05 : %s" % exc)
@@ -828,7 +938,7 @@ def main():
 
     log("=== MASTER TERMINÉ ===")
     log("Aucun import Landscape manuel requis avec l'ancien setup.")
-    log("Ouvrir LS_POLOP_ANIMATION_V05 et contrôler les POV puis 60-62 s.")
+    log("Ouvrir LS_POLOP_ANIMATION_V05 : contrôler Thomas inversé vers 60-61 s puis le contact 62 s.")
     log("Ctrl+S pour enregistrer le niveau après validation.")
 
 
