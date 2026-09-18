@@ -5253,10 +5253,26 @@ def character_performance(name, objective_time):
     yaw = math.degrees(math.atan2(direction[1], direction[0]))-90.0
     # Phase belongs to objective time, never to screen time. Reverse playback
     # therefore reverses EVERY joint of Eva/Lea, not just their root positions.
-    personal_time = 62.0-t if name == "THOMAS_INVERSE" else t
+    # The same walk pose is reached by both branches at objective minute 2.
+    # Decreasing objective time advances the inverse's own gait. No film state
+    # or camera decision may alter this phase or remove a later occurrence.
+    personal_time = 4.0-t if name == "THOMAS_INVERSE" else t
     phase = personal_time * 1.8
+    if name == "THOMAS_INVERSE" and t <= 2.25:
+        # B7: turn, then retreat into the closure. Finish turning while the
+        # roots are still >1.25 m apart; do not rotate through the other body.
+        # This is a root turn, not a mesh/pose morph or a change of worldline.
+        normal_before = a["eval_actor"]("THOMAS_NORMAL", 1.99)
+        normal_after = a["eval_actor"]("THOMAS_NORMAL", 2.01)
+        closure_yaw = math.degrees(math.atan2(
+            normal_after[1]-normal_before[1], normal_after[0]-normal_before[0]))-90.0
+        weight = cinematic_ease(max(0.0, min(1.0, (t-2.05)/0.20)))
+        yaw = closure_yaw + (a["unwrap_angle"](closure_yaw, yaw)-closure_yaw)*weight
     return dict(foot=p, yaw=yaw, moving=moving, phase=phase,
-                visible=(name != "THOMAS_INVERSE" or 2.0 <= t < 62.0))
+                # At the exact closure both branches share the same body pose.
+                # Draw that coincident endpoint once; BOTH are drawn for every
+                # strict interior time, including B9's return to normal time.
+                visible=(name != "THOMAS_INVERSE" or 2.0 < t < 62.0))
 
 
 def prepare_human_cast():
@@ -5332,14 +5348,22 @@ def add_human_performances(sequence, samples):
         section.set_range(0, final_frame)
         channels = section.get_all_channels()
         animation_track = binding.add_track(unreal.MovieSceneSkeletalAnimationTrack)
+        visibility_track = binding.add_track(unreal.MovieSceneVisibilityTrack)
+        visibility_track.set_property_name_and_path("bHidden", "bHidden")
+        visibility_section = visibility_track.add_section()
+        visibility_section.set_range(0, final_frame)
+        visibility_channel = visibility_section.get_all_channels()[0]
         last_yaw = None
         for frame_index, t in samples:
             pose = character_performance(name, t)
             yaw = pose["yaw"] if last_yaw is None else a["unwrap_angle"](last_yaw, pose["yaw"])
             last_yaw = yaw
-            scale = info["scale"] if pose["visible"] else 0.00001
+            # Never shrink a body into/out of existence. Visibility represents
+            # objective branch domain only, not whether B8 was already shown.
+            scale = info["scale"]
             values = tuple(v*100.0 for v in pose["foot"])+(0.0, 0.0, yaw)+(scale,)*3
             frame = unreal.FrameNumber(frame_index)
+            visibility_channel.add_key(frame, bool(pose["visible"]))
             for channel, value in zip(channels, values):
                 channel.add_key(frame, float(value), interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
             clip = a["human_animations"][pose["moving"]]
@@ -5356,6 +5380,102 @@ def add_human_performances(sequence, samples):
     unreal.EditorAssetLibrary.save_loaded_asset(sequence)
     journal("human_performances_baked", sequence=sequence.get_path_name(), frames=len(samples),
             clock="shared objective time", pose_sampling_fps=a["FPS"])
+
+
+def audit_cast_closure():
+    """Endpoint/domain proof, not a claim that ring/contact acting is finished."""
+    names = ("THOMAS_NORMAL", "THOMAS_INVERSE")
+    times = [1.99, 2.0, 2.000001, 2.01, 2.05, 2.1, 2.25, 2.5, 3.0, 32.0, 52.0, 60.0, 61.999999]
+    rows = []
+    for t in times:
+        normal, inverse = [character_performance(n, t) for n in names]
+        rows.append(dict(objective_minute=t, normal=normal, inverse=inverse,
+                         root_distance_m=math.dist(normal["foot"], inverse["foot"])))
+    n, i = [character_performance(name, 2.0) for name in names]
+    checks = dict(
+        closure_root=math.dist(n["foot"], i["foot"]) < 1e-6,
+        closure_yaw=abs((n["yaw"]-i["yaw"]+180.0) % 360.0-180.0) < 1e-6,
+        closure_clip=n["moving"] == i["moving"],
+        closure_phase=abs(n["phase"]-i["phase"]) < 1e-6,
+        before_closure_one=not character_performance(names[1], 1.999999)["visible"],
+        interior_two=all(all(character_performance(name, 2.0+k*0.01)["visible"]
+                            for name in names) for k in range(1, 6000)))
+    forward = {t: [character_performance(name, t) for name in names] for t in times}
+    checks["replay_same_world"] = all(forward[t] == [character_performance(name, t) for name in names]
+                                       for t in list(reversed(times))+times)
+    report = dict(status="CAST_ENDPOINT_CHECKS_ONLY", checks=checks, samples=rows,
+                  limitations=["Ring and hand/rock contact choreography not yet implemented",
+                               "Root separation is not a skeletal collision proof",
+                               "Walk clip is retained WIP; foot sliding not yet calibrated",
+                               "18h endpoint articulated continuity still to validate"])
+    path = os.path.join(RUN_SAVED_ROOT, "cast_closure_report.json")
+    with open(path, "w", encoding="utf-8") as output:
+        json.dump(report, output, indent=2)
+    journal("cast_closure_audit", report=path, checks=checks)
+    if not all(checks.values()):
+        raise RuntimeError("Cast closure regression: "+repr(checks))
+    return report
+
+
+def build_cast_closure_probe():
+    """Preserve LS_CAST_PROBE; make an unoccluded, real-time 17h closure audit.
+
+    Three passes through the SAME objective samples: forward, reverse, forward.
+    A minute of objective time is sixty screen seconds in this audit only.
+    The original articulated cast/clip baker is reused, not replaced by proxies.
+    """
+    a = _ANIMATION
+    audit_cast_closure()
+    fps = 30
+    # 16:59:57 -> 17:00:21, then back and forward again (24 s per pass).
+    objective = [1.95+k/(60.0*fps) for k in range(721)]
+    times = objective+list(reversed(objective))+objective
+    samples = list(enumerate(times))
+    name = "LS_CAST_CLOSURE_"+datetime.datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+    sequence = unreal.AssetToolsHelpers.get_asset_tools().create_asset(
+        name, RUN_ASSET_ROOT+"/Sequences", unreal.LevelSequence, unreal.LevelSequenceFactoryNew())
+    sequence.set_display_rate(unreal.FrameRate(fps, 1))
+    sequence.set_playback_start(0)
+    sequence.set_playback_end(len(samples))
+    sequence.set_view_range_start(0.0)
+    sequence.set_view_range_end(len(samples)/fps)
+    add_human_performances(sequence, samples)
+    ls = unreal.get_editor_subsystem(unreal.LevelSequenceEditorSubsystem)
+    # Visibility is scoped to this diagnostic sequence; do not delete the rocks.
+    hidden = []
+    for actor in actors.get_all_level_actors():
+        label = actor.get_actor_label()
+        if "CONVERGENCE_ROCK" in label or "CONVERGENCE_FOREGROUND_ROCK" in label or "EVENT_17H00" in label:
+            binding = ls.add_actors([actor])[0]
+            for track in binding.get_tracks():
+                binding.remove_track(track)
+            track = binding.add_track(unreal.MovieSceneVisibilityTrack)
+            track.set_property_name_and_path("bHidden", "bHidden")
+            section = track.add_section()
+            section.set_range(0, len(samples))
+            section.get_all_channels()[0].set_default(False)
+            hidden.append(label)
+    center = a["eval_actor"]("THOMAS_NORMAL", 2.08)
+    position = unreal.Vector((center[0]-2.0)*100, (center[1]-13.0)*100, (center[2]+5.5)*100)
+    target = unreal.Vector(center[0]*100, center[1]*100, (center[2]+0.9)*100)
+    camera = a["create_camera"]("CAST_CLOSURE_DEBUG", position, target, 28.0)
+    binding = ls.add_actors([camera])[0]
+    cuts = sequence.add_track(unreal.MovieSceneCameraCutTrack)
+    cut = cuts.add_section()
+    cut.set_range(0, len(samples))
+    binding_id = unreal.MovieSceneObjectBindingID()
+    binding_id.set_editor_property("guid", binding.get_id())
+    cut.set_camera_binding_id(binding_id)
+    a["cast_closure_sequence"] = sequence
+    a["cast_closure_samples"] = samples
+    unreal.EditorAssetLibrary.save_loaded_asset(sequence)
+    with open(os.path.join(RUN_SAVED_ROOT, "cast_closure_probe.json"), "w", encoding="utf-8") as output:
+        json.dump(dict(sequence=sequence.get_path_name(), fps=fps, samples=samples,
+                       hidden_for_debug=hidden, closure_frames=[90, 1351, 1532]), output, indent=2)
+    unreal.LevelSequenceEditorBlueprintLibrary.set_lock_camera_cut_to_viewport(True)
+    unreal.LevelSequenceEditorBlueprintLibrary.set_current_time(0)
+    journal("cast_closure_probe_ready", sequence=sequence.get_path_name(), frames=len(samples))
+    return sequence
 
 
 def build_omniscient_edit():
