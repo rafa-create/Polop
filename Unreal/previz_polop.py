@@ -1754,11 +1754,12 @@ ANIM["THOMAS_NORMAL"] = [
                    point_with_real_terrain(CAVE_ZONE_POINT)),
     custom_segment(53.0, 54.0, point_with_real_terrain(CAVE_ZONE_POINT),
                    point_with_real_terrain(CAVE_ENTRY_POINT)),
-    custom_segment(54.0, 56.0, point_with_real_terrain(CAVE_ENTRY_POINT), CAVE_FISSURE_POINT),
-    hold_segment(56.0, 60.0, CAVE_FISSURE_POINT),
-    hold_segment(
+    custom_segment(54.0, 54.5, point_with_real_terrain(CAVE_ENTRY_POINT), cave_ground_point(1.15, 0.0, 0.05)),
+    hold_segment(54.5, 60.0, cave_ground_point(1.15, 0.0, 0.05)),
+    custom_segment(
         60.0,
         61.0,
+        cave_ground_point(1.15, 0.0, 0.05),
         CAVE_FISSURE_POINT
     ),
     custom_segment(
@@ -1915,24 +1916,24 @@ ANIM["THOMAS_INVERSE"] = [
     station_segment(
         "B",
         32.0,
-        59.0,
+        60.2,
         B5_STATION,
         0.0
     ),
     custom_segment(
-        59.0,
-        60.0,
+        60.2,
+        60.6,
         point_with_real_terrain(HIGH_POINT),
         point_with_real_terrain(CAVE_ENTRY_POINT)
     ),
     custom_segment(
-        60.0,
-        61.0,
+        60.6,
+        61.4,
         point_with_real_terrain(CAVE_ENTRY_POINT),
         CAVE_DARK_SLOT
     ),
     custom_segment(
-        61.0,
+        61.4,
         62.0,
         CAVE_DARK_SLOT,
         CAVE_CONTACT_POINT
@@ -5231,6 +5232,127 @@ def blend_camera_pose(previous, desired, progress):
                  for old, new in zip(previous, desired))
 
 
+def character_performance(name, objective_time):
+    """One deterministic world pose/animation phase, independent of camera/time direction."""
+    a = _ANIMATION
+    t = max(0.0, min(62.0, objective_time))
+    p = a["eval_actor"](name, t)
+    before = a["eval_actor"](name, max(0.0, t-0.01))
+    after = a["eval_actor"](name, min(62.0, t+0.01))
+    direction = tuple(after[i]-before[i] for i in range(3))
+    moving = math.dist(before, after) > 0.002
+    if name == "THOMAS_INVERSE":
+        direction = tuple(-v for v in direction)
+    if not moving:
+        direction = a["pov_direction"](name, t)
+    yaw = math.degrees(math.atan2(direction[1], direction[0]))-90.0
+    # Phase belongs to objective time, never to screen time. Reverse playback
+    # therefore reverses EVERY joint of Eva/Lea, not just their root positions.
+    personal_time = 62.0-t if name == "THOMAS_INVERSE" else t
+    phase = personal_time * 1.8
+    return dict(foot=p, yaw=yaw, moving=moving, phase=phase,
+                visible=(name != "THOMAS_INVERSE" or 2.0 <= t < 62.0))
+
+
+def prepare_human_cast():
+    """Use the articulated tutorial mannequin shipped with Unreal; no downloaded asset."""
+    a = _ANIMATION
+    if a.get("human_cast"):
+        return
+    root = "/Engine/Tutorial/SubEditors/TutorialAssets/Character/"
+    mesh = unreal.load_asset(root+"TutorialTPP")
+    walk = unreal.load_asset(root+"Tutorial_Walk_Fwd")
+    idle = unreal.load_asset(root+"Tutorial_Idle")
+    if not all((mesh, walk, idle)):
+        raise RuntimeError("Unreal tutorial skeletal character/animations missing; install Engine Content")
+    mesh_height = mesh.get_bounds().box_extent.z*2.0
+    colors = {"THOMAS_NORMAL": (0.10, 0.19, 0.27), "THOMAS_INVERSE": (0.10, 0.19, 0.27),
+              "EVA": (0.38, 0.19, 0.12), "LEA": (0.32, 0.43, 0.18)}
+    cast = {}
+    for name in POV_ORDER:
+        actor = actors.spawn_actor_from_class(unreal.SkeletalMeshActor, unreal.Vector(0, 0, 0))
+        actor.set_actor_label("PZ_ANIM_HUMAN_"+name)
+        actor.set_folder_path("POLOP/Personnages")
+        component = actor.get_component_by_class(unreal.SkeletalMeshComponent)
+        component.set_skeletal_mesh_asset(mesh)
+        component.set_collision_enabled(unreal.CollisionEnabled.NO_COLLISION)
+        material = a["ensure_material"]("M_POLOP_CLOTH_"+name, colors[name])
+        material.set_editor_property("used_with_skeletal_mesh", True)
+        unreal.MaterialEditingLibrary.recompile_material(material)
+        unreal.EditorAssetLibrary.save_loaded_asset(material)
+        component.set_material(0, material)
+        scale = a["ACTOR_HEIGHT_CM"][name]/mesh_height
+        actor.set_actor_scale3d(unreal.Vector(scale, scale, scale))
+        cast[name] = dict(actor=actor, component=component, scale=scale)
+        for old in (a["actor_objects"][name], a["head_objects"][name]):
+            old.set_actor_hidden_in_game(True)
+            old.set_is_temporarily_hidden_in_editor(True)
+    a["human_cast"] = cast
+    a["human_animations"] = {True: walk, False: idle}
+    terrain = a["ensure_material"]("M_POLOP_EARTH", (0.17, 0.20, 0.12))
+    _GEOGRAPHY["landscape"].set_editor_property("landscape_material", terrain)
+    # Soft reflected entrance light, rather than a supernatural glow.
+    light_point = a["cave_ground_point"](0.25, 0.0, 2.3)
+    lamp = actors.spawn_actor_from_class(unreal.PointLight, unreal.Vector(*(v*100 for v in light_point)))
+    lamp.set_actor_label("PZ_ANIM_CAVE_ENTRANCE_BOUNCE")
+    lamp.set_folder_path("POLOP/Lumiere")
+    light = lamp.get_component_by_class(unreal.PointLightComponent)
+    light.set_intensity(160.0)
+    light.set_attenuation_radius(750.0)
+    light.set_light_color(unreal.LinearColor(1.0, 0.84, 0.65, 1.0))
+    journal("articulated_cast_created", mesh=mesh.get_path_name(),
+            limitation="shared mannequin anatomy; not final human casting or acting")
+
+
+def add_human_performances(sequence, samples):
+    """Bake a pose per display frame: scrubbing/reversing cannot desynchronise joints.
+
+    Animation clips are sampled with zero play rate and tick-resolution offsets.
+    This deliberately costs more sections than free-running animation, but keeps
+    the pose identical at the same objective time in A, B and B9.
+    """
+    a = _ANIMATION
+    prepare_human_cast()
+    unreal.LevelSequenceEditorBlueprintLibrary.open_level_sequence(sequence)
+    subsystem = unreal.get_editor_subsystem(unreal.LevelSequenceEditorSubsystem)
+    tick_rate = sequence.get_tick_resolution()
+    ticks_per_second = tick_rate.numerator/tick_rate.denominator
+    final_frame = samples[-1][0]+1
+    for name in POV_ORDER:
+        info = a["human_cast"][name]
+        binding = subsystem.add_actors([info["actor"]])[0]
+        for track in binding.get_tracks():
+            binding.remove_track(track)
+        section = binding.add_track(unreal.MovieScene3DTransformTrack).add_section()
+        section.set_range(0, final_frame)
+        channels = section.get_all_channels()
+        animation_track = binding.add_track(unreal.MovieSceneSkeletalAnimationTrack)
+        last_yaw = None
+        for frame_index, t in samples:
+            pose = character_performance(name, t)
+            yaw = pose["yaw"] if last_yaw is None else a["unwrap_angle"](last_yaw, pose["yaw"])
+            last_yaw = yaw
+            scale = info["scale"] if pose["visible"] else 0.00001
+            values = tuple(v*100.0 for v in pose["foot"])+(0.0, 0.0, yaw)+(scale,)*3
+            frame = unreal.FrameNumber(frame_index)
+            for channel, value in zip(channels, values):
+                channel.add_key(frame, float(value), interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
+            clip = a["human_animations"][pose["moving"]]
+            animation_section = animation_track.add_section()
+            animation_section.set_range(frame_index, frame_index+1)
+            params = unreal.MovieSceneSkeletalAnimationParams()
+            params.animation = clip
+            params.play_rate = unreal.MovieSceneTimeWarpExtensions.make_time_warp(0.0)
+            params.first_loop_start_frame_offset = unreal.FrameNumber(
+                int((pose["phase"] % clip.get_play_length())*ticks_per_second))
+            params.force_custom_mode = True
+            params.skip_anim_notifiers = True
+            animation_section.set_editor_property("params", params)
+    unreal.EditorAssetLibrary.save_loaded_asset(sequence)
+    journal("human_performances_baked", sequence=sequence.get_path_name(), frames=len(samples),
+            clock="shared objective time", pose_sampling_fps=a["FPS"])
+
+
 def build_omniscient_edit():
     """First editorial pass: a separate film timeline, leaving POV audit intact.
 
@@ -5253,9 +5375,9 @@ def build_omniscient_edit():
         ("A14", 6, 59, 60, "EVA", (-7, -9, 4)),
         ("A15_A16", 16, 60, 61.95, "CAVE", (0, 0, 0)),
         ("A17", 5, 61.95, 62, "CAVE", (0, 0, 0)),
-        ("B1", 16, 62, 59, "CAVE", (0, 0, 0)),
-        ("B2", 10, 59, 55, "THOMAS_INVERSE", (-14, 20, 9)),
-        ("B3_B4", 25, 55, 32, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("B1", 16, 62, 60.2, "CAVE", (0, 0, 0)),
+        ("B2", 10, 60.2, 59.4, "THOMAS_INVERSE", (-14, 20, 9)),
+        ("B3_B4", 25, 59.4, 32, "THOMAS_INVERSE", (-9, 12, 5)),
         ("B5_PONT", 4, 32, 31.9, "THOMAS_INVERSE", (-12, 18, 10)),
         ("B6", 22, 31.9, 3, "THOMAS_INVERSE", (-9, 12, 5)),
         ("B6_TRAVERSEE", 6, 3, 2.5, "THOMAS_INVERSE", (-6, -8, 3)),
@@ -5340,6 +5462,7 @@ def build_omniscient_edit():
     previous_beat = None
     max_camera_step_m = 0.0
     join_steps_m = []
+    performance_samples = []
     for code, seconds, t0, t1, focus, offset in shots:
         count = seconds*fps
         manifest.append(dict(scene=code, start_frame=first_frame, end_frame=first_frame+count,
@@ -5347,6 +5470,7 @@ def build_omniscient_edit():
         for index in range(count):
             u = index/max(1, count-1)
             t = t0+(t1-t0)*cinematic_ease(u)
+            performance_samples.append((first_frame+index, t))
             frame = unreal.FrameNumber(first_frame+index)
             for name, channels, scale, converter in animated:
                 point = a["eval_actor"](name, t)
@@ -5388,6 +5512,10 @@ def build_omniscient_edit():
         boundary_pose = previous_pose
         previous_beat = (code, focus, offset)
         first_frame += count
+    add_human_performances(seq, performance_samples)
+    if not a.get("human_audit_baked"):
+        add_human_performances(a["sequence"], [(i, i/fps) for i in range(65*fps)])
+        a["human_audit_baked"] = True
     unreal.EditorAssetLibrary.save_loaded_asset(seq)
     with open(os.path.join(RUN_SAVED_ROOT, "omniscient_edit.json"), "w", encoding="utf-8") as output:
         json.dump(dict(status="CONTINUOUS_CAMERA_BLOCKING_NOT_FINAL", duration_seconds=duration, shots=manifest,
