@@ -2,24 +2,24 @@
 
 ## Autorité absolue
 
-La source narrative unique est `Script_complet_V12.md`.
+La source narrative unique est `Script_POLOP.md`.
 
 Le présent document ne remplace jamais le scénario. Il définit comment transformer le scénario en cases sans le réécrire.
 
 En cas de contradiction entre :
 
-1. `Script_complet_V12.md`
+1. `Script_POLOP.md`
 2. `03_CASES_REGLES.md`
 3. `02_BIBLE_VISUELLE.md`
 4. `01_DECOUPAGE.md`
 
 **le document placé le plus haut dans cette liste gagne.**
 
-Aucune ancienne version, ancien storyboard, ancienne BD, ancienne image générée, critique, schéma narratif ou souvenir de conversation ne peut corriger silencieusement V12.
+Aucune ancienne version, ancien storyboard, ancienne BD, ancienne image générée, critique, schéma narratif ou souvenir de conversation ne peut corriger silencieusement Script_POLOP.
 
 ## Principe fondamental
 
-Chaque case doit être justifiable par un passage précis du script V12.
+Chaque case doit être justifiable par un passage précis du script Script_POLOP.
 
 On peut choisir un cadrage pour rendre ce passage lisible en BD. On ne peut pas ajouter un événement pour rendre le passage plus spectaculaire ou plus facile à expliquer.
 
@@ -34,7 +34,7 @@ On peut choisir un cadrage pour rendre ce passage lisible en BD. On ne peut pas 
 - aucune modification de l'ordre des événements ;
 - aucune correction silencieuse d'une ambiguïté du scénario ;
 - aucun portail, halo, flash temporel ou effet surnaturel absent du script ;
-- aucune dramatisation d'un indice que V12 demande de montrer comme banal ;
+- aucune dramatisation d'un indice que Script_POLOP demande de montrer comme banal ;
 - aucune représentation inappropriée de Léa ;
 - aucun texte intégré à l'illustration générée.
 
@@ -44,17 +44,17 @@ Avant de générer une image, préparer une fiche de case avec exactement les ru
 
 ### CASE XXX
 
-**Source V12 :** scène et passage concernés.
+**Source Script_POLOP :** scène et passage concernés.
 
-**Temps objectif :** heure exacte si donnée par V12 ; sinon « non précisée dans V12 ».
+**Temps objectif :** heure exacte si donnée par Script_POLOP ; sinon « non précisée dans Script_POLOP ».
 
 **Temps vécu par Thomas :** normal / inversé / point de fermeture, uniquement si le scénario permet de l'affirmer.
 
-**Lieu :** lieu exact selon V12.
+**Lieu :** lieu exact selon Script_POLOP.
 
 **Personnages visibles :** liste exhaustive.
 
-**Personnages volontairement hors champ :** uniquement lorsque cela a une fonction définie par V12.
+**Personnages volontairement hors champ :** uniquement lorsque cela a une fonction définie par Script_POLOP.
 
 **Action exacte :** une seule étape lisible de l'action. Si deux instants successifs sont nécessaires pour comprendre, ils deviennent deux cases.
 
@@ -62,17 +62,17 @@ Avant de générer une image, préparer une fiche de case avec exactement les ru
 
 **Information nouvelle pour le lecteur :** ce que cette case lui permet réellement de voir à ce moment du récit.
 
-**Information à NE PAS révéler :** tout élément que V12 réserve à une lecture ultérieure.
+**Information à NE PAS révéler :** tout élément que Script_POLOP réserve à une lecture ultérieure.
 
-**Cadrage proposé :** valeur de plan et position de caméra choisies pour traduire V12, sans modifier les faits.
+**Cadrage proposé :** valeur de plan et position de caméra choisies pour traduire Script_POLOP, sans modifier les faits.
 
 **Continuité entrée :** état hérité de la case précédente.
 
 **Continuité sortie :** état qui devra être repris dans la case suivante.
 
-**Texte BD :** uniquement dialogue/bruitage/cartouche directement autorisé par V12. Le texte sera ajouté séparément lors de l'assemblage.
+**Texte BD :** uniquement dialogue/bruitage/cartouche directement autorisé par Script_POLOP. Le texte sera ajouté séparément lors de l'assemblage.
 
-**Contrôle V12 :** phrase courte confirmant qu'aucun élément narratif supplémentaire n'a été introduit.
+**Contrôle Script_POLOP :** phrase courte confirmant qu'aucun élément narratif supplémentaire n'a été introduit.
 
 La génération ne commence qu'après présentation de cette fiche et le « go » de l'utilisateur.
 
@@ -98,7 +98,7 @@ Ces instants peuvent nécessiter plusieurs cases précisément parce que le scri
 
 Le hors-champ est particulièrement important à A2.
 
-V12 indique que la caméra reste avec Léa et Éva pendant que Thomas poursuit sa marche près du flanc rocheux hors du centre d'attention. Le point de convergence avec Thomas inversé et le passage de l'anneau ne doivent pas être montrés assez précisément dans la première lecture pour attribuer une cause certaine.
+Script_POLOP indique que la caméra reste avec Léa et Éva pendant que Thomas poursuit sa marche près du flanc rocheux hors du centre d'attention. Le point de convergence avec Thomas inversé et le passage de l'anneau ne doivent pas être montrés assez précisément dans la première lecture pour attribuer une cause certaine.
 
 La BD doit donc reproduire cette restriction d'information. Une case ne doit pas « profiter » de son format fixe pour montrer simultanément ce que le film cache.
 
@@ -110,7 +110,7 @@ La BD doit donc reproduire cette restriction d'information. Une case ne doit pas
 
 ### Montre
 
-Elle est regardée par Thomas lorsque V12 le précise. Elle ne doit pas devenir un écran explicatif permanent.
+Elle est regardée par Thomas lorsque Script_POLOP le précise. Elle ne doit pas devenir un écran explicatif permanent.
 
 ### Pierre
 
@@ -126,7 +126,7 @@ Avant A15, son entrée ne doit pas être lisible comme une ouverture depuis les 
 
 ### Anneau
 
-Sa causalité exacte ne doit jamais être rendue plus certaine que dans V12. Au point de fermeture, ne pas inventer un ordre de contacts si V12 choisit de ne pas l'attribuer.
+Sa causalité exacte ne doit jamais être rendue plus certaine que dans Script_POLOP. Au point de fermeture, ne pas inventer un ordre de contacts si Script_POLOP choisit de ne pas l'attribuer.
 
 ## Règle des deux Thomas
 
@@ -134,7 +134,7 @@ Lorsque Thomas normal et Thomas inversé coexistent, ils sont le même personnag
 
 Aucune différence de costume artificielle ne sera ajoutée. La compréhension doit venir de la position, de la trajectoire, de l'état temporel des actions et de la continuité immédiatement précédente.
 
-Le cadrage doit permettre de distinguer les deux sans créer une information causale que V12 cache.
+Le cadrage doit permettre de distinguer les deux sans créer une information causale que Script_POLOP cache.
 
 ## Règle du pont et du mousqueton
 
@@ -146,7 +146,7 @@ Dans le temps objectif normal, le même événement retourné doit correspondre 
 
 Le CLAC contre la roche appartient au même événement dans les deux lectures.
 
-La forme exacte de la mécanique reste marquée comme devant être validée en 3D dans V12 : la BD ne doit donc pas inventer une solution mécanique définitive incompatible avec une future simulation.
+La forme exacte de la mécanique reste marquée comme devant être validée en 3D dans Script_POLOP : la BD ne doit donc pas inventer une solution mécanique définitive incompatible avec une future simulation.
 
 ## Règle de la géographie
 
@@ -170,7 +170,7 @@ Le temps inversé n'est pas signalé par une palette bleue, rouge ou fantastique
 
 ## Règle des dialogues
 
-Le scénario V12 est la seule source autorisée.
+Le scénario Script_POLOP est la seule source autorisée.
 
 Un dialogue peut être réparti entre plusieurs cases pour le rythme de lecture, mais :
 
@@ -214,17 +214,17 @@ Quand toutes les cases nécessaires sont validées :
 2. poser les cases sans recadrage destructeur ;
 3. ajouter dialogues, cartouches et bruitages séparément ;
 4. contrôler l'ordre de lecture ;
-5. effectuer une passe complète de continuité contre V12 ;
+5. effectuer une passe complète de continuité contre Script_POLOP ;
 6. exporter le PDF final.
 
 ## Test ultime
 
 Pour chaque case, poser deux questions :
 
-**« Est-ce que V12 autorise explicitement ce que l'image affirme ? »**
+**« Est-ce que Script_POLOP autorise explicitement ce que l'image affirme ? »**
 
 et
 
-**« Est-ce que cette image révèle quelque chose que V12 voulait encore cacher ? »**
+**« Est-ce que cette image révèle quelque chose que Script_POLOP voulait encore cacher ? »**
 
 Si la première réponse est non, ou la seconde oui, la case doit être corrigée avant validation.
