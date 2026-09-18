@@ -37,6 +37,22 @@ Master V05 lit donc automatiquement `Saved/POLOP/ANIMATION_V05/validation/valida
 
 Cela évite d'avoir à chercher manuellement le fichier de validation après chaque exécution.
 
+## Master V06 — POV Thomas inversé stabilisé
+
+Le run V05 atteint maintenant correctement Animation V05 et confirme l'autorité caméra : **11 caméras POLOP actives, toutes `PZ_ANIM_*`**. Le seul échec restant était `pov_eye_offsets_reasonable`, avec Thomas inversé à 15,63 cm minimum du centre des yeux pendant l'approche de la caverne.
+
+Master V06 corrige la cause au lieu d'abaisser le seuil :
+
+- la direction 3D continue à piloter le regard de la caméra ;
+- le décalage physique du POV (38 cm avant + 12 cm latéral) est désormais calculé dans le plan XY ;
+- une forte pente ne peut donc plus écraser le décalage vers zéro autour de la tête ;
+- la petite compensation verticale est limitée à ±8 cm ;
+- les fichiers de validation portent enfin `validation_animation_v05.json/txt` au lieu de l'ancien nom V02.
+
+La caméra de Thomas inversé à environ Z=-1000 m au tout début est volontaire : avant 17h00 objectif, son proxy est caché sous le niveau. À partir de 17h00/2 s Sequencer, sa piste POV prend les positions animées normales.
+
+Après exécution, attendre `AUTO-VALIDATION : OK` et `VALIDATION ANIMATION V05 : OK | 0/19 check(s) en échec.`.
+
 ## Compatibilité avec un ancien setup
 
 Le master est prévu pour être relancé sur le niveau actuel sans nettoyage manuel :
