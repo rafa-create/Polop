@@ -9,26 +9,22 @@
 Tous les anciens scripts de construction, validation et animation sont archivés dans `Unreal/old/`. Le script master embarque actuellement la géographie V11 et l'animation V05 validées comme base de travail.
 
 
-## Master V03 — caméra unique + correction du repère Landscape
+## Master V04 — collision Landscape différée
 
-V03 corrige deux causes de confusion :
+Le log V03 a confirmé que le nettoyage caméra fonctionne : V11 annonce `CAMERAS REVIEW : 0`. Le blocage suivant venait uniquement des raycasts de validation juste après l'import automatique du heightmap : UE 5.8 peut avoir mis à jour le rendu du Landscape avant que son heightfield Chaos/collision soit immédiatement requêtable.
 
-- **V11 ne crée plus aucune caméra de revue.** Il ne construit que le terrain, les guides, le pont, le flanc, la grotte et les proxies.
-- **Animation V05 est l'unique autorité caméra.** Toutes les caméras POLOP actives doivent désormais commencer par `PZ_ANIM_`.
+V04 :
 
-Le master supprime aussi toute ancienne CineCamera POLOP préfixée `PZ_` qui n'appartient pas à Animation V05, sans toucher aux caméras utilisateur non préfixées.
+- conserve V11 sans aucune caméra de revue ;
+- appelle `force_layers_full_update()` après l'import du heightmap ;
+- force les Collision Mip Levels à 0 pour la préviz ;
+- tente plusieurs chemins de reconstruction de collision quand ils sont exposés à Python ;
+- utilise `TraceTypeQuery.ECC_VISIBILITY` au lieu de l'ancienne entrée dépréciée ;
+- ne bloque plus le pipeline si **les trois raycasts sont tous indisponibles** juste après l'import, à condition que le Landscape ait toujours ses composants et le transform V11 correct ;
+- continue alors vers Animation V05, qui reste l'unique autorité caméra ;
+- continue de bloquer si un raycast existe mais révèle une hauteur incompatible avec V11.
 
-Le blocage historique `Point hors Landscape : 0.00 0.00` venait d'une ancienne convention de V05 qui traitait la position du Landscape comme son coin alors qu'Unreal la place au centre. V03 applique ce repère de compatibilité uniquement pendant le calcul V05, puis remet immédiatement le Landscape à sa position réelle `(100800, 0, 0)`. Le terrain final n'est donc pas décalé pour contourner le bug.
-
-Après création, V03 normalise aussi les focales des caméras Animation V05 pour l'API Python d'Unreal 5.8 et vérifie qu'aucune vieille caméra POLOP ne subsiste.
-
-Dans le log final, chercher :
-
-- `AUTORITÉ CAMÉRA OK : ... toutes PZ_ANIM_*`
-- les lignes `CAMERA ACTIVE : PZ_ANIM_...`
-- `Landscape restauré au centre réel (100800.0, 0.0, 0.0)`
-
-Si une caméra POLOP non `PZ_ANIM_` survit, le master s'arrête volontairement au lieu de laisser un setup ambigu.
+Le log indique désormais `Mode validation terrain : STRONG`, `PARTIAL` ou `NO_COLLISION`. `NO_COLLISION` signifie que le rendu/import a été accepté mais que la collision n'était pas encore requêtable au moment exact du contrôle ; ce n'est plus traité comme une preuve que la montagne est absente.
 
 ## Compatibilité avec un ancien setup
 
