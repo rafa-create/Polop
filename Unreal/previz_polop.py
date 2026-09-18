@@ -24,7 +24,7 @@ import traceback
 import zlib
 import unreal
 
-MASTER_VERSION = "06"
+MASTER_VERSION = "07"
 EXPECTED_LANDSCAPE_LOCATION = unreal.Vector(100800.0, 0.0, 0.0)
 EXPECTED_LANDSCAPE_SCALE = unreal.Vector(200.0, 200.0, 100.0)
 EXPECTED_HEIGHTMAP_SIZE = 1009
@@ -584,6 +584,7 @@ def patched_animation_v05_source():
       3D reste uniquement la direction de regard. Cela évite que Thomas inversé,
       sur une pente/cavité très raide, retombe à ~15 cm du centre de la tête.
     - validation : les fichiers portent enfin le nom V05 au lieu de l'ancien V02.
+    - V07 : évitement dynamique des autres proxies dans les POV de groupe.
     """
     wrapper = _SOURCE_V05
 
@@ -622,16 +623,13 @@ def patched_animation_v05_source():
     )
 '''
 
-    new_block = '''    # Pendant le temps narratif, la POSITION de la caméra avance dans le plan XY.
-    # La direction 3D reste utilisée pour le REGARD, mais pas pour le décalage du
-    # point de vue. Sinon, sur une pente très raide (cas Thomas inversé vers la
-    # caverne), le décalage de 38 cm s'écrasait presque entièrement sur Z et la
-    # caméra revenait à ~15 cm du centre de la tête.
+    new_block = '''    # POV V07 : placement "tête/épaule" lisible.
+    # La direction 3D pilote le REGARD ; la position avance dans XY afin qu'une
+    # pente forte ne ramène jamais la caméra dans la tête du personnage.
     side_sign = -1.0 if actor_name == "THOMAS_NORMAL" else 1.0
     flat_len = math.hypot(direction[0], direction[1])
 
     if flat_len < 1e-6:
-        # Cas quasi vertical : reprendre la direction XY du mouvement local.
         before_flat = eval_actor(actor_name, max(0.0, t-POV_LOOK_AHEAD_SECONDS))
         after_flat = eval_actor(actor_name, min(SEQUENCE_SECONDS, t+POV_LOOK_AHEAD_SECONDS))
         fdx = after_flat[0] - before_flat[0]
@@ -648,10 +646,64 @@ def patched_animation_v05_source():
     lateral = (-flat_forward[1], flat_forward[0], 0.0)
     pitch_lift_cm = max(-8.0, min(8.0, direction[2]*10.0))
 
+    # Décalage latéral normal : 14 cm. Si un autre personnage est très proche
+    # du POV, tester plusieurs positions d'épaule et choisir celle qui maximise
+    # la distance au proxy le plus proche. Cela évite les cylindres géants dans
+    # l'image aux moments où le groupe est compact (notamment ~3-4 s).
+    default_lateral_cm = 14.0 * side_sign
+    chosen_lateral_cm = default_lateral_cm
+
+    base_x_cm = foot[0]*100.0 + flat_forward[0]*POV_FORWARD_OFFSET_CM
+    base_y_cm = foot[1]*100.0 + flat_forward[1]*POV_FORWARD_OFFSET_CM
+    eye_z_cm = foot[2]*100.0 + eye_height_cm + pitch_lift_cm
+
+    peers = []
+    for other_name in ("THOMAS_NORMAL", "THOMAS_INVERSE", "EVA", "LEA"):
+        if other_name == actor_name:
+            continue
+        other = eval_actor(other_name, t)
+        peers.append((other[0]*100.0, other[1]*100.0, other[2]*100.0))
+
+    def peer_clearance_cm(lat_cm):
+        cx = base_x_cm + lateral[0]*lat_cm
+        cy = base_y_cm + lateral[1]*lat_cm
+        if not peers:
+            return 99999.0
+        return min(
+            math.hypot(cx-px, cy-py)
+            for px, py, pz in peers
+        )
+
+    base_clearance = peer_clearance_cm(default_lateral_cm)
+
+    if base_clearance < 135.0:
+        candidates = (
+            default_lateral_cm,
+            -default_lateral_cm,
+            28.0, -28.0,
+            45.0, -45.0,
+            62.0, -62.0,
+            78.0, -78.0,
+        )
+
+        best_score = -1.0e30
+        best_lat = default_lateral_cm
+
+        for lat_cm in candidates:
+            clearance = peer_clearance_cm(lat_cm)
+            # Petite pénalité pour conserver une sensation de POV humain :
+            # on ne s'écarte fortement que si cela libère réellement l'image.
+            score = clearance - 0.12*abs(lat_cm-default_lateral_cm)
+            if score > best_score:
+                best_score = score
+                best_lat = lat_cm
+
+        chosen_lateral_cm = best_lat
+
     pos = V(
-        foot[0]*100.0 + flat_forward[0]*POV_FORWARD_OFFSET_CM + lateral[0]*12.0*side_sign,
-        foot[1]*100.0 + flat_forward[1]*POV_FORWARD_OFFSET_CM + lateral[1]*12.0*side_sign,
-        foot[2]*100.0 + eye_height_cm + pitch_lift_cm
+        base_x_cm + lateral[0]*chosen_lateral_cm,
+        base_y_cm + lateral[1]*chosen_lateral_cm,
+        eye_z_cm
     )
 '''
 
@@ -673,7 +725,7 @@ def patched_animation_v05_source():
     )
 
     log(
-        "Animation V05 patchée en mémoire : POV XY stable + noms validation V05."
+        "Animation V05 patchée en mémoire : POV XY stable + anti-occlusion groupe + validation V05."
     )
     return source
 
@@ -836,10 +888,12 @@ def normalize_animation_camera_focals():
         "PZ_ANIM_CAM_FINAL_CAVE_MASTER": 32.0,
         "PZ_ANIM_CAM_CAVE_BACKLIGHT_REVIEW": 30.0,
         "PZ_ANIM_CAM_CAVE_TOP_DEBUG": 35.0,
-        "PZ_ANIM_CAM_POV_THOMAS_NORMAL": 20.0,
-        "PZ_ANIM_CAM_POV_THOMAS_INVERSE": 20.0,
-        "PZ_ANIM_CAM_POV_EVA": 20.0,
-        "PZ_ANIM_CAM_POV_LEA": 20.0,
+        # 28 mm : moins de déformation / moins de proxies géants qu'à 20 mm,
+        # tout en restant suffisamment large pour une préviz subjective.
+        "PZ_ANIM_CAM_POV_THOMAS_NORMAL": 28.0,
+        "PZ_ANIM_CAM_POV_THOMAS_INVERSE": 28.0,
+        "PZ_ANIM_CAM_POV_EVA": 28.0,
+        "PZ_ANIM_CAM_POV_LEA": 28.0,
     }
 
     updated = 0
@@ -938,7 +992,7 @@ def main():
 
     log("=== MASTER TERMINÉ ===")
     log("Aucun import Landscape manuel requis avec l'ancien setup.")
-    log("Ouvrir LS_POLOP_ANIMATION_V05 : contrôler Thomas inversé vers 60-61 s puis le contact 62 s.")
+    log("Ouvrir LS_POLOP_ANIMATION_V05 : contrôler 3-4 s (groupe), Thomas inversé 60-61 s, contact 62 s.")
     log("Ctrl+S pour enregistrer le niveau après validation.")
 
 
