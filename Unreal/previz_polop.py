@@ -5265,6 +5265,9 @@ def build_omniscient_edit():
                 target = (900, 12.5, a["terrain_z_m"](900, 0)) if focus == "BRIDGE" else a["eval_actor"](focus, t)
             eye = tuple(target[i]+offset[i] for i in range(3))
             eye = (eye[0], eye[1], max(eye[2], a["terrain_z_m"](eye[0], eye[1])+2.0))
+            if code in ("A9_PONT", "B5_PONT"):
+                # Look down from the current trail, without flying to the bridge.
+                target = (900.0, 12.5, a["terrain_z_m"](900.0, 0.0)+0.59)
         return eye, (target[0], target[1], target[2]+1.1)
 
     # Editorial durations are deliberate. Do not inflate them to accommodate
