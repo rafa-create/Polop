@@ -68,6 +68,8 @@ La caméra omnisciente reste avec Léa et Éva. Léa constitue naturellement le 
 
 Pendant ces quelques secondes, Thomas poursuit sa marche près du flanc rocheux, hors du centre d’attention de la caméra. Le point exact où sa trajectoire converge avec celle de Thomas inversé n’est pas montré dans cette première lecture.
 
+Au milieu des voix et des bruits de pas, un très léger son métallique peut se perdre dans le paysage, quelque part hors champ. Personne ne réagit. La caméra reste sur Éva et Léa. Le son n’est ni isolé ni présenté comme un indice ; il ne prendra éventuellement un sens qu’après avoir vu la trajectoire de l’anneau.
+
 Au même instant, hors du centre d’attention, l’anneau passe également par ce point de fermeture. Le film ne montre ni assez précisément les contacts ni leur ordre pour attribuer une cause certaine au retour de Thomas au temps normal.
 
 Aucun mouvement de caméra ne signale qu’un événement important vient de se produire. Lorsque Thomas revient naturellement dans le cadre, il vient personnellement de terminer la boucle, mais le film ne donne au spectateur aucune raison de le comprendre encore.
@@ -607,6 +609,20 @@ Il accélère légèrement. Il se place instinctivement avant qu’un phénomèn
 
 La caméra omnisciente accompagne ce plaisir sans transformer la séquence en démonstration scientifique. Les événements restent petits, naturels et matériels.
 
+Par moments seulement, la caméra peut abandonner Thomas et retrouver l’anneau plus bas dans le relief. Ces fragments sont courts et intégrés à la même partition visuelle ; ils ne constituent pas une seconde intrigue suivie.
+
+PREMIER FRAGMENT — L’anneau chute dans une étroite rigole rocheuse. Il frappe un petit élément du décor. Dans cette lecture inversée du monde, le choc coïncide avec plusieurs éléments naturels qui semblent retrouver leur place : gravier qui remonte dans une encoche, poussière qui se rassemble, brindille qui revient contre la roche. L’impression est que l’anneau descend pendant que la montagne se recompose autour de lui. Chaque effet devra rester la lecture inversée d’une interaction physique ordinaire.
+
+Retour à Thomas.
+
+SECOND FRAGMENT — Plus tard, l’anneau atteint un mince écoulement. L’eau remonte la pente et rejoint la roche en sens inverse tandis que l’anneau, lui, continue vers le bas. Pendant quelques secondes, les deux directions coexistent clairement dans l’image : EAU VERS LE HAUT / ANNEAU VERS LE BAS. Des gouttes rejoignent le courant autour de lui. L’anneau disparaît ensuite sous un rebord humide.
+
+Retour à Thomas et à sa chorégraphie.
+
+TROISIÈME FRAGMENT — Encore plus tard, la caméra retrouve l’anneau immobile, coincé entre deux pierres ou dans une petite anfractuosité. Il peut manifestement être là depuis un certain temps. Aucun besoin de montrer la durée exacte. Un événement matériel très simple — eau, vibration, petit déplacement du terrain — rompt finalement l’équilibre. L’anneau se libère et reprend sa chute.
+
+La caméra ne cherche jamais à documenter tout son trajet. Ces apparitions espacées suffisent à faire sentir qu’entre 18h00 et 17h00 il traverse une longue chaîne de chutes, de blocages et de reprises que le film choisit de ne montrer que par fragments.
+
 Éva et Léa demeurent séparées de lui par le relief. Elles ne le voient jamais.
 
 Puis Thomas reconnaît une portion du chemin.
@@ -731,20 +747,27 @@ Le film laisse ouverte la causalité exacte de la fermeture : second contact ave
 
 B8 BIS — LA WORLDLINE DE L’ANNEAU : GROTTE ↔ PAROI
 
-La caméra omnisciente peut révéler par fragments la trajectoire unique de l’anneau.
+La caméra omnisciente ne raconte jamais la trajectoire complète de l’anneau.
 
-Le film ne formule pas de théorie sur l’orientation temporelle propre de l’anneau. Il montre seulement un fait matériel : à 18h00, le contact avec les doigts de Thomas constitue le point où sa trajectoire spatiale repart vers le bas de la montagne.
+Avant 18h00, le film ne doit pas installer l’anneau comme une intrigue parallèle. À 17h00, sa présence peut au maximum laisser une trace sensorielle presque subliminale — le léger bruit métallique hors champ entendu pendant que la caméra privilégie Éva et Léa — sans insert explicatif ni image de sa trajectoire.
 
-La trajectoire doit être construite d’abord dans le sens où Thomas est inversé, de 18h00 vers 17h00 : immédiatement après ce contact, l’anneau descend mécaniquement par la fissure et le relief, avec le minimum de contacts nécessaires — chutes libres courtes, rebonds simples, très peu de friction — jusqu’au point de fermeture contre la paroi vers 17h00.
+Après le contact de 18h00, la règle change du point de vue de la mise en scène : pendant la descente inversée de Thomas, la caméra peut retrouver ponctuellement l’anneau dans de courts fragments esthétiques.
 
-La lecture objective normale montre exactement cette animation à l’envers : depuis le point de fermeture, l’anneau semble rebondir et remonter le flanc, franchir les reliefs et la fissure, puis rejoindre Thomas dans la grotte à 18h00.
+On ne cherche pas à cartographier chaque mètre ni chaque minute de sa chute. Le film doit seulement établir suffisamment de continuité matérielle pour rendre plausible qu’il mette presque une heure à rejoindre le point de fermeture : il chute, rebondit, roule, se bloque parfois longtemps hors champ, puis repart.
 
-Il n’existe aucun état intermédiaire où l’anneau attend. Aucune impulsion spontanée. Aucune seconde instance de l’objet. Thomas ne le porte pas pendant son heure inversée.
+Ses fragments doivent appartenir à la séquence de plaisir : l’anneau descend tandis que le paysage inversé semble se remettre en place autour de lui. Il peut déplacer un gravier qui retrouve son encoche dans la lecture de Thomas, traverser une poussière qui se rassemble, accompagner une brindille ou des feuilles qui retrouvent leur position.
 
-Le film ne donne pas l’origine de l’anneau et ne démontre pas ce qui arriverait si une autre personne le touchait. Ces questions restent hors champ tant qu’aucun événement du récit ne nécessite une réponse.
+Un passage important se déroule dans l’eau : l’anneau continue vers le bas tandis qu’un mince courant paraît remonter la montagne. Les gouttes rejoignent l’écoulement autour de lui. L’image doit rendre simultanément lisibles deux directions opposées : EAU ↑ / ANNEAU ↓.
 
-[À VALIDER EN 3D — worldline complète grotte → fissure/relief → paroi dans le sens 18h → 17h. Chaque position, vitesse, rebond et contact doit être exactement réversible. La trajectoire doit croiser naturellement la main de Thomas au point de fermeture sans donner l’impression que l’anneau l’attend.]
+Un autre fragment peut retrouver l’anneau complètement immobilisé dans une anfractuosité. Le film ne précise pas depuis combien de minutes il est bloqué. Une cause matérielle banale finit par le libérer. Cette ellipse suffit à expliquer une grande partie de la durée sans obliger le film à montrer ni à simuler continûment toute l’heure.
 
+À l’approche de 17h00, ses apparitions peuvent devenir légèrement plus rapprochées jusqu’à son arrivée au relief de la fermeture. Le petit bruit métallique presque perdu dans la première lecture peut alors trouver rétrospectivement son origine sans flashback explicatif.
+
+Dans la lecture normale, les fragments visibles restent exactement les mêmes événements parcourus dans l’autre sens : l’anneau paraît remonter vers la grotte. Le spectateur peut reconstruire qu’il existe une trajectoire continue entre eux, mais le film n’a aucune obligation de lui en fournir une cartographie exhaustive.
+
+Il n’existe qu’un anneau et aucune téléportation. Les portions effectivement montrées doivent être physiquement réversibles et leurs raccords temporels compatibles. En revanche, les longues portions hors champ peuvent rester elliptiques : il suffit qu’aucun plan ne rende leur continuité impossible.
+
+[À PRÉVISUALISER — uniquement les fragments réellement montrés : départ de 18h00, rigole/recomposition du décor, passage eau ↑ / anneau ↓, blocage et libération, arrivée vers 17h00. Pas de nécessité de construire ou valider en 3D une cartographie seconde par seconde de toute l’heure.]
 ⸻
 
 B9 — 17h00 — LE RETOUR / LE DÉCLIC
