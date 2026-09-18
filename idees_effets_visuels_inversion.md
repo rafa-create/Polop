@@ -1,6 +1,6 @@
 # LA BOUCLE — Réservoir d’effets visuels et set pieces
 
-> Document de conception **non canonique**. La source de vérité narrative reste `Script_complet_V12.md`, puis `docs/REGLES_INVERSION.md` pour les règles physiques. Rien dans ce fichier ne doit être injecté silencieusement dans la BD, le storyboard ou Unreal si cela ajoute un événement absent de V12.
+> Document de conception **non canonique**. La source de vérité narrative reste `Script_POLOP.md`, puis `docs/REGLES_INVERSION.md` pour les règles physiques. Rien dans ce fichier ne doit être injecté silencieusement dans la BD, le storyboard ou Unreal si cela ajoute un événement absent de Script_POLOP.
 
 ## Objectif spectateur
 
@@ -23,7 +23,7 @@ La complexité intellectuelle ne doit donc pas occuper 100 % de l’attention. I
 * Un phénomène naturel peut être observé par Thomas inversé de la conséquence vers la cause.
 * Un objet ou un phénomène ne doit pas apparaître ou disparaître sans cause : matière, mouvement et trajectoire doivent rester cohérents.
 * Un événement inversé doit, autant que possible, reprendre la trajectoire physique qu’il aurait eue normalement, mais à rebours.
-* Pas de portail, halo, éclair, énergie visible ou code couleur « monde inversé » absent de V12.
+* Pas de portail, halo, éclair, énergie visible ou code couleur « monde inversé » absent de Script_POLOP.
 * La lumière reste celle de l’heure objective.
 * Thomas normal et Thomas inversé sont le même personnage ; pas de costume explicatif différent.
 * La cohérence globale prévaut toujours sur le spectaculaire.
@@ -34,7 +34,7 @@ La complexité intellectuelle ne doit donc pas occuper 100 % de l’attention. I
 
 Deux catégories seulement :
 
-**V12 DIRECT** — on peut enrichir la durée, la caméra, le son ou la chorégraphie d’un événement déjà présent dans V12 sans ajouter de fait narratif nouveau.
+**Script_POLOP DIRECT** — on peut enrichir la durée, la caméra, le son ou la chorégraphie d’un événement déjà présent dans Script_POLOP sans ajouter de fait narratif nouveau.
 
 **CANDIDAT SCRIPT** — l’idée ajoute un événement physique nouveau. Elle doit d’abord être écrite et validée dans une future version du scénario avant d’entrer dans le storyboard, la BD ou Unreal.
 
@@ -45,7 +45,7 @@ Deux catégories seulement :
 ## SP-00 — LA MONTAGNE RESPIRE
 
 **Source :** A5 / A8.  
-**Statut : V12 DIRECT.**
+**Statut : Script_POLOP DIRECT.**
 
 Avant même l’inversion, donner au film une vraie respiration de cinéma.
 
@@ -62,7 +62,7 @@ Le plan n’a pas besoin de révéler un secret. Sa fonction principale peut êt
 ## SP-01 — LA PAROI QUI DEVIENT UNE CAVERNE
 
 **Source :** A15.  
-**Statut : V12 DIRECT.**
+**Statut : Script_POLOP DIRECT.**
 
 Faire de la révélation de la caverne un effet visuel en soi, sans aucun effet surnaturel.
 
@@ -79,7 +79,7 @@ La caméra peut poursuivre son mouvement directement dans l’ouverture et retro
 ## SP-02 — 18H00 / LE BASCULEMENT
 
 **Source :** A16 / A17.  
-**Statut : V12 DIRECT.**
+**Statut : Script_POLOP DIRECT.**
 
 Le récit à transmettre est extrêmement simple : Thomas touche l’anneau à 18h00 et son orientation temporelle bascule.
 
@@ -100,7 +100,7 @@ On doit sentir un instant où le spectateur se demande : « Qu’est-ce qui vien
 ## SP-03 — LA MONTAGNE À REBOURS
 
 **Source :** B1 à B4, avec continuité vers B5.  
-**Statut : V12 DIRECT pour les éléments déjà écrits : eau, poussière, feuille, pierre, mouvements naturels, Éva/Léa à rebours et Thomas normal révélé par la pierre.**
+**Statut : Script_POLOP DIRECT pour les éléments déjà écrits : eau, poussière, feuille, pierre, mouvements naturels, Éva/Léa à rebours et Thomas normal révélé par la pierre.**
 
 C’est le candidat principal au **grand morceau de plaisir visuel pur** du film.
 
@@ -127,7 +127,7 @@ La scène peut être portée par une construction musicale et sonore où les bru
 ## SP-04 — LE CLAC / CHORÉGRAPHIE DU PONT
 
 **Source :** B5 / B6, en miroir de A1 / A9.  
-**Statut : V12 DIRECT.**
+**Statut : Script_POLOP DIRECT.**
 
 Cette scène est moins grande en échelle, mais peut devenir extrêmement satisfaisante par sa précision.
 
@@ -148,7 +148,7 @@ Le plaisir ne vient pas d’un gros VFX mais d’une **satisfaction mécanique e
 ## SP-05 — DEUX THOMAS → UN THOMAS
 
 **Source :** B7 / B8.  
-**Statut : V12 DIRECT.**
+**Statut : Script_POLOP DIRECT.**
 
 Deuxième grand set piece du film.
 
@@ -173,7 +173,7 @@ Pas de flash. Pas de morphing. Pas de particules. Si la chorégraphie fonctionne
 ## SP-06 — LE DÉZOOM IMPOSSIBLE / LA BOUCLE EN UN SEUL ESPACE
 
 **Source :** fin de B9.  
-**Statut : V12 DIRECT.**
+**Statut : Script_POLOP DIRECT.**
 
 Après la densité du puzzle, finir sur une sensation simple et ample.
 
@@ -183,7 +183,7 @@ Le chemin réapparaît comme une ligne dans le relief. Puis le creux. Le pont. L
 
 Le spectateur ne reçoit pas une nouvelle explication : il **voit la boucle comme un territoire**.
 
-À très grande échelle, quelques mouvements naturels peuvent sembler hésiter brièvement entre leurs deux lectures, comme V12 l’autorise déjà, puis tout redevient normal.
+À très grande échelle, quelques mouvements naturels peuvent sembler hésiter brièvement entre leurs deux lectures, comme Script_POLOP l’autorise déjà, puis tout redevient normal.
 
 La musique peut atteindre ici son ampleur maximale.
 
@@ -227,7 +227,7 @@ Les idées ci-dessous ne sont pas automatiquement canoniques. Elles sont des mat
 * Une petite flaque perturbée qui retrouve son état précédent.
 * Une gerbe d’eau qui se contracte vers la masse d’eau d’origine.
 
-Éviter d’introduire une rivière, une pluie ou un plan d’eau uniquement pour produire un effet si la géographie V12 ne les contient pas.
+Éviter d’introduire une rivière, une pluie ou un plan d’eau uniquement pour produire un effet si la géographie Script_POLOP ne les contient pas.
 
 ## Feu
 
@@ -238,8 +238,8 @@ Les idées ci-dessous ne sont pas automatiquement canoniques. Elles sont des mat
 
 ## Nature / environnement
 
-* Feuille qui remonte vers sa branche — déjà cohérent avec V12.
-* Poussière qui retrouve son point de départ — déjà cohérent avec V12.
+* Feuille qui remonte vers sa branche — déjà cohérent avec Script_POLOP.
+* Poussière qui retrouve son point de départ — déjà cohérent avec Script_POLOP.
 * Petits cailloux qui remontent une pente selon leur trajectoire antérieure.
 * Branche tombée qui reprend sa trajectoire en sens inverse.
 * Herbes et végétation dont les mouvements dus au vent sont lus à rebours.
