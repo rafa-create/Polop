@@ -2,6 +2,10 @@ LA BOUCLE
 
 Script canonique — réalisation
 
+**Bible narrative absolue et source canonique unique du projet.**
+
+Toute prévisualisation Unreal, storyboard, BD, schéma ou document de conception doit se conformer à ce fichier. Les anciennes versions de scénario archivées servent uniquement d’historique et ne peuvent pas le corriger silencieusement.
+
 ⸻
 
 A — LE TEMPS NORMAL
