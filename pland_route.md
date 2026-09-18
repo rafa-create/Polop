@@ -120,6 +120,12 @@ Quand quelque chose ne marche pas à l'image, identifier d'abord **la couche res
 
 ## Priorité immédiate
 
-1. reproductibilité complète depuis Git ;
-2. vérité physique anneau / mousqueton / fermeture / grotte ;
-3. seulement ensuite polish caméra.
+1. **#41** — reproductibilité totale depuis Git / autre machine ;
+2. **#44** — vérité physique fermeture / anneau / mousqueton / grotte ;
+3. **#47** — séparation réelle Thomas inversé / Éva-Léa vers 17h58 et absence de révélation prématurée ;
+4. **#43** — personnages reproductibles et coût Sequencer ;
+5. **#45** — validation automatique caméra ;
+6. **#42** — modularisation ;
+7. **#46** — film virtuel complet / polish narratif et visuel.
+
+Les issues #12, #14 et #21 sont des sous-tâches de #44 ; #13 et #29 sont des sous-tâches de #46 ; #32 est une règle transversale de validation 3D.
