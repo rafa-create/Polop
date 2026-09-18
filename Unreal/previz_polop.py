@@ -5256,7 +5256,7 @@ def build_omniscient_edit():
     def desired_pose(code, focus, offset, t):
         if focus == "CAVE":
             target = a["eval_actor"]("THOMAS_INVERSE" if code == "B1" else "THOMAS_NORMAL", t)
-            eye = a["cave_ground_point"](-1.5, -0.8, 1.85)
+            eye = a["cave_ground_point"](4.6 if code == "B1" else 0.4, -0.8, 1.85)
         else:
             if focus == "GEOGRAPHY":
                 target = (1320.0, 220.0, 120.0)
@@ -5333,6 +5333,7 @@ def build_omniscient_edit():
     previous_rotation = None
     previous_pose = None
     boundary_pose = None
+    previous_beat = None
     max_camera_step_m = 0.0
     join_steps_m = []
     for code, seconds, t0, t1, focus, offset in shots:
@@ -5352,7 +5353,17 @@ def build_omniscient_edit():
                     for channel, value in zip(channels[6:9], scale):
                         channel.add_key(frame, float(value if visible else 0.001),
                                         interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
-            eye, target = blend_camera_pose(boundary_pose, desired_pose(code, focus, offset, t), u)
+            # Both subjects keep moving during a camera handover. Blending from
+            # yesterday's fixed look target would leave the family out of frame.
+            moving_origin = boundary_pose
+            if previous_beat is not None:
+                old_code, old_focus, old_offset = previous_beat
+                moving_origin = desired_pose(old_code, old_focus, old_offset, t)
+            eye, target = blend_camera_pose(moving_origin, desired_pose(code, focus, offset, t), u)
+            # The sampled Landscape is continuous, so this clearance floor does
+            # not introduce cuts. Cave walls/roof still need separate validation.
+            if focus != "CAVE" and (previous_beat is None or previous_beat[1] != "CAVE"):
+                eye = (eye[0], eye[1], max(eye[2], a["terrain_z_m"](eye[0], eye[1])+2.0))
             if previous_pose is not None:
                 step = math.dist(previous_pose[0], eye)
                 max_camera_step_m = max(max_camera_step_m, step)
@@ -5369,6 +5380,7 @@ def build_omniscient_edit():
             for channel, value in zip(camera_channels[:6], (pos.x, pos.y, pos.z)+rotation):
                 channel.add_key(frame, float(value), interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
         boundary_pose = previous_pose
+        previous_beat = (code, focus, offset)
         first_frame += count
     unreal.EditorAssetLibrary.save_loaded_asset(seq)
     with open(os.path.join(RUN_SAVED_ROOT, "omniscient_edit.json"), "w", encoding="utf-8") as output:
