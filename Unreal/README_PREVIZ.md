@@ -1,34 +1,40 @@
 # POLOP — Unreal Previz
 
-## V01 — Blockout géographique
+## Scripts actifs
 
-Le script `previz_blockout_v01.py` construit dans le niveau actuellement ouvert :
+Pour éviter toute ambiguïté, seuls ces scripts à la racine de `Unreal/` sont considérés comme actifs :
 
-- chemin A — montée normale de Thomas, Éva et Léa ;
-- chemin B — descente de Thomas inversé ;
-- pont A ↔ B ;
-- chemin du flanc A ↔ B ;
-- zone de la grotte ;
-- relief séparant A et B ;
-- point de convergence de 17h00 ;
-- quatre proxies de personnages ;
-- une Cine Camera d'ensemble ;
-- une Level Sequence vide de 10 secondes à 24 fps.
+- `previz_polop_complet_v11.py` — géographie / Landscape de référence.
+- `previz_polop_validation_v11.py` — validation de la géographie V11.
+- `previz_polop_animation_v05.py` — animation, POV et validation visuelle actuelle.
 
-### Sécurité
+Les anciennes versions sont archivées dans `Unreal/old/`. Elles servent uniquement d'historique et ne doivent plus être exécutées sauf besoin de comparaison.
 
-Le script ne supprime que les Actors dont le label commence par `PZ_`.
-Il peut donc être relancé après chaque modification topologique.
+## V05 — objectif immédiat
 
-### Exécution dans Unreal Engine 5.8
+V05 reprend la simulation précédente sans modifier la logique A/B/pont/flanc déjà validée. Elle concentre les corrections sur la lisibilité de la caverne finale :
 
-1. Ouvrir le projet `polop`.
-2. Ouvrir le niveau dans lequel créer la préviz.
-3. Ouvrir **Window > Output Log**.
-4. Dans la barre de commande de l'Output Log, choisir le mode **Python** si nécessaire.
-5. Exécuter le fichier depuis une copie locale avec :
-   `py "CHEMIN_COMPLET/previz_blockout_v01.py"`
-6. Vérifier dans le World Outliner le dossier `POLOP_PREVIZ`.
-7. Sélectionner `PZ_CAM_OVERVIEW_GEOGRAPHIE` et utiliser **Pilot** pour voir la maquette depuis la caméra.
+- corridor de contrôle dégagé dans la cavité ;
+- POV Thomas normal / inversé décalés pour éviter d'entrer dans les proxies ;
+- caméras `FINAL_CAVE_MASTER`, `CAVE_BACKLIGHT_REVIEW` et `CAVE_TOP_DEBUG` ;
+- plage Sequencer cadrée sur 0–65 s ;
+- 62 s = 18h00 narratif ; 62–65 s = queue technique de vérification uniquement ;
+- validation automatique intégrée au script.
 
-La géométrie V01 est un schéma spatial, pas une proposition de décor final. Les dimensions, pentes et distances sont des hypothèses de prévisualisation à corriger après lecture dans Unreal.
+### Contrôle recommandé
+
+Après exécution de `previz_polop_animation_v05.py`, vérifier prioritairement :
+
+- 60 s et 61 s : coexistence lisible dans la cavité ;
+- 62 s : contact / convergence ;
+- 62–65 s : POV Thomas normal sans collision caméra ;
+- `PZ_ANIM_CAM_CAVE_BACKLIGHT_REVIEW` : lecture vers l'entrée ;
+- `PZ_ANIM_CAM_CAVE_TOP_DEBUG` : diagnostic si une paroi bloque encore une vue.
+
+## Exécution
+
+Dans Unreal, utiliser la console Python / Output Log et lancer la copie locale du script voulu, par exemple :
+
+`py "CHEMIN_COMPLET/previz_polop_animation_v05.py"`
+
+La préviz reste un outil de validation spatiale et narrative, pas une proposition de décor final.
