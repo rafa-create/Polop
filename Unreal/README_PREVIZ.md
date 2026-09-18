@@ -113,3 +113,86 @@ Ces quatre corrections ont permis au run local V09 du 18 septembre de terminer s
 ## Ordre de contrôle demandé
 
 Thomas normal → Léa → Éva → Thomas inversé. Contrôler A1/A2 (pont et détour), A10–A15 (attente, recherche, grotte), A17 (18h00), puis B1–B9 dans le sens 18h00 → 17h00. Une lecture objective de 16h58 → 18h00 ne suffit pas à valider le parcours vécu par Thomas inversé.
+
+## Objectif de livraison
+
+Le rendu final doit être une **caméra omnisciente**, avec une simulation esthétique
+et compréhensible qui respecte les révélations de `Script_POLOP.md`. Les quatre
+POV sont des outils de vérification. La caméra doit notamment rester avec Éva et
+Léa pendant l'entrée de Thomas, puis révéler la grotte en A15, et respecter la
+lecture normale → inversée → retour final. Un rapport technique vert ne valide
+pas, à lui seul, cette mise en scène.
+
+## Reprise du 18 septembre — déplacements et exécution différée
+
+- Correction de `NameError: __file__ is not defined` : Unreal retire cette variable
+  après l'exécution du fichier, avant les callbacks Slate. Le chemin source est
+  maintenant conservé dans `SOURCE_SCRIPT_PATH` dès le chargement.
+- Raccords continus entre l'accès, la zone rocheuse et l'intérieur de la grotte.
+- Positions distinctes pour Éva et Léa ; suppression du saut vers leur attente.
+- Regard de Thomas inversé orienté selon son temps vécu ; disparition du trajet
+  artificiel depuis le sous-sol avant 17h00.
+- Échantillonnage des déplacements et des POV à 30 images/seconde.
+- Les marqueurs sphériques de diagnostic sont masqués dans la scène.
+
+Le run `20260918_212116_518810` a terminé avec un rapport **OK** dans UE 5.8.2.
+Les nouveaux contrôles portent sur la continuité des trajectoires, la séparation
+Éva/Léa, la présence de Thomas dans la grotte avant la recherche et le regard
+inversé. Il ne s'agit pas encore d'une validation visuelle des quatre parcours.
+
+### Lecture automatisée des POV
+
+L'option de lancement Unreal `-POLOPReview` déclenche la lecture après génération.
+Les captures attendues sont dans `Saved/POLOP/Runs/<run_id>/POV/` et chaque demande
+est inscrite dans le keylog. Une demande de capture ne prouve pas que le PNG existe
+ou que son contenu est correct. La lecture limite l'avancement par tick pour
+éviter qu'une compilation de shaders saute un parcours ; un verrou évite les
+callbacks imbriqués pendant les opérations de l'éditeur.
+
+### Montage omniscient en préparation
+
+`build_omniscient_edit()` construit une séquence distincte
+`LS_POLOP_OMNISCIENT`, en rééchantillonnant tous les personnages sur la même heure
+objective, d'abord croissante puis décroissante. Le découpage est exporté dans
+`omniscient_edit.json`. Ce montage de travail est désormais généré par défaut
+après les contrôles techniques. Son exécution a été testée dans Unreal ; sa
+fidélité narrative et ses cadrages ne sont pas encore validés.
+L'ouverture A0, l'anneau, le mousqueton animé, les effets inversés, le jeu et le son
+restent à produire. Ne pas présenter ce montage de travail comme le film final.
+
+## Validation omnisciente — 18 septembre 2026
+
+Le montage de 276 secondes a été exécuté, puis ses 20 plans ont été capturés et
+inspectés dans le run `20260918_212116_518810`.
+
+Un défaut majeur a été corrigé : `LevelSequenceEditorSubsystem.add_actors()`
+crée déjà une piste Transform. Ajouter une seconde piste mélangeait les positions
+et plaçait notamment la caméra à mi-distance de sa destination. Le générateur
+supprime désormais la piste automatique avant de créer la piste animée, pour les
+corps, têtes, POV et la caméra omnisciente. Les séquences locales ont été corrigées
+et les positions réellement évaluées vérifiées sur neuf instants : aucun écart
+supérieur à 2 cm pour les quatre corps. Les anciens rapports fondés uniquement sur
+le modèle numérique ne détectaient pas ce défaut.
+
+`validate_sequencer_evaluation()` ajoute désormais ces contrôles au générateur.
+`start_omniscient_review()` produit une capture par plan et vérifie la présence des
+PNG avant de journaliser la fin, avec protection contre les callbacks imbriqués.
+Les images sont conservées localement sous `OMNISCIENT/<heure>/` dans le run.
+
+**Verdict visuel : non validé comme adaptation finale.** Léa est trop basse dans
+le tablier du pont ; la grotte reste trop sombre et certains cadrages y sont trop
+serrés ; les silhouettes sont encore de simples proxies ; le relief en damier et
+les sentiers demandent une finition. Le plan géographique et la distance de la
+caméra de grotte ont été repris pour une seconde passe de captures. Les gestes,
+objets et phénomènes canoniques listés ci-dessus restent absents. La visibilité
+des deux Thomas et leur occultation nécessitent une reprise de mise en scène.
+
+## Fichier nécessaire sur GitHub
+
+Le **seul fichier de code à télécharger et exécuter** est
+`Unreal/previz_polop.py`. Il contient la géographie, l'animation, le montage et les
+outils de contrôle ; il ne charge pas les scripts `old/` ou `reference/`.
+`README_PREVIZ.md` fournit les prérequis et limites, sans être une dépendance du
+code. Cela ne signifie pas qu'un PC vide peut exécuter le fichier seul : Unreal,
+les deux plugins et le Landscape source décrits plus haut restent nécessaires.
+
