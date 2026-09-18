@@ -27,7 +27,7 @@ import unreal
 # - pont blockout avec tablier, garde-corps et pile ;
 # - grotte blockout locale ;
 # - proxies humains ;
-# - 9 caméras créées de façon robuste.
+# - aucune caméra : l'animation V05 est l'unique autorité caméra.
 #
 # Après exécution :
 #   Saved/POLOP/V11/polop_v11_heightmap_1009.png
@@ -734,85 +734,11 @@ spawn_person("LEA_PROXY_FLANC", 810.0,82.0,135.0,MAT_LEA)
 spawn_person("THOMAS_INVERSE_PROXY", 1300.0,600.0,180.0,MAT_INVERSE)
 
 
-def make_camera(name,pos,target,focal):
-    try:
-        cam = actors.spawn_actor_from_class(
-            unreal.CineCameraActor,pos,unreal.Rotator(0,0,0),False
-        )
-        if not cam:
-            raise RuntimeError("spawn_actor_from_class=None")
-        label(cam,"CAM_REVIEW_"+name,"Cameras/Review_V11")
-        cam.set_actor_rotation(unreal.MathLibrary.find_look_at_rotation(pos,target),False)
-        cam.get_cine_camera_component().set_editor_property("current_focal_length", float(focal))
-        unreal.log("POLOP V11 CAM OK : "+name)
-        return cam
-    except Exception as exc:
-        unreal.log_error("POLOP V11 CAM FAIL %s : %s"%(name,exc))
-        return None
+# Les caméras de revue V11 sont volontairement désactivées dans le pipeline master.
+# V11 est désormais uniquement responsable de la géographie / blockout.
+# Les seules caméras actives sont créées ensuite par l'animation V05.
+unreal.log("POLOP V11 : caméras de revue désactivées (autorité = Animation V05).")
 
-
-def target(x,y,extra=0):
-    return V(x*100,y*100,height_at(x,y)*100+extra)
-
-
-def nearest_route_sample(route_name, x, y):
-    route = ROUTES[route_name]
-    return min(route, key=lambda p: (p[0]-x)**2 + (p[1]-y)**2)
-
-
-def route_camera_point(route_name, x, y, eye_cm=175.0):
-    p = nearest_route_sample(route_name, x, y)
-    return V(
-        p[0]*100.0,
-        p[1]*100.0,
-        height_at(p[0], p[1])*100.0 + eye_cm
-    )
-
-
-a_eye = route_camera_point("A", 650.0, -80.0, 175.0)
-a_look_p = nearest_route_sample("A", 710.0, -65.0)
-a_look = V(a_look_p[0]*100, a_look_p[1]*100, height_at(a_look_p[0], a_look_p[1])*100 + 165)
-
-b_eye = route_camera_point("B", 1300.0, 600.0, 175.0)
-b_look_p = nearest_route_sample("B", 1230.0, 555.0)
-b_look = V(b_look_p[0]*100, b_look_p[1]*100, height_at(b_look_p[0], b_look_p[1])*100 + 165)
-
-cave_eye_p = nearest_route_sample("GROTTE", 1800.0, 76.0)
-cave_eye = V(
-    cave_eye_p[0]*100,
-    cave_eye_p[1]*100,
-    height_at(cave_eye_p[0], cave_eye_p[1])*100 + 175
-)
-cave_look = V(183400, 9200, height_at(1834.0, 92.0)*100 + 160)
-
-conv_eye_p = nearest_route_sample("A", 8.0, 0.0)
-conv_look_p = nearest_route_sample("A", 45.0, -6.0)
-
-camera_specs = [
-    ("01_TOP_MAP", V(100800, 0, 520000), V(100800, 0, 9000), 50),
-    ("02_FLANC_CLOSE", V(75500, -8500, height_at(755,-85)*100+7000), target(825,45,650), 45),
-    ("03_BRIDGE_A", V(81000, -10500, height_at(810,-105)*100+6500), target(900,12.5,450), 45),
-    ("04_BRIDGE_B", V(99000, 15000, height_at(990,150)*100+6500), target(900,12.5,450), 45),
-    ("05_HIGH_JUNCTION", V(169000, -8500, height_at(1760,0)*100+6500), target(1760,0,900), 42),
-    ("06_CAVE_HUMAN", cave_eye, cave_look, 35),
-    ("07_HUMAN_A", a_eye, a_look, 35),
-    ("08_HUMAN_B", b_eye, b_look, 35),
-    (
-        "09_CONVERGENCE",
-        V(conv_eye_p[0]*100, conv_eye_p[1]*100, height_at(conv_eye_p[0],conv_eye_p[1])*100+175),
-        V(conv_look_p[0]*100, conv_look_p[1]*100, height_at(conv_look_p[0],conv_look_p[1])*100+165),
-        35
-    ),
-]
-
-created = []
-for spec in camera_specs:
-    cam = make_camera(*spec)
-    if cam:
-        created.append(cam)
-
-if created:
-    actors.set_selected_level_actors([created[0]])
 
 timing = route_model["timing"]
 
@@ -825,6 +751,6 @@ unreal.log("FLANC : %.1fm"%timing["flank_length_m"])
 unreal.log("THOMAS INVERSE : %.1fm / total %.1fmin"%(
     timing["inverse_length_m"], timing["inverse_total_with_7min_pause"]
 ))
-unreal.log("CAMERAS : %d / %d créées"%(len(created),len(camera_specs)))
+unreal.log("CAMERAS REVIEW : 0 — désactivées, Animation V05 uniquement")
 unreal.log("IMPORT : Location UI 100800/0/0 | Scale 200/200/100 | Flip Y OFF")
 unreal.log("============================================================")
