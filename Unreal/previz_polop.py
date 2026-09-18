@@ -5208,6 +5208,20 @@ def record_failure(exc):
     unreal.log_error("POLOP V10 FAILED: " + str(exc))
 
 
+def cinematic_ease(value):
+    """Quintic easing: position, velocity and acceleration agree at joins."""
+    x = max(0.0, min(1.0, value))
+    return x*x*x*(10.0+x*(-15.0+6.0*x))
+
+
+def blend_camera_pose(previous, desired, progress):
+    if previous is None:
+        return desired
+    weight = cinematic_ease(progress)
+    return tuple(tuple(p+(q-p)*weight for p, q in zip(old, new))
+                 for old, new in zip(previous, desired))
+
+
 def build_omniscient_edit():
     """First editorial pass: a separate film timeline, leaving POV audit intact.
 
@@ -5218,7 +5232,7 @@ def build_omniscient_edit():
     a = _ANIMATION
     # code, screen seconds, objective minute endpoints, focus, camera offset (m)
     shots = [
-        ("A1", 12, 0, 1.9, "LEA", (-8, -12, 7)),
+        ("A1", 12, 0, 2, "LEA", (-8, -12, 7)),
         ("A2", 18, 2, 8, "LEA", (-5, -9, 4)),
         ("A3_A4", 16, 8, 20, "EVA", (-8, -10, 5)),
         ("A5_GEOGRAPHIE", 12, 20, 24, "GEOGRAPHY", (-650, -950, 800)),
@@ -5230,7 +5244,7 @@ def build_omniscient_edit():
         ("A14", 6, 59, 60, "EVA", (-7, -9, 4)),
         ("A15_A16", 16, 60, 61.95, "CAVE", (0, 0, 0)),
         ("A17", 5, 61.95, 62, "CAVE", (0, 0, 0)),
-        ("B1", 16, 61.99, 59, "CAVE", (0, 0, 0)),
+        ("B1", 16, 62, 59, "CAVE", (0, 0, 0)),
         ("B2", 10, 59, 55, "THOMAS_INVERSE", (-14, 20, 9)),
         ("B3_B4", 25, 55, 32, "THOMAS_INVERSE", (-9, 12, 5)),
         ("B5_PONT", 6, 32, 31.9, "BRIDGE", (-18, -24, 20)),
@@ -5239,6 +5253,31 @@ def build_omniscient_edit():
         ("B9", 18, 2, 8, "LEA", (-5, -9, 4)),
         ("B9_ELOIGNEMENT", 12, 8, 12, "EVA", (-100, -160, 100)),
     ]
+    def desired_pose(code, focus, offset, t):
+        if focus == "CAVE":
+            target = a["eval_actor"]("THOMAS_INVERSE" if code == "B1" else "THOMAS_NORMAL", t)
+            eye = a["cave_ground_point"](-1.5, -0.8, 1.85)
+        else:
+            if focus == "GEOGRAPHY":
+                target = (1320.0, 220.0, 120.0)
+            else:
+                target = (900, 12.5, a["terrain_z_m"](900, 0)) if focus == "BRIDGE" else a["eval_actor"](focus, t)
+            eye = tuple(target[i]+offset[i] for i in range(3))
+            eye = (eye[0], eye[1], max(eye[2], a["terrain_z_m"](eye[0], eye[1])+2.0))
+        return eye, (target[0], target[1], target[2]+1.1)
+
+    # A geographical excursion needs travel time instead of a cut or teleport.
+    # Retain these as narrative beats, not separate camera shots.
+    timed_beats = []
+    previous_end = None
+    for code, seconds, t0, t1, focus, offset in shots:
+        end = desired_pose(code, focus, offset, t1)
+        if previous_end is not None:
+            travel = math.dist(previous_end[0], end[0])
+            seconds = max(seconds, int(math.ceil(1.875*travel/20.0)))
+        timed_beats.append((code, seconds, t0, t1, focus, offset))
+        previous_end = end
+    shots = timed_beats
     fps = a["FPS"]
     duration = sum(s[1] for s in shots)
     sequence_name = "LS_POLOP_OMNISCIENT"
@@ -5291,14 +5330,18 @@ def build_omniscient_edit():
     cut.set_camera_binding_id(binding_id)
     manifest = []
     first_frame = 0
+    previous_rotation = None
+    previous_pose = None
+    boundary_pose = None
+    max_camera_step_m = 0.0
+    join_steps_m = []
     for code, seconds, t0, t1, focus, offset in shots:
         count = seconds*fps
         manifest.append(dict(scene=code, start_frame=first_frame, end_frame=first_frame+count,
                              objective_start=t0, objective_end=t1, focus=focus))
-        previous_rotation = None
         for index in range(count):
             u = index/max(1, count-1)
-            t = t0+(t1-t0)*u
+            t = t0+(t1-t0)*cinematic_ease(u)
             frame = unreal.FrameNumber(first_frame+index)
             for name, channels, scale, converter in animated:
                 point = a["eval_actor"](name, t)
@@ -5309,30 +5352,30 @@ def build_omniscient_edit():
                     for channel, value in zip(channels[6:9], scale):
                         channel.add_key(frame, float(value if visible else 0.001),
                                         interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
-            if focus == "CAVE":
-                target = a["eval_actor"]("THOMAS_INVERSE" if code == "B1" else "THOMAS_NORMAL", t)
-                eye = a["cave_ground_point"](-1.5, -0.8, 1.85)
-            else:
-                if focus == "GEOGRAPHY":
-                    target = (1320.0, 220.0, 120.0)
-                else:
-                    target = (900, 12.5, a["terrain_z_m"](900, 0)) if focus == "BRIDGE" else a["eval_actor"](focus, t)
-                eye = tuple(target[i]+offset[i] for i in range(3))
-                eye = (eye[0], eye[1], max(eye[2], a["terrain_z_m"](eye[0], eye[1])+2.0))
+            eye, target = blend_camera_pose(boundary_pose, desired_pose(code, focus, offset, t), u)
+            if previous_pose is not None:
+                step = math.dist(previous_pose[0], eye)
+                max_camera_step_m = max(max_camera_step_m, step)
+                if index == 0:
+                    join_steps_m.append(step)
+            previous_pose = (eye, target)
             pos = unreal.Vector(*(v*100 for v in eye))
-            look = unreal.Vector(target[0]*100, target[1]*100, target[2]*100+110)
+            look = unreal.Vector(*(v*100 for v in target))
             rot = unreal.MathLibrary.find_look_at_rotation(pos, look)
             rotation = (rot.roll, rot.pitch, rot.yaw)
             if previous_rotation is not None:
                 rotation = tuple(a["unwrap_angle"](p, r) for p, r in zip(previous_rotation, rotation))
             previous_rotation = rotation
             for channel, value in zip(camera_channels[:6], (pos.x, pos.y, pos.z)+rotation):
-                channel.add_key(frame, float(value), interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT
-                                if index == count-1 else unreal.MovieSceneKeyInterpolation.LINEAR)
+                channel.add_key(frame, float(value), interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
+        boundary_pose = previous_pose
         first_frame += count
     unreal.EditorAssetLibrary.save_loaded_asset(seq)
     with open(os.path.join(RUN_SAVED_ROOT, "omniscient_edit.json"), "w", encoding="utf-8") as output:
-        json.dump(dict(status="BLOCKING_PASS_NOT_FINAL", duration_seconds=duration, shots=manifest,
+        json.dump(dict(status="CONTINUOUS_CAMERA_BLOCKING_NOT_FINAL", duration_seconds=duration, shots=manifest,
+                       camera_sections=1, join_steps_m=join_steps_m,
+                       maximum_camera_speed_m_s=max_camera_step_m*fps,
+                       collision_validation="pending; interpolated paths require visual and geometry review",
                        missing=["A0 river opening", "ring", "carabiner animation", "environment reversal",
                                 "acting and sound", "visual occlusion verification"]), output, indent=2)
     journal("omniscient_edit_created", sequence=seq.get_path_name(), duration_seconds=duration,
