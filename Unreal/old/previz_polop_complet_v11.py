@@ -743,7 +743,7 @@ def make_camera(name,pos,target,focal):
             raise RuntimeError("spawn_actor_from_class=None")
         label(cam,"CAM_REVIEW_"+name,"Cameras/Review_V11")
         cam.set_actor_rotation(unreal.MathLibrary.find_look_at_rotation(pos,target),False)
-        cam.get_cine_camera_component().set_current_focal_length(float(focal))
+        cam.get_cine_camera_component().set_editor_property("current_focal_length", float(focal))
         unreal.log("POLOP V11 CAM OK : "+name)
         return cam
     except Exception as exc:
