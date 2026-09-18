@@ -1,0 +1,20 @@
+{
+  "status": "template",
+  "purpose": "Copy to VERIFIED_RUN.json only after a real Unreal execution has been reviewed.",
+  "script_commit": null,
+  "script_sha256": null,
+  "unreal_version": "5.8.x",
+  "os": null,
+  "run_id": null,
+  "work_map": null,
+  "master_report": {
+    "path": null,
+    "overall": null
+  },
+  "omniscient_sequence": null,
+  "technical_status": null,
+  "visual_status": null,
+  "known_failures": [],
+  "reviewed_at": null,
+  "notes": "Do not mark a run verified from static code inspection alone."
+}
