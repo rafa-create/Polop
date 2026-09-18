@@ -29,6 +29,10 @@ import time
 import zlib
 import unreal
 
+# Unreal restores/removes __file__ once Execute Python Script returns. Slate
+# callbacks run later, so retain our own immutable source path while it exists.
+SOURCE_SCRIPT_PATH = os.path.abspath(__file__)
+
 MASTER_VERSION = "10"
 EXPECTED_LANDSCAPE_LOCATION = unreal.Vector(100800.0, 0.0, 0.0)
 EXPECTED_LANDSCAPE_SCALE = unreal.Vector(200.0, 200.0, 100.0)
@@ -884,11 +888,11 @@ FPS = 30
 NARRATIVE_SECONDS = 62.0
 REVIEW_TAIL_SECONDS = 3.0
 SEQUENCE_SECONDS = NARRATIVE_SECONDS + REVIEW_TAIL_SECONDS
-SAMPLE_SECONDS = 0.25
+SAMPLE_SECONDS = 1.0 / FPS
 
 # POV : les quatre caméras sont animées dans LA MEME Level Sequence.
 # Sélectionner la caméra souhaitée dans le viewport puis Play.
-POV_SAMPLE_SECONDS = 0.10
+POV_SAMPLE_SECONDS = 1.0 / FPS
 POV_FORWARD_OFFSET_CM = 38.0
 POV_LOOK_AHEAD_SECONDS = 0.35
 POV_FOCAL_MM = 20.0
@@ -1737,23 +1741,12 @@ ANIM["THOMAS_NORMAL"] = [
         point_with_real_terrain(HIGH_POINT),
         point_with_real_terrain(CAVE_ACCESS_POINT)
     ),
-    hold_segment(
-        52.5,
-        57.0,
-        point_with_real_terrain(CAVE_ZONE_POINT)
-    ),
-    custom_segment(
-        57.0,
-        59.0,
-        point_with_real_terrain(CAVE_ZONE_POINT),
-        point_with_real_terrain(CAVE_ENTRY_POINT)
-    ),
-    custom_segment(
-        59.0,
-        60.0,
-        point_with_real_terrain(CAVE_ENTRY_POINT),
-        CAVE_FISSURE_POINT
-    ),
+    custom_segment(52.5, 53.0, point_with_real_terrain(CAVE_ACCESS_POINT),
+                   point_with_real_terrain(CAVE_ZONE_POINT)),
+    custom_segment(53.0, 54.0, point_with_real_terrain(CAVE_ZONE_POINT),
+                   point_with_real_terrain(CAVE_ENTRY_POINT)),
+    custom_segment(54.0, 56.0, point_with_real_terrain(CAVE_ENTRY_POINT), CAVE_FISSURE_POINT),
+    hold_segment(56.0, 60.0, CAVE_FISSURE_POINT),
     hold_segment(
         60.0,
         61.0,
@@ -1780,7 +1773,7 @@ ANIM["EVA"] = [
         GROUP_DEPART_AFTER_LEA,
         52.0,
         A_BRIDGE_STATION,
-        LENGTH["A"]
+        max(0.0, LENGTH["A"] - 8.0)
     ),
     hold_segment(
         52.0,
@@ -1841,7 +1834,7 @@ ANIM["LEA"] = [
         LEA_FLANK_RETURN_END_MIN,
         52.0,
         A_BRIDGE_STATION,
-        LENGTH["A"]
+        max(0.0, LENGTH["A"] - 8.0)
     ),
     hold_segment(
         52.0,
@@ -1880,11 +1873,7 @@ ANIM["LEA"] = [
 # 17h00 fermeture ;
 # 17h00 -> 17h01 : A vers pont puis A -> B.
 # Cela correspond, dans son temps propre, à B -> A puis convergence.
-hidden_point = (
-    CONVERGENCE_POINT[0],
-    CONVERGENCE_POINT[1],
-    -1000.0
-)
+hidden_point = point_with_real_terrain(CONVERGENCE_POINT)
 
 ANIM["THOMAS_INVERSE"] = [
     hold_segment(0.0, 1.95, hidden_point),
@@ -1978,7 +1967,7 @@ def eval_segment(segment, t):
     return linear_point(segment["p0"], segment["p1"], alpha)
 
 
-def eval_actor(name, t):
+def eval_actor_base(name, t):
     segments = ANIM[name]
 
     for segment in segments:
@@ -1989,6 +1978,18 @@ def eval_actor(name, t):
         return eval_segment(segments[0], segments[0]["t0"])
 
     return eval_segment(segments[-1], segments[-1]["t1"])
+
+
+def eval_actor(name, t):
+    # Distinct walking lanes prevent the family from occupying identical bodies.
+    # These 65 cm offsets are blockout choices, not additions to the story.
+    p = eval_actor_base(name, t)
+    lateral = 0.65 if name == "EVA" else 0.0
+    if name == "LEA":
+        lateral = -0.65 * clamp((t - 7.5) / 0.5, 0.0, 1.0)
+    if lateral:
+        p = (p[0], p[1] + lateral, terrain_z_m(p[0], p[1] + lateral))
+    return p
 
 
 # =============================================================================
@@ -2171,6 +2172,11 @@ def pov_direction(actor_name, t):
     before = eval_actor(actor_name, max(0.0, t-POV_LOOK_AHEAD_SECONDS))
     after = eval_actor(actor_name, min(SEQUENCE_SECONDS, t+POV_LOOK_AHEAD_SECONDS))
     direction = _vec_sub(after, before)
+
+    # In the objective sequence his position moves toward the future, but his
+    # gaze follows his experienced journey toward 17:00.
+    if actor_name == "THOMAS_INVERSE" and 2.0 <= t < NARRATIVE_SECONDS:
+        direction = tuple(-value for value in direction)
 
     if _vec_len(direction) < 0.05:
         target = pov_story_target(actor_name, t, p)
@@ -2557,6 +2563,11 @@ def add_transform_animation(actor_name, actor):
 
     binding = bindings[0]
 
+    # add_actors creates a default transform track in UE 5.8. Two absolute
+    # tracks blend their positions, silently halving camera/character motion.
+    for existing in binding.get_tracks():
+        if isinstance(existing, unreal.MovieScene3DTransformTrack):
+            binding.remove_track(existing)
     track = binding.add_track(
         unreal.MovieScene3DTransformTrack
     )
@@ -2635,6 +2646,10 @@ def add_transform_animation(actor_name, actor):
                 (sy, float(current_scale.y)),
                 (sz, float(current_scale.z)),
             ):
+                ch.add_key(unreal.FrameNumber(0), CONTACT_HIDDEN_SCALE,
+                           interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+                ch.add_key(unreal.FrameNumber(60), value,
+                           interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
                 ch.add_key(
                     unreal.FrameNumber(CONTACT_PREV_FRAME),
                     value,
@@ -2714,6 +2729,9 @@ def add_pov_camera_animation(
 
     binding = bindings[0]
 
+    for existing in binding.get_tracks():
+        if isinstance(existing, unreal.MovieScene3DTransformTrack):
+            binding.remove_track(existing)
     track = binding.add_track(
         unreal.MovieScene3DTransformTrack
     )
@@ -2895,6 +2913,9 @@ def add_head_animation(character_name, head_actor):
     if not bindings:
         raise RuntimeError("Impossible de binder head %s." % character_name)
     binding = bindings[0]
+    for existing in binding.get_tracks():
+        if isinstance(existing, unreal.MovieScene3DTransformTrack):
+            binding.remove_track(existing)
     track = binding.add_track(unreal.MovieScene3DTransformTrack)
     section = track.add_section()
     try:
@@ -2922,6 +2943,10 @@ def add_head_animation(character_name, head_actor):
                 (channels[7], float(scale.y)),
                 (channels[8], float(scale.z)),
             ):
+                ch.add_key(unreal.FrameNumber(0), CONTACT_HIDDEN_SCALE,
+                           interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+                ch.add_key(unreal.FrameNumber(60), value,
+                           interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
                 ch.add_key(
                     unreal.FrameNumber(CONTACT_PREV_FRAME),
                     value,
@@ -4951,7 +4976,7 @@ def validate_animation_camera_authority():
 
 def run_embedded(source, virtual_name):
     log("Exécution : " + virtual_name)
-    namespace = {"__name__": "polop_generated", "__file__": __file__}
+    namespace = {"__name__": "polop_generated", "__file__": SOURCE_SCRIPT_PATH}
     exec(compile(source, virtual_name, "exec"), namespace, namespace)
     return namespace
 
@@ -5183,13 +5208,218 @@ def record_failure(exc):
     unreal.log_error("POLOP V10 FAILED: " + str(exc))
 
 
+def build_omniscient_edit():
+    """First editorial pass: a separate film timeline, leaving POV audit intact.
+
+    Story minutes are sampled in both directions; all eight character proxies
+    share the exact same objective time. This is a blocking pass, not a claim
+    that props, acting, sound or the canonical opening are finished.
+    """
+    a = _ANIMATION
+    # code, screen seconds, objective minute endpoints, focus, camera offset (m)
+    shots = [
+        ("A1", 12, 0, 1.9, "LEA", (-8, -12, 7)),
+        ("A2", 18, 2, 8, "LEA", (-5, -9, 4)),
+        ("A3_A4", 16, 8, 20, "EVA", (-8, -10, 5)),
+        ("A5_GEOGRAPHIE", 12, 20, 24, "GEOGRAPHY", (-650, -950, 800)),
+        ("A6_A8", 16, 24, 32, "THOMAS_NORMAL", (-8, -12, 6)),
+        ("A9_PONT", 6, 32, 32.2, "BRIDGE", (-18, -24, 20)),
+        ("A10", 14, 32.2, 52, "EVA", (-10, -12, 6)),
+        ("A11_ATTENTE", 18, 52, 56, "EVA", (-5, -7, 3)),
+        ("A12_A13", 16, 56, 59, "EVA", (-5, -6, 3)),
+        ("A14", 6, 59, 60, "EVA", (-7, -9, 4)),
+        ("A15_A16", 16, 60, 61.95, "CAVE", (0, 0, 0)),
+        ("A17", 5, 61.95, 62, "CAVE", (0, 0, 0)),
+        ("B1", 16, 61.99, 59, "CAVE", (0, 0, 0)),
+        ("B2", 10, 59, 55, "THOMAS_INVERSE", (-14, 20, 9)),
+        ("B3_B4", 25, 55, 32, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("B5_PONT", 6, 32, 31.9, "BRIDGE", (-18, -24, 20)),
+        ("B6", 22, 31.9, 3, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("B7_B8", 12, 3, 2, "THOMAS_INVERSE", (-6, -10, 5)),
+        ("B9", 18, 2, 8, "LEA", (-5, -9, 4)),
+        ("B9_ELOIGNEMENT", 12, 8, 12, "EVA", (-100, -160, 100)),
+    ]
+    fps = a["FPS"]
+    duration = sum(s[1] for s in shots)
+    sequence_name = "LS_POLOP_OMNISCIENT"
+    if unreal.EditorAssetLibrary.does_asset_exist(RUN_ASSET_ROOT + "/Sequences/" + sequence_name):
+        sequence_name += "_" + datetime.datetime.now().strftime("%H%M%S_%f")
+    seq = unreal.AssetToolsHelpers.get_asset_tools().create_asset(
+        sequence_name, RUN_ASSET_ROOT + "/Sequences",
+        unreal.LevelSequence, unreal.LevelSequenceFactoryNew())
+    if not seq:
+        raise RuntimeError("Could not create omniscient film sequence")
+    seq.set_display_rate(unreal.FrameRate(fps, 1))
+    seq.set_playback_start(0)
+    seq.set_playback_end(duration*fps)
+    seq.set_view_range_start(0.0)
+    seq.set_view_range_end(float(duration))
+    unreal.LevelSequenceEditorBlueprintLibrary.open_level_sequence(seq)
+    ls = unreal.get_editor_subsystem(unreal.LevelSequenceEditorSubsystem)
+    cam = a["create_camera"]("OMNISCIENT", unreal.Vector(0, 0, 200), unreal.Vector(100, 0, 100), 30)
+    bindings = []
+
+    def track_for(actor):
+        binding = ls.add_actors([actor])[0]
+        for existing in binding.get_tracks():
+            if isinstance(existing, unreal.MovieScene3DTransformTrack):
+                binding.remove_track(existing)
+        section = binding.add_track(unreal.MovieScene3DTransformTrack).add_section()
+        section.set_range(0, duration*fps)
+        channels = section.get_all_channels()
+        scale = actor.get_actor_scale3d()
+        for channel, value in zip(channels[6:9], (scale.x, scale.y, scale.z)):
+            channel.set_default(float(value))
+        bindings.append(binding)
+        return binding, channels, (scale.x, scale.y, scale.z)
+
+    animated = []
+    for name in POV_ORDER:
+        for objects, converter in ((a["actor_objects"], a["actor_location_from_foot"]),
+                                   (a["head_objects"], a["head_location_from_foot"])):
+            _, channels, scale = track_for(objects[name])
+            if name == "THOMAS_INVERSE":
+                normal_scale = objects["THOMAS_NORMAL"].get_actor_scale3d()
+                scale = (normal_scale.x, normal_scale.y, normal_scale.z)
+            animated.append((name, channels, scale, converter))
+    binding, camera_channels, _ = track_for(cam)
+    cuts = seq.add_track(unreal.MovieSceneCameraCutTrack)
+    cut = cuts.add_section()
+    cut.set_range(0, duration*fps)
+    binding_id = unreal.MovieSceneObjectBindingID()
+    binding_id.set_editor_property("guid", binding.get_id())
+    cut.set_camera_binding_id(binding_id)
+    manifest = []
+    first_frame = 0
+    for code, seconds, t0, t1, focus, offset in shots:
+        count = seconds*fps
+        manifest.append(dict(scene=code, start_frame=first_frame, end_frame=first_frame+count,
+                             objective_start=t0, objective_end=t1, focus=focus))
+        previous_rotation = None
+        for index in range(count):
+            u = index/max(1, count-1)
+            t = t0+(t1-t0)*u
+            frame = unreal.FrameNumber(first_frame+index)
+            for name, channels, scale, converter in animated:
+                point = a["eval_actor"](name, t)
+                for channel, value in zip(channels[:3], converter(name, point)):
+                    channel.add_key(frame, float(value), interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
+                if name == "THOMAS_INVERSE":
+                    visible = 2.0 <= t < 62.0
+                    for channel, value in zip(channels[6:9], scale):
+                        channel.add_key(frame, float(value if visible else 0.001),
+                                        interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+            if focus == "CAVE":
+                target = a["eval_actor"]("THOMAS_INVERSE" if code == "B1" else "THOMAS_NORMAL", t)
+                eye = a["cave_ground_point"](-1.5, -0.8, 1.85)
+            else:
+                if focus == "GEOGRAPHY":
+                    target = (1320.0, 220.0, 120.0)
+                else:
+                    target = (900, 12.5, a["terrain_z_m"](900, 0)) if focus == "BRIDGE" else a["eval_actor"](focus, t)
+                eye = tuple(target[i]+offset[i] for i in range(3))
+                eye = (eye[0], eye[1], max(eye[2], a["terrain_z_m"](eye[0], eye[1])+2.0))
+            pos = unreal.Vector(*(v*100 for v in eye))
+            look = unreal.Vector(target[0]*100, target[1]*100, target[2]*100+110)
+            rot = unreal.MathLibrary.find_look_at_rotation(pos, look)
+            rotation = (rot.roll, rot.pitch, rot.yaw)
+            if previous_rotation is not None:
+                rotation = tuple(a["unwrap_angle"](p, r) for p, r in zip(previous_rotation, rotation))
+            previous_rotation = rotation
+            for channel, value in zip(camera_channels[:6], (pos.x, pos.y, pos.z)+rotation):
+                channel.add_key(frame, float(value), interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT
+                                if index == count-1 else unreal.MovieSceneKeyInterpolation.LINEAR)
+        first_frame += count
+    unreal.EditorAssetLibrary.save_loaded_asset(seq)
+    with open(os.path.join(RUN_SAVED_ROOT, "omniscient_edit.json"), "w", encoding="utf-8") as output:
+        json.dump(dict(status="BLOCKING_PASS_NOT_FINAL", duration_seconds=duration, shots=manifest,
+                       missing=["A0 river opening", "ring", "carabiner animation", "environment reversal",
+                                "acting and sound", "visual occlusion verification"]), output, indent=2)
+    journal("omniscient_edit_created", sequence=seq.get_path_name(), duration_seconds=duration,
+            status="blocking pass; canonical coverage incomplete")
+    a["omniscient_sequence"] = seq
+    a["omniscient_camera"] = cam
+    # Keep the audit independent from the presentation sequence.
+    unreal.LevelSequenceEditorBlueprintLibrary.open_level_sequence(a["sequence"])
+
+
+_OMNI_REVIEW = {}
+_OMNI_REVIEW_HANDLE = None
+_OMNI_REVIEW_BUSY = False
+
+
+def start_omniscient_review():
+    """Capture the midpoint of every editorial shot and verify each PNG exists."""
+    global _OMNI_REVIEW, _OMNI_REVIEW_HANDLE
+    if _OMNI_REVIEW_HANDLE is not None:
+        unreal.unregister_slate_post_tick_callback(_OMNI_REVIEW_HANDLE)
+    stop_pov_review()
+    with open(os.path.join(RUN_SAVED_ROOT, "omniscient_edit.json"), encoding="utf-8") as f:
+        manifest = json.load(f)
+    directory = os.path.join(RUN_SAVED_ROOT, "OMNISCIENT", datetime.datetime.now().strftime("%H%M%S"))
+    os.makedirs(directory, exist_ok=True)
+    _OMNI_REVIEW = dict(shots=manifest["shots"], index=0, stage="seek", directory=directory,
+                       deadline=0.0, captures=[])
+    unreal.LevelSequenceEditorBlueprintLibrary.open_level_sequence(_ANIMATION["omniscient_sequence"])
+    unreal.LevelSequenceEditorBlueprintLibrary.set_lock_camera_cut_to_viewport(True)
+    _OMNI_REVIEW_HANDLE = unreal.register_slate_post_tick_callback(_omniscient_review_tick)
+    journal("omniscient_review_started", directory=directory)
+
+
+def _omniscient_review_tick(delta_seconds):
+    global _OMNI_REVIEW_HANDLE, _OMNI_REVIEW_BUSY
+    if _OMNI_REVIEW_BUSY:
+        return
+    _OMNI_REVIEW_BUSY = True
+    try:
+        r = _OMNI_REVIEW
+        now = time.monotonic()
+        if r["index"] >= len(r["shots"]):
+            unreal.unregister_slate_post_tick_callback(_OMNI_REVIEW_HANDLE)
+            _OMNI_REVIEW_HANDLE = None
+            journal("omniscient_captures_ready", captures=r["captures"],
+                    note="Files exist; visual review remains a separate operation.")
+            return
+        shot = r["shots"][r["index"]]
+        path = os.path.join(r["directory"], "%02d_%s.png" % (r["index"], shot["scene"]))
+        if r["stage"] == "seek":
+            frame = (shot["start_frame"]+shot["end_frame"])//2
+            unreal.LevelSequenceEditorBlueprintLibrary.set_current_time(frame)
+            r.update(stage="settle", deadline=now+0.75)
+        elif r["stage"] == "settle" and now >= r["deadline"]:
+            r.update(stage="capture", deadline=now+60.0)
+            unreal.AutomationLibrary.take_high_res_screenshot(1280, 720, path,
+                                                              _ANIMATION["omniscient_camera"])
+        elif r["stage"] == "capture":
+            if os.path.exists(path) and os.path.getsize(path) > 0:
+                r["captures"].append(path)
+                journal("omniscient_capture_saved", scene=shot["scene"], path=path)
+                r["index"] += 1
+                r["stage"] = "seek"
+            elif now > r["deadline"]:
+                raise RuntimeError("Screenshot missing after 60 seconds: " + path)
+    except Exception as exc:
+        if _OMNI_REVIEW_HANDLE is not None:
+            unreal.unregister_slate_post_tick_callback(_OMNI_REVIEW_HANDLE)
+            _OMNI_REVIEW_HANDLE = None
+        journal("omniscient_review_failed", error=str(exc), traceback=traceback.format_exc())
+    finally:
+        _OMNI_REVIEW_BUSY = False
+
+
 def finish_generation():
     global _ANIMATION
     route_path = _GEOGRAPHY["route_path"]
     run_world_coherence_gate(_GEOGRAPHY["landscape"], route_path)
     cleanup_non_animation_polop_cameras()
     _ANIMATION = run_animation_v05_with_legacy_landscape_mapping(_GEOGRAPHY["landscape"])
+    validate_narrative_motion()
+    validate_sequencer_evaluation()
     normalize_animation_camera_focals()
+    for actor in actors.get_all_level_actors():
+        if actor.get_actor_label().startswith("PZ_ANIM_EVENT_"):
+            actor.set_actor_hidden_in_game(True)
+            actor.set_is_temporarily_hidden_in_editor(True)
     validate_animation_camera_authority()
     report_animation_v05_validation()
     merge_animation_validation_into_master_report()
@@ -5203,6 +5433,7 @@ def finish_generation():
     overall = write_master_report()
     if overall in ("FAIL", "BLOCKED"):
         raise RuntimeError("Generated animation has failing checks: " + overall)
+    build_omniscient_edit()
     level = unreal.get_editor_subsystem(unreal.LevelEditorSubsystem)
     if not level.save_current_level():
         raise RuntimeError("Could not save generated work level")
@@ -5214,12 +5445,176 @@ def finish_generation():
         saved_root=RUN_SAVED_ROOT,
         limitations=[
             "blockout proxies",
-            "objective timeline; cinematic edit still to build",
+            "omniscient blocking edit exists; cinematic coverage and framing not yet validated",
             "ring and environmental effects not yet animated",
         ],
     )
     if CLEANUP_OLD_RUNS:
         cleanup_old_run_artifacts()
+    if "-POLOPReview" in unreal.SystemLibrary.get_command_line():
+        start_pov_review()
+
+
+_REVIEW_HANDLE = None
+_REVIEW = {}
+_REVIEW_BUSY = False
+POV_ORDER = ("THOMAS_NORMAL", "LEA", "EVA", "THOMAS_INVERSE")
+
+
+def validate_sequencer_evaluation():
+    """Compare actual evaluated actors with the model, not just model endpoints."""
+    a = _ANIMATION
+    seq = a["sequence"]
+    duplicates = []
+    for binding in seq.get_bindings():
+        count = sum(isinstance(track, unreal.MovieScene3DTransformTrack)
+                    for track in binding.get_tracks())
+        if count > 1:
+            duplicates.append(binding.get_name())
+    report_check("SEQUENCER", "single_transform_track_per_binding",
+                 "FAIL" if duplicates else "OK", "BLOCKER", {"duplicates": duplicates})
+    unreal.LevelSequenceEditorBlueprintLibrary.open_level_sequence(seq)
+    errors = []
+    for t in (0, 1, 2, 8, 32, 52, 57, 60, 61.9):
+        unreal.LevelSequenceEditorBlueprintLibrary.set_current_time(int(round(t*a["FPS"])))
+        for name, actor in a["actor_objects"].items():
+            expected = a["actor_location_from_foot"](name, a["eval_actor"](name, t))
+            actual = actor.get_actor_location()
+            error = math.dist(expected, (actual.x, actual.y, actual.z))
+            if error > 2.0:
+                errors.append(dict(actor=name, minute=t, error_cm=error))
+    unreal.LevelSequenceEditorBlueprintLibrary.set_current_time(0)
+    report_check("SEQUENCER", "evaluated_positions_match_model",
+                 "FAIL" if errors else "OK", "BLOCKER", {"errors": errors, "tolerance_cm": 2.0})
+
+
+def validate_narrative_motion():
+    """Check continuity and story constraints beyond the legacy endpoint checks."""
+    a = _ANIMATION
+    jumps = []
+    for name, segments in a["ANIM"].items():
+        for left, right in zip(segments, segments[1:]):
+            p = a["eval_segment"](left, left["t1"])
+            q = a["eval_segment"](right, right["t0"])
+            distance = math.dist(p, q)
+            if distance > 0.05:
+                jumps.append(dict(actor=name, time=left["t1"], distance_m=distance))
+    report_check("STORY", "continuous_character_trajectories", "OK" if not jumps else "FAIL",
+                 "BLOCKER", {"discontinuities": jumps})
+    separation = min(math.dist(a["eval_actor"]("EVA", t/10), a["eval_actor"]("LEA", t/10))
+                     for t in range(80, 620))
+    report_check("STORY", "eva_lea_distinct_positions", "OK" if separation >= 0.5 else "FAIL",
+                 "BLOCKER", {"minimum_distance_m": separation})
+    entry = a["CAVE_ENTRY_POINT"]
+    normal = a["eval_actor"]("THOMAS_NORMAL", 57.0)
+    inside = ((normal[0]-entry[0])*a["CAVE_UX"]+(normal[1]-entry[1])*a["CAVE_UY"]) > 1.0
+    report_check("STORY", "thomas_inside_before_search_1755", "OK" if inside else "FAIL",
+                 "BLOCKER", {"position_m": normal, "source": "A11-A13"})
+    scores = []
+    for t in (4, 16, 32, 48, 59.5, 60.5, 61.5):
+        before = a["eval_actor"]("THOMAS_INVERSE", t-0.1)
+        after = a["eval_actor"]("THOMAS_INVERSE", t+0.1)
+        gaze = a["pov_direction"]("THOMAS_INVERSE", t)
+        travel = tuple(before[i]-after[i] for i in range(3))
+        scores.append(sum(gaze[i]*travel[i] for i in range(3)))
+    report_check("STORY", "inverse_gaze_follows_personal_time", "OK" if min(scores)>0 else "FAIL",
+                 "BLOCKER", {"dot_products": scores, "direction": "18:00 -> 17:00"})
+
+
+def stop_pov_review():
+    global _REVIEW_HANDLE
+    if _REVIEW_HANDLE is not None:
+        unreal.unregister_slate_post_tick_callback(_REVIEW_HANDLE)
+        _REVIEW_HANDLE = None
+    unreal.LevelSequenceEditorBlueprintLibrary.pause()
+
+
+def start_pov_review(seconds_per_story_minute=1.0):
+    """Play all 4 views, with inverted Thomas actually travelling 18:00 -> 17:00.
+
+    Execute the file as a module, call main(), then call start_pov_review() after
+    the keylog's complete event. Increase seconds_per_story_minute to slow review.
+    A screenshot is requested at each checkpoint and its path is journaled.
+    """
+    global _REVIEW_HANDLE, _REVIEW
+    if _ANIMATION is None:
+        raise RuntimeError("Generate successfully before starting POV review")
+    if seconds_per_story_minute <= 0:
+        raise ValueError("Playback duration must be positive")
+    stop_pov_review()
+    capture_dir = os.path.join(RUN_SAVED_ROOT, "POV")
+    os.makedirs(capture_dir, exist_ok=True)
+    _REVIEW = dict(index=-1, started=0, elapsed=0.0, speed=seconds_per_story_minute,
+                   capture_dir=capture_dir, captured=set(), pending=None, paused_until=0)
+    unreal.LevelSequenceEditorBlueprintLibrary.open_level_sequence(_ANIMATION["sequence"])
+    unreal.LevelSequenceEditorBlueprintLibrary.set_lock_camera_cut_to_viewport(False)
+    journal("pov_review_started", order=POV_ORDER, seconds_per_story_minute=seconds_per_story_minute)
+    _REVIEW_HANDLE = unreal.register_slate_post_tick_callback(_review_tick)
+
+
+def _review_tick(delta_seconds):
+    global _REVIEW_BUSY
+    if _REVIEW_BUSY:
+        return
+    _REVIEW_BUSY = True
+    try:
+        now = time.monotonic()
+        if now < _REVIEW["paused_until"]:
+            return
+        if _REVIEW["pending"] is not None:
+            who, t, path = _REVIEW.pop("pending")
+            _REVIEW["pending"] = None
+            unreal.AutomationLibrary.take_high_res_screenshot(1280, 720, path,
+                _ANIMATION["pov_cameras"][who])
+            journal("pov_capture_requested", character=who, objective_minute=t,
+                    path=path, foot_m=_ANIMATION["eval_actor"](who, t))
+            _REVIEW["paused_until"] = now + 1.5
+            _REVIEW["started"] += 1.5
+            return
+        # Shader compilation and editor stalls must never skip an entire POV.
+        _REVIEW["elapsed"] += min(float(delta_seconds), 0.1) / _REVIEW["speed"]
+        elapsed = _REVIEW["elapsed"]
+        duration = 60.0 if _REVIEW["index"] == 3 else 62.0
+        if _REVIEW["index"] < 0 or elapsed > duration:
+            _REVIEW["index"] += 1
+            if _REVIEW["index"] >= len(POV_ORDER):
+                stop_pov_review()
+                files = os.listdir(_REVIEW["capture_dir"])
+                expected = {"%s_%05.2f.png" % (name, t) for name in POV_ORDER
+                            for t in ((61.9, 60, 57, 32, 3, 2.05) if name == "THOMAS_INVERSE"
+                                      else (0, 1, 2, 8, 32, 52, 57, 60, 61.9))}
+                missing = sorted(expected-set(files))
+                journal("pov_review_incomplete" if missing else "pov_review_finished",
+                        captures=files, missing=missing,
+                        note="PNG presence is checked; visual correctness still requires inspection.")
+                return
+            who = POV_ORDER[_REVIEW["index"]]
+            _REVIEW["started"] = now
+            _REVIEW["captured"] = set()
+            _REVIEW["elapsed"] = 0.0
+            elapsed = 0.0
+            unreal.get_editor_subsystem(unreal.LevelEditorSubsystem).pilot_level_actor(_ANIMATION["pov_cameras"][who])
+            journal("pov_started", character=who, direction="reverse" if who=="THOMAS_INVERSE" else "forward")
+        who = POV_ORDER[_REVIEW["index"]]
+        t = max(2.0, 62.0-elapsed) if who == "THOMAS_INVERSE" else min(62.0, elapsed)
+        checkpoints = (61.9, 60, 57, 32, 3, 2.05) if who == "THOMAS_INVERSE" else (0, 1, 2, 8, 32, 52, 57, 60, 61.9)
+        for checkpoint in checkpoints:
+            reached = t <= checkpoint if who == "THOMAS_INVERSE" else t >= checkpoint
+            if reached and checkpoint not in _REVIEW["captured"]:
+                _REVIEW["captured"].add(checkpoint)
+                t = checkpoint
+                filename = "%s_%05.2f.png" % (who, checkpoint)
+                _REVIEW["pending"] = (who, checkpoint, os.path.join(_REVIEW["capture_dir"], filename))
+                _REVIEW["paused_until"] = now + 0.5
+                _REVIEW["started"] += 0.5
+                break
+        unreal.LevelSequenceEditorBlueprintLibrary.set_current_time(int(round(t*_ANIMATION["FPS"])))
+    except Exception as exc:
+        stop_pov_review()
+        journal("pov_review_failed", error=str(exc), traceback=traceback.format_exc())
+        unreal.log_error(str(exc))
+    finally:
+        _REVIEW_BUSY = False
 
 
 def wait_for_landscape(delta_seconds):
@@ -5247,9 +5642,9 @@ def main():
     dirty = unreal.EditorLoadingAndSavingUtils.get_dirty_map_packages()
     if dirty:
         raise RuntimeError("Save your current level before running POLOP; source levels are never saved automatically.")
-    journal("start", script=os.path.abspath(__file__), engine=unreal.SystemLibrary.get_engine_version(),
+    journal("start", script=SOURCE_SCRIPT_PATH, engine=unreal.SystemLibrary.get_engine_version(),
             source_map=SOURCE_MAP, work_map=WORK_MAP,
-            source_sha256=hashlib.sha256(open(__file__, "rb").read()).hexdigest())
+            source_sha256=hashlib.sha256(open(SOURCE_SCRIPT_PATH, "rb").read()).hexdigest())
     _SOURCE_V11 = _SOURCE_V11.replace("/Game/POLOP/Generated_V10", RUN_ASSET_ROOT)
     _SOURCE_V05 = _SOURCE_V05.replace("/Game/POLOP/Generated_V10", RUN_ASSET_ROOT)
     scope_embedded_sources_to_run()
@@ -5276,3 +5671,4 @@ if __name__ == "__main__":
     except Exception as error:
         record_failure(error)
         raise
+
