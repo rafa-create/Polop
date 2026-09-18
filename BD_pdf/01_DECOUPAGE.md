@@ -1,10 +1,10 @@
 # LA BOUCLE — Découpage BD
 
-Source de vérité : `Script_complet_V12.md`.
+Source de vérité : `Script_POLOP.md`.
 
 ## Statut
 
-**Découpage macro remplacé comme outil opérationnel par `04_STORYBOARD_DETAILLE.md`.** Le présent fichier reste la vue d'ensemble des mouvements et du rythme. En cas d'écart, V12 puis `03_CASES_REGLES.md` puis `02_BIBLE_VISUELLE.md` puis le storyboard détaillé gouvernent.
+**Découpage macro remplacé comme outil opérationnel par `04_STORYBOARD_DETAILLE.md`.** Le présent fichier reste la vue d'ensemble des mouvements et du rythme. En cas d'écart, Script_POLOP puis `03_CASES_REGLES.md` puis `02_BIBLE_VISUELLE.md` puis le storyboard détaillé gouvernent.
 
 Le storyboard Phase 1 couvre désormais tout le film en **96 cases stables**, projetées sur **29 pages narratives**. Une couverture pourra porter le total final à 30 pages si cette pagination est conservée.
 
@@ -15,7 +15,7 @@ Le storyboard Phase 1 couvre désormais tout le film en **96 cases stables**, pr
 - Dialogues, cartouches et bruitages ajoutés seulement au montage final, jamais dans l'image source.
 - Aucun dialogue, événement, objet causal, heure ou phénomène inventé.
 - Ne pas transformer les indications de mise en scène en narration explicative.
-- Préserver les scènes ordinaires et les ambiguïtés de V12.
+- Préserver les scènes ordinaires et les ambiguïtés de Script_POLOP.
 - Mousqueton, pierre, feuille, montre, caverne et anneau doivent être lisibles sans traitement d'« indice de thriller ».
 - La lumière suit l'heure objective, y compris dans le temps inversé.
 
@@ -39,10 +39,10 @@ Le storyboard Phase 1 couvre désormais tout le film en **96 cases stables**, pr
 
 ## Principe de relecture
 
-Les scènes vues deux fois doivent partager la même géographie, les mêmes repères rocheux, les mêmes états physiques au même instant objectif et une lumière cohérente. Les axes peuvent être complémentaires afin d'ajouter l'information que V12 autorise lors de la seconde lecture, jamais avant.
+Les scènes vues deux fois doivent partager la même géographie, les mêmes repères rocheux, les mêmes états physiques au même instant objectif et une lumière cohérente. Les axes peuvent être complémentaires afin d'ajouter l'information que Script_POLOP autorise lors de la seconde lecture, jamais avant.
 
 ## Verrou avant images
 
-Les points marqués « À VALIDER EN 3D » dans V12 restent ouverts : caverne/axes de recherche, mécanique du mousqueton, fermeture des deux Thomas + anneau, worldline complète de l'anneau. Les références visuelles prévues par `02_BIBLE_VISUELLE.md` doivent aussi être verrouillées avant les cases concernées.
+Les points marqués « À VALIDER EN 3D » dans Script_POLOP restent ouverts : caverne/axes de recherche, mécanique du mousqueton, fermeture des deux Thomas + anneau, worldline complète de l'anneau. Les références visuelles prévues par `02_BIBLE_VISUELLE.md` doivent aussi être verrouillées avant les cases concernées.
 
 **Aucune image ne doit être générée avant l'approbation explicite de la Phase 1.**
