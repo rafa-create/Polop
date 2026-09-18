@@ -53,6 +53,21 @@ La caméra de Thomas inversé à environ Z=-1000 m au tout début est volontaire
 
 Après exécution, attendre `AUTO-VALIDATION : OK` et `VALIDATION ANIMATION V05 : OK | 0/19 check(s) en échec.`.
 
+## Master V07 — POV anti-occlusion
+
+Le run V06 est techniquement valide (`AUTO-VALIDATION : OK`, `0/19`) mais une capture vers 3,7 s montrait encore un proxy du groupe énorme sur le bord droit du POV Thomas normal.
+
+V07 ne touche ni au Landscape, ni aux trajectoires, ni au timing. Il corrige uniquement la lecture subjective :
+
+- le POV conserve son avance XY stable issue de V06 ;
+- lorsqu'un autre personnage passe à moins d'environ 1,35 m de la caméra, le script teste plusieurs positions d'épaule à gauche et à droite ;
+- il choisit automatiquement la position qui maximise la distance au proxy le plus proche, avec une pénalité pour éviter des écarts excessifs ;
+- le décalage reste normalement de 14 cm et peut monter ponctuellement jusqu'à 78 cm uniquement quand le groupe est compact ;
+- les quatre POV passent de 20 mm à **28 mm**, pour réduire l'effet grand-angle et les personnages géants en très proche avant-plan ;
+- géographie, personnages et animation restent strictement identiques.
+
+Contrôle visuel prioritaire après exécution : **3–4 s** pour le groupe, puis **60–61 s** pour Thomas inversé dans la caverne, et **62 s** pour le contact.
+
 ## Compatibilité avec un ancien setup
 
 Le master est prévu pour être relancé sur le niveau actuel sans nettoyage manuel :
