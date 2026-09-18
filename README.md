@@ -22,11 +22,11 @@ Documentation :
 
 Le dépôt contient le générateur et la logique de simulation, mais il manque encore le bootstrap Unreal complet (`.uproject` + `/Game/Main` minimal ou création automatique du Landscape). Voir :
 
-GitHub issue **#41** (`wait_codex`)
+GitHub issue **#41** (`3d_codex`)
 
 ## Travaux en attente de Codex / Unreal
 
-Toutes les tâches qui demandent du code Unreal ou une exécution réelle sont suivies dans les **GitHub Issues** avec le label **`wait_codex`**. Les issues principales actuelles sont #41 à #46.
+Toutes les tâches qui demandent du code Unreal ou une exécution réelle sont suivies dans les **GitHub Issues** avec le label **`3d_codex`**. Les issues principales actuelles sont #41 à #46.
 
 ## Règle de travail
 
