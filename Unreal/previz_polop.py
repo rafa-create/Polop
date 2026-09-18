@@ -5388,7 +5388,15 @@ def build_omniscient_edit():
     def desired_pose(code, focus, offset, t):
         if focus == "CAVE":
             target = a["eval_actor"]("THOMAS_INVERSE" if code == "B1" else "THOMAS_NORMAL", t)
-            eye = a["cave_ground_point"](4.6 if code == "B1" else 0.4, -0.8, 1.85)
+            if code == "B1":
+                # Leave through the entrance with Thomas instead of remaining
+                # behind a wall while looking at a subject already outdoors.
+                entry = a["CAVE_ENTRY_POINT"]
+                along = ((target[0]-entry[0])*a["CAVE_UX"]+
+                         (target[1]-entry[1])*a["CAVE_UY"])
+                eye = a["cave_ground_point"](min(4.8, along+1.5), -1.3, 1.75)
+            else:
+                eye = a["cave_ground_point"](0.4, -0.8, 1.85)
         else:
             if focus == "GEOGRAPHY":
                 target = (1320.0, 220.0, 120.0)
