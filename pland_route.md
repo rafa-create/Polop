@@ -34,7 +34,7 @@ Avant davantage de polish caméra, verrouiller :
 - état physique unique du monde pour chaque heure objective ;
 - interactions inversées indispensables.
 
-Issue : **#44** (`wait_codex`).
+Issue : **#44** (`3d_codex`).
 
 **Critère de sortie :** les causalités fonctionnent même si toutes les caméras sont masquées.
 
@@ -50,7 +50,7 @@ Déjà acquis :
 - fallback vers proxies ;
 - coût du sampling image par image.
 
-Issue : **#43** (`wait_codex`).
+Issue : **#43** (`3d_codex`).
 
 ## PHASE 4 — Plan-séquence omniscient
 
@@ -64,7 +64,7 @@ Automatiser les contrôles :
 - occultations volontaires vs accidentelles ;
 - rotations excessives.
 
-Issue : **#45** (`wait_codex`).
+Issue : **#45** (`3d_codex`).
 
 **Règle :** un raccord à 0 m ne suffit pas à valider une caméra de cinéma.
 
@@ -80,7 +80,7 @@ Ajouter :
 - jeu minimum ;
 - transitions temporelles.
 
-Issue : **#46** (`wait_codex`).
+Issue : **#46** (`3d_codex`).
 
 ## PHASE 6 — Validation spectateur
 
