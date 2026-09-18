@@ -2,6 +2,29 @@
 
 ## Source de vérité
 
+### Révision du rythme — 18 septembre 2026
+
+Le plan-séquence de blocage passe de 693 à 266 secondes (4 min 26).
+Les changements ordinaires de cadrage durent au plus trois secondes ; les
+vues larges A5 et finale durent huit secondes. La caméra reste près du chemin
+pour regarder le pont, au lieu d'effectuer un aller-retour jusqu'à lui.
+La traversée B6 dispose de six secondes distinctes, suivies de huit secondes
+pour B7/B8. B9 suit désormais Thomas normal, comme demandé par le scénario.
+
+Le passage de Thomas inversé sur le pont est canonique : B6 indique B vers A,
+après le geste sur le mousqueton vers 17 h 01. Léa revient par le FLANC.
+Le rapprochement des deux Thomas se termine vers 17 h 00 (minute objective 2).
+Ne pas supprimer cette traversée pour corriger une ambiguïté de cadrage.
+
+La version resserrée a été générée dans Unreal dans le run
+`20260918_212116_518810`, séquence `LS_POLOP_OMNISCIENT_222405_944014`, puis
+examinée pendant sa lecture dans le viewport. Ce contrôle n'est pas un export
+vidéo final. Ses raccords de position mesurés sont inférieurs à 1e-12 m.
+La vitesse maximale atteint 68,06 m/s : la compression des longues marches
+reste très visible. La grotte demeure trop sombre. L'anneau, le geste du
+mousqueton et la fermeture masquée par le relief ne sont pas validés.
+La correction du regard vers le pont a été ajoutée après cette première lecture.
+
 La **bible narrative absolue** du projet est `Script_POLOP.md`.
 
 Les anciennes versions de scénario conservées dans `archive/` sont historiques uniquement. Elles ne peuvent pas corriger silencieusement `Script_POLOP.md`.
