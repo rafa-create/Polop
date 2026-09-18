@@ -51,7 +51,7 @@ Chaque lancement reçoit un `RUN_ID` unique.
 
 Un run ne doit donc plus écraser le heightmap, la validation ou le rapport d'un autre run.
 
-Après un run réussi, le master conserve automatiquement les **12 derniers runs Saved** et les **8 derniers runs Content V10**. Le nettoyage ne touche jamais `/Game/Main`, `Script_POLOP.md`, `archive/` ou les sources du projet.
+Le nettoyage automatique est désactivé par défaut (`CLEANUP_OLD_RUNS = False`) pour conserver les essais et leurs preuves. Son activation explicite conserve les **12 derniers runs Saved** et les **8 derniers runs Content V10**. Il ne vise pas `/Game/Main` ni les sources.
 
 ## Rapport de cohérence
 
@@ -87,3 +87,29 @@ Dans Unreal Engine 5.8 :
 5. ouvrir le rapport HTML du `RUN_ID` courant ;
 6. seulement si le rapport est cohérent, inspecter la map `Previz_<run_id>` et les POV.
 
+
+
+## Corrections vérifiées le 18 septembre 2026
+
+- Le canal R du RenderTarget transporte des valeurs entières 0–65535, comme l'exige l'import UE 5.8, et non des valeurs normalisées 0–1. Quatre pixels sont relus avant import et comparés au PNG 16 bits.
+- L'origine du terrain est mesurée à partir de ses composants ; elle n'est pas supposée au centre.
+- Les résultats des traces Python se lisent avec `HitResult.to_tuple()` ; `GameplayStatics.break_hit_result` n'est pas exposé dans l'installation testée.
+- La couche d'édition cible est rendue visible et son poids réglé à 1 dans la copie de travail. Une couche masquée acceptait l'import sans produire de relief visible.
+- Le premier événement du journal contient le SHA-256 du fichier exécuté. Comparer ce hash en cas de résultat différent entre machines.
+
+Ces quatre corrections ont permis au run local V09 du 18 septembre de terminer sans échec technique. Elles ont été fusionnées dans la V10 distante (commit `48d2675`). Cela ne constitue pas encore une validation complète du scénario ou des quatre POV.
+
+## Reprise sur un autre ordinateur — prérequis actuels
+
+1. Récupérer **la version courante** de `Unreal/previz_polop.py` sur `main`, plutôt qu'une ancienne copie téléchargée.
+2. Utiliser Unreal Engine **5.8** (essai local : 5.8.2), avec **Python Editor Script Plugin** et **Sequencer Scripting** activés ; redémarrer l'éditeur après activation.
+3. Ouvrir un projet Unreal et disposer actuellement d'une carte **/Game/Main** avec un seul Landscape **1009 × 1009 sommets** : 63 quads par section, 1 section par composant, 16 × 16 composants. Enregistrer cette carte. Le générateur normalise ensuite son échelle et son emplacement.
+4. Exécuter le fichier **dans l'éditeur Unreal**, via Outils / Tools > Execute Python Script. Un interpréteur Python en ligne ou GitHub seul ne fournit pas le module `unreal`.
+5. Attendre l'événement `complete` dans `Saved/POLOP/Runs/<run_id>/keylog.jsonl`. En cas de `failed`, lire ce journal et le rapport du même run.
+6. Ouvrir la carte générée et sa séquence dans le dossier Content correspondant au même `run_id`.
+
+**Limite actuelle : le .py ne crée pas encore la coquille Landscape à partir d'un projet vide.** La préparation de la carte décrite ci-dessus reste nécessaire.
+
+## Ordre de contrôle demandé
+
+Thomas normal → Léa → Éva → Thomas inversé. Contrôler A1/A2 (pont et détour), A10–A15 (attente, recherche, grotte), A17 (18h00), puis B1–B9 dans le sens 18h00 → 17h00. Une lecture objective de 16h58 → 18h00 ne suffit pas à valider le parcours vécu par Thomas inversé.
