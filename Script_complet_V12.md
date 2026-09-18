@@ -495,7 +495,7 @@ Le film n’a pas besoin de montrer cette coexistence au moment du contact. Il l
 
 L’origine de l’anneau, la raison exacte de son état et la portée générale du contact restent inconnues.
 
-[À VALIDER EN 3D — le contact doit être l’intersection naturelle entre la main de Thomas et la worldline mécanique de l’anneau. Aucun arrêt ni attente de l’objet avant 18h00. Le retournement temporel de Thomas ne doit produire aucun effet visuel de duplication. Juste sous 18h00, la géométrie doit permettre à Thomas inversé de voir Thomas normal s’éloigner en marche arrière, tout en garantissant que Thomas normal, orienté vers l’anneau et ne se retournant pas, ne puisse pas voir Thomas inversé sur son axe de sortie.]
+[À VALIDER EN 3D / LUMIÈRE — le contact doit être l’intersection naturelle entre la main de Thomas et la worldline mécanique de l’anneau. Aucun arrêt ni attente de l’objet avant 18h00. La grotte doit permettre l’asymétrie suivante : Thomas normal ne distingue pas son occurrence inversée dans l’obscurité, son attention étant attirée par le faisceau de la fente ; Thomas inversé distingue seulement une silhouette humaine lorsqu’elle occulte la lumière de l’entrée, sans pouvoir l’identifier comme lui-même.]
 
 ⸻
 
@@ -515,15 +515,19 @@ Il avance vers 17h00.
 
 À mesure qu’il revient sous 18h00, Thomas normal n’a pas disparu de l’histoire. À ces mêmes heures objectives, il existe encore dans les positions antérieures de sa progression vers l’anneau.
 
-Thomas inversé peut alors apercevoir son occurrence normale dans la caverne, en train de s’éloigner de lui en marche arrière — lecture inversée des quelques pas qui conduisaient Thomas normal vers l’anneau avant 18h00.
+La caverne est très sombre. Deux zones lumineuses seulement structurent naturellement l’espace : l’ouverture vers l’extérieur et, plus profondément, une fente rocheuse qui laisse entrer un faisceau étroit. C’est cette fente qui attire le regard de Thomas normal et vers laquelle remontera l’anneau.
 
-Thomas inversé s’immobilise une fraction de seconde et le regarde repartir. Il comprend visuellement qu’il vient de revenir dans un instant où il était déjà présent.
+Dans la chronologie normale, lorsque Thomas entre et avance dans la cavité, son occurrence inversée est déjà présente dans une partie sombre. Thomas normal ne la distingue pas : sombre sur sombre, tandis que son regard s’adapte à la pénombre et se fixe naturellement sur le faisceau de la fente. Il n’a aucune raison de chercher une silhouette dans l’obscurité.
 
-Cette visibilité est volontairement asymétrique. Thomas normal, dans la scène A16, reste orienté vers la fissure et l’anneau ; Thomas inversé se trouve déjà derrière lui, sur l’axe de sortie, puis quitte la cavité. Thomas normal ne se retourne jamais au moment où une ligne de vue vers son occurrence inversée pourrait s’ouvrir. Il ne la voit donc pas.
+Après la bascule, Thomas inversé commence au contraire à percevoir une présence humaine qui se déplace étrangement vers la sortie en marche arrière. Il ne la voit pas grâce à des détails du visage ou des vêtements : la silhouette devient lisible lorsqu’elle masque momentanément la lumière de l’entrée de la grotte.
 
-La scène ne doit pas donner l’impression que Thomas inversé se cache. La séparation vient naturellement de l’orientation des corps, de la progression vers / hors de la fissure et de la géométrie de la cavité. La caméra peut rendre le Thomas normal lisible depuis le point de vue de Thomas inversé sans adopter un angle qui aurait existé pour Thomas normal.
+Thomas inversé s’arrête une fraction de seconde. Il vient à peine de découvrir que le monde évolue à rebours. Il ne comprend pas que cette silhouette est sa propre occurrence normale. Il voit seulement quelqu’un — ou quelque chose de manifestement humain — quitter la cavité d’une manière impossible.
 
-Cette première vision du double reste brève et troublante. B3, avec la pierre puis Thomas normal plus haut dans le relief, conserve la fonction de rendre la coexistence pleinement compréhensible.
+La visibilité est donc asymétrique par la lumière elle-même : pour Thomas normal, une silhouette sombre se perd dans une cavité sombre ; pour Thomas inversé, la même silhouette se découpe brièvement devant une ouverture lumineuse.
+
+La scène ne doit pas donner l’impression que l’un des Thomas se cache de l’autre. L’obscurité, l’adaptation des yeux, le faisceau de la fente, l’ouverture extérieure et les orientations corporelles suffisent.
+
+B3, avec la pierre puis la vision de Thomas normal plus haut dans le relief, reste le moment où Thomas et le spectateur peuvent réellement commencer à comprendre qu’il existe deux occurrences du même Thomas dans cette heure.
 
 ⸻
 
