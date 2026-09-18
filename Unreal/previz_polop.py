@@ -688,7 +688,7 @@ def bridge_blockout():
         spawn_box(
             "PONT_GARDE_%s"%side,
             rail_center,
-            (length,12.0,110.0),
+            (length,6.0,6.0),
             MAT_BRIDGE,
             "Props/Pont",
             rotation
@@ -1999,6 +1999,11 @@ def eval_actor(name, t):
         lateral = -0.65 * clamp((t - 7.5) / 0.5, 0.0, 1.0)
     if lateral:
         p = (p[0], p[1] + lateral, terrain_z_m(p[0], p[1] + lateral))
+    crossing = {"LEA": (0.75, 1.25), "THOMAS_INVERSE": (2.5, 3.0)}.get(name)
+    if crossing:
+        lo, hi = crossing
+        lift = min(clamp((t-lo+0.1)/0.1, 0.0, 1.0), clamp((hi+0.1-t)/0.1, 0.0, 1.0))
+        p = (p[0], p[1], p[2]+0.59*lift)
     return p
 
 
