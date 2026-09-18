@@ -384,7 +384,7 @@ Tu crois qu’il est tombé ?
 
 Éva ne répond pas.
 
-La phrase lancée quelques minutes plus tôt — « Va pas te casser la gueule quand même » — prend rétrospectivement un autre poids, sans être répétée.
+Éva regarde les herbes au bord du vide bouger sous une nouvelle rafale légère. Le souvenir du vent rend sa crainte d’une chute immédiate et concrète, sans qu’aucune phrase ne soit répétée.
 
 ⸻
 
