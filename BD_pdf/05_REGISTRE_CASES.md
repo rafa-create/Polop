@@ -1,6 +1,6 @@
 # LA BOUCLE — Registre des cases
 
-Source : `04_STORYBOARD_DETAILLE.md`. V12 reste l'autorité narrative absolue.
+Source : `04_STORYBOARD_DETAILLE.md`. Script_POLOP reste l'autorité narrative absolue.
 
 ## Statut global
 
@@ -14,7 +14,7 @@ La production est engagée case par case. Une image validée devient une référ
 |---|---|---|---|
 | CASE_001 → CASE_018 | `BD_pdf/images/case_001.png` → `case_018.png` | **VALIDÉES** | références visuelles approuvées dans la conversation de production |
 | CASE_019 | `BD_pdf/images/case_019.png` | **À VALIDER** | image générée ; validation finale non encore donnée après génération |
-| CASE_020 → CASE_096 | `BD_pdf/images/case_020.png` → `case_096.png` | EN ATTENTE | V12 + bible visuelle + storyboard + références validées précédentes |
+| CASE_020 → CASE_096 | `BD_pdf/images/case_020.png` → `case_096.png` | EN ATTENTE | Script_POLOP + bible visuelle + storyboard + références validées précédentes |
 
 ## Continuité verrouillée à ce stade
 
@@ -23,11 +23,11 @@ La production est engagée case par case. Une image validée devient une référ
 - Configuration P1 : pont accroché, cordage sous tension normale, mousqueton fixé à l'ancrage.
 - La géographie du creux, du vrai chemin, du pont et du chemin du flanc doit rester raccord avec les cases déjà validées.
 - Les images sources restent sans dialogue, bulle, cartouche, numéro ou texte généré.
-- CASE_010 / CASE_011 cachent volontairement Thomas, la convergence et l'anneau conformément à V12.
+- CASE_010 / CASE_011 cachent volontairement Thomas, la convergence et l'anneau conformément à Script_POLOP.
 
 ## Procédure de mise à jour
 
-Pour chaque case, dans l'ordre strict : présenter la fiche, attendre « go », générer une seule image sans texte, contrôler contre V12 et les références validées, puis renseigner ici le statut. Après validation, le binaire canonique doit être conservé sous `BD_pdf/images/case_XXX.png` sans substitution silencieuse par une autre tentative.
+Pour chaque case, dans l'ordre strict : présenter la fiche, attendre « go », générer une seule image sans texte, contrôler contre Script_POLOP et les références validées, puis renseigner ici le statut. Après validation, le binaire canonique doit être conservé sous `BD_pdf/images/case_XXX.png` sans substitution silencieuse par une autre tentative.
 
 ## Verrous avant production avancée
 
