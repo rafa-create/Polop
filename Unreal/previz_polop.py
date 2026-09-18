@@ -18,7 +18,7 @@ The 65-second review sequence is NOT yet the complete cinematic adaptation.
 Ring, environmental effects and full A/B/B9 film edit are subsequent milestones.
 """
 
-import base64
+import hashlib
 import html
 import json
 import math
@@ -4446,7 +4446,7 @@ def _trace_landscape_z_cm(x_m, y_m):
     if not hit:
         return None
 
-    fields = unreal.GameplayStatics.break_hit_result(hit)
+    fields = hit.to_tuple()
     point = fields[5]
     hit_actor = fields[9]
 
@@ -4554,6 +4554,16 @@ def import_heightmap_into_landscape(landscape, png_path):
     # comme une paire de canaux packés.
     for edit_layer_index in _landscape_edit_layer_indices(landscape):
         try:
+            layers = list(landscape.get_edit_layers_bp())
+            layer = layers[edit_layer_index]
+            journal("landscape_edit_layer", index=edit_layer_index,
+                    visible_before=layer.get_editor_property("visible"),
+                    alpha_before=layer.get_editor_property("heightmap_alpha"))
+            # A hidden layer accepts imports successfully but contributes no relief.
+            # This operates only on the copied work map.
+            layer.set_editor_property("locked", False)
+            layer.set_editor_property("visible", True)
+            layer.set_editor_property("heightmap_alpha", 1.0)
             result = landscape.landscape_import_heightmap_from_render_target(
                 rt, False, int(edit_layer_index)
             )
@@ -4966,6 +4976,7 @@ KEYLOG_PATH = os.path.join(RUN_SAVED_ROOT, "keylog.jsonl")
 
 KEEP_SAVED_RUNS = 12
 KEEP_CONTENT_RUNS = 8
+CLEANUP_OLD_RUNS = False  # Opt-in: retain previous work and diagnostic evidence by default.
 
 os.makedirs(RUN_SAVED_ROOT, exist_ok=True)
 
@@ -5207,7 +5218,8 @@ def finish_generation():
             "ring and environmental effects not yet animated",
         ],
     )
-    cleanup_old_run_artifacts()
+    if CLEANUP_OLD_RUNS:
+        cleanup_old_run_artifacts()
 
 
 def wait_for_landscape(delta_seconds):
@@ -5236,7 +5248,8 @@ def main():
     if dirty:
         raise RuntimeError("Save your current level before running POLOP; source levels are never saved automatically.")
     journal("start", script=os.path.abspath(__file__), engine=unreal.SystemLibrary.get_engine_version(),
-            source_map=SOURCE_MAP, work_map=WORK_MAP)
+            source_map=SOURCE_MAP, work_map=WORK_MAP,
+            source_sha256=hashlib.sha256(open(__file__, "rb").read()).hexdigest())
     _SOURCE_V11 = _SOURCE_V11.replace("/Game/POLOP/Generated_V10", RUN_ASSET_ROOT)
     _SOURCE_V05 = _SOURCE_V05.replace("/Game/POLOP/Generated_V10", RUN_ASSET_ROOT)
     scope_embedded_sources_to_run()
