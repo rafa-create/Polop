@@ -31,7 +31,7 @@ Le générateur normalise ensuite le terrain et crée les runs de travail.
   soit une création fiable de cette coquille par script ;
 - une vérification automatique des plugins au démarrage.
 
-Ces éléments sont suivis dans la GitHub issue **#41** (`wait_codex`).
+Ces éléments sont suivis dans la GitHub issue **#41** (`3d_codex`).
 
 ## Assets Engine utilisés
 
@@ -43,7 +43,7 @@ Le code récent peut utiliser les assets tutoriels Unreal :
 - `Tutorial_Walk_Fwd`
 - `Tutorial_Idle`
 
-Ce ne sont pas des fichiers du dépôt. Le pipeline doit donc soit garantir leur présence, soit avoir un fallback. Voir la GitHub issue **#43** (`wait_codex`).
+Ce ne sont pas des fichiers du dépôt. Le pipeline doit donc soit garantir leur présence, soit avoir un fallback. Voir la GitHub issue **#43** (`3d_codex`).
 
 ## Fichiers générés
 
