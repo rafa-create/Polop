@@ -617,7 +617,13 @@ L’anneau chute dans une rigole rocheuse et frappe de petits éléments du déc
 
 Plus tard, l’anneau traverse un mince écoulement. L’eau remonte la pente tandis que l’anneau continue vers le bas. Des gouttes rejoignent le courant autour de lui : EAU VERS LE HAUT / ANNEAU VERS LE BAS dans la même image.
 
-Encore plus tard, la caméra retrouve l’anneau immobile, coincé dans une petite anfractuosité. Il peut être là depuis longtemps. Une cause matérielle banale — eau, vibration ou déplacement du terrain — rompt finalement l’équilibre et il reprend sa chute.
+Encore plus tard, la caméra retrouve l’anneau immobile, coincé dans une petite anfractuosité. Il peut être là depuis longtemps.
+
+Un chevreuil apparaît plus haut dans le relief. Dans la perception temporelle de Thomas, ses mouvements sont inversés : il recule à travers le terrain, ses appuis et les petits déplacements de végétation se recomposent autour de lui. La caméra peut suivre brièvement cette trajectoire étrange sans la transformer en événement fantastique autonome.
+
+En passant près de l’anfractuosité, l’un de ses sabots intervient dans la chaîne physique à rebours : une petite pierre revient sous son appui, une vibration traverse le sol et l’équilibre qui retenait l’anneau se défait. L’anneau est libéré et reprend immédiatement sa chute vers le bas.
+
+Le chevreuil continue sa trajectoire inversée sans regarder l’anneau. La rencontre reste purement causale et accidentelle : aucun animal ne semble guider volontairement l’objet.
 
 La caméra ne documente jamais tout son trajet. Ces apparitions espacées suffisent à faire sentir une longue chaîne de chutes, blocages et reprises.
 
@@ -769,7 +775,7 @@ On ne cherche pas à cartographier chaque mètre ni chaque minute. Le film étab
 
 Les fragments appartiennent à la séquence de plaisir. L’anneau descend tandis que le paysage inversé semble se remettre en place autour de lui. Un passage important montre l’anneau continuer vers le bas dans un mince courant qui paraît remonter la montagne : EAU ↑ / ANNEAU ↓.
 
-Un autre fragment retrouve l’anneau immobilisé dans une anfractuosité. Le film ne précise pas depuis combien de temps. Une cause matérielle banale finit par le libérer. L’ellipse explique une grande partie de la durée sans montrer toute l’heure.
+Un autre fragment retrouve l’anneau immobilisé dans une anfractuosité. Le film ne précise pas depuis combien de temps. Un chevreuil, perçu en mouvement inversé dans l’orientation temporelle de Thomas, passe à proximité. L’un de ses appuis provoque à rebours une petite vibration / remise en place du terrain qui libère physiquement l’anneau. L’animal poursuit sa trajectoire sans lui prêter attention. L’ellipse explique une grande partie de la durée sans montrer toute l’heure.
 
 À l’approche de 17h00, ses apparitions peuvent devenir légèrement plus rapprochées jusqu’à son arrivée au relief de la fermeture. Le petit bruit métallique de la première lecture peut alors trouver rétrospectivement son origine sans flashback explicatif.
 
