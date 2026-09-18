@@ -72,6 +72,27 @@ def list_landscapes():
     ]
 
 
+def cleanup_landscape_helpers():
+    """
+    V05 historique détecte un Landscape par nom de classe.
+    On retire donc les Gizmo/Placeholder/anciens helpers Landscape afin que
+    le premier Actor contenant "Landscape" soit bien le vrai LandscapeProxy.
+    """
+    doomed = []
+    for actor in actors.get_all_level_actors():
+        try:
+            class_name = actor.get_class().get_name()
+            if "Landscape" in class_name and not is_landscape_proxy(actor):
+                doomed.append(actor)
+        except Exception:
+            pass
+
+    if doomed:
+        actors.destroy_actors(doomed)
+
+    log("%d helper(s) Landscape obsolètes supprimés." % len(doomed))
+
+
 def cleanup_old_polop_actors():
     if not CLEAN_OLD_POLOP_ACTORS:
         return
@@ -292,6 +313,7 @@ def main():
     log("=== START MASTER V%s ===" % MASTER_VERSION)
 
     cleanup_old_polop_actors()
+    cleanup_landscape_helpers()
     landscape = prepare_landscape_shell()
 
     # Génère heightmap + géographie.
