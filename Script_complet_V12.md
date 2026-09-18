@@ -14,15 +14,19 @@ A1 — 16h58 — LA RANDONNÉE
 
 EXT. MONTAGNE — FIN D’APRÈS-MIDI
 
-Thomas, Éva et Léa avancent sur le vrai chemin de randonnée, sur le flanc de la montagne.
+Thomas, Éva et Léa avancent sur le chemin A, le vrai chemin de randonnée, sur le flanc de la montagne.
 
-Plus bas, dans un creux, un petit pont constitue un passage annexe. Un chemin rocheux plus long longe le flanc du creux.
+La géographie forme une boucle simple autour du relief. Deux itinéraires distincts relient la partie basse de la montagne à la zone haute de la caverne : le chemin A, emprunté par le groupe pour monter, et le chemin B, qui suit un autre versant du relief. A et B se rejoignent en haut, à proximité de la zone de la caverne.
+
+Plus bas, dans un creux, A et B peuvent communiquer de deux façons : un petit pont constitue le passage court ; un chemin rocheux plus long contourne le creux par le flanc. Sous cette zone de liaison, la descente rejoint la partie basse du chemin principal.
+
+[GÉOGRAPHIE VERROUILLÉE POUR LA PRÉVISUALISATION 3D — Thomas, Éva et Léa montent par A. Léa quitte brièvement A en traversant le pont vers B, puis revient de B vers A par le chemin du flanc et poursuit ensuite la montée avec Éva et Thomas sur A jusqu’à la caverne. Après l’inversion, Thomas sort de la caverne et descend par B, ce qui le maintient séparé de son occurrence normale pendant l’essentiel du trajet. Il rejoint la zone pont / flanc par le côté B, puis revient vers A avant la convergence de 17h00. La rencontre Thomas normal ↔ Thomas inversé de B7/B8 reste donc intacte.]
 
 Le pont est étroit. Son cordage est usé, mais tient. Un mousqueton simple assure l’un de ses points d’attache.
 
 Éva et Léa parlent et plaisantent. Thomas participe peu. Il est là, légèrement en retrait.
 
-Léa aperçoit le pont. Sans prévenir, elle quitte le chemin et s’engage dessus.
+Léa aperçoit le pont. Sans prévenir, elle quitte A, traverse le creux par le pont et rejoint brièvement B.
 
 ÉVA
 Doucement.
@@ -92,7 +96,9 @@ C’est plus long.
 THOMAS
 Oui.
 
-Léa prend le chemin du flanc.
+Léa prend le chemin du flanc. Ce détour la ramène de B vers A.
+
+Quand elle les rejoint, tous trois reprennent ensuite la montée par A en direction de la zone haute et de la caverne.
 
 ÉVA
 Tu pouvais pas lui dire ça avant ?
@@ -198,7 +204,7 @@ Après, comment les gens vont savoir qu’il a souffert ?
 
 A5 — LE PAYSAGE
 
-La caméra quitte la famille et révèle la géographie : le vrai chemin sur le flanc, le pont plus bas dans le creux, le chemin rocheux qui contourne celui-ci.
+La caméra quitte la famille et révèle la géographie : A, le vrai chemin emprunté par le groupe ; B, l’autre itinéraire qui suit le relief ; plus bas, le pont qui relie directement A et B à travers le creux ; et le chemin rocheux du flanc qui permet le même passage par un détour plus long.
 
 Une feuille se détache d’une branche et tombe. La caméra la suit un instant avant de retrouver la famille.
 
@@ -275,7 +281,7 @@ Le contraste avec 16h59 existe visuellement : le spectateur a déjà vu ce même
 
 A10 — 17h50 — LA PAUSE
 
-Le vrai chemin continue en hauteur. À quelques mètres se trouve une petite zone rocheuse fermée : quelques dizaines de mètres carrés entre la paroi et le précipice. Depuis le chemin, aucune autre sortie n’est visible.
+Le chemin A continue en hauteur jusqu’à la zone où A et B se rejoignent près de la caverne. À quelques mètres se trouve une petite zone rocheuse fermée : quelques dizaines de mètres carrés entre la paroi et le précipice. Depuis le chemin, aucune autre sortie n’est visible.
 
 L’entrée de la caverne existe dans cette zone, mais son angle est masqué par un décrochement rocheux. Depuis le sentier, elle se confond avec une partie sombre de la paroi.
 
@@ -507,7 +513,9 @@ B — LE TEMPS INVERSÉ
 
 B1 — LE PREMIER PAS
 
-Thomas sort de la caverne. L’eau, la poussière et les mouvements naturels du paysage se recomposent à rebours autour de lui.
+Thomas sort de la caverne. Depuis cette zone haute, A et B offrent deux descentes distinctes. Il s’engage sur B, le chemin qu’il n’avait pas emprunté pendant la montée normale. L’eau, la poussière et les mouvements naturels du paysage se recomposent à rebours autour de lui.
+
+Le relief sépare alors naturellement sa descente par B de la progression de son occurrence normale sur A.
 
 Derrière lui, l’anneau poursuit la descente amorcée au contact de 18h00 et s’éloigne dans la fissure vers le relief inférieur. Thomas ne le porte pas.
 
@@ -677,6 +685,8 @@ Les phénomènes inversés continuent autour de lui, mais ils ne sont plus amusa
 
 B5 — VERS 17h30 — LE PONT DÉCROCHÉ
 
+En descendant par B, Thomas arrive dans la zone basse où B communique avec A par le pont ou, plus longuement, par le chemin du flanc.
+
 Thomas arrive à portée visuelle du pont.
 
 Le cordage est détendu. Son mousqueton est décroché de son point d’ancrage, dans le même état que celui montré par la caméra à 17h30 pendant la randonnée.
@@ -703,6 +713,8 @@ CLAC.
 
 Exactement la même signature métallique que lorsque Léa traversait à 16h59.
 
+Thomas franchit ensuite le pont depuis B vers A. Dans le temps objectif, Léa utilise l’autre liaison, le chemin du flanc, pour revenir de B vers A : leurs trajectoires restent séparées. Thomas inversé peut ainsi retrouver A sans rencontrer Léa avant la fermeture.
+
 Thomas s’immobilise.
 
 Son regard va du mousqueton désormais accroché vers le pont. Il n’y a pas d’autre effet destiné à confirmer la connexion.
@@ -723,7 +735,7 @@ Le geste doit rester suffisamment simple pour fonctionner dans les deux sens san
 
 B7 — VERS 17h00 — LA CONVERGENCE
 
-Thomas continue sa progression vers le point où sa trajectoire rejoint celle de Thomas normal.
+Désormais revenu sur A, Thomas continue sa progression vers le point où sa trajectoire rejoint celle de Thomas normal.
 
 Un gros relief rocheux borde le chemin. Il permet à la caméra de masquer ou de superposer brièvement les deux occurrences du même Thomas selon l’angle.
 
