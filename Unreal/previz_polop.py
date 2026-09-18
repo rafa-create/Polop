@@ -5114,7 +5114,7 @@ def journal(event, **details):
     with open(KEYLOG_PATH, "a", encoding="utf-8") as stream:
         stream.write(json.dumps(row, ensure_ascii=False) + "\n")
         stream.flush()
-    unreal.log("POLOP V09 | " + event + " | " + json.dumps(row["details"], ensure_ascii=False))
+    unreal.log("POLOP V10 | " + event + " | " + json.dumps(row["details"], ensure_ascii=False))
 
 
 _original_report_check = report_check
@@ -5169,7 +5169,7 @@ def record_failure(exc):
     journal("failed", error=str(exc), traceback=traceback.format_exc())
     report_check("EXECUTION", "exception", "FAIL", "BLOCKER", {"error": str(exc)})
     write_master_report(exception_text=traceback.format_exc())
-    unreal.log_error("POLOP V09 FAILED: " + str(exc))
+    unreal.log_error("POLOP V10 FAILED: " + str(exc))
 
 
 def finish_generation():
