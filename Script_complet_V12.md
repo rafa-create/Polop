@@ -295,7 +295,7 @@ Au premier visionnage, ce bref arrêt peut n’être qu’une curiosité de rand
 Éva le regarde partir, amusée.
 
 ÉVA
-Va pas te casser la gueule quand même.
+Fais gaffe aux rafales de vent.
 
 THOMAS
 Ça va.
