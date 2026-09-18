@@ -72,9 +72,13 @@ La caméra omnisciente reste avec Léa et Éva. Léa constitue naturellement le 
 
 Pendant ces quelques secondes, Thomas poursuit sa marche près du flanc rocheux, hors du centre d’attention de la caméra. Le point exact où sa trajectoire converge avec celle de Thomas inversé n’est pas montré dans cette première lecture.
 
-Au milieu des voix et des bruits de pas, un très léger son métallique peut se perdre dans le paysage, quelque part hors champ. Personne ne réagit. La caméra reste sur Éva et Léa. Le son n’est ni isolé ni présenté comme un indice ; il ne prendra éventuellement un sens qu’après avoir vu la trajectoire de l’anneau.
+Au milieu des voix et des bruits de pas, un très léger son métallique se fait entendre quelque part plus haut dans le relief, hors champ.
 
-Au milieu des voix et des bruits de pas, un très léger son métallique peut se perdre dans le paysage, quelque part hors champ. Personne ne réagit. La caméra reste sur Éva et Léa. Le son n’est ni isolé ni présenté comme un indice ; il ne prendra éventuellement un sens qu’après avoir vu la trajectoire de l’anneau.
+Léa jette instinctivement un petit coup d’œil vers le haut, dans la direction du bruit.
+
+La caméra accompagne à peine ce regard, sans chercher sa source, puis se reconcentre aussitôt sur Léa. Elle reste le cœur de la scène.
+
+Le son n’est ni isolé ni présenté comme un indice ; il ne prendra éventuellement un sens qu’après avoir vu la trajectoire de l’anneau.
 
 Au même instant, hors du centre d’attention, l’anneau passe également par ce point de fermeture. Le film ne montre ni assez précisément les contacts ni leur ordre pour attribuer une cause certaine au retour de Thomas au temps normal.
 
