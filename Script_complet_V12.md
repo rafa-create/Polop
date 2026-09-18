@@ -539,11 +539,89 @@ Aucune nouvelle règle physique n’est introduite : seule la narration visuelle
 
 ⸻
 
-B4 — LE CHEMIN
+B4 — LA DESCENTE / LE PLAISIR DE L’INVERSION
 
-Thomas continue vers le passé. Une feuille remonte vers sa branche. De petits événements naturels retrouvent leurs états antérieurs.
+Thomas continue vers le passé. Une feuille quitte le sol et remonte vers sa branche. Il la suit des yeux jusqu’à ce qu’elle retrouve exactement sa place.
 
-Éva et Léa restent séparées de lui par le relief.
+Il avance encore, d’abord avec prudence.
+
+Un peu plus bas, le sentier traverse une zone humide alimentée par un mince ruissellement. Une petite flaque porte encore les traces d’un passage. Sous les yeux de Thomas, des gouttes quittent la roche et remontent vers le filet d’eau. Une éclaboussure se rassemble au lieu de se disperser.
+
+Thomas s’arrête.
+
+Il approche le pied, hésite, puis traverse. L’eau semble se recomposer autour de son pas. Il se retourne pour regarder la flaque.
+
+Pour la première fois depuis la caverne, sa peur laisse place à une curiosité presque enfantine.
+
+Il reprend sa descente.
+
+La caméra cesse progressivement de présenter les phénomènes comme des anomalies isolées. Elle accompagne Thomas dans une continuité plus fluide.
+
+Une poignée de poussière se rassemble sur un rocher juste avant qu’il le dépasse.
+
+Des feuilles remontent du chemin dans son dos et viennent retrouver une branche.
+
+Un petit gravier quitte une rigole et remonte la pente à côté de sa chaussure. Thomas ralentit pour suivre sa course, comprend où il va passer, puis adapte son pas au dernier moment. Le gravier file exactement là où il l’avait anticipé.
+
+Thomas sourit.
+
+Plus loin, un petit caillou distinct de celui de A7/B3 remonte une trajectoire simple devant lui. Thomas observe sa course quelques secondes. Il tend la main à l’endroit où il pense qu’elle va arriver.
+
+Le caillou vient dans sa paume.
+
+Thomas reste surpris une fraction de seconde.
+
+Puis il rit, brièvement, presque malgré lui.
+
+Il regarde le caillou dans sa main, puis le chemin devant lui. Il ne possède aucun pouvoir : il vient seulement de comprendre assez bien une trajectoire pour se trouver au bon endroit au bon moment.
+
+Il continue.
+
+La descente devient progressivement une chorégraphie.
+
+Thomas se baisse au moment où une branche revient vers sa position précédente. Il traverse un nuage de poussière qui se resserre derrière lui. Quelques pierres remontent une courte pente au rythme de ses pas. Un filet d’eau remonte le long d’une paroi au moment où il passe.
+
+Il ne s’arrête plus après chaque phénomène.
+
+Il commence à anticiper.
+
+Un pas.
+
+Un impact de pierre.
+
+Un mouvement de feuille.
+
+Son souffle.
+
+L’eau.
+
+Le frottement de ses vêtements.
+
+Les sons physiques forment progressivement une partition avec ses mouvements. La musique peut se mêler à ce rythme sans recouvrir le paysage.
+
+Pendant quelques instants, Thomas ne subit plus l’inversion. Il joue avec elle.
+
+Il accélère légèrement. Il se place instinctivement avant qu’un phénomène n’arrive, corrige son mouvement, se trompe une fois, puis retrouve le rythme. Son sourire devient franc.
+
+La caméra omnisciente accompagne ce plaisir sans transformer la séquence en démonstration scientifique. Les événements restent petits, naturels et matériels.
+
+Éva et Léa demeurent séparées de lui par le relief. Elles ne le voient jamais.
+
+Puis Thomas reconnaît une portion du chemin.
+
+Son allure ralentit.
+
+Son sourire disparaît progressivement.
+
+Au loin, plus bas, la géographie du creux devient familière.
+
+Le pont apparaît.
+
+Le jeu s’arrête presque de lui-même.
+
+Thomas regarde sa montre, puis le pont.
+
+Les phénomènes inversés continuent autour de lui, mais ils ne sont plus amusants. Ils lui indiquent désormais qu’il se rapproche de 17h00.
 
 ⸻
 
