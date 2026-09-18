@@ -5235,9 +5235,9 @@ def build_omniscient_edit():
         ("A1", 12, 0, 2, "LEA", (-8, -12, 7)),
         ("A2", 18, 2, 8, "LEA", (-5, -9, 4)),
         ("A3_A4", 16, 8, 20, "EVA", (-8, -10, 5)),
-        ("A5_GEOGRAPHIE", 12, 20, 24, "GEOGRAPHY", (-650, -950, 800)),
+        ("A5_GEOGRAPHIE", 8, 20, 24, "EVA", (-45, -65, 40)),
         ("A6_A8", 16, 24, 32, "THOMAS_NORMAL", (-8, -12, 6)),
-        ("A9_PONT", 6, 32, 32.2, "BRIDGE", (-18, -24, 20)),
+        ("A9_PONT", 4, 32, 32.2, "THOMAS_NORMAL", (-12, -18, 10)),
         ("A10", 14, 32.2, 52, "EVA", (-10, -12, 6)),
         ("A11_ATTENTE", 18, 52, 56, "EVA", (-5, -7, 3)),
         ("A12_A13", 16, 56, 59, "EVA", (-5, -6, 3)),
@@ -5247,11 +5247,12 @@ def build_omniscient_edit():
         ("B1", 16, 62, 59, "CAVE", (0, 0, 0)),
         ("B2", 10, 59, 55, "THOMAS_INVERSE", (-14, 20, 9)),
         ("B3_B4", 25, 55, 32, "THOMAS_INVERSE", (-9, 12, 5)),
-        ("B5_PONT", 6, 32, 31.9, "BRIDGE", (-18, -24, 20)),
+        ("B5_PONT", 4, 32, 31.9, "THOMAS_INVERSE", (-12, 18, 10)),
         ("B6", 22, 31.9, 3, "THOMAS_INVERSE", (-9, 12, 5)),
-        ("B7_B8", 12, 3, 2, "THOMAS_INVERSE", (-6, -10, 5)),
-        ("B9", 18, 2, 8, "LEA", (-5, -9, 4)),
-        ("B9_ELOIGNEMENT", 12, 8, 12, "EVA", (-100, -160, 100)),
+        ("B6_TRAVERSEE", 6, 3, 2.5, "THOMAS_INVERSE", (-6, -8, 3)),
+        ("B7_B8", 8, 2.5, 2, "THOMAS_INVERSE", (-6, -8, 3)),
+        ("B9", 18, 2, 8, "THOMAS_NORMAL", (-5, -9, 4)),
+        ("B9_ELOIGNEMENT", 8, 8, 12, "THOMAS_NORMAL", (-45, -65, 35)),
     ]
     def desired_pose(code, focus, offset, t):
         if focus == "CAVE":
@@ -5266,18 +5267,9 @@ def build_omniscient_edit():
             eye = (eye[0], eye[1], max(eye[2], a["terrain_z_m"](eye[0], eye[1])+2.0))
         return eye, (target[0], target[1], target[2]+1.1)
 
-    # A geographical excursion needs travel time instead of a cut or teleport.
-    # Retain these as narrative beats, not separate camera shots.
-    timed_beats = []
-    previous_end = None
-    for code, seconds, t0, t1, focus, offset in shots:
-        end = desired_pose(code, focus, offset, t1)
-        if previous_end is not None:
-            travel = math.dist(previous_end[0], end[0])
-            seconds = max(seconds, int(math.ceil(1.875*travel/20.0)))
-        timed_beats.append((code, seconds, t0, t1, focus, offset))
-        previous_end = end
-    shots = timed_beats
+    # Editorial durations are deliberate. Do not inflate them to accommodate
+    # unnecessary kilometre-long trips to the bridge or a distant overview.
+    # These remain narrative beats within one continuous camera binding.
     fps = a["FPS"]
     duration = sum(s[1] for s in shots)
     sequence_name = "LS_POLOP_OMNISCIENT"
@@ -5359,7 +5351,9 @@ def build_omniscient_edit():
             if previous_beat is not None:
                 old_code, old_focus, old_offset = previous_beat
                 moving_origin = desired_pose(old_code, old_focus, old_offset, t)
-            eye, target = blend_camera_pose(moving_origin, desired_pose(code, focus, offset, t), u)
+            handover_seconds = seconds if code in ("A5_GEOGRAPHIE", "B9_ELOIGNEMENT") else min(3.0, seconds)
+            eye, target = blend_camera_pose(moving_origin, desired_pose(code, focus, offset, t),
+                                            u*seconds/handover_seconds)
             # The sampled Landscape is continuous, so this clearance floor does
             # not introduce cuts. Cave walls/roof still need separate validation.
             if focus != "CAVE" and (previous_beat is None or previous_beat[1] != "CAVE"):
