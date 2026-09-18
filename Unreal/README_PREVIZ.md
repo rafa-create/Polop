@@ -24,6 +24,14 @@ La vitesse maximale atteint 68,06 m/s : la compression des longues marches
 reste très visible. La grotte demeure trop sombre. L'anneau, le geste du
 mousqueton et la fermeture masquée par le relief ne sont pas validés.
 La correction du regard vers le pont a été ajoutée après cette première lecture.
+Elle a ensuite été générée dans `LS_POLOP_OMNISCIENT_222856_861056`.
+Une relecture ciblée à partir de 3 min 46 a confirmé le trajet B vers A,
+mais révélé une superposition exposée des deux Thomas vers 3 min 59.
+Un relief de premier plan a donc été ajouté à côté de la voie, sans changer
+les trajectoires. La lecture montre désormais le masquage puis le retour à
+Thomas normal et à la famille. Ce volume est encore un bloc massif : sa forme
+naturelle, son encombrement dans le cadre, la lisibilité du contact et l'anneau
+restent à travailler. Cette correction ne vaut pas validation finale de B8.
 
 La **bible narrative absolue** du projet est `Script_POLOP.md`.
 
