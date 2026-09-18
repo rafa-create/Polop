@@ -10,6 +10,44 @@ A — LE TEMPS NORMAL
 
 ⸻
 
+A0 — 16h58 — LA RIVIÈRE
+
+EXT. GRANDE RIVIÈRE / VALLÉE — FIN D’APRÈS-MIDI
+
+Sous l’eau.
+
+La lumière traverse doucement la surface. Des plantes ondulent dans le courant. Des particules dérivent entre les pierres.
+
+La caméra avance tranquillement au ras du fond.
+
+Entre deux rochers repose un anneau simple.
+
+La caméra ne s’arrête pas spécialement sur lui.
+
+Au passage, l’anneau effectue un petit mouvement contre la pierre. Un déplacement bref, matériel, légèrement étrange — juste assez pour attirer l’œil sans interrompre la tranquillité du plan.
+
+La caméra poursuit son mouvement.
+
+Elle laisse l’anneau derrière elle et remonte lentement vers la surface.
+
+Sans coupe, elle sort de l’eau.
+
+Le son sous-marin s’ouvre sur celui de la vallée.
+
+La caméra continue à s’élever avec calme. La rivière apparaît en contrebas. Plus loin, la ville. Puis le relief. La montagne domine progressivement le paysage.
+
+Toujours dans le même plan, la caméra se dirige vers elle.
+
+Elle se rapproche tranquillement de la montagne, puis du chemin qui serpente sur son flanc.
+
+Petit à petit, trois silhouettes apparaissent.
+
+Thomas, Éva et Léa.
+
+La caméra se rapproche encore, sans rupture, comme si elle venait simplement de choisir de suivre cette randonnée.
+
+⸻
+
 A1 — 16h58 — LA RANDONNÉE
 
 EXT. MONTAGNE — FIN D’APRÈS-MIDI
