@@ -6,7 +6,7 @@ Portable: one readable Python file, no encoded payload or machine-specific paths
 Unreal Engine 5.8: Tools > Execute Python Script, select this file.
 Prerequisite: /Game/Main contains one 1009x1009 Landscape (16x16 components).
 Save your current level before running. Every run duplicates /Game/Main into a
-new work map and creates assets under /Game/POLOP/Generated_V09/Runs/<run_id>.
+new work map and creates assets under /Game/POLOP/Generated_V10/Runs/<run_id>.
 The source map and original materials/sequences are not overwritten.
 
 Diagnostics: every run is isolated under Saved/POLOP/Runs/<run_id>/ :
@@ -539,7 +539,7 @@ if old:
 
 
 def ensure_material(name, rgb):
-    folder = "/Game/POLOP/Generated_V09/Materials"
+    folder = "/Game/POLOP/Generated_V10/Materials"
     unreal.EditorAssetLibrary.make_directory(folder)
     path = folder + "/" + name
 
@@ -872,7 +872,7 @@ import unreal
 # -------
 # Saved/POLOP/Runs/<run_id>/ANIMATION_V05/animation_model_v05.json
 # Content Browser :
-# /Game/POLOP/Generated_V09/Sequences/LS_POLOP_ANIMATION_V05
+# /Game/POLOP/Generated_V10/Sequences/LS_POLOP_ANIMATION_V05
 #
 # V05 supplante V04 : animation, POV, lisibilité et validation dans un seul script.
 # Il supprime/recrée les Actors PZ_ANIM_* et remplace les Level Sequences V01/V02/V03/V04.
@@ -1288,7 +1288,7 @@ for actor in actors.get_all_level_actors():
 # =============================================================================
 
 def ensure_material(name, rgb):
-    folder = "/Game/POLOP/Generated_V09/Materials"
+    folder = "/Game/POLOP/Generated_V10/Materials"
     unreal.EditorAssetLibrary.make_directory(folder)
     path = folder + "/" + name
 
@@ -2478,7 +2478,7 @@ for pov_character in (
 # LEVEL SEQUENCE
 # =============================================================================
 
-sequence_asset_path = "/Game/POLOP/Generated_V09/Sequences"
+sequence_asset_path = "/Game/POLOP/Generated_V10/Sequences"
 sequence_name = "LS_POLOP_ANIMATION_V05"
 sequence_full_path = sequence_asset_path + "/" + sequence_name
 
@@ -2486,10 +2486,10 @@ unreal.EditorAssetLibrary.make_directory(sequence_asset_path)
 
 # V05 remplace les anciennes séquences Animation dans le Content Browser.
 for obsolete_sequence in (
-    "/Game/POLOP/Generated_V09/Sequences/LS_POLOP_ANIMATION_V01",
-    "/Game/POLOP/Generated_V09/Sequences/LS_POLOP_ANIMATION_V02",
-    "/Game/POLOP/Generated_V09/Sequences/LS_POLOP_ANIMATION_V03",
-    "/Game/POLOP/Generated_V09/Sequences/LS_POLOP_ANIMATION_V04",
+    "/Game/POLOP/Generated_V10/Sequences/LS_POLOP_ANIMATION_V01",
+    "/Game/POLOP/Generated_V10/Sequences/LS_POLOP_ANIMATION_V02",
+    "/Game/POLOP/Generated_V10/Sequences/LS_POLOP_ANIMATION_V03",
+    "/Game/POLOP/Generated_V10/Sequences/LS_POLOP_ANIMATION_V04",
     sequence_full_path,
 ):
     if unreal.EditorAssetLibrary.does_asset_exist(
@@ -5237,8 +5237,8 @@ def main():
         raise RuntimeError("Save your current level before running POLOP; source levels are never saved automatically.")
     journal("start", script=os.path.abspath(__file__), engine=unreal.SystemLibrary.get_engine_version(),
             source_map=SOURCE_MAP, work_map=WORK_MAP)
-    _SOURCE_V11 = _SOURCE_V11.replace("/Game/POLOP/Generated_V09", RUN_ASSET_ROOT)
-    _SOURCE_V05 = _SOURCE_V05.replace("/Game/POLOP/Generated_V09", RUN_ASSET_ROOT)
+    _SOURCE_V11 = _SOURCE_V11.replace("/Game/POLOP/Generated_V10", RUN_ASSET_ROOT)
+    _SOURCE_V05 = _SOURCE_V05.replace("/Game/POLOP/Generated_V10", RUN_ASSET_ROOT)
     scope_embedded_sources_to_run()
 
     level = unreal.get_editor_subsystem(unreal.LevelEditorSubsystem)
