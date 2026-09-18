@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-LA BOUCLE / POLOP - PREVIZ MASTER V09
+LA BOUCLE / POLOP - PREVIZ MASTER V10
 
 Portable: one readable Python file, no encoded payload or machine-specific paths.
 Unreal Engine 5.8: Tools > Execute Python Script, select this file.
@@ -9,8 +9,8 @@ Save your current level before running. Every run duplicates /Game/Main into a
 new work map and creates assets under /Game/POLOP/Generated_V09/Runs/<run_id>.
 The source map and original materials/sequences are not overwritten.
 
-Diagnostics: previz_polop.keylog.jsonl beside this script (append-only, run IDs),
-plus Saved/POLOP/MASTER_V09/report_previz_v09.{json,txt,html}.
+Diagnostics: every run is isolated under Saved/POLOP/Runs/<run_id>/ :
+keylog.jsonl, V11/, ANIMATION_V05/ and MASTER_V10/report_previz_v10.{json,txt,html}.
 The editor stays responsive while Landscape layers/collision finish rebuilding.
 
 Current milestone: terrain correction and objective-time animated blockout.
@@ -29,7 +29,7 @@ import time
 import zlib
 import unreal
 
-MASTER_VERSION = "09"
+MASTER_VERSION = "10"
 EXPECTED_LANDSCAPE_LOCATION = unreal.Vector(100800.0, 0.0, 0.0)
 EXPECTED_LANDSCAPE_SCALE = unreal.Vector(200.0, 200.0, 100.0)
 EXPECTED_HEIGHTMAP_SIZE = 1009
@@ -75,8 +75,8 @@ import unreal
 # - aucune caméra : l'animation V05 est l'unique autorité caméra.
 #
 # Après exécution :
-#   Saved/POLOP/V11/polop_v11_heightmap_1009.png
-#   Saved/POLOP/V11/route_model_v11.json
+#   Saved/POLOP/Runs/<run_id>/V11/polop_v11_heightmap_1009.png
+#   Saved/POLOP/Runs/<run_id>/V11/route_model_v11.json
 #
 # IMPORT DU LANDSCAPE V11 :
 #   Supprimer uniquement le Landscape V10.
@@ -811,7 +811,7 @@ import unreal
 
 # =============================================================================
 # LA BOUCLE / POLOP — ANIMATION PREVIZ V05
-# Bible narrative : Script_complet_V12.md
+# Bible narrative : Script_POLOP.md
 # Base géographique : V11 validée techniquement
 # Unreal Engine 5.8
 #
@@ -838,7 +838,7 @@ import unreal
 #
 # IMPORTANT — CORRECTIONS NARRATIVES AVANT ANIMATION
 # --------------------------------------------------
-# La lecture intégrale de V12 fait apparaître deux contraintes que les marqueurs
+# La lecture intégrale de Script_POLOP fait apparaître deux contraintes que les marqueurs
 # V11 ne traduisaient pas correctement :
 #
 # 1) B6 se déroule à 17h01 et B8 à 17h00.
@@ -870,7 +870,7 @@ import unreal
 #
 # SORTIES
 # -------
-# Saved/POLOP/ANIMATION_V05/animation_model_v05.json
+# Saved/POLOP/Runs/<run_id>/ANIMATION_V05/animation_model_v05.json
 # Content Browser :
 # /Game/POLOP/Generated_V09/Sequences/LS_POLOP_ANIMATION_V05
 #
@@ -909,7 +909,7 @@ CONTACT_HIDDEN_SCALE = 0.001
 
 # Hypothèses de blockout NON CANONIQUES mais nécessaires pour la première simu.
 CONVERGENCE_BEFORE_BRIDGE_M = 25.0
-LEA_FLANK_RETURN_END_MIN = 8.0     # 17h06 — non précisé par V12.
+LEA_FLANK_RETURN_END_MIN = 8.0     # 17h06 — non précisé par Script_POLOP.
 NORMAL_REJOIN_HOLD_END_MIN = 8.0   # le groupe attend Léa près du pont.
 B5_DISTANCE_FROM_BRIDGE_M = 800.0  # "à portée visuelle" vers 17h30.
 
@@ -1141,7 +1141,7 @@ HIGH_POINT = ROUTES["A"][-1]
 # MICRO-ZONE CAVERNE — conforme à A10/A11/A15, sans refaire le Landscape
 # =============================================================================
 #
-# V12 donne des qualités, pas des dimensions exactes :
+# Script_POLOP donne des qualités, pas des dimensions exactes :
 # "quelques mètres", "quelques dizaines de mètres carrés", accès surveillable.
 # V05 choisit donc une poche ~8m x 6m, explicitement comme hypothèse de préviz.
 # =============================================================================
@@ -3076,13 +3076,13 @@ assumptions = [
     {
         "id": "A_V05_02",
         "value": "Léa termine le flanc vers 17h06.",
-        "reason": "V12 ne donne pas l'heure exacte de son retour sur A.",
+        "reason": "Script_POLOP ne donne pas l'heure exacte de son retour sur A.",
         "canon": False
     },
     {
         "id": "A_V05_03",
         "value": "Micro-zone caverne ~8x6 m à ~quelques mètres de la jonction haute.",
-        "reason": "V12 impose une petite zone de quelques dizaines de m² mais pas de dimensions exactes.",
+        "reason": "Script_POLOP impose une petite zone de quelques dizaines de m² mais pas de dimensions exactes.",
         "canon": False
     },
     {
@@ -3101,7 +3101,7 @@ animation_out_dir = os.path.join(
 os.makedirs(animation_out_dir, exist_ok=True)
 
 animation_model = {
-    "source_narrative": "Script_complet_V12.md",
+    "source_narrative": "Script_POLOP.md",
     "geography_base": "V11",
     "timeline": {
         "objective_start": "16h58",
@@ -3477,7 +3477,7 @@ validation_txt_path = os.path.join(
 
 validation_report = {
     "overall": validation_overall,
-    "source_narrative": "Script_complet_V12.md",
+    "source_narrative": "Script_POLOP.md",
     "geography_base": "V11",
     "sequence_asset": sequence_full_path,
     "checks": validation_checks,
@@ -3563,7 +3563,7 @@ with open(
 
 unreal.log("============================================================")
 unreal.log("POLOP — ANIMATION PREVIZ V05 + POV")
-unreal.log("Bible : Script_complet_V12.md")
+unreal.log("Bible : Script_POLOP.md")
 unreal.log("Sequence UNIQUE : " + sequence_full_path)
 unreal.log("Model : " + model_path)
 unreal.log("Validation : " + validation_txt_path)
@@ -3670,12 +3670,8 @@ def _report_overall():
 
 
 def write_master_report(exception_text=None):
-    saved_dir = unreal.Paths.convert_relative_path_to_full(
-        unreal.Paths.project_saved_dir()
-    )
     report_dir = os.path.join(
-        saved_dir,
-        "POLOP",
+        RUN_SAVED_ROOT,
         "MASTER_V%s" % MASTER_VERSION,
     )
     os.makedirs(report_dir, exist_ok=True)
@@ -3697,9 +3693,9 @@ def write_master_report(exception_text=None):
     }
     MASTER_REPORT["counts"] = counts
 
-    json_path = os.path.join(report_dir, "report_previz_v09.json")
-    txt_path = os.path.join(report_dir, "report_previz_v09.txt")
-    html_path = os.path.join(report_dir, "report_previz_v09.html")
+    json_path = os.path.join(report_dir, "report_previz_v10.json")
+    txt_path = os.path.join(report_dir, "report_previz_v10.txt")
+    html_path = os.path.join(report_dir, "report_previz_v10.html")
 
     MASTER_REPORT["paths"] = {
         "json": json_path,
@@ -4124,12 +4120,8 @@ def run_world_coherence_gate(landscape, route_model_path):
 
 def merge_animation_validation_into_master_report():
     stage = "ANIMATION"
-    saved_dir = unreal.Paths.convert_relative_path_to_full(
-        unreal.Paths.project_saved_dir()
-    )
     path = os.path.join(
-        saved_dir,
-        "POLOP",
+        RUN_SAVED_ROOT,
         "ANIMATION_V05",
         "validation",
         "validation_animation_v05.json",
@@ -4780,11 +4772,8 @@ def report_animation_v05_validation():
     Le master lit le rapport V05 et imprime TOUS les checks en échec dans l'Output Log,
     afin qu'un simple copier-coller du log suffise pour diagnostiquer la suite.
     """
-    saved_dir = unreal.Paths.convert_relative_path_to_full(
-        unreal.Paths.project_saved_dir()
-    )
     validation_dir = os.path.join(
-        saved_dir, "POLOP", "ANIMATION_V05", "validation"
+        RUN_SAVED_ROOT, "ANIMATION_V05", "validation"
     )
     validation_json = os.path.join(
         validation_dir, "validation_animation_v05.json"
@@ -4957,18 +4946,165 @@ def run_embedded(source, virtual_name):
     return namespace
 
 
-# V09: portable single-file entry point. Generated assets are deliberately isolated.
-# Run in Unreal: Tools > Execute Python Script, select this file.
-# Source map is read-only; every run gets its own level and asset folder.
+# V10: portable single-file entry point. Every generated run is isolated.
+# Source map is read-only; a run owns its level, Content assets and Saved outputs.
 SOURCE_MAP = "/Game/Main"
 RUN_ID = datetime.datetime.now().strftime("%Y%m%d_%H%M%S_%f")
-WORK_MAP = "/Game/POLOP/Generated_V09/Maps/Previz_" + RUN_ID
-RUN_ASSET_ROOT = "/Game/POLOP/Generated_V09/Runs/" + RUN_ID
-KEYLOG_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "previz_polop.keylog.jsonl")
+
+GENERATED_ROOT = "/Game/POLOP/Generated_V10"
+RUN_MAP_ROOT = GENERATED_ROOT + "/Maps"
+RUN_CONTENT_PARENT = GENERATED_ROOT + "/Runs"
+WORK_MAP = RUN_MAP_ROOT + "/Previz_" + RUN_ID
+RUN_ASSET_ROOT = RUN_CONTENT_PARENT + "/" + RUN_ID
+
+PROJECT_SAVED_DIR = unreal.Paths.convert_relative_path_to_full(
+    unreal.Paths.project_saved_dir()
+)
+RUNS_SAVED_ROOT = os.path.join(PROJECT_SAVED_DIR, "POLOP", "Runs")
+RUN_SAVED_ROOT = os.path.join(RUNS_SAVED_ROOT, RUN_ID)
+KEYLOG_PATH = os.path.join(RUN_SAVED_ROOT, "keylog.jsonl")
+
+KEEP_SAVED_RUNS = 12
+KEEP_CONTENT_RUNS = 8
+
+os.makedirs(RUN_SAVED_ROOT, exist_ok=True)
+
 _TICK_HANDLE = None
 _STAGE_STARTED = 0.0
 _ANIMATION = None
 _GEOGRAPHY = None
+
+
+def scope_embedded_sources_to_run():
+    """Redirect embedded geography/animation filesystem outputs to this RUN_ID."""
+    global _SOURCE_V11, _SOURCE_V05
+
+    run_v11_dir = os.path.join(RUN_SAVED_ROOT, "V11")
+    run_animation_dir = os.path.join(RUN_SAVED_ROOT, "ANIMATION_V05")
+
+    old_v11 = 'out_dir = os.path.join(saved, "POLOP", "V11")'
+    new_v11 = 'out_dir = ' + repr(run_v11_dir)
+
+    old_anim_v11 = 'v11_dir = os.path.join(saved_dir, "POLOP", "V11")'
+    new_anim_v11 = 'v11_dir = ' + repr(run_v11_dir)
+
+    old_anim_out = '''animation_out_dir = os.path.join(
+    saved_dir,
+    "POLOP",
+    "ANIMATION_V05"
+)'''
+    new_anim_out = 'animation_out_dir = ' + repr(run_animation_dir)
+
+    if old_v11 not in _SOURCE_V11:
+        raise RuntimeError("V10: V11 output redirection marker missing")
+    if old_anim_v11 not in _SOURCE_V05:
+        raise RuntimeError("V10: V05 V11 input redirection marker missing")
+    if old_anim_out not in _SOURCE_V05:
+        raise RuntimeError("V10: V05 output redirection marker missing")
+
+    _SOURCE_V11 = _SOURCE_V11.replace(old_v11, new_v11, 1)
+    _SOURCE_V05 = _SOURCE_V05.replace(old_anim_v11, new_anim_v11, 1)
+    _SOURCE_V05 = _SOURCE_V05.replace(old_anim_out, new_anim_out, 1)
+
+    os.makedirs(run_v11_dir, exist_ok=True)
+    os.makedirs(run_animation_dir, exist_ok=True)
+
+    MASTER_REPORT["run_id"] = RUN_ID
+    MASTER_REPORT["saved_root"] = RUN_SAVED_ROOT
+    MASTER_REPORT["content_root"] = RUN_ASSET_ROOT
+    MASTER_REPORT["work_map"] = WORK_MAP
+
+
+def cleanup_old_run_artifacts():
+    """Keep recent generated runs only. Never touches /Game/Main or archive sources."""
+    saved_deleted = []
+    content_deleted = []
+    map_deleted = []
+    errors = []
+
+    # Saved/POLOP/Runs/<run_id>
+    try:
+        names = [
+            name for name in os.listdir(RUNS_SAVED_ROOT)
+            if os.path.isdir(os.path.join(RUNS_SAVED_ROOT, name))
+        ]
+        names = sorted(names, reverse=True)
+        keep = set(names[:KEEP_SAVED_RUNS])
+        keep.add(RUN_ID)
+
+        import shutil
+        for name in names:
+            if name in keep:
+                continue
+            path = os.path.join(RUNS_SAVED_ROOT, name)
+            try:
+                shutil.rmtree(path)
+                saved_deleted.append(name)
+            except Exception as exc:
+                errors.append("Saved %s: %s" % (name, exc))
+    except Exception as exc:
+        errors.append("Saved scan: %s" % exc)
+
+    # /Game/POLOP/Generated_V10/Runs/<run_id>
+    try:
+        assets_found = unreal.EditorAssetLibrary.list_assets(
+            RUN_CONTENT_PARENT, True, False
+        )
+        run_ids = set()
+        prefix = RUN_CONTENT_PARENT + "/"
+
+        for asset_path in assets_found:
+            text_path = str(asset_path)
+            if not text_path.startswith(prefix):
+                continue
+            tail = text_path[len(prefix):]
+            run_id = tail.split("/", 1)[0]
+            if run_id:
+                run_ids.add(run_id)
+
+        ordered = sorted(run_ids, reverse=True)
+        keep = set(ordered[:KEEP_CONTENT_RUNS])
+        keep.add(RUN_ID)
+
+        for run_id in ordered:
+            if run_id in keep:
+                continue
+            directory = RUN_CONTENT_PARENT + "/" + run_id
+            try:
+                if unreal.EditorAssetLibrary.delete_directory(directory):
+                    content_deleted.append(run_id)
+            except Exception as exc:
+                errors.append("Content %s: %s" % (run_id, exc))
+
+        # Generated work maps matching runs removed from Content.
+        maps = unreal.EditorAssetLibrary.list_assets(RUN_MAP_ROOT, False, False)
+        for asset_path in maps:
+            package = str(asset_path).split(".", 1)[0]
+            name = package.rsplit("/", 1)[-1]
+            if not name.startswith("Previz_"):
+                continue
+            run_id = name[len("Previz_"):]
+            if run_id in content_deleted:
+                try:
+                    if unreal.EditorAssetLibrary.delete_asset(package):
+                        map_deleted.append(run_id)
+                except Exception as exc:
+                    errors.append("Map %s: %s" % (run_id, exc))
+    except Exception as exc:
+        errors.append("Content scan: %s" % exc)
+
+    journal(
+        "cleanup_old_runs",
+        keep_saved=KEEP_SAVED_RUNS,
+        keep_content=KEEP_CONTENT_RUNS,
+        saved_deleted=saved_deleted,
+        content_deleted=content_deleted,
+        map_deleted=map_deleted,
+        errors=errors,
+    )
+
+    if errors:
+        warn("Nettoyage anciens runs partiel : " + " | ".join(errors))
 
 
 def journal(event, **details):
@@ -5059,9 +5195,19 @@ def finish_generation():
     level = unreal.get_editor_subsystem(unreal.LevelEditorSubsystem)
     if not level.save_current_level():
         raise RuntimeError("Could not save generated work level")
-    journal("complete", status=overall, level=WORK_MAP, asset_root=RUN_ASSET_ROOT,
-            limitations=["blockout proxies", "objective timeline; cinematic edit still to build",
-                         "ring and environmental effects not yet animated"])
+    journal(
+        "complete",
+        status=overall,
+        level=WORK_MAP,
+        asset_root=RUN_ASSET_ROOT,
+        saved_root=RUN_SAVED_ROOT,
+        limitations=[
+            "blockout proxies",
+            "objective timeline; cinematic edit still to build",
+            "ring and environmental effects not yet animated",
+        ],
+    )
+    cleanup_old_run_artifacts()
 
 
 def wait_for_landscape(delta_seconds):
@@ -5093,8 +5239,11 @@ def main():
             source_map=SOURCE_MAP, work_map=WORK_MAP)
     _SOURCE_V11 = _SOURCE_V11.replace("/Game/POLOP/Generated_V09", RUN_ASSET_ROOT)
     _SOURCE_V05 = _SOURCE_V05.replace("/Game/POLOP/Generated_V09", RUN_ASSET_ROOT)
+    scope_embedded_sources_to_run()
+
     level = unreal.get_editor_subsystem(unreal.LevelEditorSubsystem)
-    unreal.EditorAssetLibrary.make_directory("/Game/POLOP/Generated_V09/Maps")
+    unreal.EditorAssetLibrary.make_directory(RUN_MAP_ROOT)
+    unreal.EditorAssetLibrary.make_directory(RUN_CONTENT_PARENT)
     if not level.new_level_from_template(WORK_MAP, SOURCE_MAP):
         raise RuntimeError("Could not create work level from " + SOURCE_MAP)
     world = editor_subsystem.get_editor_world()
