@@ -138,6 +138,24 @@ trajectoire n'a pas encore été validée visuellement dans Unreal : les collisi
 les occultations et l'absence de révélations prématurées restent à contrôler.
 Une interpolation continue ne garantit pas à elle seule un plan-séquence réussi.
 
+La première génération continue a été exécutée dans Unreal : 693 secondes, une
+seule section caméra, 19 raccords à 0 m d'écart et 20 captures produites. Leur
+inspection a révélé des sujets perdus pendant les transitions et des passages
+derrière le relief. La correction suivante (`9b995ad`) suit les positions
+actuelles des sujets des deux côtés de la transition, et relève la caméra au-dessus
+du Landscape hors grotte. Elle reprend aussi les positions de caméra intérieures.
+Les rochers et le toit de la grotte ne sont pas couverts par ce contrôle de hauteur.
+
+La seconde passe (`OMNISCIENT/220418` du même run) a également produit 20 captures
+inspectées. Les raccords restent inférieurs à 1e-12 m ; le suivi de Léa et du groupe
+est amélioré. La durée est de 693 s (11 min 33), et la vitesse maximale mesurée
+reste de 36,27 m/s : le calcul de durée n'est pas une limitation stricte à 20 m/s.
+Les vues géographiques, l'approche A15 et B1 restent insuffisantes ; la caméra perd
+encore certains centres d'intérêt pendant les grands trajets. Il faut remplacer
+ces transitions génériques par des points de passage choisis dans le décor et
+contrôler la visibilité image par image. Statut : continuité technique vérifiée,
+mise en scène et fidélité au scénario non validées.
+
 ## Reprise du 18 septembre — déplacements et exécution différée
 
 - Correction de `NameError: __file__ is not defined` : Unreal retire cette variable
