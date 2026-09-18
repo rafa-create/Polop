@@ -9,11 +9,26 @@
 Tous les anciens scripts de construction, validation et animation sont archivés dans `Unreal/old/`. Le script master embarque actuellement la géographie V11 et l'animation V05 validées comme base de travail.
 
 
-## Correctif master V02
+## Master V03 — caméra unique + correction du repère Landscape
 
-Le master V02 corrige les problèmes observés sous Unreal 5.8.2 : réglage de focale des CineCamera via propriété Python, import du heightmap via une Edit Layer valide, RenderTarget linéaire 32F, contrôle de trois hauteurs du relief après import, et marge automatique de quelques centimètres sur le bord X=0 utilisé par le départ de la route A.
+V03 corrige deux causes de confusion :
 
-Si la validation terrain échoue, le master s'arrête avant de lancer l'animation au lieu de continuer avec un Landscape incohérent.
+- **V11 ne crée plus aucune caméra de revue.** Il ne construit que le terrain, les guides, le pont, le flanc, la grotte et les proxies.
+- **Animation V05 est l'unique autorité caméra.** Toutes les caméras POLOP actives doivent désormais commencer par `PZ_ANIM_`.
+
+Le master supprime aussi toute ancienne CineCamera POLOP préfixée `PZ_` qui n'appartient pas à Animation V05, sans toucher aux caméras utilisateur non préfixées.
+
+Le blocage historique `Point hors Landscape : 0.00 0.00` venait d'une ancienne convention de V05 qui traitait la position du Landscape comme son coin alors qu'Unreal la place au centre. V03 applique ce repère de compatibilité uniquement pendant le calcul V05, puis remet immédiatement le Landscape à sa position réelle `(100800, 0, 0)`. Le terrain final n'est donc pas décalé pour contourner le bug.
+
+Après création, V03 normalise aussi les focales des caméras Animation V05 pour l'API Python d'Unreal 5.8 et vérifie qu'aucune vieille caméra POLOP ne subsiste.
+
+Dans le log final, chercher :
+
+- `AUTORITÉ CAMÉRA OK : ... toutes PZ_ANIM_*`
+- les lignes `CAMERA ACTIVE : PZ_ANIM_...`
+- `Landscape restauré au centre réel (100800.0, 0.0, 0.0)`
+
+Si une caméra POLOP non `PZ_ANIM_` survit, le master s'arrête volontairement au lieu de laisser un setup ambigu.
 
 ## Compatibilité avec un ancien setup
 
@@ -26,7 +41,9 @@ Le master est prévu pour être relancé sur le niveau actuel sans nettoyage man
 - remise à `Scale X=200 Y=200 Z=100` ;
 - génération du heightmap V11 ;
 - réinjection automatique du heightmap dans le Landscape ;
-- reconstruction de la géographie puis de l'animation, des POV et du Sequencer.
+- V11 = géographie/blockout uniquement, sans caméra ;
+- suppression de sécurité des anciennes caméras POLOP hors animation ;
+- Animation V05 = seules caméras, POV et Sequencer.
 
 ### Prérequis unique
 
