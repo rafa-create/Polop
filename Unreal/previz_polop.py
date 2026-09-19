@@ -5838,7 +5838,6 @@ def add_f01_box_to_film(sequence, samples):
     end = pause["start_frame"]+int(round(2.15*a["FPS"]))
     # The narrator's only camera is not modified; crop/reframe is a later pass.
     # Hide at frame zero even if the spawned static mesh default is visible.
-    vis_ch.set_default(True)
     vis_ch.add_key(unreal.FrameNumber(0), True,
                    interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
     if start > 0:
