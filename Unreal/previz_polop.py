@@ -418,6 +418,26 @@ for iy in range(max(0, cy-radius_px), min(HM_SIZE-1, cy+radius_px)+1):
         height_grid[idx] = height_grid[idx] * (1.0-w) + CAVE_TERRACE_Z * w
 
 
+# Précipice près de la recherche d'Éva et Léa (17h55). Entaille LOCALISÉE
+# au sud du chemin haut : bord à y=-14 m, profondeur 30 m à y<=-22 m.
+# Les routes A, HAUT, B, le pont et le flanc ne changent pas.
+# Les extrémités sont estompées pour éviter une tranchée rectangulaire.
+for iy in range(HM_SIZE):
+    wy = WORLD_Y_MIN_M + iy * GRID_STEP_M
+    if wy >= -14.0 or wy < -55.0:
+        continue
+    cliff_across = smoothstep((-14.0 - wy) / 8.0)
+    row = iy * HM_SIZE
+    for ix in range(HM_SIZE):
+        wx = WORLD_X_MIN_M + ix * GRID_STEP_M
+        if wx <= 1744.0 or wx >= 1794.0:
+            continue
+        cliff_along = min(smoothstep((wx - 1744.0) / 9.0),
+                          smoothstep((1794.0 - wx) / 9.0))
+        cut = 30.0 * cliff_along * cliff_across
+        height_grid[row + ix] = max(0.0, height_grid[row + ix] - cut)
+
+
 def height_to_u16(h):
     return max(0, min(65535, int(round(32768.0 + (h/256.0)*32768.0))))
 
@@ -1152,40 +1172,42 @@ HIGH_POINT = ROUTES["A"][-1]
 
 high_x, high_y, high_z = HIGH_POINT
 
+# Accès en crochet derrière un éperon : la famille ne voit pas la bouche
+# de la grotte. Les deux Thomas contournent réellement l'éperon côté est.
 CAVE_ACCESS_POINT = (
     high_x + 4.0,
-    high_y + 3.0,
-    terrain_z_m(high_x + 4.0, high_y + 3.0)
+    high_y - 1.0,
+    terrain_z_m(high_x + 4.0, high_y - 1.0)
 )
 
 CAVE_ZONE_POINT = (
-    high_x + 7.0,
-    high_y + 6.0,
-    terrain_z_m(high_x + 7.0, high_y + 6.0)
+    high_x + 16.0,
+    high_y + 0.0,
+    terrain_z_m(high_x + 16.0, high_y + 0.0)
 )
 
 CAVE_ENTRY_POINT = (
-    high_x + 9.0,
+    high_x + 13.0,
     high_y + 8.0,
-    terrain_z_m(high_x + 9.0, high_y + 8.0)
+    terrain_z_m(high_x + 13.0, high_y + 8.0)
 )
 
 CAVE_DARK_SLOT = (
-    high_x + 11.0,
+    high_x + 15.0,
     high_y + 9.5,
-    terrain_z_m(high_x + 11.0, high_y + 9.5) + 0.2
+    terrain_z_m(high_x + 15.0, high_y + 9.5) + 0.2
 )
 
 CAVE_FISSURE_POINT = (
-    high_x + 13.0,
-    high_y + 10.5,
-    terrain_z_m(high_x + 13.0, high_y + 10.5) + 0.4
+    high_x + 17.0,
+    high_y + 11.0,
+    terrain_z_m(high_x + 17.0, high_y + 11.0) + 0.4
 )
 
 CAVE_CONTACT_POINT = (
-    high_x + 14.0,
-    high_y + 11.0,
-    terrain_z_m(high_x + 14.0, high_y + 11.0) + 0.8
+    high_x + 19.0,
+    high_y + 12.0,
+    terrain_z_m(high_x + 19.0, high_y + 12.0) + 0.8
 )
 
 CAVE_GUARD_POINT = route_point_at_station(
@@ -1193,16 +1215,18 @@ CAVE_GUARD_POINT = route_point_at_station(
     max(0.0, LENGTH["A"] - 8.0)
 )
 
+# Elles fouillent le rebord praticable côté précipice ; elles ne vont pas
+# jusqu'à l'arrière de l'éperon, d'où l'entrée redeviendrait visible.
 CAVE_SEARCH_POINT_1 = (
-    high_x + 5.5,
-    high_y + 5.0,
-    terrain_z_m(high_x + 5.5, high_y + 5.0)
+    high_x + 0.0,
+    high_y - 5.0,
+    terrain_z_m(high_x + 0.0, high_y - 5.0)
 )
 
 CAVE_SEARCH_POINT_2 = (
-    high_x + 7.0,
-    high_y + 3.5,
-    terrain_z_m(high_x + 7.0, high_y + 3.5)
+    high_x + 3.0,
+    high_y - 7.0,
+    terrain_z_m(high_x + 3.0, high_y - 7.0)
 )
 
 # Axe local de la cavité. Toute la géométrie V05 et les caméras de contrôle
@@ -1588,7 +1612,19 @@ spawn_box(
     _cave_rot
 )
 
-# Deux rochers d'entrée sur les côtés, pas de masque plein devant l'ouverture.
+# Éperon RÉEL entre le poste d'Éva/Léa et la bouche de la grotte.
+# Il masque l'ouverture sans traverser le crochet d'accès des deux Thomas
+# ni le couloir intérieur. Ne pas le remplacer par un simple cache caméra.
+spawn_rock(
+    "CAVE_ENTRANCE_BLIND_SPUR",
+    high_x + 8.0, high_y + 6.0,
+    terrain_z_m(high_x + 8.0, high_y + 6.0) + 2.9,
+    (4.0, 4.5, 4.6),
+    MAT_ROCK_READABLE,
+    "MicroGeo/CaverneV05/Rocks"
+)
+
+# Deux rochers d'entrée latéraux, aucune obstruction dans l'axe intérieur.
 for _side, _name, _yaw in ((2.2, "CAVE_ENTRY_ROCK_L", 12), (-2.2, "CAVE_ENTRY_ROCK_R", -12)):
     _rx, _ry = cave_xy(-0.15, _side)
     _rz = terrain_z_m(_rx, _ry) + 1.45
@@ -1941,10 +1977,18 @@ ANIM["THOMAS_INVERSE"] = [
         B5_STATION,
         0.0
     ),
+    # En temps objectif, le Thomas inversé contourne le même éperon.
+    # Le segment direct HIGH_POINT -> entrée traverserait le rocher.
     custom_segment(
         60.2,
-        60.6,
+        60.38,
         point_with_real_terrain(HIGH_POINT),
+        point_with_real_terrain(CAVE_ZONE_POINT)
+    ),
+    custom_segment(
+        60.38,
+        60.6,
+        point_with_real_terrain(CAVE_ZONE_POINT),
         point_with_real_terrain(CAVE_ENTRY_POINT)
     ),
     custom_segment(
@@ -5684,9 +5728,9 @@ def build_omniscient_edit():
         ("A6_A8", 16, 24, 32, "THOMAS_NORMAL", (-8, -12, 6)),
         ("A9_PONT", 4, 32, 32.2, "THOMAS_NORMAL", (-18, -35, 20)),
         ("A10", 14, 32.2, 52, "EVA", (-10, -12, 6)),
-        ("A11_ATTENTE", 18, 52, 56, "EVA", (-5, -7, 3)),
-        ("A12_A13", 16, 56, 59, "EVA", (-5, -6, 3)),
-        ("A14", 6, 59, 60, "EVA", (-7, -9, 4)),
+        ("A11_ATTENTE", 18, 52, 56, "EVA", (0, 10, 4.5)),
+        ("A12_A13", 16, 56, 59, "EVA", (0, 11, 5)),
+        ("A14", 6, 59, 60, "EVA", (0, 10, 4.5)),
         ("A15_A16", 16, 60, 61.95, "CAVE", (0, 0, 0)),
         ("A17", 5, 61.95, 62, "CAVE", (0, 0, 0)),
         ("B1", 16, 62, 60.2, "CAVE", (0, 0, 0)),
@@ -5717,6 +5761,10 @@ def build_omniscient_edit():
             else:
                 target = (900, 12.5, a["terrain_z_m"](900, 0)) if focus == "BRIDGE" else a["eval_actor"](focus, t)
             eye = tuple(target[i]+offset[i] for i in range(3))
+            if code == "A12_A13":
+                # Voir les femmes ET la rupture du terrain derrière elles,
+                # plutôt qu'une paroi de grotte géante remplissant l'image.
+                target = (target[0], target[1]-3.0, target[2]-0.35)
             eye = (eye[0], eye[1], max(eye[2], a["terrain_z_m"](eye[0], eye[1])+2.0))
             if code == "A9_PONT":
                 # Only this distant bridge view: reveal the gap and both landings,
