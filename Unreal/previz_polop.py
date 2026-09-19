@@ -5945,6 +5945,104 @@ def build_cast_closure_probe():
     return sequence
 
 
+def update_existing_omniscient_camera(shots, desired_pose, reveal_pose, reveal_clearance):
+    """Fast pass: replace ONLY the existing camera's transform keys.
+
+    Keep the original film sequence, all cast tracks/poses, 17 pauses,
+    subtitle tracks, camera cut, world actors and Landscape untouched.
+    """
+    a = _ANIMATION
+    if tuple(shots) != a.get("omniscient_shots"):
+        raise RuntimeError(
+            "FAST_CAMERA_ONLY: shot timing/order changed; set False for a full run.")
+    seq = a["omniscient_sequence"]
+    cam = a["omniscient_camera"]
+    binding = a["omniscient_camera_binding"]
+    fps = a["FPS"]
+    if not seq or not cam or not binding or cam.get_actor_label() != "PZ_ANIM_CAM_OMNISCIENT_CURRENT":
+        raise RuntimeError("FAST_CAMERA_ONLY: live film/camera unavailable; run full mode.")
+    entry = [actor for actor in actors.get_all_level_actors()
+             if actor.get_actor_label() == "POLOP_FILM_CURRENT"
+             and isinstance(actor, unreal.LevelSequenceActor)]
+    if len(entry) != 1 or entry[0].get_sequence() != seq:
+        raise RuntimeError("FAST_CAMERA_ONLY: current film does not match cached film.")
+    old_tracks = [track for track in binding.get_tracks()
+                  if isinstance(track, unreal.MovieScene3DTransformTrack)]
+    if len(old_tracks) != 1:
+        raise RuntimeError("FAST_CAMERA_ONLY: expected exactly one camera transform track.")
+    old_track = old_tracks[0]
+    # Bake new camera in a temporary transform track. If any F03 geometry
+    # audit fails, discard only this NEW track, leaving the old film intact.
+    unreal.LevelSequenceEditorBlueprintLibrary.pause()
+    unreal.LevelSequenceEditorBlueprintLibrary.open_level_sequence(seq)
+    new_track = binding.add_track(unreal.MovieScene3DTransformTrack)
+    try:
+        section = new_track.add_section()
+        section.set_range(0, sum(shot[1] for shot in shots)*fps)
+        camera_channels = section.get_all_channels()
+        previous_rotation = None
+        previous_pose = None
+        boundary_pose = None
+        previous_beat = None
+        first_frame = 0
+        max_step_m = 0.0
+        for code, seconds, t0, t1, focus, offset in shots:
+            count = seconds*fps
+            for index in range(count):
+                u = index/max(1, count-1)
+                t = t0+(t1-t0)*cinematic_ease(u)
+                moving_origin = boundary_pose
+                if previous_beat is not None:
+                    old_code, old_focus, old_offset = previous_beat
+                    moving_origin = desired_pose(old_code, old_focus, old_offset, t)
+                handover = (seconds if code in ("A5_GEOGRAPHIE", "B9_ELOIGNEMENT")
+                            else min(3.0, seconds))
+                if code == "A15_A16":
+                    eye, target = reveal_pose(u, t, boundary_pose)
+                    reveal_clearance(eye, target, u)
+                    if u >= 0.60 and eye[2] < a["terrain_z_m"](eye[0], eye[1])+1.25:
+                        raise RuntimeError(
+                            "F03 A15 camera below terrain clearance at %.3f" % u)
+                else:
+                    eye, target = blend_camera_pose(
+                        moving_origin, desired_pose(code, focus, offset, t),
+                        u*seconds/handover)
+                    if focus != "CAVE" and (
+                            previous_beat is None or previous_beat[1] != "CAVE"):
+                        eye = (eye[0], eye[1],
+                               max(eye[2], a["terrain_z_m"](eye[0], eye[1])+2.0))
+                if previous_pose is not None:
+                    max_step_m = max(max_step_m, math.dist(previous_pose[0], eye))
+                previous_pose = (eye, target)
+                pos = unreal.Vector(*(value*100.0 for value in eye))
+                look = unreal.Vector(*(value*100.0 for value in target))
+                rotation_raw = unreal.MathLibrary.find_look_at_rotation(pos, look)
+                rotation = (rotation_raw.roll, rotation_raw.pitch, rotation_raw.yaw)
+                if previous_rotation is not None:
+                    rotation = tuple(a["unwrap_angle"](p, q)
+                                     for p, q in zip(previous_rotation, rotation))
+                previous_rotation = rotation
+                frame = unreal.FrameNumber(first_frame+index)
+                for channel, value in zip(
+                        camera_channels[:6], (pos.x, pos.y, pos.z)+rotation):
+                    channel.add_key(frame, float(value),
+                                    interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
+            boundary_pose = previous_pose
+            previous_beat = (code, focus, offset)
+            first_frame += count
+    except Exception:
+        binding.remove_track(new_track)
+        raise
+    # Swap only after the entire replacement track has baked successfully.
+    binding.remove_track(old_track)
+    unreal.EditorAssetLibrary.save_loaded_asset(seq)
+    a["omniscient_camera_channels"] = camera_channels
+    journal("camera_only_updated", sequence=seq.get_path_name(),
+            frames=first_frame, maximum_camera_speed_m_s=max_step_m*fps,
+            scope="omniscient transform keys only; cast, captions and terrain reused")
+    return seq
+
+
 def build_omniscient_edit():
     """First editorial pass: a separate film timeline, leaving POV audit intact.
 
