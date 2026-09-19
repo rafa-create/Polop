@@ -1725,15 +1725,24 @@ A_DESCEND_3MIN = max(0.0, LENGTH["A"] - 100.0)
 # Route B est orientée HAUT -> PONT.
 B5_STATION = max(0.0, LENGTH["B"] - B5_DISTANCE_FROM_BRIDGE_M)
 
+# #49: local photographic stop beside A, near the unchanged flank arrival.
+# 12 m before the junction, 4 m off the path: blocking values, not new geography.
+FAMILY_WAIT_STATION = A_BRIDGE_STATION - 12.0
+FAMILY_WAIT_POINT = point_with_real_terrain(route_point_at_station("A", FAMILY_WAIT_STATION))
+EVA_PHOTO_POINT = point_with_real_terrain(
+    (FAMILY_WAIT_POINT[0], FAMILY_WAIT_POINT[1] - 4.0, FAMILY_WAIT_POINT[2]))
+
 # A 17h01 en lecture objective, Thomas inversé vient de traverser A -> B.
 # Dans son temps propre, c'est bien B -> A conformément à B6.
 ANIM = {}
 
 ANIM["THOMAS_NORMAL"] = [
     station_segment("A", 0.0, 2.0, normal_start_station, CONVERGENCE_STATION),
-    station_segment("A", 2.0, 3.0, CONVERGENCE_STATION, A_BRIDGE_STATION),
+    station_segment("A", 2.0, 3.0, CONVERGENCE_STATION, FAMILY_WAIT_STATION),
+    hold_segment(3.0, 3.5, FAMILY_WAIT_POINT),
+    station_segment("A", 3.5, 4.0, FAMILY_WAIT_STATION, A_BRIDGE_STATION),
     hold_segment(
-        3.0,
+        4.0,
         GROUP_DEPART_AFTER_LEA,
         point_with_real_terrain(A_BRIDGE_POINT)
     ),
@@ -1771,10 +1780,12 @@ ANIM["THOMAS_NORMAL"] = [
 ]
 
 ANIM["EVA"] = [
-    station_segment("A", 0.0, 2.0, eva_start_station, CONVERGENCE_STATION + 10.0),
-    station_segment("A", 2.0, 3.0, CONVERGENCE_STATION + 10.0, A_BRIDGE_STATION),
+    station_segment("A", 0.0, 1.7, eva_start_station, FAMILY_WAIT_STATION),
+    custom_segment(1.7, 1.9, FAMILY_WAIT_POINT, EVA_PHOTO_POINT),
+    hold_segment(1.9, 3.5, EVA_PHOTO_POINT),
+    custom_segment(3.5, 4.0, EVA_PHOTO_POINT, point_with_real_terrain(A_BRIDGE_POINT)),
     hold_segment(
-        3.0,
+        4.0,
         GROUP_DEPART_AFTER_LEA,
         point_with_real_terrain(A_BRIDGE_POINT)
     ),
@@ -1827,16 +1838,19 @@ ANIM["LEA"] = [
         point_with_real_terrain(A_BRIDGE_POINT),
         point_with_real_terrain(B_BRIDGE_POINT)
     ),
-    hold_segment(
-        1.25,
-        2.2,
-        point_with_real_terrain(B_BRIDGE_POINT)
-    ),
+    hold_segment(1.25, 1.5, point_with_real_terrain(B_BRIDGE_POINT)),
+    # #49: the existing first metres of FLANC represent the descent from B
+    # (user-approved blocking; neither bridge nor path geometry is changed).
+    # Leave the bridge BEFORE the closure. Pause for the request AFTER 17h01,
+    # when the inverse has passed behind her on B, then continue the detour.
+    station_segment("FLANC", 1.5, 3.5, 0.0, 12.0),
+    hold_segment(3.5, 3.65,
+                 point_with_real_terrain(route_point_at_station("FLANC", 12.0))),
     station_segment(
         "FLANC",
-        2.2,
+        3.65,
         LEA_FLANK_RETURN_END_MIN,
-        0.0,
+        12.0,
         LENGTH["FLANC"]
     ),
     station_segment(
@@ -2155,7 +2169,10 @@ def pov_story_target(actor_name, t, position):
     if actor_name == "THOMAS_INVERSE" and t >= 59.0:
         return CAVE_CONTACT_POINT
 
-    if actor_name == "LEA" and 1.0 <= t <= 2.2:
+    if actor_name == "LEA" and 3.5 <= t <= 3.65:
+        return eval_actor("THOMAS_NORMAL", t)
+
+    if actor_name == "LEA" and 1.0 <= t <= 1.5:
         return (
             B_BRIDGE_POINT[0] + 1.0,
             B_BRIDGE_POINT[1] + 1.0,
@@ -2170,6 +2187,16 @@ def pov_story_target(actor_name, t, position):
 
 def pov_direction(actor_name, t):
     p = eval_actor(actor_name, t)
+
+    # A2/B6: the photographer faces the landscape, away from the bridge.
+    # This orientation belongs to the world pose, not the film camera.
+    if actor_name == "EVA" and 1.9 <= t <= 3.5:
+        return (0.0, -1.0, 0.0)
+
+    # The short pause must not inherit movement from the 0.35-minute lookahead.
+    # The cast and POV share this objective-time glance toward normal Thomas.
+    if actor_name == "LEA" and 3.5 <= t <= 3.65:
+        return _vec_norm(_vec_sub(pov_story_target(actor_name, t, p), p))
 
     # Le tail 62-65 s est un banc de contrôle, pas du temps narratif.
     if t >= NARRATIVE_SECONDS:
@@ -3313,9 +3340,11 @@ lea_flank_segments = [
 ]
 
 lea_flank_ok = (
-    len(lea_flank_segments) == 1
-    and lea_flank_segments[0]["s1"]
-    > lea_flank_segments[0]["s0"]
+    len(lea_flank_segments) == 2
+    and lea_flank_segments[0]["s0"] == 0.0
+    and lea_flank_segments[0]["s1"] == lea_flank_segments[1]["s0"]
+    and lea_flank_segments[1]["s1"] == LENGTH["FLANC"]
+    and all(segment["s1"] > segment["s0"] for segment in lea_flank_segments)
 )
 
 _check(
@@ -5418,6 +5447,35 @@ def add_human_performances(sequence, samples):
             clock="shared objective time", pose_sampling_fps=a["FPS"])
 
 
+def audit_bridge_family_blocking():
+    """Measure #49 blocking in the shared world; not a visual visibility verdict."""
+    a = _ANIMATION
+    results = {}
+    for name in ("EVA", "LEA"):
+        closest = (float("inf"), None)
+        frontal = (180.0, None)
+        for index in range(2001, 8001):
+            t = index / 1000.0  # 17h00:00.06 through 17h06, both film readings.
+            pose = character_performance(name, t)
+            inverse = a["eval_actor"]("THOMAS_INVERSE", t)
+            dx, dy = inverse[0]-pose["foot"][0], inverse[1]-pose["foot"][1]
+            distance = math.hypot(dx, dy)
+            heading = math.radians(pose["yaw"]+90.0)
+            cosine = (math.cos(heading)*dx+math.sin(heading)*dy)/max(distance, 1e-9)
+            angle = math.degrees(math.acos(max(-1.0, min(1.0, cosine))))
+            closest = min(closest, (distance, t))
+            frontal = min(frontal, (angle, t))
+        results[name] = dict(min_horizontal_distance_m=closest[0], distance_time=closest[1],
+                             min_facing_angle_deg=frontal[0], angle_time=frontal[1])
+    payload = dict(scope="Root positions and facing, minutes since 16h58; no occlusion or eye/peripheral-vision test",
+                   visual_validation="PENDING", actors=results)
+    path = os.path.join(RUN_SAVED_ROOT, "bridge_family_blocking.json")
+    with open(path, "w", encoding="utf-8") as output:
+        json.dump(payload, output, indent=2)
+    journal("bridge_family_blocking_measured", report=path, **payload)
+    return payload
+
+
 def audit_cast_closure():
     """Endpoint/domain proof, not a claim that ring/contact acting is finished."""
     names = ("THOMAS_NORMAL", "THOMAS_INVERSE")
@@ -5929,6 +5987,7 @@ def finish_generation():
     cleanup_non_animation_polop_cameras()
     _ANIMATION = run_animation_v05_with_legacy_landscape_mapping(_GEOGRAPHY["landscape"])
     validate_narrative_motion()
+    audit_bridge_family_blocking()
     validate_sequencer_evaluation()
     normalize_animation_camera_focals()
     for actor in actors.get_all_level_actors():

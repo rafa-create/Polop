@@ -368,3 +368,47 @@ Le Python et ses outils de contrôle sont sur GitHub ; les scripts de reprise
 sous Saved ne sont pas des dépendances. Le bootstrap d'un ordinateur neuf reste
 le chantier #41 : une installation Unreal et la coquille Landscape source sont
 encore nécessaires.
+
+
+### Passe #49 — placement familial, 19 septembre 2026 (validation visuelle en attente)
+
+La référence active est #48, avec #49 comme correction macro prioritaire ; les
+anciens numéros cités dans les sections historiques ci-dessus ne sont pas des
+chantiers séparés. Bible lue au commit `4747d5a`.
+
+Sans changer la géographie, les premiers mètres du flanc représentent désormais
+la descente de Léa depuis B (interprétation autorisée par l'utilisateur). Elle
+quitte le pont à 16h59:30, ralentit à 17h01:30–17h01:39 pour regarder Thomas normal,
+puis poursuit le même flanc ; arrivée inchangée à 17h06. Éva s'écarte de quatre
+mètres du centre du chemin, douze mètres avant la jonction sur A, pour regarder
+le paysage pendant le passage de l'inversé. Le décalage latéral préexistant de
+son corps reste appliqué. Thomas normal rejoint cette zone d'attente. Le modèle
+rejoint les anciennes trajectoires à 17h02 pour les adultes, à 17h06 pour Léa.
+La branche inversée, les chemins, les rochers, la grotte et les clips articulés
+ne sont pas modifiés. Les horaires intermédiaires sont des choix de blockout.
+
+Contrôles statiques réalisés sur les fonctions sources et les routes V11 du run
+`20260919_093417_388979` : syntaxe du maître et des deux sources embarquées,
+raccord de pose à 17h00, domaine de coexistence des deux Thomas, égalité des
+poses aux mêmes instants interrogés dans les deux sens et conservation des
+trajectoires après les fenêtres modifiées. Échantillonnage horizontal toutes
+les 0,06 secondes objectives de 17h00 à 17h06 : distance minimale à l'inversé
+3,35 m pour Éva et 8,54 m pour Léa ; angle minimal entre orientation corporelle
+et direction de l'inversé respectivement 51,52° et 61,69°. Ces mesures ne sont
+**pas une preuve de non-perception** : ni champ périphérique, ni regard des yeux,
+ni occultation, ni animation évaluée dans Unreal n'ont été contrôlés. Le test
+statique utilise un Z plat ; il ne valide pas les appuis sur le Landscape.
+
+Le prochain lancement produira `bridge_family_blocking.json` et l'événement
+`bridge_family_blocking_measured` dans les résultats locaux du même run. Ce
+rapport mesure les positions/orientations ; il laisse explicitement la
+validation visuelle en attente et ne ferme pas #49.
+
+Vérification nouvelle nécessaire : depuis `/Game/Main` du clone officiel,
+exécuter `Unreal/previz_polop.py` une fois, attendre `complete`, puis examiner le
+nouveau résultat entre 16h59 et 17h02 dans les deux sens, notamment 17h00:17,
+17h01:07 et la pause de Léa à 17h01:30. Vérifier les appuis d'Éva hors du sentier,
+les regards, la continuité des arrêts et le rejeu A2/B9. Ne pas sauvegarder le
+résultat dans `Content/Main.umap`. Aucun nouveau run Unreal n'a encore été fait
+pour cette passe. Le mousqueton reste un proxy statique et l'anneau n'est pas
+animé : la causalité complète demandée par #49 reste donc à traiter et valider.
