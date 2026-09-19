@@ -1,6 +1,6 @@
 # F01 — Présenter la famille et garder l'arc émotionnel
 
-**Statut : PREMIÈRE PASSE CAMÉRA PUBLIÉE — À TESTER DANS UNREAL, NON VALIDÉE.** Type : mise en scène incomplète / éléments de scénario non encore animés.
+**Statut : CADRAGE INITIAL À REPRENDRE ; B9 À TESTER DANS UNREAL — NON VALIDÉE.** Type : mise en scène incomplète / éléments de scénario non encore animés.
 
 ## Observation dans la vidéo
 
@@ -40,3 +40,11 @@ Distinguer deux étapes : (1) garantir un plan lisible des trois personnages ava
 **Script publié, non testé dans Unreal :** `899772b37fc86b442b1395d6f99dac2e835eef80`.
 
 Suite au visionnage du retour B9 et du dézoom, le cadrage sur Thomas se rapproche progressivement en fin de B9 (temps objectif 7,45–8), puis reste auprès de lui pendant la pause. Le dézoom suivant retarde son éloignement d'environ 2,4 secondes de temps écran avant de suivre le centre mobile des trois personnages pour retrouver le paysage. La chronologie, les 17 pauses, les déplacements du casting, la première version du cadrage d'ouverture et la géométrie F03 n'ont pas été modifiés. Le geste de la boîte n'est pas encore créé. Vérifier dans Unreal le raccord B9 → pause → dézoom et l'absence d'obstruction du terrain; F01 n'est pas validée. Demander séparément l'extrait complet du début jusqu'au pont avant toute correction supplémentaire de l'ouverture. F03 demeure en pause.
+
+## Revue de la capture du 19/09/2026 à 17 h 28 — ouverture confirmée
+
+L'utilisateur confirme explicitement que le plan très éloigné aperçu au **début de l'enregistrement** est bien le début de la préviz, et non un extrait d'une autre séquence. Le précédent doute sur l'identification du plan est donc levé : **la première passe F01 ne présente pas encore les trois personnages à une taille suffisante pour lire la famille**. Les trois silhouettes deviennent plus faciles à distinguer lors du détour près du pont (environ 36–52 s dans l'enregistrement), mais cet instant arrive trop tard pour remplacer l'installation familiale d'A1. La caméra suit toujours des positions de départ très espacées; aucun changement de trajectoire n'est autorisé par cette seule observation.
+
+**Action à discuter en F01 :** recadrer plus près le début sans couper Thomas ou Éva, et contrôler le raccord vers Léa; si le blocking actuel rend un plan familial rapproché impossible, soumettre un changement limité des positions initiales à validation explicite, au lieu de le faire silencieusement. La véritable ouverture A0 (rivière → montagne, sans coupe) demeure non réalisée. Le retour B9 et son dézoom révisés ne sont pas visibles en entier dans ce dernier extrait; conserver leur statut « à tester ».
+
+**Sous-titre initial — signalement confirmé par l'utilisateur :** le premier carton reste à l'image trop longtemps. Le code l'affichait pendant la totalité de la pause introductive de 6 s. Correction publiée dans le script : texte introductif raccourci à deux lignes et plage de la section UMG **ainsi que durée du cue** réduites à **3 s**, sans modifier la pause introductive, les 17 pauses ou la durée du film. **À vérifier sur un nouveau run complet, avec `FAST_CAMERA_ONLY=False` : le mode rapide ne régénère pas les sous-titres.** Ne pas considérer cette correction comme validée tant que le texte ne disparaît pas réellement avant la reprise de la randonnée. F03 reste en pause.
