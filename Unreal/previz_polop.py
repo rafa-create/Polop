@@ -6068,7 +6068,11 @@ def build_omniscient_edit():
     def card_text(name, content, height, font_size, color):
         actor = actors.spawn_actor_from_class(
             unreal.TextRenderActor, unreal.Vector(0, 0, 0))
-        comp = actor.get_text_render()
+        # UE 5.8 : TextRenderActor n'expose pas get_text_render() en Python.
+        # Son composant est accessible via la classe Unreal exportee.
+        comp = actor.get_component_by_class(unreal.TextRenderComponent)
+        if comp is None:
+            raise RuntimeError("Le carton " + name + " n'a pas de TextRenderComponent")
         # Même contrainte pour les deux lignes de texte attachées à la caméra.
         comp.set_mobility(unreal.ComponentMobility.MOVABLE)
         comp.set_text(content)
