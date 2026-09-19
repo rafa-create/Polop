@@ -6593,8 +6593,11 @@ def build_omniscient_edit():
         limit = min(110.0, 100.0*dist)
         if limit <= 0.01:
             return
-        end_cm = ue.Vector(*(eye_cm.to_tuple()[i]+
-                             (diff[i]/dist)*limit for i in range(3)))
+        end_cm = ue.Vector(*(v*100.0 for v in eye))
+        end_cm = ue.Vector(
+            eye_cm.x+(diff[0]/dist)*limit,
+            eye_cm.y+(diff[1]/dist)*limit,
+            eye_cm.z+(diff[2]/dist)*limit)
         watch = ("CAVE_REVIEW_", "CAVE_WALL_", "CAVE_SIDE_",
                  "CAVE_ENTRY_ROCK_", "CAVE_ENTRANCE_BLIND_SPUR",
                  "SEARCH_LEDGE_MOUNTAIN_WALL", "F03_SHADOW_RECESS_")
@@ -6607,7 +6610,7 @@ def build_omniscient_edit():
             comp = actor.get_component_by_class(unreal.StaticMeshComponent)
             if comp is None:
                 continue
-            center, extent = comp.get_actor_bounds(False)
+            center, extent = actor.get_actor_bounds(False)
             # Inflate to catch near-plane rock even with collision disabled.
             bx, by, bz = center.x, center.y, center.z
             ex, ey, ez = extent.x+12.0, extent.y+12.0, extent.z+12.0
