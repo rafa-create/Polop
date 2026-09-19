@@ -91,59 +91,48 @@ Vous venez ?
 ÉVA
 On arrive. Mais c’est pas le bon chemin, tu sais. Mais je comprends, c’est marrant de prendre le pont, je comprends.
 
-Thomas reste sur le vrai chemin avec Éva. Ils continuent sans traverser.
+Thomas reste sur le vrai chemin, sans traverser. Éva s'est arrêtée un peu plus loin, près de l'arrivée du flanc sur A. Elle sort son appareil et photographie le paysage. Thomas marche encore en retrait, entre le relief et elle.
 
 ⸻
 
-A2 — 17h00 — LE RETOUR DE LÉA
+A2 — VERS 17h00–17h01 — LE RETOUR DE LÉA
 
 La musique reste légère, dans la continuité naturelle de la randonnée.
 
-Léa, toujours de l’autre côté du creux, veut rejoindre Thomas et Éva et revient vers le pont.
+De l'autre côté du creux, Léa s'éloigne du pont. Elle descend quelques pas sur B, vers le départ du chemin du flanc.
 
-ÉVA
-Léa, reviens. C’est pas le bon chemin.
+Plus bas sur A, près de l'arrivée du flanc, Éva prend des photos. Elle cadre la montagne, puis s'écarte du sentier pour chercher un autre angle.
 
-Léa s’arrête.
+La caméra omnisciente reste d'abord avec Léa et Éva. Thomas avance seul sur A, en retrait, le long du relief rocheux.
 
-La caméra omnisciente reste avec Léa et Éva. Léa constitue naturellement le centre de l’action : elle revient vers le pont et Éva lui parle.
+Un bruit bref se perd parmi les voix et les pas, sans que la caméra cherche aussitôt sa source. Léa continue à descendre.
 
-Pendant ces quelques secondes, Thomas poursuit sa marche près du flanc rocheux, hors du centre d’attention de la caméra. Le point exact où sa trajectoire converge avec celle de Thomas inversé n’est pas montré dans cette première lecture.
+Un instant plus tard, Thomas revient naturellement au centre de l'image. Il s'arrête une seconde, troublé, puis reprend sa marche vers Éva et l'arrivée du flanc.
 
-Au milieu des voix et des bruits de pas, un très léger son métallique se fait entendre quelque part plus haut dans le relief, hors champ.
+La caméra poursuit son mouvement. Au passage, elle laisse voir le mousqueton du pont, déjà décroché de son point d'ancrage. Elle ne montre pas le geste qui l'a décroché et ne précise pas si Thomas l'a vu.
 
-Léa jette instinctivement un petit coup d’œil vers le haut, dans la direction du bruit.
-
-La caméra accompagne à peine son regard, sans chercher la source, puis se reconcentre aussitôt sur Léa.
-
-Au même instant, hors du centre d’attention, l’anneau passe également par ce point de fermeture. Le film ne montre ni assez précisément les contacts ni leur ordre pour attribuer une cause certaine au retour de Thomas au temps normal.
-
-Aucun mouvement de caméra ne signale qu’un événement important vient de se produire. Thomas revient naturellement dans le cadre.
-
-Thomas voit Léa revenir vers le pont. Son regard se fixe une fraction de seconde sur le point d’ancrage. Dans le temps qu’il vient personnellement de parcourir, il a rencontré ce même mousqueton détaché juste après cet instant. Il n’a pas besoin d’en comprendre toute la mécanique : il sait concrètement que cette fixation est sur le point de devenir dangereuse.
-
-THOMAS
-Ne reprends pas le pont.
-
-Il désigne le chemin rocheux qui longe le flanc.
-
-THOMAS
-Passe par le flanc.
+Léa ralentit sur B. Elle tourne légèrement la tête vers son père, sans retourner vers le pont.
 
 LÉA
-C’est plus long.
+Papa, en fait, j'ai envie de reprendre le pont.
+
+THOMAS
+Non, non. Continue. Prends le flanc, cette fois-ci.
+
+LÉA
+C'est plus long.
 
 THOMAS
 Oui.
 
-Léa prend le chemin du flanc. Ce détour la ramène de B vers A.
+Léa reprend sa descente, puis s'engage sur le flanc pour revenir de B vers A. La caméra accompagne brièvement son mouvement avant de retrouver Éva, qui abaisse son appareil.
 
 ÉVA
-Tu pouvais pas lui dire ça avant ?
+Pourquoi tu lui fais prendre le détour ?
 
-Thomas ne répond pas. Il regarde Léa.
+Thomas ne répond pas. Il regarde Léa s'éloigner sur le flanc.
 
-Quand elle les rejoint sur A, Thomas regarde le chemin A qui monte vers la zone haute et la caverne.
+Quand elle les rejoint sur A, Thomas regarde le chemin qui monte vers la zone haute et la caverne.
 
 THOMAS
 On est obligés de monter jusqu’en haut ?
@@ -174,7 +163,6 @@ Allez.
 Éva et Léa repartent dans une énergie légère. Thomas reste immobile une seconde, en retrait du centre d'attention.
 
 Puis il les suit.
-
 ⸻
 
 A3 — LA RANDONNÉE
@@ -701,73 +689,51 @@ Thomas aperçoit le pont mais poursuit sa progression vers 17h00. Le film ne don
 
 ⸻
 
-B6 — 17h01 — LE GESTE QUI SAUVE LÉA
+B6 — VERS 17h01 — LE GESTE QUI SAUVE LÉA
 
-Thomas atteint la zone du pont peu avant 17h00.
+En approchant du pont par B, Thomas aperçoit Léa, plus bas, sur le chemin du flanc. Elle marche à reculons, remontant vers le côté B dans le mouvement inversé du paysage. Thomas la suit du regard. Au-delà du creux, Éva, elle aussi à rebours, tient son appareil photo près de l'arrivée du flanc sur A.
 
-Dans le sens temporel qu’il parcourt, le cordage pend et le mousqueton est décroché de son point d’ancrage.
+Léa disparaît derrière un tournant du chemin. Thomas rejoint l'attache du pont : le cordage pend, le mousqueton est décroché.
 
-Thomas s’arrête. Il regarde le mousqueton. Puis, presque instinctivement, il s’approche.
-
-Il effectue un seul geste mécanique, court et simple. Dans son sens temporel, ce geste fait passer le mousqueton de l’état décroché à l’état accroché.
-
-Le mousqueton vient toucher la roche.
+Il s'arrête net, regarde vers le flanc, puis revient au mousqueton. Il s'approche et effectue un geste court, précis. Le mousqueton reprend sa place sur son point d'ancrage.
 
 CLAC.
 
-Exactement la même signature métallique que lorsque Léa traversait à 16h59.
+Le même son métallique que lors de la traversée de Léa à 16h59.
 
-Thomas s’immobilise.
-
-Son regard va du mousqueton désormais accroché vers le pont. Il n’y a pas d’autre effet destiné à confirmer la connexion.
-
-Thomas franchit ensuite le pont depuis B vers A. Dans le temps objectif, Léa utilise l’autre liaison, le chemin du flanc, pour revenir de B vers A : leurs trajectoires restent séparées. Thomas inversé peut ainsi retrouver A sans rencontrer Léa avant la fermeture.
+Thomas vérifie l'attache du regard. Il se presse vers le pont et le traverse de B vers A. Léa reste sur le flanc et ne le voit pas. De l'autre côté du creux, Éva photographie toujours le paysage, le dos tourné vers son passage.
 
 ⸻
 
 B7 — VERS 17h00 — LA CONVERGENCE
 
-Désormais revenu sur A, Thomas continue sa progression vers le point où sa trajectoire rejoint celle de Thomas normal.
+Thomas inversé débouche du pont sur A et se hâte le long du relief, en direction du chemin par lequel il est arrivé. Éva reste plus bas sur A, absorbée par ses photos. Léa poursuit son trajet sur le flanc, de l'autre côté du creux. Ni l'une ni l'autre ne regarde vers Thomas inversé.
 
-Un gros relief rocheux borde le chemin. Il permet à la caméra de masquer ou de superposer brièvement les deux occurrences du même Thomas selon l’angle.
+Au détour du rocher, Thomas normal apparaît devant lui. Dans le temps de Thomas inversé, il avance à reculons vers le pont, le long du chemin A.
 
-Thomas inversé aperçoit Thomas normal.
+Thomas inversé tente de se décaler. Trop tard.
 
-Pour lui, Thomas normal vient vers lui en mouvement inversé, au ras du flanc rocheux.
-
-Thomas comprend que leurs trajectoires convergent.
-
-Il recule et se plaque instinctivement contre la montagne pour lui laisser le passage.
-
-Au même moment, l’anneau arrive du relief inférieur au terme de sa trajectoire dans cette orientation temporelle.
+Au même instant, l'anneau arrive contre la paroi.
 
 ⸻
 
 B8 — 17h00 — LA FERMETURE
 
-Tout se produit dans le même instant.
+Thomas inversé percute accidentellement Thomas normal près du rocher.
 
-Thomas inversé, adossé au relief, tend une main contre la roche pour se stabiliser.
-
-Thomas normal converge sur exactement la même zone. Leurs trajectoires corporelles se superposent brièvement dans le mouvement et dans l’occultation partielle du relief.
-
-Au même instant, l’anneau passe contre la paroi et touche Thomas.
+L'anneau touche Thomas au même instant.
 
 CONTACT THOMAS ↔ THOMAS.
 
 CONTACT THOMAS ↔ ANNEAU.
 
-La caméra poursuit son mouvement.
+Leurs mouvements se confondent brièvement au contact du relief. La caméra poursuit son trajet sans isoler un geste qui donnerait la cause certaine du retour au temps normal.
 
-À la sortie de la superposition / occultation, il n’y a plus qu’un Thomas, orienté dans le temps normal.
+À la sortie de ce mouvement, elle retrouve Thomas avançant dans le temps normal, seul dans le cadre, encore troublé.
 
-Pas de flash. Pas de dissolution. Pas de morphing. Pas d’image de deux corps qui fondent l’un dans l’autre. La sensation de fusion vient uniquement de la continuité des trajectoires, du cadrage et du mouvement.
+Pas de flash. Pas de dissolution. Pas de morphing. Pas d’image de deux corps qui fondent l’un dans l’autre.
 
-Thomas suit brièvement l’anneau du regard.
-
-Puis il regarde devant lui.
-
-Léa. Éva.
+Thomas reprend sa marche vers Éva. De l'autre côté du creux, Léa descend sur B.
 
 ⸻
 
@@ -785,51 +751,36 @@ Un autre fragment retrouve l’anneau immobilisé dans une anfractuosité. Le fi
 
 À l’approche de 17h00, ses apparitions peuvent devenir légèrement plus rapprochées jusqu’à son arrivée au relief de la fermeture. Le petit bruit métallique de la première lecture peut alors trouver rétrospectivement son origine sans flashback explicatif.
 
-B9 — 17h00 — LE RETOUR / LE DÉCLIC
+B9 — VERS 17h00–17h01 — LE RETOUR / LE DÉCLIC
 
-Exactement le même espace, les mêmes positions, les mêmes dialogues et les mêmes actions que dans A2. Seuls le regard de la caméra, le son et la musique changent la lecture.
+Le même moment et les mêmes mouvements que dans A2, revus sans changer l'heure ni les positions de la famille. Le regard de la caméra et la musique rendent cette fois plus sensible le trouble de Thomas.
 
-La musique reste retenue. Elle accompagne l’émotion de Thomas sans annoncer ni expliquer une révélation.
+Après la rencontre près du rocher, Thomas reprend sa marche vers Éva, occupée à prendre des photos plus bas sur A. De l'autre côté du creux, Léa descend sur B vers le flanc.
 
-Cette fois, la caméra a révélé la convergence : Thomas inversé, Thomas normal et l’anneau ont occupé le même point de fermeture. Elle ne donne pourtant aucune réponse explicative sur la cause exacte du retour au temps normal.
+La caméra continue sans coupe. Elle découvre brièvement le mousqueton du pont, déjà décroché. Elle ne montre pas le décrochage et ne donne pas à voir ce que Thomas a personnellement aperçu.
 
-Thomas regarde une fraction de seconde l’anneau repartir vers le haut de la montagne.
-
-Puis il voit Léa.
-
-ÉVA
-Léa, reviens. C’est pas le bon chemin.
-
-Léa s’arrête.
-
-Thomas regarde Léa vivante.
-
-Son regard descend brièvement vers le pont. La caméra reste sur lui.
-
-Puis Léa fait un mouvement vers le pont.
-
-THOMAS
-Ne reprends pas le pont.
-
-Il désigne le chemin rocheux du flanc.
-
-THOMAS
-Passe par le flanc.
+Léa ralentit, puis tourne légèrement la tête vers son père.
 
 LÉA
-C’est plus long.
+Papa, en fait, j'ai envie de reprendre le pont.
+
+THOMAS
+Non, non. Continue. Prends le flanc, cette fois-ci.
+
+LÉA
+C'est plus long.
 
 THOMAS
 Oui.
 
-Léa prend le chemin du flanc.
+Léa reprend sa descente et s'engage sur le flanc.
+
+Éva abaisse son appareil photo.
 
 ÉVA
-Tu pouvais pas lui dire ça avant ?
+Pourquoi tu lui fais prendre le détour ?
 
-Thomas ne répond pas.
-
-La caméra reste avec lui. L’émotion monte, mais elle n’est pas traduite par une succession de raccords explicatifs.
+Thomas ne répond pas. Il regarde Léa s'éloigner sur le flanc.
 
 Quand Léa les rejoint, Thomas regarde le chemin qui monte.
 
