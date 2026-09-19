@@ -26,7 +26,7 @@ GitHub issue **#41** (`3d_codex`)
 
 ## Travaux en attente de Codex / Unreal
 
-Toutes les tâches qui demandent du code Unreal ou une exécution réelle sont suivies dans les **GitHub Issues** avec le label **`3d_codex`**. Les issues principales actuelles sont #41 à #46.
+Toutes les tâches qui demandent du code Unreal ou une exécution réelle sont suivies dans les **GitHub Issues** avec le label **`3d_codex`**. Les issues principales ouvertes sont #41, #42, #44, #45, #46 et #47. #43 est fusionnée dans #41.
 
 ## Règle de travail
 
