@@ -1,6 +1,6 @@
 # F03 — Disparition : terrasse, paroi, précipice, chemin gardé
 
-**Statut : CORRECTION PUBLIÉE — À TESTER DANS UNREAL, NON VALIDÉE.** Type : enjeu causal majeur / géographie et mise en scène.
+**Statut : EN PAUSE À LA DEMANDE DE L’UTILISATEUR — NON VALIDÉE.** Type : enjeu causal majeur / géographie et mise en scène.
 
 ## Observation dans la vidéo
 
@@ -105,3 +105,7 @@ Le rendu vidéo du run précédent montrait encore un grand bloc sombre/gris dev
 **Contrôle supplémentaire :** dans A15 après le contournement (progression ≥ 0,60), le code vérifie aussi que l'objectif est au moins 1,25 m au-dessus du Landscape réel; le test d'enveloppes 2D des rochers reste en place. Ce contrôle peut **bloquer** le run si le nouveau mouvement passe sous le terrain. Il ne constitue pas une garantie de visibilité intégrale des meshes, des ombres ou du rendu Unreal.
 
 **Test avant de clore F03 :** récupérer le dernier script, lancer un nouveau run en mode `POLOP_F03_GEOMETRY_ONLY=1` si le test des sous-titres est reporté, vérifier `complete` et `LS_POLOP_OMNISCIENT`. Dans le film A12–A15, examiner (1) la petite surface bornée par la paroi/le vide, (2) l'impasse apparente depuis les femmes, (3) l'apparition progressive de l'ouverture après leur départ, (4) la caméra passant par une entrée dégagée puis montrant Thomas dans la cavité. Contrôler la vraie visibilité de l'entrée depuis les POV d'Éva et Léa. En cas d'échec, transmettre le **premier message d'erreur du même run** ou un extrait vidéo A15. Aucune nouvelle fiche ne doit être déclarée validée avant accord de l'utilisateur.
+
+## Décision de suivi — 19/09/2026, capture de 17 h 28
+
+**F03 EST EN PAUSE À LA DEMANDE DE L'UTILISATEUR, ET NON VALIDÉE.** Dans le nouvel extrait, vers **72–76 s**, une grande masse rocheuse masque encore le cadrage pendant la zone de recherche / révélation. Cette observation est compatible avec l'occultation déjà documentée mais ne permet pas d'identifier avec certitude le mesh responsable. Ne pas recommencer des corrections de la grotte, du précipice ou d'A15 à l'occasion du travail F01 / sous-titres. Reprendre ultérieurement la recherche de l'obstacle précis dans Unreal et les critères physiques déjà consignés.
