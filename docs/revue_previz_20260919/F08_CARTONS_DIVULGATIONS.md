@@ -1,6 +1,6 @@
 # F08 — Informations narratives dans les annotations de préviz
 
-**Statut : À DISCUTER.** Type : pédagogie de prévisualisation vs surprise du film. **Hors sujet ici :** résolution, netteté, langue anglaise, taille ou placement du texte; ces points relèvent d'un autre correctif non testé dans cette vidéo.
+**Statut actuel : DEUX MODES DE SOUS-TITRES CODÉS ; DURÉES, CALAGE ET DIVULGATIONS À CONTRÔLER EN VIDÉO — NON VALIDÉE.** Type : pédagogie de prévisualisation vs surprise du film. **Hors sujet ici :** résolution, netteté, langue anglaise, taille ou placement du texte; ces points relèvent d'un autre correctif non testé dans cette vidéo.
 
 ## Observation dans la vidéo
 
@@ -29,3 +29,11 @@ L'utilisateur indique que **le tout premier sous-titre reste affiché trop longt
 **À tester :** régénérer le film en mode complet (`FAST_CAMERA_ONLY=False` : son mode rapide ne retouche pas le texte), puis contrôler le début image par image : texte visible pendant la courte introduction, disparu au plus tard vers la troisième seconde de film, sans survivre sur A1. Les API UMG ou le widget peuvent conserver un état à vérifier : ce correctif statique ne prouve pas à lui seul la disparition effective. Si l'affichage persiste, demander un extrait avec le temps de Sequencer avant d'étendre la correction.
 
 **Contenu des autres cartons :** la vidéo ne tranche pas les questions déjà soulevées sur les révélations prématurées, notamment le mousqueton décroché indiqué dans `PAUSE_ATTACHE`. Ne pas modifier ces annonces ni déclarer F08 validée à partir du problème de durée du premier sous-titre.
+
+## Passe de sous-titres « œil neuf » publiée — 19/09/2026, nouveau rendu en cours de validation
+
+**État du code, pas une confirmation du rendu :** `SUBTITLE_REVIEW_MODE=False` par défaut propose des cartons plus concis au spectateur ; `True` ajoute des indications techniques sur les effets/accessoires incomplets. Il reste **17 pauses** et une seule caméra. L'introduction UMG doit disparaître après trois secondes, alors que sa pause temporelle dure toujours six secondes. A1 reçoit cinq sous-titres raccourcis, avec la réponse d'Éva sur le chemin. Les **quatre répliques de Léa et Thomas** sont répétées à l'identique en A2 et en B9. Les dialogues de la pause de Thomas, de l'attente, de la recherche et de la décision de redescendre sont maintenant répartis dans A11, A12–A13 et A14. La réparation du mousqueton est explicitée **uniquement en B**, le décrochage restant discret en A. Les effets encore non animés ne sont signalés que dans le mode de revue technique ; la cause de la fermeture de 17 h 00 n'est pas tranchée par les cartons.
+
+**Réserves et test :** le code de la préviz comprime des minutes de récit dans quelques secondes d'écran, sans jeu labial ; les phrases doivent être évaluées avec les actions réelles et non seulement par leurs indices de trame. Le spectateur ne doit pas recevoir des informations d'A9 ou B9 avant l'instant où elles deviennent pertinentes. Tester le départ, A1/A2, A10–A14, B5/B6 puis B9 avec le nouveau run, en particulier débuts/fins des sections UMG, chevauchements, rémanence du premier carton et rythme des échanges ; demander à une personne découvrant l'histoire de résumer les chemins, la disparition et la fonction du mousqueton **sans relire les cartons**.
+
+**Procédure :** `FAST_CAMERA_ONLY=False` obligatoire pour reconstruire textes et séquences ; tester d'abord `SUBTITLE_REVIEW_MODE=False`, puis si nécessaire le mode technique sur un run complet distinct. Ne pas déclarer F08 ni le premier cue validés avant la vidéo et l'accord de l'utilisateur. Les commentaires historiques précédents décrivent la préviz *avant* cette passe et ne correspondent plus aux textes actuellement publiés.
