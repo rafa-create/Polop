@@ -5786,15 +5786,19 @@ def build_omniscient_edit():
         ("A2", 18, 2, 8, "LEA", (-5, -9, 4)),
         ("A3_A4", 16, 8, 20, "EVA", (-8, -10, 5)),
         ("A5_GEOGRAPHIE", 8, 20, 24, "EVA", (-45, -65, 40)),
+        ("PAUSE_CHEMINS", 3, 24, 24, "EVA", (-45, -65, 40)),
         ("A6_A8", 16, 24, 32, "THOMAS_NORMAL", (-8, -12, 6)),
         ("A9_PONT", 4, 32, 32.2, "THOMAS_NORMAL", (-18, -35, 20)),
         ("A10", 14, 32.2, 52, "EVA", (-10, -12, 6)),
         ("A11_ATTENTE", 18, 52, 56, "EVA", (-3, 9, 4.5)),
         ("A12_A13", 16, 56, 59, "EVA", (9, -16, 6)),
+        ("PAUSE_RECHERCHE", 3, 59, 59, "EVA", (9, -16, 6)),
         ("A14", 6, 59, 60, "EVA", (9, -16, 6)),
         ("A15_A16", 16, 60, 61.95, "CAVE", (0, 0, 0)),
         ("A17", 5, 61.95, 62, "CAVE", (0, 0, 0)),
+        ("PAUSE_CONTACT", 3, 62, 62, "CAVE", (0, 0, 0)),
         ("B1", 16, 62, 60.2, "CAVE", (0, 0, 0)),
+        ("PAUSE_OBSCURITE", 3, 60.2, 60.2, "CAVE", (0, 0, 0)),
         ("B2", 10, 60.2, 59.4, "THOMAS_INVERSE", (-14, 20, 9)),
         ("B3_B4", 25, 59.4, 32, "THOMAS_INVERSE", (-9, 12, 5)),
         ("B5_PONT", 4, 32, 31.9, "THOMAS_INVERSE", (-12, 18, 10)),
@@ -5804,7 +5808,20 @@ def build_omniscient_edit():
         ("B9", 18, 2, 8, "THOMAS_NORMAL", (-5, -9, 4)),
         ("B9_ELOIGNEMENT", 8, 8, 12, "THOMAS_NORMAL", (-45, -65, 35)),
     ]
+    # Aides de lecture pour la PREVIZ uniquement, pas des dialogues canoniques.
+    # Chaque pause maintient le temps objectif exact, y compris le casting.
+    pause_cards = {
+        "PAUSE_CHEMINS": ("DEUX CHEMINS", "A monte ; B redescend de l'autre côté."),
+        "PAUSE_RECHERCHE": ("17 H 55", "Une petite terrasse : la paroi, puis le vide."),
+        "PAUSE_CONTACT": ("18 H 00", "Deux parcours de Thomas se rejoignent ici."),
+        "PAUSE_OBSCURITE": ("DANS LE NOIR", "Thomas inversé s'y est habitué ; l'autre, non."),
+    }
+
     def desired_pose(code, focus, offset, t):
+        if code == "PAUSE_RECHERCHE":
+            code = "A12_A13"
+        elif code == "PAUSE_OBSCURITE":
+            code = "B1"
         if code in ("A12_A13", "A14"):
             # Vue courte côté aval : les deux personnages sur la petite
             # banquette, la paroi derrière, la face du précipice dessous.
@@ -5893,6 +5910,62 @@ def build_omniscient_edit():
                 scale = (normal_scale.x, normal_scale.y, normal_scale.z)
             animated.append((name, channels, scale, converter))
     binding, camera_channels, _ = track_for(cam)
+
+    # Deux lignes de texte + un petit panneau sombre : tous sont attachés
+    # à la caméra du film, pas placés dans le monde près des personnages.
+    # Le track Visibility de Sequencer les montre uniquement pendant la pause.
+    def card_attach(actor, name, local_position, rotation=None):
+        actor.set_actor_label("PZ_OMNI_CARD_" + name)
+        actor.set_folder_path("POLOP/Film/Annotations")
+        result = actor.attach_to_actor(
+            cam, unreal.Name(""),
+            unreal.AttachmentRule.SNAP_TO_TARGET,
+            unreal.AttachmentRule.SNAP_TO_TARGET,
+            unreal.AttachmentRule.KEEP_WORLD, False)
+        if result is False:
+            raise RuntimeError("Attachement au cadre impossible : " + name)
+        actor.set_actor_relative_location(unreal.Vector(*local_position), False, False)
+        actor.set_actor_relative_rotation(rotation or unreal.Rotator(0, 0, 0),
+                                          False, False)
+        actor.set_actor_hidden_in_game(True)
+        return actor
+
+    def card_text(name, content, height, font_size, color):
+        actor = actors.spawn_actor_from_class(
+            unreal.TextRenderActor, unreal.Vector(0, 0, 0))
+        comp = actor.get_text_render()
+        comp.set_text(content)
+        comp.set_world_size(float(font_size))
+        comp.set_horizontal_alignment(unreal.HorizTextAligment.EHTA_CENTER)
+        comp.set_text_render_color(color)
+        comp.set_cast_shadow(False)
+        return card_attach(actor, name, (210.0, 0.0, height),
+                           unreal.Rotator(0, 180, 0))
+
+    def card_background(name):
+        cube = unreal.load_asset("/Engine/BasicShapes/Cube.Cube")
+        actor = actors.spawn_actor_from_object(
+            cube, unreal.Vector(0, 0, 0), unreal.Rotator(0, 0, 0), False)
+        actor.set_actor_scale3d(unreal.Vector(0.02, 2.24, 0.61))
+        comp = actor.get_component_by_class(unreal.StaticMeshComponent)
+        comp.set_material(0, a["MAT_CAVE"])
+        comp.set_cast_shadow(False)
+        return card_attach(actor, name, (226.0, 0.0, -51.0))
+
+    def card_visibility(actor, first_frame, last_frame):
+        # bHidden=True hors carton. Les clés CONSTANT ne créent aucun fondu.
+        binding = ls.add_actors([actor])[0]
+        track = binding.add_track(unreal.MovieSceneVisibilityTrack)
+        track.set_property_name_and_path("bHidden", "bHidden")
+        section = track.add_section()
+        section.set_range(0, duration*fps)
+        channel = section.get_all_channels()[0]
+        channel.set_default(True)
+        channel.add_key(unreal.FrameNumber(first_frame), False,
+                        interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+        channel.add_key(unreal.FrameNumber(last_frame), True,
+                        interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+
     # A9 is hundreds of metres from the bridge: a brief optical push makes
     # the 25 m crossing legible without a rapid physical flight or a camera cut.
     # Keep the camera's actual original focal length outside this one beat.
@@ -5905,8 +5978,9 @@ def build_omniscient_edit():
     lens_section.set_range(0, duration*fps)
     lens_channel = lens_section.get_all_channels()[0]
     lens_channel.set_default(baseline_focal)
-    a9_start = sum(shot[1] for shot in shots[:5])*fps
-    a9_end = a9_start + shots[5][1]*fps
+    a9_index = next(i for i, shot in enumerate(shots) if shot[0] == "A9_PONT")
+    a9_start = sum(shot[1] for shot in shots[:a9_index])*fps
+    a9_end = a9_start + shots[a9_index][1]*fps
     for frame_number, focal_mm in (
         (0, baseline_focal),
         (a9_start, baseline_focal),
@@ -5985,13 +6059,34 @@ def build_omniscient_edit():
         boundary_pose = previous_pose
         previous_beat = (code, focus, offset)
         first_frame += count
+    # Créer les cartes après l'animation : les autres plans restent intacts.
+    card_manifest = []
+    for shot in manifest:
+        if shot["scene"] not in pause_cards:
+            continue
+        scene = shot["scene"]
+        title, explanation = pause_cards[scene]
+        first, last = shot["start_frame"], shot["end_frame"]
+        panel = card_background(scene + "_FOND")
+        heading = card_text(scene + "_TITRE", title, -40.0, 13.0,
+                            unreal.Color(255, 225, 155, 255))
+        note = card_text(scene + "_NOTE", explanation, -61.0, 9.5,
+                         unreal.Color(245, 245, 245, 255))
+        for overlay in (panel, heading, note):
+            card_visibility(overlay, first, last)
+        card_manifest.append(dict(scene=scene, title=title, explanation=explanation,
+                                  start_frame=first, end_frame_exclusive=last))
+    if len(card_manifest) != len(pause_cards):
+        raise RuntimeError("Cartons narratifs incomplets")
     add_human_performances(seq, performance_samples)
     if not a.get("human_audit_baked"):
         add_human_performances(a["sequence"], [(i, i/fps) for i in range(65*fps)])
         a["human_audit_baked"] = True
     unreal.EditorAssetLibrary.save_loaded_asset(seq)
     with open(os.path.join(RUN_SAVED_ROOT, "omniscient_edit.json"), "w", encoding="utf-8") as output:
-        json.dump(dict(status="CONTINUOUS_CAMERA_BLOCKING_NOT_FINAL", duration_seconds=duration, shots=manifest,
+        json.dump(dict(status="CONTINUOUS_CAMERA_BLOCKING_NOT_FINAL", duration_seconds=duration,
+                       shots=manifest, previz_pause_cards=card_manifest,
+                       note="Cartons d'aide à la lecture : uniquement pour la prévisualisation.",
                        camera_sections=1, join_steps_m=join_steps_m,
                        maximum_camera_speed_m_s=max_camera_step_m*fps,
                        collision_validation="pending; interpolated paths require visual and geometry review",
