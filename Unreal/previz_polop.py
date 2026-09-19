@@ -2031,8 +2031,8 @@ ANIM = {}
 ANIM["THOMAS_NORMAL"] = [
     # F07: a shared objective-time hesitation on the SAME path A.
     station_segment("A", 0.0, 1.975, normal_start_station, CONVERGENCE_STATION),
-    hold_segment(1.975, 2.25, point_with_real_terrain(CONVERGENCE_POINT)),
-    station_segment("A", 2.25, 3.0, CONVERGENCE_STATION, FAMILY_WAIT_STATION),
+    hold_segment(1.975, 2.75, point_with_real_terrain(CONVERGENCE_POINT)),
+    station_segment("A", 2.75, 3.0, CONVERGENCE_STATION, FAMILY_WAIT_STATION),
     custom_segment(3.0, 3.5, FAMILY_WAIT_POINT, NORMAL_FAMILY_POINT),
     hold_segment(3.5, GROUP_DEPART_AFTER_LEA, NORMAL_FAMILY_POINT),
     custom_segment(GROUP_DEPART_AFTER_LEA, FAMILY_REJOIN_TIME, NORMAL_FAMILY_POINT,
@@ -5699,8 +5699,8 @@ def character_performance(name, objective_time):
     # Decreasing objective time advances the inverse's own gait. No film state
     # or camera decision may alter this phase or remove a later occurrence.
     phase = objective_gait_phase(name, t) if moving else t*0.1
-    if name == "THOMAS_NORMAL" and 1.955 <= t <= 2.25:
-        # Hold normal Thomas facing Lea throughout the inverse approach and retreat.
+    if name == "THOMAS_NORMAL" and 1.955 <= t <= 3.0:
+        # Hold normal Thomas facing Lea through the inverse approach,\n        # collision and retreat; do not turn toward the double.
         # Body-facing cue only: separate neck motion requires a later rig pass.
         daughter = a["eval_actor"]("LEA", t)
         look_yaw = math.degrees(math.atan2(
