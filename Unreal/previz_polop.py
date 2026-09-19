@@ -7298,6 +7298,35 @@ def build_omniscient_edit():
         journal("f08_subtitle_sections_verified", **subtitle_audit)
     else:
         journal("f08_subtitles_intentionally_disabled", **subtitle_audit)
+    # F08: also export a frame-accurate SRT independent of the editor's
+    # Slate/UMG overlay. It is an alternate subtitle delivery artifact for a
+    # full-length movie export; a shortened editor recording needs its own
+    # edit-time synchronization and must NOT use this SRT unmodified.
+    if not F03_GEOMETRY_ONLY:
+        cues = []
+        for item in card_manifest:
+            cues.append((item["start_frame"], item["end_frame_exclusive"],
+                         item["title"]+"\\n"+item["explanation"]))
+        for item in opening_dialogue_manifest + later_dialogue_manifest:
+            cues.append((item["start_frame"], item["end_frame_exclusive"],
+                         item["text"]))
+        cues.sort(key=lambda entry: (entry[0], entry[1]))
+        def srt_timestamp(frame_number):
+            milliseconds = int(round(1000.0*frame_number/fps))
+            hh, remain = divmod(milliseconds, 3600000)
+            mm, remain = divmod(remain, 60000)
+            ss, ms = divmod(remain, 1000)
+            return "%02d:%02d:%02d,%03d" % (hh, mm, ss, ms)
+        srt_path = os.path.join(RUN_SAVED_ROOT, "polop_spectator_subtitles.srt")
+        with open(srt_path, "w", encoding="utf-8") as srt:
+            for index, (first, last, content) in enumerate(cues, 1):
+                srt.write("%d\\n%s --> %s\\n%s\\n\\n" %
+                          (index, srt_timestamp(first), srt_timestamp(last),
+                           content.replace("\\n", "\\n")))
+        subtitle_audit["srt_path"] = srt_path
+        subtitle_audit["srt_cues"] = len(cues)
+        journal("f08_subtitle_srt_exported", path=srt_path, cues=len(cues),
+                limitation="For full 372-second film only; no automatic MP4 burn-in.")
     if not a.get("human_audit_baked"):
         add_human_performances(a["sequence"], [(i, i/fps) for i in range(65*fps)])
         a["human_audit_baked"] = True
@@ -7774,8 +7803,15 @@ def main():
             "restart Unreal Engine, and rerun POLOP. "
             "Required native UMG/Sequencer types unavailable: " + ", ".join(missing))
     if F03_GEOMETRY_ONLY:
-        unreal.log("POLOP F03: geometry-only run; no UMG subtitles generated. "
-                   "The 17 pauses remain but their texts are omitted.")
+        unreal.log_warning(
+            "POLOP F03_GEOMETRY_ONLY=1: THIS RUN WILL HAVE NO SUBTITLES. "
+            "For cave + visible narrative text clear POLOP_F03_GEOMETRY_ONLY "
+            "in the Unreal Python console and run FAST_CAMERA_ONLY=False.")
+    else:
+        unreal.log(
+            "POLOP F08: full spectator subtitle build requested. "
+            "Check the Sequencer subtitle track AND the screen-space overlay "
+            "in the same mode used for video capture.")
     journal("start", script=SOURCE_SCRIPT_PATH, engine=unreal.SystemLibrary.get_engine_version(),
             source_map=SOURCE_MAP, work_map=WORK_MAP,
             source_sha256=hashlib.sha256(open(SOURCE_SCRIPT_PATH, "rb").read()).hexdigest())
