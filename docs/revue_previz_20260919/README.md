@@ -1,6 +1,8 @@
+> **Suivi actif :** les fiches F01–F09 ont été intégralement transférées dans les [issues #50 à #58](https://github.com/rafa-create/Polop/issues?q=is%3Aissue+is%3Aopen+%22Revue+pr%C3%A9viz%22). Les références historiques à une « fiche » ci-dessous désignent désormais l'issue correspondante. Le commit de préviz de référence reste à choisir par l'utilisateur ; ne pas engager de correction sur la seule base de ce registre.
+
 # LA BOUCLE — revue de la prévisualisation du 19 septembre 2026
 
-**Statut : registre de revue et correctifs successifs ; fiches non validées, F03 en pause.** Revue de la capture utilisateur `2026-09-19_15h33_22.mp4` (enregistrement écran de **105,6 secondes**, avec une lecture accélérée/consultation du montage : les temps ci-dessous repèrent **la vidéo envoyée**, non les heures du récit ni les secondes du film). Elle montre l'ancien rendu **avant** la modification de sous-titres en anglais/UMG, qui sera testée plus tard.
+**Statut : registre historique de revue et correctifs successifs ; suivi actif dans les issues #50 à #58.** Revue de la capture utilisateur `2026-09-19_15h33_22.mp4` (enregistrement écran de **105,6 secondes**, avec une lecture accélérée/consultation du montage : les temps ci-dessous repèrent **la vidéo envoyée**, non les heures du récit ni les secondes du film). Elle montre l'ancien rendu **avant** la modification de sous-titres en anglais/UMG, qui sera testée plus tard.
 
 **Autorité narrative :** `Script_POLOP.md`. Le script Unreal reste un blockout : distinguer une contradiction à l'image d'un accessoire, dialogue, effet ou scène **pas encore réalisé**. Ne pas déclarer une erreur de trajectoire physique à partir d'une seule capture. Les figures et les annotations de préviz ne sont pas censées être dans le film final.
 
@@ -10,11 +12,11 @@
 
 **Bilan visuel :** les trois personnages et leurs itinéraires deviennent globalement suivables, le mousqueton B bénéficie d'un rapprochement lisible et la seconde lecture revient bien à la famille. **Les longues marches avec mouvements identiques, les 17 pauses (106 s des 372 s), le gros volume de l'ancrage, la recherche/grotte occultée et surtout le rocher couvrant la collision freinent fortement le visionnage.** Un sous-titre de la partie inversée apparaît sur l'image initiale de la capture ; contrôler le démarrage/bouclage UMG. F03 demeure **en pause** malgré la persistance de l'occultation dans cette vidéo.
 
-**Plan d'attaque recommandé :** (1) vérifier/corriger le plan **F07** de collision pour rendre l'accident visible depuis un angle latéral, sans toucher F03 ; (2) rendre la remise du mousqueton **F06** corporelle et claire avant la traversée ; (3) varier l'action et les regards sur la longue descente inversée **F05** ; (4) travailler le trio, la boîte et les émotions **F01**, ainsi que la lisibilité du pont **F02** ; (5) seulement ensuite proposer à l'utilisateur une **variante de rythme écran** qui traite les pauses redondantes et les marches répétées sans bouleverser les 17 repères ou les heures objectives, puis retester F08 sur un lancement froid. Le dossier **[F09 — Rythme et dynamisme](F09_RYTHME_DYNAMIQUE.md)** contient les repères vidéo détaillés et la méthode de remontage.
+**Plan d'attaque recommandé :** (1) vérifier/corriger le plan **F07** de collision pour rendre l'accident visible depuis un angle latéral, sans toucher F03 ; (2) rendre la remise du mousqueton **F06** corporelle et claire avant la traversée ; (3) varier l'action et les regards sur la longue descente inversée **F05** ; (4) travailler le trio, la boîte et les émotions **F01**, ainsi que la lisibilité du pont **F02** ; (5) seulement ensuite proposer à l'utilisateur une **variante de rythme écran** qui traite les pauses redondantes et les marches répétées sans bouleverser les 17 repères ou les heures objectives, puis retester F08 sur un lancement froid. Le dossier **[F09 — Rythme et dynamisme](https://github.com/rafa-create/Polop/issues/58)** contient les repères vidéo détaillés et la méthode de remontage.
 
 **Point à clarifier avec l'utilisateur :** « animation de vote » n'identifie pas de façon certaine un geste dans la vidéo ; ne pas supposer qu'il s'agit de la petite boîte, de la marche, ou d'une autre action tant que le terme n'a pas été confirmé.
 
-**Exécution engagée — P1 / F07, 19/09/2026 :** une première correction ciblée de la caméra 17 h, un léger jeu d'impact des mannequins et un diagnostic d'occultation ont été publiés dans `Unreal/previz_polop.py` après « go 1 ». **Non testés dans Unreal** : le choc, l'angle mort réel pour Thomas inversé et la continuité à l'image restent à vérifier. Voir la section « Passe 1 F07 » de [F07](F07_CONVERGENCE_ET_FIN.md). Les priorités F06/F05, la révision des longueurs F09 et F03 ne sont pas lancées.
+**Exécution engagée — P1 / F07, 19/09/2026 :** une première correction ciblée de la caméra 17 h, un léger jeu d'impact des mannequins et un diagnostic d'occultation ont été publiés dans `Unreal/previz_polop.py` après « go 1 ». **Non testés dans Unreal** : le choc, l'angle mort réel pour Thomas inversé et la continuité à l'image restent à vérifier. Voir la section « Passe 1 F07 » de [F07](https://github.com/rafa-create/Polop/issues/56). Les priorités F06/F05, la révision des longueurs F09 et F03 ne sont pas lancées.
 
 **Statut de validation :** toutes les fiches restent ouvertes ; les retouches de rythme, d'acting et d'objets sont des **propositions**, non des modifications déjà réalisées dans Unreal. La Bible et `Unreal/previz_polop.py` n'ont pas été modifiés pendant cette revue. **F03 et sa fiche restent inchangées, gelées sur demande.**
 
@@ -35,19 +37,19 @@
 
 **Mode de contrôle courant :** régénérer complètement avec `FAST_CAMERA_ONLY=False` et `SUBTITLE_REVIEW_MODE=False` pour vérifier ensemble trajets, sous-titres et nouvel état du mousqueton. Le mode rapide ne reconstruit ni casting ni texte. En cas de régression, demander une capture ciblée et le premier message d'erreur du **même run** avant une nouvelle correction. Les sept fiches mises à jour décrivent le travail encore ouvert ; F03 demeure inchangée et gelée. La clôture d'une fiche exige une confirmation explicite de l'utilisateur après visionnage.
 
-## Fiches à traiter séparément
+## Issues de suivi à traiter séparément
 
 | Fiche | Question à résoudre | Repère vidéo |
 | --- | --- | --- |
-| [F01](F01_DEPART_FAMILLE.md) | Ouvrir sur la famille, préserver l'ouverture rivière et la fin émotionnelle | 0–40 s, 99–104 s |
-| [F02](F02_GEOGRAPHIE_PONT_FLANC.md) | Comprendre le pont, A, B et le flanc sans explication plaquée | 10–20 s, 47–54 s, 89–94 s |
-| [F03](F03_DISPARITION_TERRASSE_PRECIPICE.md) | Rendre l'absence de Thomas physiquement convaincante | 54–65 s |
-| [F04](F04_REVELATION_GROTTE_ANNEAU.md) | Montrer la grotte et le contact sans noir inexpliqué ni dévoiler le double trop tôt | 65–75 s |
-| [F05](F05_TEMPS_INVERSE_SENSATIONS.md) | Faire exister le temps inversé à l'image, pas seulement dans les cartons | 75–90 s |
-| [F06](F06_MOUSQUETON_PONT.md) | Retrouver le geste et le trajet du pont, préserver la révélation | 90–95 s et A1–A2 |
-| [F07](F07_CONVERGENCE_ET_FIN.md) | Rendre la rencontre des deux Thomas et la boucle lisibles sans montrer de fusion | 95–104 s |
-| [F08](F08_CARTONS_DIVULGATIONS.md) | Contrôler l'information narrative contenue dans les cartons (pas leur netteté) | 0–4, 34–36, 86–96 s |
-| [F09](F09_RYTHME_DYNAMIQUE.md) | Rendre le plan continu dynamique, supprimer les répétitions sans déplacer les événements objectifs | Nouvelle vidéo 18 h 56 : 00:45–01:03, 02:00–02:36, 04:00–04:42, 05:27–05:42 |
+| [F01](https://github.com/rafa-create/Polop/issues/50) | Ouvrir sur la famille, préserver l'ouverture rivière et la fin émotionnelle | 0–40 s, 99–104 s |
+| [F02](https://github.com/rafa-create/Polop/issues/51) | Comprendre le pont, A, B et le flanc sans explication plaquée | 10–20 s, 47–54 s, 89–94 s |
+| [F03](https://github.com/rafa-create/Polop/issues/52) | Rendre l'absence de Thomas physiquement convaincante | 54–65 s |
+| [F04](https://github.com/rafa-create/Polop/issues/53) | Montrer la grotte et le contact sans noir inexpliqué ni dévoiler le double trop tôt | 65–75 s |
+| [F05](https://github.com/rafa-create/Polop/issues/54) | Faire exister le temps inversé à l'image, pas seulement dans les cartons | 75–90 s |
+| [F06](https://github.com/rafa-create/Polop/issues/55) | Retrouver le geste et le trajet du pont, préserver la révélation | 90–95 s et A1–A2 |
+| [F07](https://github.com/rafa-create/Polop/issues/56) | Rendre la rencontre des deux Thomas et la boucle lisibles sans montrer de fusion | 95–104 s |
+| [F08](https://github.com/rafa-create/Polop/issues/57) | Contrôler l'information narrative contenue dans les cartons (pas leur netteté) | 0–4, 34–36, 86–96 s |
+| [F09](https://github.com/rafa-create/Polop/issues/58) | Rendre le plan continu dynamique, supprimer les répétitions sans déplacer les événements objectifs | Nouvelle vidéo 18 h 56 : 00:45–01:03, 02:00–02:36, 04:00–04:42, 05:27–05:42 |
 
 ## Méthode de validation
 
