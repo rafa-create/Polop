@@ -6589,34 +6589,37 @@ def build_omniscient_edit():
 
     # F03: keep the lens in the traversable gallery, not at the old entrance.
     def f03_corridor_pose(code, t):
+        """F03 camera pose; never abort film assembly on an editorial handover.
+
+        A15_A16 is a CAVE-focus reveal shot: its pose is needed as the
+        preceding shot's handover boundary, even though the actual reveal
+        frames are built separately by f03_reveal_pose(). A RuntimeError
+        here aborts build_omniscient_edit before the complete film sequence
+        and caption tracks can be delivered; it does NOT disable animation
+        or subtitles. See issue #59 and the A15_A16 failure log.
+        """
         normal = a["eval_actor"]("THOMAS_NORMAL", t)
         inverse = a["eval_actor"]("THOMAS_INVERSE", t)
-        entry = a["CAVE_ENTRY_POINT"]
-        contact = a["CAVE_CONTACT_POINT"]
-        bend = a["CAVE_INNER_BEND_POINT"]
-        beam = a["CAVE_SECOND_BEAM_POINT"]
-        exit_b = a["CAVE_EXIT_B_POINT"]
-
-        def lens(p, q, u):
-            x = p[0]+(q[0]-p[0])*u
-            y = p[1]+(q[1]-p[1])*u
-            return (x, y, a["terrain_z_m"](x, y)+1.70)
+        # Use the V05 animation export's supported cave coordinates. The
+        # former corridor-camera patch referenced CAVE_CONTACT_POINT,
+        # CAVE_INNER_BEND_POINT, CAVE_SECOND_BEAM_POINT and CAVE_EXIT_B_POINT
+        # through a[], but those keys are not exported by _ANIMATION.
+        cave_point = a["cave_ground_point"]
 
         def aim(p):
             return (p[0], p[1], p[2]+1.25)
 
+        if code == "A15_A16":
+            return cave_point(1.0, 0.0, 1.85), aim(normal)
         if code in ("A17", "PAUSE_CONTACT"):
-            return lens(entry, contact, 0.62), aim(normal)
+            return cave_point(3.0, 0.0, 1.75), aim(normal)
         if code == "PAUSE_REVELATION":
-            return lens(entry, contact, 0.32), aim(normal)
+            return cave_point(1.0, 0.0, 1.85), aim(normal)
         if code in ("B1", "PAUSE_OBSCURITE"):
-            if t >= 61.15:
-                return lens(entry, contact, 0.62), aim(inverse)
-            if t >= 60.8:
-                return lens(contact, bend, 0.35), aim(inverse)
-            if t >= 60.35:
-                return lens(bend, beam, 0.35), aim(inverse)
-            return lens(beam, exit_b, 0.35), aim(inverse)
+            entry = a["CAVE_ENTRY_POINT"]
+            along = ((inverse[0]-entry[0])*a["CAVE_UX"] +
+                     (inverse[1]-entry[1])*a["CAVE_UY"])
+            return cave_point(min(4.8, along+1.5), -1.3, 1.75), aim(inverse)
         raise RuntimeError("Unexpected F03 cave shot: " + code)
 
     def desired_pose(code, focus, offset, t):
