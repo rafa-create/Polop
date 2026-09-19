@@ -6537,40 +6537,47 @@ def build_omniscient_edit():
                         raise RuntimeError("F03 A15 lens looks through %s at %.3f" %
                                            (label, progress))
 
-    # F03: actual UE mesh tracing in three dimensions. The old XY elliptical
-    # masks can miss a slab above the lens or a diagonal ray through a side
-    # rock. Run this AFTER the Landscape and all cave meshes are in the world.
-    # Keep the blind-spur meshes: the women's sightline is an independent test.
-    def f03_trace_scene(start, end, label, progress, radius_m=0.0):
-        pos = unreal.Vector(*(float(v)*100.0 for v in start))
-        dest = unreal.Vector(*(float(v)*100.0 for v in end))
-        # Query known world geometry rather than relying on collision presets
-        # of spawned BasicShapes. An actual trace catches the Landscape and
-        # collision-enabled meshes; audit the remaining candidate meshes with
-        # their component bounds below if their trace response is disabled.
-        trace_type = (unreal.TraceTypeQuery.TRACE_TYPE_QUERY1)
-        hit = unreal.SystemLibrary.line_trace_single(
-            world, pos, dest, trace_type, True, [],
-            unreal.DrawDebugTrace.NONE, True)
-        if hit:
-            data = hit.to_tuple()
-            blocking = bool(data[0])
-            actor = data[9]
-            if blocking and actor is not None:
-                name = actor.get_actor_label()
-                raise RuntimeError(
-                    "F03 A15 %s collides with %s at progress %.3f" %
-                    (label, name, progress))
-
+    # F03: 3D traces against generated cave/static geometry. Keep the
+    # physical blind-spur intact: never hide it just to clear the camera.
     def f03_mesh_clearance(eye, target, progress):
-        # Ray length and mesh collision are evaluated in actual Unreal units.
-        # Avoid tracing through Thomas himself: only the approach to the mouth
-        # and the near field of the camera must be empty of static geometry.
-        if progress >= 0.28:
-            f03_trace_scene(eye, target, "look_ray", progress)
-        if progress >= 0.12:
-            f03_trace_scene(eye, (eye[0], eye[1], eye[2]-0.80),
-                            "near_floor", progress)
+        query = (unreal.TraceTypeQuery.ECC_VISIBILITY
+                 if hasattr(unreal.TraceTypeQuery, "ECC_VISIBILITY")
+                 else unreal.TraceTypeQuery.TRACE_TYPE_QUERY1)
+        ignored = [actor for actor in actors.get_all_level_actors()
+                   if actor.get_actor_label().startswith((
+                       "PZ_ANIM_HUMAN_", "PZ_ANIM_EVENT_", "PZ_ANIM_CAM_",
+                       "PZ_ANIM_F04_RING_", "PZ_ANIM_F01_SMALL_BOX"))]
+        def trace(start, end, label):
+            # Ignore the animated cast and review cameras, NOT landscape,
+            # cave shell or rock meshes. This checks real Unreal collision
+            # rather than the earlier XY-only approximation.
+            result = unreal.SystemLibrary.line_trace_single(
+                world,
+                unreal.Vector(*(float(v)*100.0 for v in start)),
+                unreal.Vector(*(float(v)*100.0 for v in end)),
+                query, True, ignored, unreal.DrawDebugTrace.NONE, True)
+            if not result:
+                return
+            data = result.to_tuple()
+            if not data[0] or data[9] is None:
+                return
+            blocked = data[9].get_actor_label()
+            if blocked.startswith(("PZ_ANIM_HUMAN_", "PZ_ANIM_EVENT_")):
+                return
+            raise RuntimeError(
+                "F03 A15 %s obstructed by %s at progress %.3f" %
+                (label, blocked, progress))
+        # Trace a near-lens forward ray, not all the way to Thomas (who may
+        # legitimately be behind a cave wall until the reveal is completed).
+        # Also check camera clearance above the real terrain.
+        if progress >= 0.54:
+            direction = tuple(target[i]-eye[i] for i in range(3))
+            length = math.dist(eye, target)
+            if length > 0.05:
+                near = tuple(eye[i]+direction[i]*min(1.1/length, 1.0)
+                             for i in range(3))
+                trace(eye, near, "lens_forward")
+            trace(eye, (eye[0], eye[1], eye[2]-0.65), "lens_floor")
 
     # F01 camera-only pass: no actor movement or retiming. At t=0 Lea
     # already walks ahead of Thomas/Eva in the existing validated blocking.
@@ -6995,6 +7002,7 @@ def build_omniscient_edit():
                 # Former generic handover moved the lens through opaque rock.
                 eye, target = f03_reveal_pose(u, t, boundary_pose)
                 f03_reveal_clearance(eye, target, u)
+                f03_mesh_clearance(eye, target, u)
                 # Avoid frames of opaque Landscape under the lens. The
                 # previous XY rock test could not detect this failure.
                 if u >= 0.60 and eye[2] < a["terrain_z_m"](eye[0], eye[1]) + 1.25:
