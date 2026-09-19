@@ -6593,7 +6593,6 @@ def build_omniscient_edit():
         limit = min(110.0, 100.0*dist)
         if limit <= 0.01:
             return
-        end_cm = ue.Vector(*(v*100.0 for v in eye))
         end_cm = ue.Vector(
             eye_cm.x+(diff[0]/dist)*limit,
             eye_cm.y+(diff[1]/dist)*limit,
