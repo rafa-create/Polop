@@ -6055,6 +6055,52 @@ def build_omniscient_edit():
         ),
     }
 
+    # F03: continuously move around the physical outcrop before revealing
+    # the mouth. Only A15 may use this angle; A10-A14 stay on the women side.
+    def f03_reveal_pose(progress, objective_t, start):
+        entry = a["CAVE_ENTRY_POINT"]
+        ledge = a["SEARCH_LEDGE_CENTER"]
+        terrain = a["terrain_z_m"]
+        thomas = a["eval_actor"]("THOMAS_NORMAL", objective_t)
+        stages = (
+            (0.0, start[0], start[1]),
+            (0.24, (entry[0]-1.3, entry[1]-8.0, ledge[2]+4.3),
+             (entry[0]-4.0, entry[1]-2.8, terrain(entry[0]-4.0, entry[1]-2.8)+1.8)),
+            (0.52, (entry[0]+0.15, entry[1]-4.4, ledge[2]+3.2),
+             (entry[0], entry[1], terrain(entry[0], entry[1])+1.45)),
+            (0.75, (entry[0]-0.12, entry[1]-1.2,
+                    terrain(entry[0]-0.12, entry[1]-1.2)+1.85),
+             a["cave_ground_point"](2.4, 0.0, 1.45)),
+            (1.0, a["cave_ground_point"](1.0, 0.0, 1.85),
+             (thomas[0], thomas[1], thomas[2]+1.1))
+        )
+        for k in range(len(stages)-1):
+            start_u, start_eye, start_target = stages[k]
+            end_u, end_eye, end_target = stages[k+1]
+            if progress <= end_u or k == len(stages)-2:
+                alpha = max(0.0, min(1.0, (progress-start_u)/(end_u-start_u)))
+                alpha = alpha*alpha*(3.0-2.0*alpha)
+                eye = tuple(start_eye[j]+(end_eye[j]-start_eye[j])*alpha for j in range(3))
+                target = tuple(start_target[j]+(end_target[j]-start_target[j])*alpha for j in range(3))
+                return eye, target
+        raise RuntimeError("F03: invalid camera reveal progress")
+
+    def f03_reveal_clearance(eye, progress):
+        entry = a["CAVE_ENTRY_POINT"]
+        masks = [
+            (entry[0]-5.0, entry[1]+0.6, 2.5, 1.3, "mountain wall"),
+            (entry[0]-4.0, entry[1]-2.8, 3.0, 2.1, "blind spur")
+        ]
+        for side, label in ((2.2, "left entrance"), (-2.2, "right entrance")):
+            masks.append((
+                entry[0]-0.15*a["CAVE_UX"]+side*a["CAVE_PX"],
+                entry[1]-0.15*a["CAVE_UY"]+side*a["CAVE_PY"],
+                1.65, 1.35, label))
+        for cx, cy, rx, ry, label in masks:
+            if math.hypot((eye[0]-cx)/rx, (eye[1]-cy)/ry) < 1.04:
+                raise RuntimeError("F03 A15 camera intersects %s at %.3f" %
+                                   (label, progress))
+
     def desired_pose(code, focus, offset, t):
         if code == "PAUSE_RECHERCHE":
             code = "A12_A13"
@@ -6096,7 +6142,8 @@ def build_omniscient_edit():
                          (target[1]-entry[1])*a["CAVE_UY"])
                 eye = a["cave_ground_point"](min(4.8, along+1.5), -1.3, 1.75)
             else:
-                eye = a["cave_ground_point"](0.4, -0.8, 1.85)
+                # Previous camera side=-.8 intersected the right entry rock.
+                eye = a["cave_ground_point"](1.0, 0.0, 1.85)
         else:
             if focus == "GEOGRAPHY":
                 target = (1320.0, 220.0, 120.0)
@@ -6239,12 +6286,15 @@ def build_omniscient_edit():
                 old_code, old_focus, old_offset = previous_beat
                 moving_origin = desired_pose(old_code, old_focus, old_offset, t)
             handover_seconds = seconds if code in ("A5_GEOGRAPHIE", "B9_ELOIGNEMENT") else min(3.0, seconds)
-            eye, target = blend_camera_pose(moving_origin, desired_pose(code, focus, offset, t),
-                                            u*seconds/handover_seconds)
-            # The sampled Landscape is continuous, so this clearance floor does
-            # not introduce cuts. Cave walls/roof still need separate validation.
-            if focus != "CAVE" and (previous_beat is None or previous_beat[1] != "CAVE"):
-                eye = (eye[0], eye[1], max(eye[2], a["terrain_z_m"](eye[0], eye[1])+2.0))
+            if code == "A15_A16":
+                # Former generic handover moved the lens through opaque rock.
+                eye, target = f03_reveal_pose(u, t, boundary_pose)
+                f03_reveal_clearance(eye, u)
+            else:
+                eye, target = blend_camera_pose(moving_origin, desired_pose(code, focus, offset, t),
+                                                u*seconds/handover_seconds)
+                if focus != "CAVE" and (previous_beat is None or previous_beat[1] != "CAVE"):
+                    eye = (eye[0], eye[1], max(eye[2], a["terrain_z_m"](eye[0], eye[1])+2.0))
             if previous_pose is not None:
                 step = math.dist(previous_pose[0], eye)
                 max_camera_step_m = max(max_camera_step_m, step)
