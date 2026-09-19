@@ -1264,6 +1264,21 @@ CAVE_CONTACT_POINT = (
     terrain_z_m(high_x + 19.0, high_y + 6.0) + 0.8
 )
 
+# Sortie vers B : le second faisceau reste derriere le coude, hors de
+# l'axe de regard de Thomas normal depuis l'anneau.
+CAVE_INNER_BEND_POINT = (
+    high_x + 19.0, high_y + 14.0,
+    terrain_z_m(high_x + 19.0, high_y + 14.0) + 0.3
+)
+CAVE_SECOND_BEAM_POINT = (
+    high_x + 7.0, high_y + 24.0,
+    terrain_z_m(high_x + 7.0, high_y + 24.0) + 0.3
+)
+CAVE_EXIT_B_POINT = (
+    high_x - 12.0, high_y + 24.0,
+    terrain_z_m(high_x - 12.0, high_y + 24.0)
+)
+
 CAVE_GUARD_POINT = route_point_at_station(
     "A",
     max(0.0, LENGTH["A"] - 8.0)
@@ -1730,17 +1745,57 @@ spawn_box(
     _cave_rot
 )
 
-# Fond derrière le contact : jamais entre une caméra de contrôle et le contact.
-_back_x, _back_y = cave_xy(_CAVE_AXIS_LEN + 1.0, 0.0)
-_back_z = terrain_z_m(_back_x, _back_y) + 1.65
-spawn_box(
-    "CAVE_REVIEW_BACK",
-    V(_back_x*100, _back_y*100, _back_z*100),
-    (28, 470, 330),
-    MAT_CAVE,
-    "MicroGeo/CaverneV05",
-    _cave_rot
+# Le fond n'est plus ferme : la galerie continue apres l'anneau vers B.
+# Trois segments successifs constituent un blockout traversant, sans mur
+# frontal a la seconde ouverture. Le coude rocheux masque le second faisceau
+# depuis la premiere partie de la grotte.
+CAVE_B_GALLERY = (
+    CAVE_CONTACT_POINT, CAVE_INNER_BEND_POINT,
+    CAVE_SECOND_BEAM_POINT, CAVE_EXIT_B_POINT
 )
+for _i, (_p, _q) in enumerate(zip(CAVE_B_GALLERY, CAVE_B_GALLERY[1:]), 1):
+    _dx, _dy = _q[0]-_p[0], _q[1]-_p[1]
+    _length = math.hypot(_dx, _dy)
+    _yaw = math.degrees(math.atan2(_dy, _dx))
+    _mx, _my = (_p[0]+_q[0])*0.5, (_p[1]+_q[1])*0.5
+    _mz = (_p[2]+_q[2])*0.5
+    _nx, _ny = -_dy/_length, _dx/_length
+    for _side, _label in ((-2.6, "R"), (2.6, "L")):
+        spawn_box(
+            "CAVE_B_GALLERY_%02d_WALL_%s" % (_i, _label),
+            V((_mx+_nx*_side)*100, (_my+_ny*_side)*100, (_mz+1.55)*100),
+            (_length*100, 42, 310), MAT_CAVE,
+            "MicroGeo/CaverneV05/VersantB",
+            unreal.Rotator(0, _yaw, 0)
+        )
+    spawn_box(
+        "CAVE_B_GALLERY_%02d_ROOF" % _i,
+        V(_mx*100, _my*100, (_mz+3.20)*100),
+        (_length*100, 550, 24), MAT_CAVE,
+        "MicroGeo/CaverneV05/VersantB",
+        unreal.Rotator(0, _yaw, 0)
+    )
+# Marqueur temporaire du second faisceau, a remplacer par une lumiere naturelle
+# calibree apres verification du rendu dans Unreal.
+spawn_sphere(
+    "CAVE_SECOND_BEAM_MARKER",
+    V(CAVE_SECOND_BEAM_POINT[0]*100, CAVE_SECOND_BEAM_POINT[1]*100,
+      CAVE_SECOND_BEAM_POINT[2]*100+180),
+    16, MAT_EVENT, "MicroGeo/CaverneV05/VersantB"
+)
+# Deux levres rocheuses signalent la grande ouverture sans l'obstruer.
+_exit_dx = CAVE_EXIT_B_POINT[0]-CAVE_SECOND_BEAM_POINT[0]
+_exit_dy = CAVE_EXIT_B_POINT[1]-CAVE_SECOND_BEAM_POINT[1]
+_exit_len = math.hypot(_exit_dx, _exit_dy)
+for _side, _label in ((-3.8, "R"), (3.8, "L")):
+    spawn_rock(
+        "CAVE_B_EXIT_LIP_"+_label,
+        CAVE_EXIT_B_POINT[0]-_exit_dy/_exit_len*_side,
+        CAVE_EXIT_B_POINT[1]+_exit_dx/_exit_len*_side,
+        CAVE_EXIT_B_POINT[2]+1.7,
+        (1.1, 1.1, 2.7), MAT_ROCK_READABLE,
+        "MicroGeo/CaverneV05/VersantB"
+    )
 
 # F03: small connected mountain-side boundary, not a camera-only mask.
 # Short low volumes visually close the toilet nook on the north side
@@ -2198,46 +2253,30 @@ ANIM["THOMAS_INVERSE"] = [
         B5_STATION,
         0.0
     ),
-    # F03 : inverse de l'acces de Thomas normal, dans le TEMPS OBJECTIF.
-    # En temps propre, l'inverse sort du coude, puis rejoint A sans etre
-    # vu d'Eva et Lea, qui sont deja en train de redescendre.
+    # En temps propre : apres le contact, l'inverse suit le second faisceau,
+    # sort directement sur B et ne revient jamais sur la plateforme A.
+    # Le Sequencer est en temps OBJECTIF : les points se lisent B -> anneau.
     custom_segment(
-        60.2, 60.26,
-        point_with_real_terrain(HIGH_POINT),
-        point_with_real_terrain(CAVE_ACCESS_POINT)
+        60.2, 60.35,
+        point_with_real_terrain(route_point_at_station("B", 0.0)),
+        point_with_real_terrain(CAVE_EXIT_B_POINT)
     ),
     custom_segment(
-        60.26, 60.32,
-        point_with_real_terrain(CAVE_ACCESS_POINT),
-        point_with_real_terrain(CAVE_LEDGE_TURN_POINT)
+        60.35, 60.8,
+        point_with_real_terrain(CAVE_EXIT_B_POINT),
+        CAVE_SECOND_BEAM_POINT
     ),
     custom_segment(
-        60.32, 60.4,
-        point_with_real_terrain(CAVE_LEDGE_TURN_POINT),
-        point_with_real_terrain(CAVE_LEDGE_PASS_POINT)
+        60.8, 61.15,
+        CAVE_SECOND_BEAM_POINT,
+        CAVE_INNER_BEND_POINT
     ),
     custom_segment(
-        60.4, 60.48,
-        point_with_real_terrain(CAVE_LEDGE_PASS_POINT),
-        point_with_real_terrain(CAVE_ZONE_POINT)
-    ),
-    custom_segment(
-        60.48, 60.6,
-        point_with_real_terrain(CAVE_ZONE_POINT),
-        point_with_real_terrain(CAVE_ENTRY_POINT)
-    ),
-    custom_segment(
-        60.6,
-        61.4,
-        point_with_real_terrain(CAVE_ENTRY_POINT),
-        CAVE_DARK_SLOT
-    ),
-    custom_segment(
-        61.4,
-        62.0,
-        CAVE_DARK_SLOT,
+        61.15, 61.5,
+        CAVE_INNER_BEND_POINT,
         CAVE_CONTACT_POINT
     ),
+    hold_segment(61.5, 62.0, CAVE_CONTACT_POINT),
 ]
 
 def _segment_final_point(segment):
