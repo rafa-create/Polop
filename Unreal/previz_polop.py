@@ -5946,7 +5946,7 @@ def build_cast_closure_probe():
     return sequence
 
 
-def update_existing_omniscient_camera(shots, desired_pose, reveal_pose, reveal_clearance):
+def update_existing_omniscient_camera(shots, desired_pose, reveal_pose, reveal_clearance, opening_pose):
     """Fast pass: replace ONLY the existing camera's transform keys.
 
     Keep the original film sequence, all cast tracks/poses, 17 pauses,
@@ -6005,7 +6005,7 @@ def update_existing_omniscient_camera(shots, desired_pose, reveal_pose, reveal_c
                         raise RuntimeError(
                             "F03 A15 camera below terrain clearance at %.3f" % u)
                 else:
-                    requested = (f01_opening_pose(code, u, t)
+                    requested = (opening_pose(code, u, t)
                                  if code in ("PAUSE_INTRO", "A1")
                                  else desired_pose(code, focus, offset, t))
                     eye, target = blend_camera_pose(
@@ -6464,7 +6464,8 @@ def build_omniscient_edit():
     duration = sum(s[1] for s in shots)
     if FAST_CAMERA_ONLY:
         return update_existing_omniscient_camera(
-            shots, desired_pose, f03_reveal_pose, f03_reveal_clearance)
+            shots, desired_pose, f03_reveal_pose, f03_reveal_clearance,
+            f01_opening_pose)
     sequence_name = "LS_POLOP_OMNISCIENT"
     if unreal.EditorAssetLibrary.does_asset_exist(RUN_ASSET_ROOT + "/Sequences/" + sequence_name):
         sequence_name += "_" + datetime.datetime.now().strftime("%H%M%S_%f")
