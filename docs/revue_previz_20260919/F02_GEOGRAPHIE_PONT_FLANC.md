@@ -21,3 +21,7 @@ D'abord contrôler les coordonnées/raccords réels des quatre segments et les p
 ## Critères de validation
 
 Un observateur nouveau peut tracer verbalement le trajet de Léa (A→B, puis flanc B→A) et de Thomas inversé (B→pont→A) en s'appuyant sur les images, avant de lire les cartons. Aucun personnage ne traverse la roche ni ne change de rive sans trajet visible; pont et flanc restent matériellement distincts.
+
+## Point de contrôle de la capture du 19/09/2026 à 17 h 28
+
+Environ **36–52 s de l'enregistrement**, le trio se lit mieux près du pont et sur le chemin. Cela confirme seulement une amélioration de la **visibilité des personnages**, pas de la compréhension des deux rives ni de l'alternative pont court / flanc long. Aucune preuve nouvelle n'autorise à valider la continuité A → B → flanc → A. Conserver F02 ouverte, sans modification du relief ou des trajectoires. Pour la prochaine revue dédiée, recueillir le plan où Léa traverse le pont et celui qui montre la connexion entre les deux voies; le seul grand plan familial ne suffit pas.
