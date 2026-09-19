@@ -4,6 +4,23 @@
 
 **Autorité narrative :** `Script_POLOP.md`. Le script Unreal reste un blockout : distinguer une contradiction à l'image d'un accessoire, dialogue, effet ou scène **pas encore réalisé**. Ne pas déclarer une erreur de trajectoire physique à partir d'une seule capture. Les figures et les annotations de préviz ne sont pas censées être dans le film final.
 
+## État courant — après les correctifs de caméra, convergence, mousqueton et sous-titres (19/09/2026)
+
+**Nouveau run Unreal en cours de validation par l'utilisateur ; aucun des éléments ci-dessous n'est réputé validé à l'image.** Les repères vidéo datés plus bas proviennent des enregistrements *antérieurs* aux derniers changements et servent d'historique, pas de constat sur le rendu à venir. `Script_POLOP.md` reste la Bible narrative ; les numéros de lignes cités dans les anciennes fiches peuvent être décalés depuis sa mise à jour A2/B6–B9.
+
+| Fiche | Déjà préparé / publié dans le code | Travail restant avant validation |
+| --- | --- | --- |
+| **F01** | Aller-retour continu de caméra famille ↔ Éva/Thomas ↔ Léa, dialogues A1/A2/B9, cadrage B9/dézoom | Tester le véritable début et la fin dans la nouvelle vidéo ; A0 rivière, geste de la boîte, acting et musique finale non construits. |
+| **F02** | Trajets A/B/pont/flanc et passe de cadrage du pont ; B6_REPAIR sur la rive B avant la traversée | Vérifier rives, creux, culées, durée du flanc, et compréhension spatiale **sans** les cartons. |
+| **F03** | Corrections anciennes de cavité/terrasse publiées | **EN PAUSE SUR DEMANDE** : aucune reprise du travail A12–A15 ni validation tant que l'utilisateur ne le décide pas. |
+| **F04** | Repères textuels 18 h et perceptions ; proxies des deux occurrences | Créer/tester anneau et contact, éclairage/perceptions de la grotte ; ne pas modifier F03 en passant. |
+| **F05** | Trajectoires en temps objectif ; repères de sous-titres | Créer de vrais effets naturels inversés, jeu et sons ; trajets matériels de l'anneau en passe dédiée. |
+| **F06** | Attache côté B, état animé d'un proxy, halte et cadrage B6, révélation B seulement | Tester action/visibilité et raccord pont ; vraie main, cordage et CLAC encore à créer ; A reste discret. |
+| **F07** | Une collision objective à 17 h, pause/regard de Thomas, trajectoire inverse sur A, caméra centrée Thomas | Tester occultation physique des yeux de Thomas inversé et dégagement caméra ; anneau/contact et boîte non animés. |
+| **F08** | 17 cartons conservés, mode « spectateur » par défaut et revue technique optionnelle, nouveaux dialogues A1/A2/B9/A11–A14 et repères B6 | Tester durée UMG intro 3 s, calage, chevauchements, lisibilité et divulgation seulement au moment voulu. |
+
+**Mode de contrôle courant :** régénérer complètement avec `FAST_CAMERA_ONLY=False` et `SUBTITLE_REVIEW_MODE=False` pour vérifier ensemble trajets, sous-titres et nouvel état du mousqueton. Le mode rapide ne reconstruit ni casting ni texte. En cas de régression, demander une capture ciblée et le premier message d'erreur du **même run** avant une nouvelle correction. Les sept fiches mises à jour décrivent le travail encore ouvert ; F03 demeure inchangée et gelée. La clôture d'une fiche exige une confirmation explicite de l'utilisateur après visionnage.
+
 ## Fiches à traiter séparément
 
 | Fiche | Question à résoudre | Repère vidéo |
