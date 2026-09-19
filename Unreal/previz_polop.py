@@ -6463,26 +6463,36 @@ def build_omniscient_edit():
             "Contact acting, ring and physical occlusion need visual review."
         )
 
-    # F03: A15 alone travels along the real cliff-side bend around the
-    # outcrop. Previous version looked through a lateral entrance rock.
+    # F03: establish the apparent closed wall from the women's side, then
+    # bend round the actual outer edge, finally enter via the OPEN cave axis.
+    # The previous stages looked THROUGH the blind spur at u=.43-.60.
     def f03_reveal_pose(progress, objective_t, start):
         entry = a["CAVE_ENTRY_POINT"]
-        ledge = a["SEARCH_LEDGE_CENTER"]
         terrain = a["terrain_z_m"]
+        along = a["cave_xy"]
+        ground = a["cave_ground_point"]
         thomas = a["eval_actor"]("THOMAS_NORMAL", objective_t)
+
+        def safe_eye(x, y, relative=2.15):
+            return (x, y, max(terrain(x, y)+relative, entry[2]+relative))
+
+        # Prior to 0.60 the objective never peers through the hidden mouth.
+        # At 0.60 the viewpoint clears the spur from the cliff side; then
+        # the camera follows the walkable opening's real local centreline.
+        outer_x, outer_y = along(-2.6, -4.0)
+        lip_x, lip_y = along(-1.5, -2.8)
+        mouth_x, mouth_y = along(-0.8, -0.65)
         stages = (
             (0.0, start[0], start[1]),
-            (0.18, (entry[0]-1.7, entry[1]-8.3, ledge[2]+4.6),
-             (entry[0]-1.0, entry[1]-6.2, ledge[2]+1.8)),
-            (0.43, (entry[0]-0.6, entry[1]-6.9, ledge[2]+4.2),
-             (entry[0]+2.0, entry[1]-4.0, ledge[2]+1.8)),
-            (0.60, (entry[0]+1.6, entry[1]-4.6,
-                    max(ledge[2]+3.35, terrain(entry[0]+1.6, entry[1]-4.6)+2.8)),
-             (entry[0], entry[1], terrain(entry[0], entry[1])+1.65)),
-            (0.80, (entry[0]+0.7, entry[1]-2.0,
-                    terrain(entry[0]+0.7, entry[1]-2.0)+2.2),
-             a["cave_ground_point"](1.0, 0.0, 1.5)),
-            (1.0, a["cave_ground_point"](1.0, 0.0, 1.85),
+            (0.27, safe_eye(outer_x, outer_y, 3.5),
+             (entry[0]-3.3, entry[1]-3.5, entry[2]+1.4)),
+            (0.54, safe_eye(lip_x, lip_y, 2.8),
+             (entry[0]-1.0, entry[1]-2.9, entry[2]+1.55)),
+            (0.71, safe_eye(mouth_x, mouth_y, 2.15),
+             ground(0.8, 0.0, 1.45)),
+            (0.87, ground(0.65, 0.0, 1.85),
+             ground(2.3, 0.0, 1.45)),
+            (1.0, ground(1.25, 0.0, 1.85),
              (thomas[0], thomas[1], thomas[2]+1.1))
         )
         for k in range(len(stages)-1):
