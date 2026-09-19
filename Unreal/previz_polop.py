@@ -6244,7 +6244,7 @@ def build_omniscient_edit():
     pause_cards = {
         "PAUSE_INTRO": (
             "THOMAS, EVA & LEA",
-            "Three friends hike together. Nothing seems unusual yet."
+            "Thomas, Eva and their daughter Lea hike together."
         ),
         "PAUSE_DETOUR": (
             "THE LONGER WAY BACK",
@@ -6253,7 +6253,7 @@ def build_omniscient_edit():
         ),
         "PAUSE_THOMAS": (
             "UP THE MOUNTAIN",
-            "Thomas falls behind. Soon, they will lose sight of him."
+            "Thomas falls behind, distracted by the time."
         ),
         "PAUSE_CHEMINS": (
             "THE TWO PATHS",
@@ -6276,7 +6276,7 @@ def build_omniscient_edit():
         ),
         "PAUSE_RECHERCHE": (
             "NO SIGN OF THOMAS",
-            "The search ends at a cliff.\n"
+            "The rocky platform ends at a cliff.\n"
             "Eva and Lea cannot find Thomas."
         ),
         "PAUSE_REVELATION": (
@@ -6291,31 +6291,31 @@ def build_omniscient_edit():
         ),
         "PAUSE_OBSCURITE": (
             "A FIGURE IN THE DARK",
-            "Thomas glimpses a silhouette by the small entrance;\n"
+            "In the dark, Thomas glimpses a silhouette near the entrance;\n"
             "the figure cannot make him out in the darkness."
         ),
         "PAUSE_FAMILLE": (
             "TWO PATHS, THE SAME TIME",
-            "Eva and Lea seek help on A, unaware that Thomas\n"
-            "has emerged on B and is travelling into their past."
+            "Eva and Lea head down A to seek help. Thomas\n"
+            "emerges on the hidden B side, moving into their past."
         ),
         "PAUSE_RETOUR": (
             "THOMAS MOVES INTO THE PAST",
-            "The world runs backward around Thomas.\nHis fear gives way to curiosity - then delight."
+            "The world runs backward around Thomas.\nBewildered at first, he starts to enjoy it."
         ),
         "PAUSE_PONT_RETOUR": (
             "ABOUT 5:30 P.M. - THE BRIDGE",
-            "Thomas spots the loose carabiner on the B bank.\nHis playful discovery of time now has consequences."
+            "On the B bank, Thomas spots the loose carabiner.\nThe game is over: Lea crossed this bridge earlier."
         ),
         "PAUSE_MOUSQUETON": (
             "5:01 P.M. - THE B BANK",
-            "Thomas has reattached the carabiner and checked it.\n"
+            "Thomas secures the carabiner on the B bank.\n"
             "He now crosses the bridge from B to A."
         ),
         "PAUSE_BOUCLE": (
             "5:00 P.M. - THE SAME INSTANT",
-            "The two Thomases collide as the ring touches Thomas.\n"
-            "Neither contact is identified as the certain cause."
+            "The two Thomases collide; the ring touches Thomas.\n"
+            "At 5:00 P.M., he returns to normal time. Why?"
         ),
         "PAUSE_ISSUE": (
             "THE SAME MOMENT AGAIN",
