@@ -34,3 +34,6 @@ __pycache__/
 
 # Generated POLOP evidence belongs in local Saved/, not Git.
 # Keep source docs/scripts only.
+
+# POLOP: generated Unreal runs (keep source assets trackable)
+/Content/POLOP/Generated_*/
