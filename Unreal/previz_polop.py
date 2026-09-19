@@ -5862,6 +5862,65 @@ def add_f01_box_to_film(sequence, samples):
             limitation="Small pocket proxy only; true hand reach and holding rig pending")
 
 
+def add_f04_ring_blockout(sequence, samples):
+    """F04: one objective-time material ring proxy; no F03 camera/rock edits.
+
+    The sphere is a temporary marker for ring trajectory and contact timing,
+    NOT a final ring mesh or a validated hand interaction.
+    """
+    a = _ANIMATION
+    sphere = unreal.load_asset("/Engine/BasicShapes/Sphere.Sphere")
+    if not sphere:
+        raise RuntimeError("F04 ring blockout sphere asset missing")
+    ring = actors.spawn_actor_from_object(sphere, unreal.Vector(0, 0, -100000))
+    ring.set_actor_label("PZ_ANIM_F04_RING_BLOCKOUT")
+    ring.set_folder_path("POLOP/Accessoires/F04")
+    ring.set_actor_scale3d(unreal.Vector(0.085, 0.085, 0.025))
+    subsystem = unreal.get_editor_subsystem(unreal.LevelSequenceEditorSubsystem)
+    binding = subsystem.add_actors([ring])[0]
+    track = binding.add_track(unreal.MovieScene3DTransformTrack)
+    section = track.add_section()
+    section.set_range(0, samples[-1][0]+1)
+    channels = section.get_all_channels()
+    for channel, value in zip(channels[6:9], (0.085, 0.085, 0.025)):
+        channel.set_default(value)
+    visibility = binding.add_track(unreal.MovieSceneVisibilityTrack)
+    visibility.set_property_name_and_path("bHidden", "bHidden")
+    vis_section = visibility.add_section()
+    vis_section.set_range(0, samples[-1][0]+1)
+    hidden = vis_section.get_all_channels()[0]
+    hidden.add_key(unreal.FrameNumber(0), True,
+                   interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+    # Ring stays offscreen until the cave contact sequence, then follows one
+    # deterministic objective-time curve in BOTH film directions.
+    cave_shots = [shot for shot in a["f04_film_shots"]
+                  if shot["scene"] in ("A15_A16", "A17", "PAUSE_CONTACT", "B1")]
+    start = cave_shots[0]["start_frame"]
+    end = cave_shots[-1]["end_frame"]
+    hidden.add_key(unreal.FrameNumber(start), False,
+                   interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+    hidden.add_key(unreal.FrameNumber(end), True,
+                   interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+    fissure = a["CAVE_FISSURE_POINT"]
+    contact = a["CAVE_CONTACT_POINT"]
+    for frame_index, t in samples:
+        if not (start <= frame_index < end):
+            continue
+        # Material approach at 18h: an accelerating short bounce, no flash.
+        # t is shared objective time, even when B1 plays in reverse.
+        u = cinematic_ease((t-61.65)/0.35)
+        bounce = 0.10*math.sin(4.0*math.pi*u)*(1.0-u)
+        point = tuple(fissure[i]*(1.0-u)+contact[i]*u for i in range(3))
+        point = (point[0], point[1], point[2]+bounce)
+        for channel, value in zip(channels[:3], (100.0*point[0],
+                                                   100.0*point[1],
+                                                   100.0*point[2])):
+            channel.add_key(unreal.FrameNumber(frame_index), float(value),
+                            interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
+    journal("f04_ring_blockout_baked", objective_contact=62.0,
+            limitation="Sphere proxy, no hand contact, no falling path beyond B1")
+
+
 def add_human_performances(sequence, samples):
     """Bake a pose per display frame: scrubbing/reversing cannot desynchronise joints.
 
@@ -6930,6 +6989,9 @@ def build_omniscient_edit():
     a["f01_film_shots"] = manifest
     if not F03_GEOMETRY_ONLY:
         add_f01_box_to_film(seq, performance_samples)
+    a["f04_film_shots"] = manifest
+    if not F03_GEOMETRY_ONLY:
+        add_f04_ring_blockout(seq, performance_samples)
     # F03 can be checked independently of the still-untested English/UMG
     # subtitle change. This mode does NOT replace the full-film renderer.
     card_manifest = []
