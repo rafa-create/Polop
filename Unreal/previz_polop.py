@@ -5779,8 +5779,75 @@ def build_omniscient_edit():
             status="blocking pass; canonical coverage incomplete")
     a["omniscient_sequence"] = seq
     a["omniscient_camera"] = cam
-    # Keep the audit independent from the presentation sequence.
-    unreal.LevelSequenceEditorBlueprintLibrary.open_level_sequence(a["sequence"])
+    publish_current_film(seq, cam)
+    # End generation on the film, not the separate objective-time audit.
+    play_omniscient_film(play=False)
+
+
+def publish_current_film(sequence, camera):
+    """One persistent entry point; preserve historical cameras/sequences."""
+    current = []
+    archives = []
+    for actor in actors.get_all_level_actors():
+        label = actor.get_actor_label()
+        if label == "POLOP_FILM_CURRENT" and isinstance(actor, unreal.LevelSequenceActor):
+            current.append(actor)
+        if actor != camera and label.startswith("PZ_ANIM_CAM_OMNISCIENT"):
+            actor.set_folder_path("POLOP/Cameras/Archives")
+            actor.set_actor_label("PZ_ANIM_CAM_OMNISCIENT_ARCHIVE_"+actor.get_name())
+            archives.append(actor.get_actor_label())
+    if len(current) > 1:
+        raise RuntimeError("Multiple POLOP_FILM_CURRENT actors: resolve entry point before playback")
+    entry = current[0] if current else actors.spawn_actor_from_class(
+        unreal.LevelSequenceActor, unreal.Vector(0, 0, 0))
+    entry.set_actor_label("POLOP_FILM_CURRENT")
+    entry.set_folder_path("POLOP/Film")
+    entry.set_sequence(sequence)
+    settings = entry.get_editor_property("playback_settings")
+    settings.set_editor_property("auto_play", True)
+    settings.set_editor_property("pause_at_end", True)
+    settings.set_editor_property("loop_count", unreal.MovieSceneSequenceLoopCount(0))
+    entry.set_editor_property("playback_settings", settings)
+    camera.set_actor_label("PZ_ANIM_CAM_OMNISCIENT_CURRENT")
+    camera.set_folder_path("POLOP/Film")
+    cuts = [track for track in sequence.get_tracks() if isinstance(track, unreal.MovieSceneCameraCutTrack)]
+    sections = [section for track in cuts for section in track.get_sections()]
+    if len(sections) != 1 or sections[0].get_start_frame() != sequence.get_playback_start() or sections[0].get_end_frame() != sequence.get_playback_end():
+        raise RuntimeError("Film must have exactly one camera cut covering its full playback range")
+    manifest = dict(sequence=sequence.get_path_name(), camera=camera.get_actor_label(),
+                    entry_actor=entry.get_actor_label(), map=unreal.get_editor_subsystem(unreal.UnrealEditorSubsystem).get_editor_world().get_path_name(),
+                    start_frame=sequence.get_playback_start(), end_frame_exclusive=sequence.get_playback_end(),
+                    camera_sections=1, archived_cameras=archives,
+                    source_sha256=hashlib.sha256(open(SOURCE_SCRIPT_PATH, "rb").read()).hexdigest(),
+                    status="PLAYABLE_A1_B9_BLOCKOUT_NOT_FULL_SCRIPT_VALIDATION")
+    with open(os.path.join(RUN_SAVED_ROOT, "current_film.json"), "w", encoding="utf-8") as output:
+        json.dump(manifest, output, indent=2)
+    journal("current_film_published", **manifest)
+
+
+def play_omniscient_film(play=True):
+    """Open the persistent film entry at frame zero, with its sole camera cut.
+
+    After reopening the generated map, its POLOP_FILM_CURRENT LevelSequenceActor
+    also starts this same sequence with the editor's normal Play button (PIE).
+    """
+    global _OMNI_REVIEW_HANDLE
+    stop_pov_review()
+    if _OMNI_REVIEW_HANDLE is not None:
+        unreal.unregister_slate_post_tick_callback(_OMNI_REVIEW_HANDLE)
+        _OMNI_REVIEW_HANDLE = None
+    entries = [actor for actor in actors.get_all_level_actors()
+               if isinstance(actor, unreal.LevelSequenceActor) and actor.get_actor_label() == "POLOP_FILM_CURRENT"]
+    if len(entries) != 1 or not entries[0].get_sequence():
+        raise RuntimeError("No unique current film in this map; generate it first")
+    sequence = entries[0].get_sequence()
+    unreal.LevelSequenceEditorBlueprintLibrary.pause()
+    unreal.LevelSequenceEditorBlueprintLibrary.open_level_sequence(sequence)
+    unreal.LevelSequenceEditorBlueprintLibrary.set_lock_camera_cut_to_viewport(True)
+    unreal.LevelSequenceEditorBlueprintLibrary.set_current_time(sequence.get_playback_start())
+    if play:
+        unreal.LevelSequenceEditorBlueprintLibrary.play()
+    journal("current_film_opened", sequence=sequence.get_path_name(), playing=play)
 
 
 _OMNI_REVIEW = {}
@@ -5884,15 +5951,17 @@ def finish_generation():
         asset_root=RUN_ASSET_ROOT,
         saved_root=RUN_SAVED_ROOT,
         limitations=[
-            "blockout proxies",
+            "articulated engine mannequin; provisional gait and acting",
             "omniscient blocking edit exists; cinematic coverage and framing not yet validated",
             "ring and environmental effects not yet animated",
         ],
     )
     if CLEANUP_OLD_RUNS:
         cleanup_old_run_artifacts()
-    if "-POLOPReview" in unreal.SystemLibrary.get_command_line():
+    if "-POLOPPOVReview" in unreal.SystemLibrary.get_command_line():
         start_pov_review()
+    elif "-POLOPReview" in unreal.SystemLibrary.get_command_line():
+        play_omniscient_film()
 
 
 _REVIEW_HANDLE = None
