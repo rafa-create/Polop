@@ -32,12 +32,10 @@ import time
 import zlib
 import unreal
 
-# F03 geometry-only was a temporary diagnostic before subtitles were
-# validated. It silently removed narrative text and the F01/F04 props from
-# the film, and could remain enabled in an Unreal process across reruns.
-# Retired: ALWAYS generate the complete cast, props and native subtitles.
-# Ignore a stale POLOP_F03_GEOMETRY_ONLY environment variable.
-F03_GEOMETRY_ONLY = False
+# Test ONLY F03 geometry, without requiring the unrelated, as-yet-untested
+# English/UMG subtitle plugin. Set the environment variable to "1" before
+# executing the script in Unreal. Default: full film with all 17 captions.
+F03_GEOMETRY_ONLY = os.environ.get("POLOP_F03_GEOMETRY_ONLY", "") == "1"
 
 # Switch to True for CAMERA-ONLY changes after a successful FULL run with
 # this script in the SAME Unreal session, while still in its generated map.
@@ -5676,30 +5674,6 @@ def character_performance(name, objective_time):
         # unsuspected body. The prior weighting rotated him the wrong way.
         weight = cinematic_ease((2.11-t)/0.07)
         yaw += (a["unwrap_angle"](yaw, closure_yaw)-yaw)*weight
-    # F01: same objective-time family glances in both A2 and B9 readings.
-    # Stock mannequin root yaw is a readable placeholder for head/eye acting.
-    if name in ("EVA", "LEA", "THOMAS_NORMAL") and 0.08 <= t <= 0.70:
-        # Shared opening joke; everyone remains on their approved worldline.
-        other = ("THOMAS_NORMAL" if name == "EVA" else "EVA")
-        look = a["eval_actor"](other, t)
-        look_yaw = math.degrees(math.atan2(
-            look[1]-p[1], look[0]-p[0]))-90.0
-        moment = ((0.10, 0.46) if name == "EVA" else
-                  (0.20, 0.65) if name == "THOMAS_NORMAL" else (0.28, 0.58))
-        weight = (cinematic_ease((t-moment[0])/0.045) *
-                  (1.0-cinematic_ease((t-moment[1])/0.055)))
-        yaw += (a["unwrap_angle"](yaw, look_yaw)-yaw)*0.68*weight
-    if name in ("EVA", "LEA") and 52.0 <= t < 57.0:
-        # Eva first acknowledges Lea; then both watch the only return passage.
-        # No movement, cave entrance reveal or alteration of F03 geometry.
-        start = 54.15 if name == "EVA" else 53.95
-        look = (a["eval_actor"]("LEA", t) if name == "EVA" and t < 53.0
-                else a["eval_actor"]("EVA", t) if name == "LEA" and t < 53.0
-                else a["CAVE_GUARD_POINT"])
-        look_yaw = math.degrees(math.atan2(
-            look[1]-p[1], look[0]-p[0]))-90.0
-        attention = cinematic_ease((t-start)/0.16)
-        yaw += (a["unwrap_angle"](yaw, look_yaw)-yaw)*attention
     # F07: provisional, deterministic contact acting. The STOCK mannequin
     # has no bespoke impact clip or planted-foot IK: tip the upper/root body
     # very slightly as inverse Thomas recoils into the collision, then return
@@ -5717,13 +5691,6 @@ def character_performance(name, objective_time):
         closure = character_performance("THOMAS_NORMAL", 2.0)
         yaw, moving, phase = closure["yaw"], closure["moving"], closure["phase"]
         pitch, roll = closure["pitch"], closure["roll"]
-    if name == "THOMAS_NORMAL" and 7.65 <= t <= 8.0:
-        # Shared closing glance to Eva, evaluated identically in A2 and B9.
-        eva = a["eval_actor"]("EVA", t)
-        eva_yaw = math.degrees(math.atan2(
-            eva[1]-p[1], eva[0]-p[0]))-90.0
-        weight = cinematic_ease((t-7.65)/0.11)
-        yaw += (a["unwrap_angle"](yaw, eva_yaw)-yaw)*0.45*weight
     return dict(foot=p, yaw=yaw, pitch=pitch, roll=roll,
                 moving=moving, phase=phase,
                 # At the exact closure both branches share the same body pose.
@@ -5780,142 +5747,6 @@ def prepare_human_cast():
     light.set_light_color(unreal.LinearColor(1.0, 0.84, 0.65, 1.0))
     journal("articulated_cast_created", mesh=mesh.get_path_name(),
             limitation="shared mannequin anatomy; not final human casting or acting")
-
-
-def f01_box_pose(objective_t):
-    """Small B9-only visual prop: Thomas checks a pocket box, then hides it.
-
-    Object presence is an editorial reveal, not a second A2/B9 worldline.
-    During the earlier reading the same object remains concealed in his pocket.
-    This proxy does not claim a finished hand/box skeletal interaction.
-    """
-    a = _ANIMATION
-    thomas = character_performance("THOMAS_NORMAL", objective_t)
-    foot = thomas["foot"]
-    yaw = math.radians(thomas["yaw"]+90.0)
-    forward = (math.cos(yaw), math.sin(yaw))
-    side = (-forward[1], forward[0])
-    # A small part of the box emerges from the pocket; no floating box handoff.
-    return (foot[0]+0.23*side[0]+0.11*forward[0],
-            foot[1]+0.23*side[1]+0.11*forward[1],
-            foot[2]+0.92)
-
-
-def add_f01_box_to_film(sequence, samples):
-    """One unobtrusive box beat near the B9 ending; no new camera cut/time."""
-    a = _ANIMATION
-    mesh = unreal.load_asset("/Engine/BasicShapes/Cube.Cube")
-    if not mesh:
-        raise RuntimeError("F01 box blockout cube asset missing")
-    actor = actors.spawn_actor_from_object(mesh, unreal.Vector(0, 0, -100000))
-    # MovieSceneVisibilityTrack BoolChannel uses True=VISIBLE (commit 66b40fda).
-    # Do not invert bHidden manually or pass unsupported interpolation=.
-    actor.set_actor_label("PZ_ANIM_F01_SMALL_BOX")
-    actor.set_folder_path("POLOP/Accessoires/F01")
-    actor.set_actor_scale3d(unreal.Vector(0.08, 0.055, 0.025))
-    try:
-        actor.get_component_by_class(unreal.StaticMeshComponent).set_material(
-            0, a["ensure_material"]("M_POLOP_F01_BOX", (0.28, 0.20, 0.12)))
-    except Exception as exc:
-        unreal.log_warning("F01 small box material: "+str(exc))
-    subsystem = unreal.get_editor_subsystem(unreal.LevelSequenceEditorSubsystem)
-    binding = subsystem.add_actors([actor])[0]
-    for old in binding.get_tracks():
-        if isinstance(old, unreal.MovieScene3DTransformTrack):
-            binding.remove_track(old)
-    track = binding.add_track(unreal.MovieScene3DTransformTrack)
-    section = track.add_section()
-    section.set_range(0, samples[-1][0]+1)
-    channels = section.get_all_channels()
-    for channel, value in zip(channels[6:9], (0.08, 0.055, 0.025)):
-        channel.set_default(value)
-    visibility = binding.add_track(unreal.MovieSceneVisibilityTrack)
-    visibility.set_property_name_and_path("bHidden", "bHidden")
-    vis_section = visibility.add_section()
-    vis_section.set_range(0, samples[-1][0]+1)
-    vis_ch = vis_section.get_all_channels()[0]
-    b9 = next(item for item in a["f01_film_shots"] if item["scene"] == "B9")
-    pause = next(item for item in a["f01_film_shots"] if item["scene"] == "PAUSE_ISSUE")
-    # A2 is deliberately absent: the box stays inside Thomas's pocket.
-    # In the B9-only PAUSE_ISSUE, Thomas hesitates, briefly reveals the box,
-    # then conceals it again. The final 18 s B9 track's world pose is shared
-    # with A2; the pocket prop never changes that shared objective-time pose.
-    start = pause["start_frame"]+int(round(1.20*a["FPS"]))
-    end = pause["start_frame"]+int(round(4.65*a["FPS"]))
-    # The narrator's only camera is not modified; crop/reframe is a later pass.
-    # Hide at frame zero even if the spawned static mesh default is visible.
-    vis_ch.add_key(unreal.FrameNumber(0), False)
-    if start > 0:
-        vis_ch.add_key(unreal.FrameNumber(start-1), False)
-    vis_ch.add_key(unreal.FrameNumber(start), True)
-    vis_ch.add_key(unreal.FrameNumber(end), False)
-    # The box remains at one physical position in the pocket for a fixed
-    # objective instant; never key on film-time elapsed or the edit direction.
-    for frame_index, objective_t in samples:
-        frame = unreal.FrameNumber(frame_index)
-        x, y, z = f01_box_pose(objective_t)
-        for channel, value in zip(channels[:3], (100.0*x, 100.0*y, 100.0*z)):
-            channel.add_key(frame, float(value),
-                            interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
-    journal("f01_box_blockout_baked", start_frame=start, end_frame=end,
-            limitation="Small pocket proxy only; true hand reach and holding rig pending")
-
-
-def add_f04_ring_blockout(sequence, samples):
-    """F04: one objective-time material ring proxy; no F03 camera/rock edits.
-
-    The sphere is a temporary marker for ring trajectory and contact timing,
-    NOT a final ring mesh or a validated hand interaction.
-    """
-    a = _ANIMATION
-    sphere = unreal.load_asset("/Engine/BasicShapes/Sphere.Sphere")
-    if not sphere:
-        raise RuntimeError("F04 ring blockout sphere asset missing")
-    ring = actors.spawn_actor_from_object(sphere, unreal.Vector(0, 0, -100000))
-    ring.set_actor_label("PZ_ANIM_F04_RING_BLOCKOUT")
-    ring.set_folder_path("POLOP/Accessoires/F04")
-    ring.set_actor_scale3d(unreal.Vector(0.085, 0.085, 0.025))
-    subsystem = unreal.get_editor_subsystem(unreal.LevelSequenceEditorSubsystem)
-    binding = subsystem.add_actors([ring])[0]
-    track = binding.add_track(unreal.MovieScene3DTransformTrack)
-    section = track.add_section()
-    section.set_range(0, samples[-1][0]+1)
-    channels = section.get_all_channels()
-    for channel, value in zip(channels[6:9], (0.085, 0.085, 0.025)):
-        channel.set_default(value)
-    visibility = binding.add_track(unreal.MovieSceneVisibilityTrack)
-    visibility.set_property_name_and_path("bHidden", "bHidden")
-    vis_section = visibility.add_section()
-    vis_section.set_range(0, samples[-1][0]+1)
-    visible = vis_section.get_all_channels()[0]
-    # Match the validated human visibility convention (66b40fda).
-    visible.add_key(unreal.FrameNumber(0), False)
-    # Ring stays offscreen until the cave contact sequence, then follows one
-    # deterministic objective-time curve in BOTH film directions.
-    cave_shots = [shot for shot in a["f04_film_shots"]
-                  if shot["scene"] in ("A15_A16", "A17", "PAUSE_CONTACT", "B1")]
-    start = cave_shots[0]["start_frame"]
-    end = cave_shots[-1]["end_frame"]
-    visible.add_key(unreal.FrameNumber(start), True)
-    visible.add_key(unreal.FrameNumber(end), False)
-    fissure = a["CAVE_FISSURE_POINT"]
-    contact = a["CAVE_CONTACT_POINT"]
-    for frame_index, t in samples:
-        if not (start <= frame_index < end):
-            continue
-        # Material approach at 18h: an accelerating short bounce, no flash.
-        # t is shared objective time, even when B1 plays in reverse.
-        u = cinematic_ease((t-61.65)/0.35)
-        bounce = 0.10*math.sin(4.0*math.pi*u)*(1.0-u)
-        point = tuple(fissure[i]*(1.0-u)+contact[i]*u for i in range(3))
-        point = (point[0], point[1], point[2]+bounce)
-        for channel, value in zip(channels[:3], (100.0*point[0],
-                                                   100.0*point[1],
-                                                   100.0*point[2])):
-            channel.add_key(unreal.FrameNumber(frame_index), float(value),
-                            interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
-    journal("f04_ring_blockout_baked", objective_contact=62.0,
-            limitation="Sphere proxy, no hand contact, no falling path beyond B1")
 
 
 def add_human_performances(sequence, samples):
@@ -6460,36 +6291,26 @@ def build_omniscient_edit():
             "Contact acting, ring and physical occlusion need visual review."
         )
 
-    # F03: establish the apparent closed wall from the women's side, then
-    # bend round the actual outer edge, finally enter via the OPEN cave axis.
-    # The previous stages looked THROUGH the blind spur at u=.43-.60.
+    # F03: A15 alone travels along the real cliff-side bend around the
+    # outcrop. Previous version looked through a lateral entrance rock.
     def f03_reveal_pose(progress, objective_t, start):
         entry = a["CAVE_ENTRY_POINT"]
+        ledge = a["SEARCH_LEDGE_CENTER"]
         terrain = a["terrain_z_m"]
-        along = a["cave_xy"]
-        ground = a["cave_ground_point"]
         thomas = a["eval_actor"]("THOMAS_NORMAL", objective_t)
-
-        def safe_eye(x, y, relative=2.15):
-            return (x, y, max(terrain(x, y)+relative, entry[2]+relative))
-
-        # Prior to 0.60 the objective never peers through the hidden mouth.
-        # At 0.60 the viewpoint clears the spur from the cliff side; then
-        # the camera follows the walkable opening's real local centreline.
-        outer_x, outer_y = along(-2.6, -4.0)
-        lip_x, lip_y = along(-1.5, -2.8)
-        mouth_x, mouth_y = along(-0.8, -0.65)
         stages = (
             (0.0, start[0], start[1]),
-            (0.27, safe_eye(outer_x, outer_y, 3.5),
-             (entry[0]-3.3, entry[1]-3.5, entry[2]+1.4)),
-            (0.54, safe_eye(lip_x, lip_y, 2.8),
-             (entry[0]-1.0, entry[1]-2.9, entry[2]+1.55)),
-            (0.71, safe_eye(mouth_x, mouth_y, 2.15),
-             ground(0.8, 0.0, 1.45)),
-            (0.87, ground(0.65, 0.0, 1.85),
-             ground(2.3, 0.0, 1.45)),
-            (1.0, ground(1.25, 0.0, 1.85),
+            (0.18, (entry[0]-1.7, entry[1]-8.3, ledge[2]+4.6),
+             (entry[0]-1.0, entry[1]-6.2, ledge[2]+1.8)),
+            (0.43, (entry[0]-0.6, entry[1]-6.9, ledge[2]+4.2),
+             (entry[0]+2.0, entry[1]-4.0, ledge[2]+1.8)),
+            (0.60, (entry[0]+1.6, entry[1]-4.6,
+                    max(ledge[2]+3.35, terrain(entry[0]+1.6, entry[1]-4.6)+2.8)),
+             (entry[0], entry[1], terrain(entry[0], entry[1])+1.65)),
+            (0.80, (entry[0]+0.7, entry[1]-2.0,
+                    terrain(entry[0]+0.7, entry[1]-2.0)+2.2),
+             a["cave_ground_point"](1.0, 0.0, 1.5)),
+            (1.0, a["cave_ground_point"](1.0, 0.0, 1.85),
              (thomas[0], thomas[1], thomas[2]+1.1))
         )
         for k in range(len(stages)-1):
@@ -6525,105 +6346,14 @@ def build_omniscient_edit():
             if clearance(eye[0], eye[1]) < 1.12:
                 raise RuntimeError("F03 A15 lens enters %s at %.3f" %
                                    (label, progress))
-            # The old 2D full look-ray check gave false positives for an
-            # elevated lens looking OVER a low rock. The actual near-lens
-            # three-dimensional ray and mesh-bound checks run below once the
-            # camera turns into the entrance. Preserve the physical mask.
-
-    # F03: 3D traces against generated cave/static geometry. Keep the
-    # physical blind-spur intact: never hide it just to clear the camera.
-    # Cache actor lists once, not on each of the 480 A15 frames.
-    f03_scene_actors = actors.get_all_level_actors()
-    f03_ignored = [actor for actor in f03_scene_actors
-                   if actor.get_actor_label().startswith((
-                       "PZ_ANIM_HUMAN_", "PZ_ANIM_EVENT_", "PZ_ANIM_CAM_",
-                       "PZ_ANIM_F04_RING_", "PZ_ANIM_F01_SMALL_BOX"))]
-    f03_bounds_names = ("CAVE_REVIEW_", "CAVE_WALL_", "CAVE_SIDE_",
-                        "CAVE_ENTRY_ROCK_", "CAVE_ENTRANCE_BLIND_SPUR",
-                        "SEARCH_LEDGE_MOUNTAIN_WALL", "F03_SHADOW_RECESS_")
-    f03_meshes = [
-        actor for actor in f03_scene_actors
-        if actor.get_actor_label().startswith("PZ_ANIM_")
-        and any(actor.get_actor_label().startswith("PZ_ANIM_"+part)
-                for part in f03_bounds_names)
-        and actor.get_component_by_class(unreal.StaticMeshComponent) is not None
-    ]
-
-    def f03_mesh_clearance(eye, target, progress):
-        query = (unreal.TraceTypeQuery.ECC_VISIBILITY
-                 if hasattr(unreal.TraceTypeQuery, "ECC_VISIBILITY")
-                 else unreal.TraceTypeQuery.TRACE_TYPE_QUERY1)
-        def trace(start, end, label):
-            # Ignore the animated cast and review cameras, NOT landscape,
-            # cave shell or rock meshes. This checks real Unreal collision
-            # rather than the earlier XY-only approximation.
-            result = unreal.SystemLibrary.line_trace_single(
-                world,
-                unreal.Vector(*(float(v)*100.0 for v in start)),
-                unreal.Vector(*(float(v)*100.0 for v in end)),
-                query, True, f03_ignored, unreal.DrawDebugTrace.NONE, True)
-            if not result:
-                return
-            data = result.to_tuple()
-            if not data[0] or data[9] is None:
-                return
-            blocked = data[9].get_actor_label()
-            if blocked.startswith(("PZ_ANIM_HUMAN_", "PZ_ANIM_EVENT_")):
-                return
-            raise RuntimeError(
-                "F03 A15 %s obstructed by %s at progress %.3f" %
-                (label, blocked, progress))
-        # Trace a near-lens forward ray, not all the way to Thomas (who may
-        # legitimately be behind a cave wall until the reveal is completed).
-        # Also check camera clearance above the real terrain.
-        if progress >= 0.71:
-            direction = tuple(target[i]-eye[i] for i in range(3))
-            length = math.dist(eye, target)
-            if length > 0.05:
-                near = tuple(eye[i]+direction[i]*min(1.1/length, 1.0)
-                             for i in range(3))
-                trace(eye, near, "lens_forward")
-            trace(eye, (eye[0], eye[1], eye[2]-0.65), "lens_floor")
-
-    # F03: query each generated static mesh directly; some preview meshes have
-    # collision disabled, so a line_trace alone cannot establish visibility.
-    # Treat the transformed component bounds as conservative: they can stop
-    # an otherwise usable shot, but cannot silently certify a blocked lens.
-    def f03_static_bounds_audit(eye, target, progress):
-        if progress < 0.71:
-            return
-        import unreal as ue
-        eye_cm = ue.Vector(*(float(v)*100.0 for v in eye))
-        diff = tuple(target[i]-eye[i] for i in range(3))
-        dist = math.dist(eye, target)
-        limit = min(110.0, 100.0*dist)
-        if limit <= 0.01:
-            return
-        end_cm = ue.Vector(
-            eye_cm.x+(diff[0]/dist)*limit,
-            eye_cm.y+(diff[1]/dist)*limit,
-            eye_cm.z+(diff[2]/dist)*limit)
-        for actor in f03_meshes:
-            name = actor.get_actor_label()
-            center, extent = actor.get_actor_bounds(False)
-            # Inflate to catch near-plane rock even with collision disabled.
-            bx, by, bz = center.x, center.y, center.z
-            ex, ey, ez = extent.x+12.0, extent.y+12.0, extent.z+12.0
-            for i in range(9):
-                u = i/8.0
-                x = eye_cm.x+(end_cm.x-eye_cm.x)*u
-                y = eye_cm.y+(end_cm.y-eye_cm.y)*u
-                z = eye_cm.z+(end_cm.z-eye_cm.z)*u
-                if abs(x-bx) < ex and abs(y-by) < ey and abs(z-bz) < ez:
-                    raise RuntimeError(
-                        "F03 A15 near lens bounds of %s at progress %.3f" %
-                        (name, progress))
-
-    # F03: geometry of the generated cave is represented with PZ_ANIM_
-    # actors. A camera may remain outside at the start of A15; once it
-    # enters the opening the near lens MUST NOT overlap any cave surface.
-    # This independent test complements (not replaces) the XY mask checks.
-    # No rock gets disabled or moved as a shortcut.
+            if progress >= 0.60:
+                for step in range(31):
+                    fraction = step/30.0
+                    x = eye[0]+(target[0]-eye[0])*fraction
+                    y = eye[1]+(target[1]-eye[1])*fraction
+                    if clearance(x, y) < 1.07:
+                        raise RuntimeError("F03 A15 lens looks through %s at %.3f" %
+                                           (label, progress))
 
     # F01 camera-only pass: no actor movement or retiming. At t=0 Lea
     # already walks ahead of Thomas/Eva in the existing validated blocking.
@@ -7048,8 +6778,6 @@ def build_omniscient_edit():
                 # Former generic handover moved the lens through opaque rock.
                 eye, target = f03_reveal_pose(u, t, boundary_pose)
                 f03_reveal_clearance(eye, target, u)
-                f03_mesh_clearance(eye, target, u)
-                f03_static_bounds_audit(eye, target, u)
                 # Avoid frames of opaque Landscape under the lens. The
                 # previous XY rock test could not detect this failure.
                 if u >= 0.60 and eye[2] < a["terrain_z_m"](eye[0], eye[1]) + 1.25:
@@ -7085,13 +6813,6 @@ def build_omniscient_edit():
     # les mannequins articulés avant de construire les 17 annotations.
     # La fin de generation et la sauvegarde restent conditionnees au succes.
     add_human_performances(seq, performance_samples)
-    # F01 only: the reveal is in B9, never in the shared A2 world pose.
-    a["f01_film_shots"] = manifest
-    if not F03_GEOMETRY_ONLY:
-        add_f01_box_to_film(seq, performance_samples)
-    a["f04_film_shots"] = manifest
-    if not F03_GEOMETRY_ONLY:
-        add_f04_ring_blockout(seq, performance_samples)
     # F03 can be checked independently of the still-untested English/UMG
     # subtitle change. This mode does NOT replace the full-film renderer.
     card_manifest = []
@@ -7275,55 +6996,6 @@ def build_omniscient_edit():
         expected = 2*len(flank_dialogue)+5+4+2+2
         if len(later_dialogue_manifest) != expected:
             raise RuntimeError("Incomplete dialogue in A2/B9, disappearance or B6")
-    # F08: audit the ACTUAL Sequencer section count, not just our manifests.
-    # Some editor capture modes omit screen-space UMG subtitles entirely.
-    subtitle_audit = dict(
-        geometry_only=F03_GEOMETRY_ONLY,
-        track_count=0,
-        actual_sections=0,
-        expected_sections=(len(card_manifest)+len(opening_dialogue_manifest)+
-                           len(later_dialogue_manifest)))
-    if not F03_GEOMETRY_ONLY:
-        native_tracks = [track for track in seq.get_tracks()
-                         if isinstance(track, unreal.MovieSceneSubtitlesTrack)]
-        subtitle_audit["track_count"] = len(native_tracks)
-        subtitle_audit["actual_sections"] = sum(len(track.get_sections())
-                                                 for track in native_tracks)
-        if (subtitle_audit["track_count"] != 1 or
-                subtitle_audit["actual_sections"] != subtitle_audit["expected_sections"]):
-            raise RuntimeError("F08 subtitle Sequencer mismatch: "+str(subtitle_audit))
-        journal("f08_subtitle_sections_verified", **subtitle_audit)
-    else:
-        journal("f08_subtitles_intentionally_disabled", **subtitle_audit)
-    # F08: also export a frame-accurate SRT independent of the editor's
-    # Slate/UMG overlay. It is an alternate subtitle delivery artifact for a
-    # full-length movie export; a shortened editor recording needs its own
-    # edit-time synchronization and must NOT use this SRT unmodified.
-    if not F03_GEOMETRY_ONLY:
-        cues = []
-        for item in card_manifest:
-            cues.append((item["start_frame"], item["end_frame_exclusive"],
-                         item["title"]+"\n"+item["explanation"]))
-        for item in opening_dialogue_manifest + later_dialogue_manifest:
-            cues.append((item["start_frame"], item["end_frame_exclusive"],
-                         item["text"]))
-        cues.sort(key=lambda entry: (entry[0], entry[1]))
-        def srt_timestamp(frame_number):
-            milliseconds = int(round(1000.0*frame_number/fps))
-            hh, remain = divmod(milliseconds, 3600000)
-            mm, remain = divmod(remain, 60000)
-            ss, ms = divmod(remain, 1000)
-            return "%02d:%02d:%02d,%03d" % (hh, mm, ss, ms)
-        srt_path = os.path.join(RUN_SAVED_ROOT, "polop_spectator_subtitles.srt")
-        with open(srt_path, "w", encoding="utf-8") as srt:
-            for index, (first, last, content) in enumerate(cues, 1):
-                srt.write("%d\n%s --> %s\n%s\n\n" %
-                          (index, srt_timestamp(first), srt_timestamp(last),
-                           content))
-        subtitle_audit["srt_path"] = srt_path
-        subtitle_audit["srt_cues"] = len(cues)
-        journal("f08_subtitle_srt_exported", path=srt_path, cues=len(cues),
-                limitation="For full 372-second film only; no automatic MP4 burn-in.")
     if not a.get("human_audit_baked"):
         add_human_performances(a["sequence"], [(i, i/fps) for i in range(65*fps)])
         a["human_audit_baked"] = True
@@ -7333,10 +7005,7 @@ def build_omniscient_edit():
                        shots=manifest, previz_pause_cards=card_manifest,
                        opening_dialogue_cues=opening_dialogue_manifest,
                        later_dialogue_cues=later_dialogue_manifest,
-                       subtitle_mode=("geometry_only_no_captions" if F03_GEOMETRY_ONLY
-                                      else "technical_review" if SUBTITLE_REVIEW_MODE
-                                      else "spectator"),
-                       subtitle_audit=subtitle_audit,
+                       subtitle_mode=("technical_review" if SUBTITLE_REVIEW_MODE else "spectator"),
                        carabiner=dict(bank="B", repair_objective_minutes=[3.08, 3.04],
                                       normal_reading="detaches", inverse_reading="repairs",
                                       track="MOUSQUETON_PROXY", acting="blockout"),
@@ -7800,15 +7469,8 @@ def main():
             "restart Unreal Engine, and rerun POLOP. "
             "Required native UMG/Sequencer types unavailable: " + ", ".join(missing))
     if F03_GEOMETRY_ONLY:
-        unreal.log_warning(
-            "POLOP F03_GEOMETRY_ONLY=1: THIS RUN WILL HAVE NO SUBTITLES. "
-            "For cave + visible narrative text clear POLOP_F03_GEOMETRY_ONLY "
-            "in the Unreal Python console and run FAST_CAMERA_ONLY=False.")
-    else:
-        unreal.log(
-            "POLOP F08: full spectator subtitle build requested. "
-            "Check the Sequencer subtitle track AND the screen-space overlay "
-            "in the same mode used for video capture.")
+        unreal.log("POLOP F03: geometry-only run; no UMG subtitles generated. "
+                   "The 17 pauses remain but their texts are omitted.")
     journal("start", script=SOURCE_SCRIPT_PATH, engine=unreal.SystemLibrary.get_engine_version(),
             source_map=SOURCE_MAP, work_map=WORK_MAP,
             source_sha256=hashlib.sha256(open(SOURCE_SCRIPT_PATH, "rb").read()).hexdigest())
