@@ -6608,11 +6608,13 @@ def build_omniscient_edit():
 
     # F03: keep the lens in the traversable gallery, not at the old entrance.
     def f03_corridor_pose(code, t):
-        """F03: keep the lens on the same gallery leg as the visible Thomas.
+        """One continuous gallery camera, trailing inverse Thomas across bends.
 
-        A15_A16 is also queried for editorial handover; never reject it.
-        Coordinates are read from the embedded animation namespace (a),
-        not inferred by projecting the B gallery onto the A entrance axis.
+        In B1 a fixed midpoint could coincide with Thomas on the contact ->
+        inner-bend leg (around master frame 6562): the lens looked up through
+        his body and the rock. The lens now stays behind his position along
+        the actual cave polyline; it does not jump between fixed leg cameras.
+        Editorial handovers and the A15_A16 reveal remain intact.
         """
         normal = a["eval_actor"]("THOMAS_NORMAL", t)
         inverse = a["eval_actor"]("THOMAS_INVERSE", t)
@@ -6621,13 +6623,6 @@ def build_omniscient_edit():
         def aim(p):
             return (p[0], p[1], p[2]+1.25)
 
-        def gallery_lens(p, q, fraction=0.5):
-            # Both endpoints are gallery waypoints, not an exterior camera
-            # offset. Aim down the current leg rather than through a bend.
-            x = p[0]+(q[0]-p[0])*fraction
-            y = p[1]+(q[1]-p[1])*fraction
-            return (x, y, a["terrain_z_m"](x, y)+1.65)
-
         if code == "A15_A16":
             return cave_point(1.0, 0.0, 1.85), aim(normal)
         if code in ("A17", "PAUSE_CONTACT"):
@@ -6635,35 +6630,47 @@ def build_omniscient_edit():
         if code == "PAUSE_REVELATION":
             return cave_point(1.0, 0.0, 1.85), aim(normal)
         if code in ("B1", "PAUSE_OBSCURITE"):
-            contact = a["CAVE_CONTACT_POINT"]
-            bend = a["CAVE_INNER_BEND_POINT"]
-            beam = a["CAVE_SECOND_BEAM_POINT"]
-            exit_b = a["CAVE_EXIT_B_POINT"]
+            # Ordered in Thomas's PERSONAL direction after the 18 h contact.
+            # The two exterior waypoints are the same ones used by his actor
+            # trajectory; do not redirect the film camera towards A's summit.
+            path = (
+                a["CAVE_FISSURE_POINT"],
+                a["CAVE_CONTACT_POINT"],
+                a["CAVE_INNER_BEND_POINT"],
+                a["CAVE_SECOND_BEAM_POINT"],
+                a["CAVE_EXIT_B_POINT"],
+                a["CAVE_EXIT_B_CLEAR_POINT"],
+                a["CAVE_B_JOIN_POINT"],
+            )
+            lengths = [math.dist(p, q) for p, q in zip(path, path[1:])]
+            # Objective time runs backwards during B1. Each pair below is
+            # precisely the corresponding inverse-Thomas animation interval.
             if t >= 61.5:
-                # Inverse Thomas waits near the ring; the other silhouette
-                # is at the entrance, but the camera remains in the chamber.
-                return gallery_lens(contact, bend, 0.20), aim(inverse)
-            if t >= 61.15:
-                return gallery_lens(contact, bend, 0.55), aim(inverse)
-            if t >= 60.8:
-                return gallery_lens(bend, beam, 0.50), aim(inverse)
-            if t >= 60.35:
-                return gallery_lens(beam, exit_b, 0.45), aim(inverse)
-            # Leave the mouth with Thomas, then hand over to B2's exterior
-            # framing at the actual downhill join, not the shared A/B summit.
-            mouth_pose = (gallery_lens(beam, exit_b, 0.45), aim(inverse))
-            exterior_eye = (inverse[0]-14.0, inverse[1]+20.0,
-                            max(inverse[2]+9.0,
-                                a["terrain_z_m"](inverse[0]-14.0, inverse[1]+20.0)+2.0))
-            exterior_pose = (exterior_eye,
-                             (inverse[0], inverse[1], inverse[2]+1.1))
-            clear = a["CAVE_EXIT_B_CLEAR_POINT"]
-            clear_pose = ((clear[0], clear[1], clear[2]+1.65), aim(inverse))
-            # First move straight through the opening; only then move sideways
-            # and rise outside, avoiding a diagonal sweep through the last wall.
-            if t >= 60.28:
-                return blend_camera_pose(mouth_pose, clear_pose, (60.35-t)/0.07)
-            return blend_camera_pose(clear_pose, exterior_pose, (60.28-t)/0.08)
+                leg, fraction = 0, 1.0
+            elif t >= 61.15:
+                leg, fraction = 1, (61.5-t)/0.35
+            elif t >= 60.8:
+                leg, fraction = 2, (61.15-t)/0.35
+            elif t >= 60.35:
+                leg, fraction = 3, (60.8-t)/0.45
+            elif t >= 60.28:
+                leg, fraction = 4, (60.35-t)/0.07
+            else:
+                leg, fraction = 5, (60.28-t)/0.08
+            distance_along = sum(lengths[:leg]) + lengths[leg]*max(
+                0.0, min(1.0, fraction))
+            # Follow along the SAME polyline, about 4.5 m behind the actor.
+            # Unlike lerping between static stage lenses, this cannot sweep
+            # through Thomas when the objective time crosses a gallery bend.
+            camera_distance = max(0.0, distance_along-4.5)
+            for i, segment_length in enumerate(lengths):
+                if camera_distance <= segment_length or i == len(lengths)-1:
+                    u = min(1.0, camera_distance/max(0.001, segment_length))
+                    x = path[i][0]+(path[i+1][0]-path[i][0])*u
+                    y = path[i][1]+(path[i+1][1]-path[i][1])*u
+                    eye = (x, y, a["terrain_z_m"](x, y)+1.95)
+                    return eye, aim(inverse)
+                camera_distance -= segment_length
         raise RuntimeError("Unexpected F03 cave shot: " + code)
 
     def desired_pose(code, focus, offset, t):
