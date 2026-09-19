@@ -6320,7 +6320,35 @@ def build_omniscient_edit():
                        for i in range(3))
         return (x, y, z), target
 
+    def f07_17h_closure_pose(t):
+        """Keep the real convergence rock as a SIDE mask, not a grey screen.
+
+        The previous inverse-relative offset (-6, -8) looked straight through
+        CONVERGENCE_FOREGROUND_ROCK (centered at convergence x, y-2 m).
+        Approach from the open trail side, aiming at the two actual worldlines.
+        No cast, rock, collision, objective time or camera cut is altered.
+        """
+        inverse = a["eval_actor"]("THOMAS_INVERSE", t)
+        normal = a["eval_actor"]("THOMAS_NORMAL", t)
+        # In the final moments the inverse approaches the normal occurrence.
+        # Keep the inverse as subject when still near the bridge; gradually
+        # include the normal as both bodies approach the convergence rock.
+        together = cinematic_ease((2.25-t)/0.23)
+        subject = tuple(inverse[i]*(1.0-0.5*together)+
+                        normal[i]*0.5*together for i in range(3))
+        # A deliberate left-side sightline passes outside the low foreground
+        # rock in XY; preserve the large mountain-side rock on the opposite
+        # edge of frame instead of moving or hiding either physical volume.
+        eye_x = inverse[0]-12.0
+        eye_y = inverse[1]-8.0
+        eye_z = max(inverse[2]+4.8,
+                    a["terrain_z_m"](eye_x, eye_y)+2.0)
+        return ((eye_x, eye_y, eye_z),
+                (subject[0], subject[1], subject[2]+1.15))
+
     def desired_pose(code, focus, offset, t):
+        if code in ("B7_B8", "PAUSE_BOUCLE"):
+            return f07_17h_closure_pose(t)
         if code in ("PAUSE_INTRO", "A1"):
             family = f01_family_pose(t)
             if code == "PAUSE_INTRO" or t <= 0.55:
