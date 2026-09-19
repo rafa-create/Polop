@@ -1680,22 +1680,15 @@ spawn_sphere(
     "Evenements"
 )
 
-# Rocher placé sur le côté de A, assez proche pour permettre un masque caméra.
+# Remove the large CONVERGENCE_ROCK box ahead of normal Thomas: it blocks
+# the inverse's approach. Preserve the low foreground outcrop BEHIND normal
+# Thomas for the canonical partial mask of the 17h00 collision.
 spawn_box(
-    "CONVERGENCE_ROCK",
-    V(
-        (conv_x+2.5)*100,
-        (conv_y+5.0)*100,
-        (terrain_z_m(conv_x+2.5, conv_y+5.0)+2.4)*100
-    ),
-    (900, 450, 480),
-    MAT_ROCK,
-    "MicroGeo/Convergence",
-    unreal.Rotator(0, 20, 0)
+    "CONVERGENCE_FOREGROUND_ROCK",
+    V(conv_x*100, (conv_y-2.0)*100,
+      (terrain_z_m(conv_x, conv_y-2.0)+1.5)*100),
+    (380, 140, 300), MAT_ROCK, "MicroGeo/Convergence"
 )
-
-# Remove the foreground box that blocked the approach to normal Thomas.
-# Keep CONVERGENCE_ROCK beside A for the canonical partial collision mask.
 
 # Micro-zone caverne V05 : shell lisible construit sur l'axe entrée -> contact.
 # Largeur intérieure ~4,4 m ; hauteur libre ~3,2 m. Aucune masse n'est placée
