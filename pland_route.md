@@ -16,10 +16,13 @@ Objectif : repartir du Git sur un autre ordinateur sans dépendre d'un ancien pr
 - [x] `.gitignore` Unreal.
 - [x] `.gitattributes` préparé pour Git LFS.
 - [x] Documentation de l'environnement reproductible.
-- [ ] Projet Unreal bootstrapable depuis zéro — GitHub issue **#41**.
-- [ ] Smoke test sur une deuxième machine.
+- [x] Projet Unreal de démarrage versionné (`polop.uproject`, `Config/Default*.ini`, `Content/Main.umap` via LFS), ouverture et run local réussis — issue **#41** clôturée sur ce **jalon pratique accepté** le 19/09/2026.
+- [x] Nouveau clone local depuis GitHub : `.uproject` et `Main.umap` correctement récupérés via LFS.
+- [ ] Run depuis ce clone isolé / essai sur un autre PC : **non effectués, non demandés pour ce jalon**. À revalider si une nouvelle machine révèle un problème.
 
-**Critère de sortie :** `git clone → ouvrir projet → lancer previz_polop.py → obtenir un run + rapport`, sans préparation manuelle cachée.
+**Preuve :** UE 5.8.2, run local `20260919_084218_028677`, rapport `OVERALL: OK` (35 OK / 0 WARN / 0 FAIL / 0 BLOCKER). La carte de travail et la séquence omnisciente ont été contrôlées visuellement. Le succès n'est pas une garantie de portabilité intermachines ni d'adaptation cinématographique finale. Lire `AGENTS.md` et `docs/ENVIRONNEMENT_REPRODUCTIBILITE.md`.
+
+**Critère pratique accepté :** `git clone → ouvrir polop.uproject → lancer Unreal/previz_polop.py → obtenir un run + rapport`, sans préparation manuelle du Landscape.
 
 ## PHASE 2 — Vérité physique
 
@@ -120,7 +123,7 @@ Quand quelque chose ne marche pas à l'image, identifier d'abord **la couche res
 
 ## Priorité immédiate
 
-1. **#41** — reproductibilité totale depuis Git / autre machine ;
+1. **#41** — bootstrap local livré et issue clôturée (limite : aucune validation intermachines) ;
 2. **#44** — vérité physique fermeture / anneau / mousqueton / grotte ;
 3. **#47** — séparation réelle Thomas inversé / Éva-Léa vers 17h58 et absence de révélation prématurée ;
 4. **#45** — validation automatique caméra ;
