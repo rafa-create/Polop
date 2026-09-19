@@ -5674,6 +5674,30 @@ def character_performance(name, objective_time):
         # unsuspected body. The prior weighting rotated him the wrong way.
         weight = cinematic_ease((2.11-t)/0.07)
         yaw += (a["unwrap_angle"](yaw, closure_yaw)-yaw)*weight
+    # F01: same objective-time family glances in both A2 and B9 readings.
+    # Stock mannequin root yaw is a readable placeholder for head/eye acting.
+    if name in ("EVA", "LEA", "THOMAS_NORMAL") and 0.08 <= t <= 0.70:
+        # Shared opening joke; everyone remains on their approved worldline.
+        other = ("THOMAS_NORMAL" if name == "EVA" else "EVA")
+        look = a["eval_actor"](other, t)
+        look_yaw = math.degrees(math.atan2(
+            look[1]-p[1], look[0]-p[0]))-90.0
+        moment = ((0.10, 0.46) if name == "EVA" else
+                  (0.20, 0.65) if name == "THOMAS_NORMAL" else (0.28, 0.58))
+        weight = (cinematic_ease((t-moment[0])/0.045) *
+                  (1.0-cinematic_ease((t-moment[1])/0.055)))
+        yaw += (a["unwrap_angle"](yaw, look_yaw)-yaw)*0.68*weight
+    if name in ("EVA", "LEA") and 52.0 <= t < 57.0:
+        # Eva first acknowledges Lea; then both watch the only return passage.
+        # No movement, cave entrance reveal or alteration of F03 geometry.
+        start = 54.15 if name == "EVA" else 53.95
+        look = (a["eval_actor"]("LEA", t) if name == "EVA" and t < 53.0
+                else a["eval_actor"]("EVA", t) if name == "LEA" and t < 53.0
+                else a["CAVE_GUARD_POINT"])
+        look_yaw = math.degrees(math.atan2(
+            look[1]-p[1], look[0]-p[0]))-90.0
+        attention = cinematic_ease((t-start)/0.16)
+        yaw += (a["unwrap_angle"](yaw, look_yaw)-yaw)*attention
     # F07: provisional, deterministic contact acting. The STOCK mannequin
     # has no bespoke impact clip or planted-foot IK: tip the upper/root body
     # very slightly as inverse Thomas recoils into the collision, then return
@@ -5691,6 +5715,13 @@ def character_performance(name, objective_time):
         closure = character_performance("THOMAS_NORMAL", 2.0)
         yaw, moving, phase = closure["yaw"], closure["moving"], closure["phase"]
         pitch, roll = closure["pitch"], closure["roll"]
+    if name == "THOMAS_NORMAL" and 7.65 <= t <= 8.0:
+        # Shared closing glance to Eva, evaluated identically in A2 and B9.
+        eva = a["eval_actor"]("EVA", t)
+        eva_yaw = math.degrees(math.atan2(
+            eva[1]-p[1], eva[0]-p[0]))-90.0
+        weight = cinematic_ease((t-7.65)/0.11)
+        yaw += (a["unwrap_angle"](yaw, eva_yaw)-yaw)*0.45*weight
     return dict(foot=p, yaw=yaw, pitch=pitch, roll=roll,
                 moving=moving, phase=phase,
                 # At the exact closure both branches share the same body pose.
