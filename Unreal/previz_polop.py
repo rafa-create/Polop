@@ -6537,6 +6537,41 @@ def build_omniscient_edit():
                         raise RuntimeError("F03 A15 lens looks through %s at %.3f" %
                                            (label, progress))
 
+    # F03: actual UE mesh tracing in three dimensions. The old XY elliptical
+    # masks can miss a slab above the lens or a diagonal ray through a side
+    # rock. Run this AFTER the Landscape and all cave meshes are in the world.
+    # Keep the blind-spur meshes: the women's sightline is an independent test.
+    def f03_trace_scene(start, end, label, progress, radius_m=0.0):
+        pos = unreal.Vector(*(float(v)*100.0 for v in start))
+        dest = unreal.Vector(*(float(v)*100.0 for v in end))
+        # Query known world geometry rather than relying on collision presets
+        # of spawned BasicShapes. An actual trace catches the Landscape and
+        # collision-enabled meshes; audit the remaining candidate meshes with
+        # their component bounds below if their trace response is disabled.
+        trace_type = (unreal.TraceTypeQuery.TRACE_TYPE_QUERY1)
+        hit = unreal.SystemLibrary.line_trace_single(
+            world, pos, dest, trace_type, True, [],
+            unreal.DrawDebugTrace.NONE, True)
+        if hit:
+            data = hit.to_tuple()
+            blocking = bool(data[0])
+            actor = data[9]
+            if blocking and actor is not None:
+                name = actor.get_actor_label()
+                raise RuntimeError(
+                    "F03 A15 %s collides with %s at progress %.3f" %
+                    (label, name, progress))
+
+    def f03_mesh_clearance(eye, target, progress):
+        # Ray length and mesh collision are evaluated in actual Unreal units.
+        # Avoid tracing through Thomas himself: only the approach to the mouth
+        # and the near field of the camera must be empty of static geometry.
+        if progress >= 0.28:
+            f03_trace_scene(eye, target, "look_ray", progress)
+        if progress >= 0.12:
+            f03_trace_scene(eye, (eye[0], eye[1], eye[2]-0.80),
+                            "near_floor", progress)
+
     # F01 camera-only pass: no actor movement or retiming. At t=0 Lea
     # already walks ahead of Thomas/Eva in the existing validated blocking.
     # Show all three honestly in a wide frame, then follow Lea to the bridge.
