@@ -7157,12 +7157,58 @@ def _omniscient_review_tick(delta_seconds):
         _OMNI_REVIEW_BUSY = False
 
 
+def configure_poc_dynamic_shadows():
+    """Configure shadows in the generated work map, never in /Game/Main.
+
+    Reuse the source map's sun when available; create a provisional sun only
+    when the map has no DirectionalLight. Unreal render validation is required.
+    """
+    directional = [actor for actor in actors.get_all_level_actors()
+                   if isinstance(actor, unreal.DirectionalLight)]
+    if directional:
+        sun = directional[0]
+        created = False
+    else:
+        sun = actors.spawn_actor_from_class(
+            unreal.DirectionalLight, unreal.Vector(0.0, 0.0, 0.0))
+        sun.set_actor_label("PZ_DYNAMIC_SUN")
+        sun.set_folder_path("POLOP/Lumiere")
+        sun.set_actor_rotation(unreal.Rotator(-40.0, -35.0, 0.0), False)
+        created = True
+
+    sun_component = sun.get_component_by_class(unreal.DirectionalLightComponent)
+    if sun_component is None:
+        raise RuntimeError("POLOP shadows: directional light has no component")
+    # Preserve an existing sun's direction, intensity and mobility.
+    # Only a newly created fallback sun needs an explicit movable setting.
+    if created:
+        sun_component.set_editor_property("mobility", unreal.ComponentMobility.MOVABLE)
+    sun_component.set_editor_property("cast_shadows", True)
+
+    shadow_components = 0
+    for actor in actors.get_all_level_actors():
+        label = actor.get_actor_label()
+        if not (label.startswith("PZ_") or actor == _GEOGRAPHY["landscape"]):
+            continue
+        for component in actor.get_components_by_class(unreal.PrimitiveComponent):
+            if isinstance(component, unreal.CameraComponent):
+                continue
+            component.set_editor_property("cast_shadow", True)
+            shadow_components += 1
+
+    journal("poc_dynamic_shadows_configured",
+            sun=sun.get_actor_label(), provisional_sun=created,
+            components=shadow_components,
+            note="Configuration only; verify shadows in an actual Unreal render")
+
+
 def finish_generation():
     global _ANIMATION
     route_path = _GEOGRAPHY["route_path"]
     run_world_coherence_gate(_GEOGRAPHY["landscape"], route_path)
     cleanup_non_animation_polop_cameras()
     _ANIMATION = run_animation_v05_with_legacy_landscape_mapping(_GEOGRAPHY["landscape"])
+    configure_poc_dynamic_shadows()
     validate_narrative_motion()
     audit_bridge_family_blocking()
     validate_sequencer_evaluation()
