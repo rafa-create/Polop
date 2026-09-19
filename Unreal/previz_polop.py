@@ -6412,38 +6412,27 @@ def build_omniscient_edit():
         return (x, y, z), target
 
     def f07_17h_closure_pose(t):
-        """Keep the real convergence rock as a SIDE mask, not a grey screen.
+        """Stay chiefly with normal Thomas: inverse emerges only at the end.
 
-        The previous inverse-relative offset (-6, -8) looked straight through
-        CONVERGENCE_FOREGROUND_ROCK (centered at convergence x, y-2 m).
-        Approach from the open trail side, aiming at the two actual worldlines.
-        No cast, rock, collision, objective time or camera cut is altered.
+        Follow the existing A-side line of travel from a lateral viewpoint.
+        The two occurrences, real rock, closure instant and worldline are
+        unchanged. The viewer sees the accident; inverse Thomas may not see
+        normal Thomas until he rounds the physical rock.
         """
-        inverse = a["eval_actor"]("THOMAS_INVERSE", t)
-        normal = a["eval_actor"]("THOMAS_NORMAL", t)
-        # In the final moments the inverse approaches the normal occurrence.
-        # Keep the inverse as subject when still near the bridge; gradually
-        # include the normal as both bodies approach the convergence rock.
-        together = cinematic_ease((2.25-t)/0.23)
-        subject = tuple(inverse[i]*(1.0-0.5*together)+
-                        normal[i]*0.5*together for i in range(3))
-        # A deliberate left-side sightline passes outside the low foreground
-        # rock in XY; preserve the large mountain-side rock on the opposite
-        # edge of frame instead of moving or hiding either physical volume.
-        eye_x = inverse[0]-12.0
-        eye_y = inverse[1]-8.0
-        eye_z = max(inverse[2]+4.8,
-                    a["terrain_z_m"](eye_x, eye_y)+2.0)
-        return ((eye_x, eye_y, eye_z),
-                (subject[0], subject[1], subject[2]+1.15))
+        return f07_normal_view(t)
 
     def desired_pose(code, focus, offset, t):
         if code in ("B6_REPAIR", "PAUSE_MOUSQUETON"):
             return f07_carabiner_view(t)
         if code in ("B7_B8", "PAUSE_BOUCLE"):
             return f07_17h_closure_pose(t)
-        if code == "A2" and t <= 2.35:
-            return f07_normal_view(t)
+        if code == "A2":
+            # No hard camera jump when A2 returns to its original Lea/Eva
+            # coverage. The same objective-time pause is also replayed in B9.
+            normal_view = f07_normal_view(t)
+            lea_view = desired_pose("A2_LEA_CONTINUATION", "LEA", (-5, -9, 4), t)
+            return blend_camera_pose(normal_view, lea_view,
+                                     (t-2.28)/0.75)
         if code in ("PAUSE_INTRO", "A1"):
             # Used only as the END pose of the previous beat in camera handover.
             return f01_opening_pose(code, 1.0, t)
