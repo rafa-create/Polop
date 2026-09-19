@@ -1,6 +1,6 @@
 # F03 — Disparition : terrasse, paroi, précipice, chemin gardé
 
-**Statut : À DISCUTER.** Type : enjeu causal majeur / géographie et mise en scène.
+**Statut : CORRECTION PUBLIÉE — À TESTER DANS UNREAL, NON VALIDÉE.** Type : enjeu causal majeur / géographie et mise en scène.
 
 ## Observation dans la vidéo
 
@@ -21,3 +21,17 @@ Tracer depuis leurs yeux les lignes de vue vers : retour sur A, terrasse entièr
 ## Critères de validation
 
 Une unique vue (ou un mouvement très court) situe paroi, quelques m² praticables et vide; le parcours filmé de la recherche exclut une autre sortie visible. Les femmes ne voient ni l'entrée ni Thomas y pénétrer; la caméra ne révèle la cavité **qu'en A15**. Aucun déplacement ou occultation n'est uniquement un tour de caméra.
+
+## Première implémentation approuvée (19/09/2026)
+
+**Commit script :** `8d1ae58383753e39598ec30710bc4576e1b5b37a`.
+
+- Thomas quitte le chemin A et entre dans **la même poche près du précipice** que fouilleront ensuite Éva et Léa : motif banal, pause toilettes. Il contourne physiquement le gros bloc situé à l'extrémité apparente de la paroi, passe derrière lui, puis entre dans une **ouverture sombre réelle** à l'abri de leurs regards. La grotte V05 est rapprochée de cette extrémité; ses points internes et les deux parcours de Thomas sont raccordés à cette nouvelle bouche, sans changer le casting articulé.
+- Deux volumes de roche constituent le masque physique : l'un depuis le chemin A, l'autre depuis les positions de recherche. Les femmes vont vers la poche mais ne contournent pas l'extrémité qui leur paraît bouchée. Un filet d'ombre à l'intérieur suggère une roche continue jusqu'au changement de point de vue A15; ne pas afficher la bouche avant.
+- Le Landscape conserve sa rupture de terrain à proximité immédiate de la petite zone. Le gros bloc vertical de 21 m ajouté devant la falaise a été supprimé pour ne pas cacher le précipice réel.
+- A11 reste cadré du côté d'Éva et Léa; A12 accompagne leur déplacement avant de décaler la caméra du côté du vide. A14 garde ce point de vue pendant leur départ. A15 reste seul détenteur de la révélation.
+- Une vérification **2D indicative** des segments de trajet des deux Thomas et des angles de vue des femmes par rapport aux volumes des deux rochers est intégrée au script. Elle ne remplace pas la vérification 3D des hauteurs, collisions, ombres et silhouettes dans Unreal.
+
+**À vérifier dans le prochain run :** 1) la génération complète réussit; 2) les deux femmes restent effectivement devant l'impasse apparente et ne voient ni Thomas entrer ni l'ouverture; 3) la terrasse paraît petite et fermée, le vide reste lisible; 4) le chemin réel de Thomas et celui de son occurrence inversée ne traversent pas les roches, les talus ou le bord; 5) la grotte ne se dévoile qu'en A15; 6) les mannequins articulés et les 17 pauses restent fonctionnels. La variante anglaise/UMG des sous-titres n'est **pas** considérée comme validée par cette fiche.
+
+**Important :** statut « À TESTER » ne signifie **pas** que la mise en scène est validée. Attendre la vidéo/captures et l'accord de l'utilisateur avant toute autre fiche.
