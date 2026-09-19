@@ -6802,6 +6802,9 @@ def finish_generation():
             "ring and environmental effects not yet animated",
         ],
     )
+    # Only a fully successful, saved run may be reused by the opt-in camera
+    # mode. Cache survives Execute Python Script within this editor session.
+    remember_live_omniscient_world()
     if CLEANUP_OLD_RUNS:
         cleanup_old_run_artifacts()
     if "-POLOPPOVReview" in unreal.SystemLibrary.get_command_line():
@@ -6991,12 +6994,69 @@ def wait_for_landscape(delta_seconds):
         record_failure(exc)
 
 
+def remember_live_omniscient_world():
+    """Save references, not generated assets, for same-session camera-only reruns."""
+    if _ANIMATION is None or _GEOGRAPHY is None:
+        raise RuntimeError("Cannot cache an unfinished POLOP run")
+    cache = types.ModuleType(_CAMERA_CACHE_KEY)
+    cache.animation = _ANIMATION
+    cache.geography = _GEOGRAPHY
+    cache.signature = _CAMERA_BASE_SIGNATURE
+    cache.world_path = editor_subsystem.get_editor_world().get_path_name()
+    cache.work_map = WORK_MAP
+    cache.asset_root = RUN_ASSET_ROOT
+    cache.full_run_id = RUN_ID
+    sys.modules[_CAMERA_CACHE_KEY] = cache
+    journal("camera_only_cache_ready", map=WORK_MAP,
+            full_run_id=RUN_ID, enabled_next_time=True)
+
+
+def rerun_existing_camera_only():
+    """No level duplication, no Landscape import, no character/caption baking."""
+    global _ANIMATION, _GEOGRAPHY, world, WORK_MAP, RUN_ASSET_ROOT
+    cache = sys.modules.get(_CAMERA_CACHE_KEY)
+    if cache is None:
+        raise RuntimeError(
+            "FAST_CAMERA_ONLY needs one successful FULL run using this version "
+            "of the script, in this Unreal session. Set False and run once.")
+    if cache.signature != _CAMERA_BASE_SIGNATURE:
+        raise RuntimeError(
+            "FAST_CAMERA_ONLY: geography/actor source changed. "
+            "Set False for a new full run.")
+    if not cache.work_map.startswith(RUN_MAP_ROOT + "/Previz_"):
+        raise RuntimeError("FAST_CAMERA_ONLY: cached map is not a generated POLOP work map.")
+    world = editor_subsystem.get_editor_world()
+    if world.get_path_name() != cache.world_path:
+        raise RuntimeError(
+            "FAST_CAMERA_ONLY: wrong level open. Reopen the cached generated "
+            "work map in the same Unreal session, or set False for a full run.")
+    _ANIMATION = cache.animation
+    _GEOGRAPHY = cache.geography
+    WORK_MAP = cache.work_map
+    RUN_ASSET_ROOT = cache.asset_root
+    journal("camera_only_start", map=WORK_MAP,
+            reused_full_run=cache.full_run_id,
+            scope="existing omniscient camera keys only")
+    build_omniscient_edit()
+    unreal.LevelSequenceEditorBlueprintLibrary.pause()
+    if not unreal.get_editor_subsystem(unreal.LevelEditorSubsystem).save_current_level():
+        raise RuntimeError("FAST_CAMERA_ONLY: failed to save generated work map")
+    play_omniscient_film(play=False)
+    journal("complete", status="CAMERA_ONLY_REUSED_WORLD_NOT_FULL_REVALIDATION",
+            map=WORK_MAP, source_full_run=cache.full_run_id,
+            skipped=["Landscape", "cast", "character animation", "captions",
+                     "full story/geometry validation"])
+
+
 def main():
     global world, _GEOGRAPHY, _TICK_HANDLE, _STAGE_STARTED, _SOURCE_V11, _SOURCE_V05
     # Check before opening a different map; never discard an unsaved user level.
     dirty = unreal.EditorLoadingAndSavingUtils.get_dirty_map_packages()
     if dirty:
         raise RuntimeError("Save your current level before running POLOP; source levels are never saved automatically.")
+    if FAST_CAMERA_ONLY:
+        rerun_existing_camera_only()
+        return
     # This is deliberately before duplicating /Game/Main or generating terrain.
     # The native subtitle renderer needs an editor restart after the plugin
     # is enabled in polop.uproject. Never silently return to blurry 3D cards.
