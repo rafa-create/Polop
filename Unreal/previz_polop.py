@@ -5544,9 +5544,9 @@ def add_human_performances(sequence, samples):
             values = tuple(v*100.0 for v in pose["foot"])+(0.0, 0.0, yaw)+(scale,)*3
             frame = unreal.FrameNumber(frame_index)
             # bHidden=True signifie invisible : inverser la valeur narrative.
-            visibility_channel.add_key(
-                frame, not bool(pose["visible"]),
-                interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+            # MovieSceneBoolChannel.add_key n'accepte pas interpolation=.
+            # Ses cles discretes ont naturellement un comportement en palier.
+            visibility_channel.add_key(frame, not bool(pose["visible"]))
             for channel, value in zip(channels, values):
                 channel.add_key(frame, float(value), interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
             clip = a["human_animations"][pose["moving"]]
@@ -6101,7 +6101,8 @@ def build_omniscient_edit():
         return card_attach(actor, name, (226.0, 0.0, -52.0))
 
     def card_visibility(actor, first_frame, last_frame):
-        # bHidden=True hors carton. Les clés CONSTANT ne créent aucun fondu.
+        # bHidden=True hors carton. MovieSceneBoolChannel est discret :
+        # add_key(frame, valeur) sans interpolation= sous Unreal 5.8.
         binding = ls.add_actors([actor])[0]
         track = binding.add_track(unreal.MovieSceneVisibilityTrack)
         track.set_property_name_and_path("bHidden", "bHidden")
@@ -6110,12 +6111,9 @@ def build_omniscient_edit():
         channel = section.get_all_channels()[0]
         channel.set_default(True)
         if first_frame > 0:
-            channel.add_key(unreal.FrameNumber(0), True,
-                            interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
-        channel.add_key(unreal.FrameNumber(first_frame), False,
-                        interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
-        channel.add_key(unreal.FrameNumber(last_frame), True,
-                        interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+            channel.add_key(unreal.FrameNumber(0), True)
+        channel.add_key(unreal.FrameNumber(first_frame), False)
+        channel.add_key(unreal.FrameNumber(last_frame), True)
 
     # A9 is hundreds of metres from the bridge: a brief optical push makes
     # the 25 m crossing legible without a rapid physical flight or a camera cut.
