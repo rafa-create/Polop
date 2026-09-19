@@ -45,6 +45,11 @@ F03_GEOMETRY_ONLY = os.environ.get("POLOP_F03_GEOMETRY_ONLY", "") == "1"
 # landscape import, character bake, subtitle rebuild or new film sequence.
 FAST_CAMERA_ONLY = False
 
+# False: spectator-readable narrative captions; no technical notes/spoilers in A.
+# True: optional PREVIZ diagnostic notes about unfinished effects and acting.
+# Changing this setting (or any subtitles) requires FAST_CAMERA_ONLY=False.
+SUBTITLE_REVIEW_MODE = False
+
 # Unreal restores/removes __file__ once Execute Python Script returns. Slate
 # callbacks run later, so retain our own immutable source path while it exists.
 SOURCE_SCRIPT_PATH = os.path.abspath(__file__)
@@ -6154,107 +6159,117 @@ def build_omniscient_edit():
     # English-only narrative annotations. No text is shortened or repositioned
     # to conceal a rendering problem; the screen-space renderer fixes clarity.
     # Narrative order, pause lengths and objective-time trajectories are unchanged.
+    # The fixed 17 narrative PAUSE beats stay in the film. The default text
+    # gives a first-time viewer orientation at the instant it becomes useful;
+    # it never advertises the B-side carabiner's future repair during A.
+    # Subtitle dialogue is authored separately at the actual scene beat.
     pause_cards = {
         "PAUSE_INTRO": (
-            "THE LOOP - PREVISUALIZATION",
-            "Thomas, Eva and Lea begin their hike."
+            "THOMAS, EVA & LEA",
+            "A family hike in the late afternoon."
         ),
         "PAUSE_DETOUR": (
-            "LEA'S DETOUR",
-            "Lea crossed the bridge to path B.\n"
-            "Thomas asks her to return by the longer\n"
-            "hillside route, not across the bridge."
+            "THE LONGER WAY BACK",
+            "Lea is on path B. She returns to her parents\n"
+            "on A by the hillside path, not the short bridge."
         ),
         "PAUSE_THOMAS": (
-            "THOMAS IS DISTRACTED",
-            "Eva and Lea enjoy the walk.\n"
-            "Thomas lags behind and keeps\n"
-            "checking the time."
+            "UP THE MOUNTAIN",
+            "Eva and Lea keep walking. Thomas lags behind."
         ),
         "PAUSE_CHEMINS": (
-            "REMEMBER THESE THREE ROUTES",
-            "A: the family's uphill path.\n"
-            "B: the path on the opposite slope.\n"
-            "A short bridge or a long hillside route connects them."
+            "THE TWO PATHS",
+            "A: the family's uphill trail. B: the opposite slope.\n"
+            "The short bridge and the longer hillside path connect them."
         ),
         "PAUSE_ATTACHE": (
-            "THE BRIDGE, LATER",
-            "The short bridge and the longer hillside path\n"
-            "still connect A and B."
+            "THE BRIDGE BELOW",
+            "The family continues uphill, leaving the bridge behind."
         ),
         "PAUSE_DEPART": (
             "5:50 P.M. - THOMAS STEPS AWAY",
-            "Thomas says he is taking a break.\n"
-            "He enters a small rocky area.\n"
-            "Eva and Lea wait on the path."
+            "Thomas goes into a small rocky area.\n"
+            "Eva and Lea stay on the trail."
         ),
         "PAUSE_ATTENTE": (
-            "THEY WATCHED THE ONLY WAY BACK",
-            "Thomas should have returned this way.\n"
-            "They watch the only route back:\n"
-            "no one has passed them."
+            "THEY WAIT",
+            "Eva and Lea can see the only visible way back\n"
+            "from the rocky area. Thomas has not returned."
         ),
         "PAUSE_RECHERCHE": (
-            "AN IMPOSSIBLE DISAPPEARANCE",
-            "The area is tiny: rocks, a cliff wall,\n"
-            "then the precipice. Thomas did not return.\n"
-            "Eva fears he may have fallen."
+            "NO SIGN OF THOMAS",
+            "The rocky space ends at a cliff.\n"
+            "Eva and Lea cannot find Thomas."
         ),
         "PAUSE_REVELATION": (
-            "WHAT THEY COULD NOT SEE",
-            "Behind a bend in the rock face\n"
-            "lies the entrance to a small cave.\n"
-            "Thomas is inside, wearing headphones."
+            "BEHIND THE ROCK FACE",
+            "Thomas is inside a hidden cave.\n"
+            "His headphones kept him from hearing their calls."
         ),
         "PAUSE_CONTACT": (
             "6:00 P.M. - TIME REVERSES",
-            "In the story, Thomas touches a ring\n"
-            "and his direction in time reverses.\n"
-            "The ring and effects are not yet animated."
+            "Thomas touches a ring. He begins moving backward\n"
+            "through time while the world follows its usual course."
         ),
         "PAUSE_OBSCURITE": (
-            "TWO SETS OF EYES IN THE DARK",
-            "Inverted Thomas spots a figure:\n"
-            "his eyes have adjusted to the darkness.\n"
-            "The other Thomas cannot see him yet."
+            "A FIGURE IN THE DARK",
+            "Inverted Thomas can see a figure near the entrance;\n"
+            "the figure cannot make him out in the darkness."
         ),
         "PAUSE_FAMILLE": (
-            "TWO PATHS, THE SAME MOMENT",
-            "Eva and Lea go down path A to get help.\n"
-            "Inverted Thomas descends path B,\n"
-            "moving backward through time."
+            "TWO PATHS, THE SAME TIME",
+            "Eva and Lea descend path A to get help.\n"
+            "Thomas follows path B toward earlier moments."
         ),
         "PAUSE_RETOUR": (
-            "THE LANDSCAPE MOVES BACKWARD",
-            "For inverted Thomas, raindrops, leaves\n"
-            "and stones retrace their movements.\n"
-            "These environmental effects are not built yet."
+            "THOMAS MOVES INTO THE PAST",
+            "From his point of view, the landscape moves backward."
         ),
         "PAUSE_PONT_RETOUR": (
-            "ABOUT 5:30 P.M. - THE SAME BRIDGE",
-            "Thomas finds the carabiner already\n"
-            "unclipped. He has not yet reached\n"
-            "the moment when Lea crossed the bridge."
+            "ABOUT 5:30 P.M. - THE BRIDGE",
+            "On path B, Thomas finds the carabiner hanging loose."
         ),
         "PAUSE_MOUSQUETON": (
-            "5:01 P.M. - ON THE B BANK",
-            "The carabiner is now secured. Inverted Thomas\n"
-            "checks the fastening, then crosses B to A.\n"
-            "Hand choreography is still a blockout."
+            "5:01 P.M. - THE B BANK",
+            "Thomas has reattached the carabiner and checked it.\n"
+            "He now crosses the bridge from B to A."
         ),
         "PAUSE_BOUCLE": (
-            "5:00 P.M. - ONE ACCIDENTAL COLLISION",
-            "At the same instant, the two Thomases collide\n"
-            "and the ring touches Thomas. Neither contact\n"
-            "is identified as the certain cause of his return."
+            "5:00 P.M. - THE SAME INSTANT",
+            "The two Thomases collide as the ring touches Thomas.\n"
+            "Neither contact is identified as the certain cause."
         ),
         "PAUSE_ISSUE": (
-            "THE SAME MOMENT, A DIFFERENT VIEW",
-            "We return to Thomas in normal time,\n"
-            "as at the beginning of the film.\n"
-            "He asks Lea to take the hillside route."
+            "THE SAME MOMENT AGAIN",
+            "Thomas is back on path A. Lea is still on B."
         ),
     }
+    if SUBTITLE_REVIEW_MODE:
+        # Optional diagnostic wording; never enabled for the spectator pass.
+        pause_cards["PAUSE_REVELATION"] = (
+            "CAVE REVEAL - PREVIZ",
+            "The concealed cave entrance and Thomas's headphones\n"
+            "still require final acting and sound."
+        )
+        pause_cards["PAUSE_CONTACT"] = (
+            "6:00 P.M. - INVERSION PREVIZ",
+            "Ring/hand contact and environmental reversal\n"
+            "are narrative beats; their animations are pending."
+        )
+        pause_cards["PAUSE_RETOUR"] = (
+            "INVERTED LANDSCAPE - PREVIZ",
+            "The reversed environmental effects are not yet animated."
+        )
+        pause_cards["PAUSE_MOUSQUETON"] = (
+            "5:01 P.M. - B-SIDE REPAIR PREVIZ",
+            "The shared carabiner state is keyed in both time directions.\n"
+            "Finger and attachment acting is not yet finished."
+        )
+        pause_cards["PAUSE_BOUCLE"] = (
+            "5:00 P.M. - CONTACT PREVIZ",
+            "The one collision and simultaneous ring contact are planned.\n"
+            "Contact acting, ring and physical occlusion need visual review."
+        )
 
     # F03: A15 alone travels along the real cliff-side bend around the
     # outcrop. Previous version looked through a lateral entrance rock.
@@ -6751,11 +6766,13 @@ def build_omniscient_edit():
         a1_start = a1_shot["start_frame"]
         a1_end = a1_shot["end_frame"]
         opening_cues = (
-            (0.25, 2.75, "EVA: Is it much farther to the top?"),
-            (2.90, 5.35, "THOMAS: No, no. After this climb,\njust all the others."),
-            (5.55, 7.90, "EVA: Careful."),
-            (8.15, 10.25, "LEA crosses the short bridge from path A to B."),
-            (10.40, 11.90, "LEA: Are you coming?"),
+            # Lea steps onto the bridge at objective t=.75 (A1 screen ~5 s),
+            # reaches B at t=1.25 (~7 s), then turns to address her parents.
+            (0.25, 2.30, "EVA: Is it much farther to the top?"),
+            (2.45, 4.20, "THOMAS: No, no. After this climb,\njust all the others."),
+            (4.35, 5.35, "EVA: Careful."),
+            (8.00, 9.35, "LEA: Are you coming?"),
+            (9.50, 11.90, "EVA: We're coming. But that's not the right trail."),
         )
         last_dialogue_end = a1_start
         for cue_index, (cue_start_s, cue_end_s, cue_text) in enumerate(opening_cues):
