@@ -5,9 +5,10 @@ LA BOUCLE / POLOP - PREVIZ MASTER V10
 Portable: one readable Python file, no encoded payload or machine-specific paths.
 Unreal Engine 5.8: Tools > Execute Python Script, select this file.
 Prerequisite: /Game/Main contains one 1009x1009 Landscape (16x16 components).
-Save your current level before running. Every run duplicates /Game/Main into a
-new work map and creates assets under /Game/POLOP/Generated_V10/Runs/<run_id>.
-The source map and original materials/sequences are not overwritten.
+Save the current level before running. Full mode duplicates /Game/Main
+into a new work map; fast camera-only mode reuses the already generated work
+map and film IN PLACE. /Game/Main is never modified by fast camera mode.
+Keep a backup of a generated map before experimenting with camera-only runs.
 
 Diagnostics: every run is isolated under Saved/POLOP/Runs/<run_id>/ :
 keylog.jsonl, V11/, ANIMATION_V05/ and MASTER_V10/report_previz_v10.{json,txt,html}.
