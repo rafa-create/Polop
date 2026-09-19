@@ -6005,9 +6005,11 @@ def update_existing_omniscient_camera(shots, desired_pose, reveal_pose, reveal_c
                         raise RuntimeError(
                             "F03 A15 camera below terrain clearance at %.3f" % u)
                 else:
+                    requested = (f01_opening_pose(code, u, t)
+                                 if code in ("PAUSE_INTRO", "A1")
+                                 else desired_pose(code, focus, offset, t))
                     eye, target = blend_camera_pose(
-                        moving_origin, desired_pose(code, focus, offset, t),
-                        u*seconds/handover)
+                        moving_origin, requested, u*seconds/handover)
                     if focus != "CAVE" and (
                             previous_beat is None or previous_beat[1] != "CAVE"):
                         eye = (eye[0], eye[1],
@@ -6591,7 +6593,10 @@ def build_omniscient_edit():
                 if u >= 0.60 and eye[2] < a["terrain_z_m"](eye[0], eye[1]) + 1.25:
                     raise RuntimeError("F03 A15 camera below terrain clearance at %.3f" % u)
             else:
-                eye, target = blend_camera_pose(moving_origin, desired_pose(code, focus, offset, t),
+                requested = (f01_opening_pose(code, u, t)
+                             if code in ("PAUSE_INTRO", "A1")
+                             else desired_pose(code, focus, offset, t))
+                eye, target = blend_camera_pose(moving_origin, requested,
                                                 u*seconds/handover_seconds)
                 if focus != "CAVE" and (previous_beat is None or previous_beat[1] != "CAVE"):
                     eye = (eye[0], eye[1], max(eye[2], a["terrain_z_m"](eye[0], eye[1])+2.0))
