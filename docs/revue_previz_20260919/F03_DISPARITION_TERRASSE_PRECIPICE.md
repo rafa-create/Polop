@@ -34,4 +34,22 @@ Une unique vue (ou un mouvement très court) situe paroi, quelques m² praticabl
 
 **À vérifier dans le prochain run :** 1) la génération complète réussit; 2) les deux femmes restent effectivement devant l'impasse apparente et ne voient ni Thomas entrer ni l'ouverture; 3) la terrasse paraît petite et fermée, le vide reste lisible; 4) le chemin réel de Thomas et celui de son occurrence inversée ne traversent pas les roches, les talus ou le bord; 5) la grotte ne se dévoile qu'en A15; 6) les mannequins articulés et les 17 pauses restent fonctionnels. La variante anglaise/UMG des sous-titres n'est **pas** considérée comme validée par cette fiche.
 
+### Tester F03 sans avancer le chantier des sous-titres
+
+Le script principal conserve par défaut le nouveau système de sous-titres anglais, **non validé à ce stade**. Pour isoler uniquement F03, saisir dans la console Python de l'éditeur Unreal AVANT « Execute Python Script » :
+
+```python
+import os; os.environ["POLOP_F03_GEOMETRY_ONLY"] = "1"
+```
+
+Exécuter ensuite le `previz_polop.py` mis à jour, depuis une carte sauvegardée, et vérifier les scènes A10 à A15. Dans CE run de test, les 17 pauses restent sur la timeline **sans texte**; aucun plugin UMG n'est nécessaire. Les animations et la caméra restent présentes. Après le test, vider la variable dans la même console Python :
+
+```python
+import os; os.environ.pop("POLOP_F03_GEOMETRY_ONLY", None)
+```
+
+Puis fermer et rouvrir Unreal plus tard pour tester les vrais sous-titres avec la configuration normale. Ne pas considérer l'absence de texte pendant le test F03 comme une régression.
+
+Captures demandées pour la validation : A10 Thomas s'écarte; A11 ligne de vue des femmes vers l'unique sortie; A12–A13 (vue à hauteur humaine et caméra film) paroi + petite terrasse + bord du vide; A15 **première apparition** de l'entrée; vérifier également dans le journal l'absence d'erreur F03 et la fin de génération. Étiqueter les captures du même run.
+
 **Important :** statut « À TESTER » ne signifie **pas** que la mise en scène est validée. Attendre la vidéo/captures et l'accord de l'utilisateur avant toute autre fiche.
