@@ -7185,6 +7185,25 @@ def configure_poc_dynamic_shadows():
         sun_component.set_editor_property("mobility", unreal.ComponentMobility.MOVABLE)
     sun_component.set_editor_property("cast_shadows", True)
 
+    # The work map inherits /Game/Main's lighting settings. A static or
+    # stationary light can request a light build even when dynamic shadows work.
+    # Keep this change local to the duplicated work map; never edit /Game/Main.
+    settings = world.get_world_settings()
+    settings.set_editor_property("force_no_precomputed_lighting", True)
+    movable_lights = 0
+    for light_actor in actors.get_all_level_actors():
+        if not isinstance(light_actor, unreal.Light):
+            continue
+        light_component = light_actor.get_component_by_class(unreal.LightComponent)
+        if light_component is None:
+            continue
+        light_component.set_editor_property("mobility", unreal.ComponentMobility.MOVABLE)
+        movable_lights += 1
+    journal("poc_precomputed_lighting_disabled",
+            work_map=WORK_MAP, movable_lights=movable_lights,
+            note="If an existing map still reports unbuilt lighting, rebuild/clear "
+                 "its old light data once in Unreal; do not hide screen messages.")
+
     shadow_components = 0
     for actor in actors.get_all_level_actors():
         label = actor.get_actor_label()
