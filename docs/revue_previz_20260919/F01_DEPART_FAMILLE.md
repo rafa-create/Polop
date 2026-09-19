@@ -1,6 +1,6 @@
 # F01 — Présenter la famille et garder l'arc émotionnel
 
-**Statut : CADRAGE INITIAL À REPRENDRE ; B9 À TESTER DANS UNREAL — NON VALIDÉE.** Type : mise en scène incomplète / éléments de scénario non encore animés.
+**Statut actuel : PASSES DE CAMÉRA ET DE SOUS-TITRES PUBLIÉES ; OUVERTURE ET FIN À TESTER DANS UNREAL — NON VALIDÉE.** Type : mise en scène incomplète / éléments de scénario non encore animés.
 
 ## Observation dans la vidéo
 
@@ -48,3 +48,11 @@ L'utilisateur confirme explicitement que le plan très éloigné aperçu au **d�
 **Action à discuter en F01 :** recadrer plus près le début sans couper Thomas ou Éva, et contrôler le raccord vers Léa; si le blocking actuel rend un plan familial rapproché impossible, soumettre un changement limité des positions initiales à validation explicite, au lieu de le faire silencieusement. La véritable ouverture A0 (rivière → montagne, sans coupe) demeure non réalisée. Le retour B9 et son dézoom révisés ne sont pas visibles en entier dans ce dernier extrait; conserver leur statut « à tester ».
 
 **Sous-titre initial — signalement confirmé par l'utilisateur :** le premier carton reste à l'image trop longtemps. Le code l'affichait pendant la totalité de la pause introductive de 6 s. Correction publiée dans le script : texte introductif raccourci à deux lignes et plage de la section UMG **ainsi que durée du cue** réduites à **3 s**, sans modifier la pause introductive, les 17 pauses ou la durée du film. **À vérifier sur un nouveau run complet, avec `FAST_CAMERA_ONLY=False` : le mode rapide ne régénère pas les sous-titres.** Ne pas considérer cette correction comme validée tant que le texte ne disparaît pas réellement avant la reprise de la randonnée. F03 reste en pause.
+
+## État de suivi après les passes F01/F07/F08 — 19/09/2026 (nouvelle vidéo attendue)
+
+**Publié dans le générateur, pas encore validé à l'image :** présentation famille → Éva → Thomas → Léa au début avec une seule caméra ; sous-titres anglais d'A1 raccourcis et réponse d'Éva sur le chemin ; sous-titres du même échange Léa/Thomas en A2 et B9 ; nouvelle hésitation de Thomas normal autour de 17 h 00, vue deux fois selon le même temps objectif ; cadrage B9 et éloignement progressif conservés. Ces opérations ne prouvent ni la taille des trois silhouettes à l'écran, ni le bon calage des répliques, ni la continuité des regards.
+
+**Reste à faire :** regarder dans le nouveau run les six premières secondes (famille clairement identifiable et disparition effective du premier sous-titre après trois secondes), A1 jusqu'à la rive B (paroles calées sur traversée et réponse d'Éva), le raccord A2 et B9 (mêmes gestes, mêmes répliques), puis la fin avec Éva et Léa en profondeur et un dézoom sans obstacle. L'ouverture canonique A0 depuis la rivière **n'est toujours pas construite** ; le geste de Thomas vers la petite boîte destinée à Éva, les nuances de jeu et de musique finales restent à animer. Ne pas considérer des sous-titres expliquant ces moments comme leur réalisation visuelle.
+
+**Décision différée :** si la famille demeure trop écartée malgré la nouvelle caméra, examiner avec l'utilisateur un ajustement borné des positions de départ ; ne modifier ni ce blocking ni A0 ni le jeu final sans accord spécifique. F03 reste en pause.
