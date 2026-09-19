@@ -6587,6 +6587,38 @@ def build_omniscient_edit():
         "If no physical blind spot exists, request a separate F07 geometry decision; "
         "do not hide a visible approach with editing.")
 
+    # F03: keep the lens in the traversable gallery, not at the old entrance.
+    def f03_corridor_pose(code, t):
+        normal = a["eval_actor"]("THOMAS_NORMAL", t)
+        inverse = a["eval_actor"]("THOMAS_INVERSE", t)
+        entry = a["CAVE_ENTRY_POINT"]
+        contact = a["CAVE_CONTACT_POINT"]
+        bend = a["CAVE_INNER_BEND_POINT"]
+        beam = a["CAVE_SECOND_BEAM_POINT"]
+        exit_b = a["CAVE_EXIT_B_POINT"]
+
+        def lens(p, q, u):
+            x = p[0]+(q[0]-p[0])*u
+            y = p[1]+(q[1]-p[1])*u
+            return (x, y, a["terrain_z_m"](x, y)+1.70)
+
+        def aim(p):
+            return (p[0], p[1], p[2]+1.25)
+
+        if code in ("A17", "PAUSE_CONTACT"):
+            return lens(entry, contact, 0.62), aim(normal)
+        if code == "PAUSE_REVELATION":
+            return lens(entry, contact, 0.32), aim(normal)
+        if code in ("B1", "PAUSE_OBSCURITE"):
+            if t >= 61.15:
+                return lens(entry, contact, 0.62), aim(inverse)
+            if t >= 60.8:
+                return lens(contact, bend, 0.35), aim(inverse)
+            if t >= 60.35:
+                return lens(bend, beam, 0.35), aim(inverse)
+            return lens(beam, exit_b, 0.35), aim(inverse)
+        raise RuntimeError("Unexpected F03 cave shot: " + code)
+
     def desired_pose(code, focus, offset, t):
         if code in ("B6_REPAIR", "PAUSE_MOUSQUETON"):
             return f07_carabiner_view(t)
@@ -6648,17 +6680,7 @@ def build_omniscient_edit():
             target = tuple(near_target[i]*(1.0-alpha)+far_target[i]*alpha for i in range(3))
             return eye, target
         if focus == "CAVE":
-            target = a["eval_actor"]("THOMAS_INVERSE" if code == "B1" else "THOMAS_NORMAL", t)
-            if code == "B1":
-                # Leave through the entrance with Thomas instead of remaining
-                # behind a wall while looking at a subject already outdoors.
-                entry = a["CAVE_ENTRY_POINT"]
-                along = ((target[0]-entry[0])*a["CAVE_UX"]+
-                         (target[1]-entry[1])*a["CAVE_UY"])
-                eye = a["cave_ground_point"](min(4.8, along+1.5), -1.3, 1.75)
-            else:
-                # Previous camera side=-.8 intersected the right entry rock.
-                eye = a["cave_ground_point"](1.0, 0.0, 1.85)
+            return f03_corridor_pose(code, t)
         else:
             if focus == "GEOGRAPHY":
                 target = (1320.0, 220.0, 120.0)
