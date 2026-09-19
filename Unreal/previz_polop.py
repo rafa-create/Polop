@@ -7306,7 +7306,7 @@ def build_omniscient_edit():
         cues = []
         for item in card_manifest:
             cues.append((item["start_frame"], item["end_frame_exclusive"],
-                         item["title"]+"\\n"+item["explanation"]))
+                         item["title"]+"\n"+item["explanation"]))
         for item in opening_dialogue_manifest + later_dialogue_manifest:
             cues.append((item["start_frame"], item["end_frame_exclusive"],
                          item["text"]))
@@ -7320,9 +7320,9 @@ def build_omniscient_edit():
         srt_path = os.path.join(RUN_SAVED_ROOT, "polop_spectator_subtitles.srt")
         with open(srt_path, "w", encoding="utf-8") as srt:
             for index, (first, last, content) in enumerate(cues, 1):
-                srt.write("%d\\n%s --> %s\\n%s\\n\\n" %
+                srt.write("%d\n%s --> %s\n%s\n\n" %
                           (index, srt_timestamp(first), srt_timestamp(last),
-                           content.replace("\\n", "\\n")))
+                           content))
         subtitle_audit["srt_path"] = srt_path
         subtitle_audit["srt_cues"] = len(cues)
         journal("f08_subtitle_srt_exported", path=srt_path, cues=len(cues),
