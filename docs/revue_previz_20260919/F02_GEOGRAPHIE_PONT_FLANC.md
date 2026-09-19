@@ -1,6 +1,6 @@
 # F02 — Lisibilité du pont, des chemins A/B et du flanc
 
-**Statut : À DISCUTER.** Type : espace / caméra / orientation.
+**Statut actuel : GÉOGRAPHIE ET CADRAGES PARTIELLEMENT PRÉPARÉS ; LECTURE VISUELLE À TESTER — NON VALIDÉE.** Type : espace / caméra / orientation.
 
 ## Observation dans la vidéo
 
@@ -25,3 +25,9 @@ Un observateur nouveau peut tracer verbalement le trajet de Léa (A→B, puis fl
 ## Point de contrôle de la capture du 19/09/2026 à 17 h 28
 
 Environ **36–52 s de l'enregistrement**, le trio se lit mieux près du pont et sur le chemin. Cela confirme seulement une amélioration de la **visibilité des personnages**, pas de la compréhension des deux rives ni de l'alternative pont court / flanc long. Aucune preuve nouvelle n'autorise à valider la continuité A → B → flanc → A. Conserver F02 ouverte, sans modification du relief ou des trajectoires. Pour la prochaine revue dédiée, recueillir le plan où Léa traverse le pont et celui qui montre la connexion entre les deux voies; le seul grand plan familial ne suffit pas.
+
+## État de suivi après les nouvelles passes — 19/09/2026 (nouvelle vidéo attendue)
+
+**Publié ou déjà présent dans le code :** chemin A et chemin B reliés par le pont court et le flanc plus long ; Léa suit A → pont → B → flanc → A ; Thomas inversé suit B → pont → A après l'attache côté B. La caméra d'ouverture suit Léa vers le pont ; le plan A9 possède un cadrage/rapprochement optique dédié. En B6, un temps de réparation sur B précède dorénavant le plan de traversée. Les sous-titres situent brièvement les routes, mais ne prouvent pas leur lisibilité à l'image.
+
+**Reste à contrôler dans le nouveau rendu :** montrer simultanément le creux, les deux culées et le départ du flanc, avec une caméra à hauteur compréhensible ; vérifier la vraie continuité du déplacement de Léa et les rives A/B, la marche et les regards des deux Thomas, l'absence de traversée dans les rochers et l'arrivée B→A. Vérifier que le carton géographique n'est pas la seule source permettant de reconstituer les itinéraires. Ne pas bouger relief, pont ou chemins à l'occasion de cette simple revue : demander d'abord une séquence vidéo du pont, du flanc et de B6.
