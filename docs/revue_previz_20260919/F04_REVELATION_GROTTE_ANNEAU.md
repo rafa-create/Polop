@@ -1,6 +1,6 @@
 # F04 — Révélation de la grotte, perceptions, contact de 18 h
 
-**Statut : À DISCUTER.** Type : scène fondatrice absente ou illisible dans le blockout.
+**Statut actuel : PASSAGES CANONIQUES ENCORE PARTIELLEMENT ABSENTS DU BLOCKOUT — NON VALIDÉE ; F03 GELÉE.** Type : scène fondatrice absente ou illisible dans le blockout.
 
 ## Observation dans la vidéo
 
@@ -21,3 +21,9 @@ Séparer **validation spatiale** (entrée, paroi, fissure, accès des deux occur
 ## Critères de validation
 
 La révélation de l'ouverture survient en A15 seulement. Le contact annulaire de 18 h est visible, simultané au changement de direction de l'anneau. B1 fait comprendre que seul Thomas inversé **voit une silhouette**; l'autre ne la voit pas à cause de l'obscurité, pas parce que le double a disparu. Les trajectoires 3D restent cohérentes.
+
+## État de suivi au 19/09/2026 — après revue du code et de la Bible
+
+**Pas de nouvel essai validant A15–B1.** Les nouvelles passes de sous-titres donnent des repères au contact de 18 h et à la perception dans l'obscurité, mais elles ne créent ni l'anneau ni ses rebonds, ni le contact de la main, ni la divergence des perceptions par le jeu/la lumière. Les deux occurrences articulées existent comme proxies temporels ; cela ne prouve pas que leur visibilité à l'écran respecte les yeux de Thomas normal et inversé.
+
+**Reste à faire lorsque le travail F03 sera explicitement repris :** vérifier d'abord que l'ouverture de la cavité est révélée depuis un trajet de caméra et une géométrie réellement dégagés. Puis animer un anneau matériel montant vers Thomas, son contact **exact à 18 h 00** et sa descente, sans flash ni explication magique ; rendre les deux regards distincts (silhouette perceptible seulement par Thomas inversé à cet instant) en contrôlant les lignes de vue, l'éclairage et les POV. Tester l'extrait A15–A17 puis B1 dans Unreal. **Ne toucher à aucune géométrie ni caméra de F03 tant que cette fiche reste en pause.**
