@@ -6053,6 +6053,8 @@ def build_omniscient_edit():
         actor = actors.spawn_actor_from_class(
             unreal.TextRenderActor, unreal.Vector(0, 0, 0))
         comp = actor.get_text_render()
+        # Même contrainte pour les deux lignes de texte attachées à la caméra.
+        comp.set_mobility(unreal.ComponentMobility.MOVABLE)
         comp.set_text(content)
         comp.set_world_size(float(font_size))
         comp.set_horizontal_alignment(unreal.HorizTextAligment.EHTA_CENTER)
@@ -6067,6 +6069,13 @@ def build_omniscient_edit():
             cube, unreal.Vector(0, 0, 0), unreal.Rotator(0, 0, 0), False)
         actor.set_actor_scale3d(unreal.Vector(0.02, 2.90, 0.84))
         comp = actor.get_component_by_class(unreal.StaticMeshComponent)
+        if comp is None:
+            raise RuntimeError("Le panneau du carton n'a pas de StaticMeshComponent")
+        # A StaticMeshActor spawné à partir de Cube.Cube est STATIC par défaut.
+        # Une caméra CineCameraActor animée est MOVABLE : Unreal refuse
+        # explicitement l'attachement STATIC -> MOVABLE (log AttachTo).
+        # Rendre le panneau mobile AVANT card_attach / la piste Sequencer.
+        comp.set_mobility(unreal.ComponentMobility.MOVABLE)
         comp.set_material(0, a["MAT_CAVE"])
         comp.set_cast_shadow(False)
         return card_attach(actor, name, (226.0, 0.0, -52.0))
