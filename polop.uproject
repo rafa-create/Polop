@@ -32,10 +32,6 @@
 			"Enabled": true
 		},
 		{
-			"Name": "SubtitlesAndClosedCaptions",
-			"Enabled": true
-		},
-		{
 			"Name": "Takes",
 			"Enabled": true
 		},
@@ -144,6 +140,10 @@
 		},
 		{
 			"Name": "PerformanceCaptureWorkflow",
+			"Enabled": true
+		},
+		{
+			"Name": "SubtitlesAndClosedCaptions",
 			"Enabled": true
 		}
 	]
