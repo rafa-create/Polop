@@ -1694,14 +1694,8 @@ spawn_box(
     unreal.Rotator(0, 20, 0)
 )
 
-# A low foreground outcrop masks the exact closure from the omniscient
-# approach. It stays beside the walking lane; neither Thomas walks through it.
-spawn_box(
-    "CONVERGENCE_FOREGROUND_ROCK",
-    V(conv_x*100, (conv_y-2.0)*100,
-      (terrain_z_m(conv_x, conv_y-2.0)+1.5)*100),
-    (380, 140, 300), MAT_ROCK, "MicroGeo/Convergence"
-)
+# Remove the foreground box that blocked the approach to normal Thomas.
+# Keep CONVERGENCE_ROCK beside A for the canonical partial collision mask.
 
 # Micro-zone caverne V05 : shell lisible construit sur l'axe entrée -> contact.
 # Largeur intérieure ~4,4 m ; hauteur libre ~3,2 m. Aucune masse n'est placée
@@ -2044,8 +2038,8 @@ ANIM = {}
 ANIM["THOMAS_NORMAL"] = [
     # F07: a shared objective-time hesitation on the SAME path A.
     station_segment("A", 0.0, 1.975, normal_start_station, CONVERGENCE_STATION),
-    hold_segment(1.975, 2.025, point_with_real_terrain(CONVERGENCE_POINT)),
-    station_segment("A", 2.025, 3.0, CONVERGENCE_STATION, FAMILY_WAIT_STATION),
+    hold_segment(1.975, 2.25, point_with_real_terrain(CONVERGENCE_POINT)),
+    station_segment("A", 2.25, 3.0, CONVERGENCE_STATION, FAMILY_WAIT_STATION),
     custom_segment(3.0, 3.5, FAMILY_WAIT_POINT, NORMAL_FAMILY_POINT),
     hold_segment(3.5, GROUP_DEPART_AFTER_LEA, NORMAL_FAMILY_POINT),
     custom_segment(GROUP_DEPART_AFTER_LEA, FAMILY_REJOIN_TIME, NORMAL_FAMILY_POINT,
@@ -5712,13 +5706,13 @@ def character_performance(name, objective_time):
     # Decreasing objective time advances the inverse's own gait. No film state
     # or camera decision may alter this phase or remove a later occurrence.
     phase = objective_gait_phase(name, t) if moving else t*0.1
-    if name == "THOMAS_NORMAL" and 1.955 <= t <= 2.055:
+    if name == "THOMAS_NORMAL" and 1.955 <= t <= 2.25:
+        # Hold normal Thomas facing Lea throughout the inverse approach and retreat.
         # Body-facing cue only: separate neck motion requires a later rig pass.
         daughter = a["eval_actor"]("LEA", t)
         look_yaw = math.degrees(math.atan2(
             daughter[1]-p[1], daughter[0]-p[0]))-90.0
-        look_weight = (cinematic_ease((t-1.955)/0.02) *
-                       (1.0-cinematic_ease((t-2.025)/0.03)))
+        look_weight = cinematic_ease((t-1.955)/0.02)
         yaw += (a["unwrap_angle"](yaw, look_yaw)-yaw)*look_weight
     if name == "THOMAS_INVERSE" and t <= 2.25:
         # B7: turn, then retreat into the closure. Finish turning while the
