@@ -5823,113 +5823,112 @@ def build_omniscient_edit():
     ]
     # Aides de lecture pour la PREVIZ uniquement, pas des dialogues canoniques.
     # Chaque pause maintient le temps objectif exact, y compris le casting.
+    # English-only narrative annotations. No text is shortened or repositioned
+    # to conceal a rendering problem; the screen-space renderer fixes clarity.
+    # Narrative order, pause lengths and objective-time trajectories are unchanged.
     pause_cards = {
-        # Notes courtes mais suffisantes pour un spectateur qui découvre l'histoire.
-        # La caméra ne doit jamais révéler la grotte avant A15 ou la causalité
-        # du pont avant B6. Les objets non animés sont indiqués comme tels.
         "PAUSE_INTRO": (
-            "LA BOUCLE - PREVISUALISATION",
-            "Thomas, Eva et leur fille Lea montent\n"
-            "ensemble sur une montagne.\n"
-            "Nous suivons d'abord le temps normal."
+            "THE LOOP - PREVISUALIZATION",
+            "Thomas, Eva and their daughter Lea climb\\n"
+            "a mountain together.\\n"
+            "We begin in normal time."
         ),
         "PAUSE_DETOUR": (
-            "LE DETOUR DE LEA",
-            "Lea a traverse le pont vers le chemin B.\n"
-            "Thomas lui demande de revenir par\n"
-            "le flanc, plus long, plutot que le pont."
+            "LEA'S DETOUR",
+            "Lea crossed the bridge to path B.\\n"
+            "Thomas asks her to return by the longer\\n"
+            "hillside route, not across the bridge."
         ),
         "PAUSE_THOMAS": (
-            "THOMAS EST DISTRAIT",
-            "Eva et Lea profitent de la balade.\n"
-            "Thomas reste en retrait et regarde\n"
-            "souvent l'heure."
+            "THOMAS IS DISTRACTED",
+            "Eva and Lea enjoy the walk.\\n"
+            "Thomas lags behind and keeps\\n"
+            "checking the time."
         ),
         "PAUSE_CHEMINS": (
-            "RETENIR CES TROIS PASSAGES",
-            "A : la montee empruntee en famille.\n"
-            "B : un autre versant, rejoint en haut.\n"
-            "Pont court ou long flanc entre A et B."
+            "REMEMBER THESE THREE ROUTES",
+            "A: the family's uphill path.\\n"
+            "B: the path on the opposite slope.\\n"
+            "A short bridge or a long hillside route connects them."
         ),
         "PAUSE_ATTACHE": (
-            "LE PONT, PLUS TARD",
-            "Vers 17 h 30, son mousqueton est\n"
-            "decroche : l'attache n'est plus sure.\n"
-            "Le geste n'est pas encore anime."
+            "THE BRIDGE, LATER",
+            "Around 5:30 p.m., his carabiner is\\n"
+            "unclipped: the attachment is no longer secure.\\n"
+            "The action has not been animated yet."
         ),
         "PAUSE_DEPART": (
-            "17 H 50 - THOMAS S'ECARTE",
-            "Thomas dit qu'il va faire une pause.\n"
-            "Il entre dans une petite zone rocheuse.\n"
-            "Eva et Lea attendent sur le chemin."
+            "5:50 P.M. - THOMAS STEPS AWAY",
+            "Thomas says he is taking a break.\\n"
+            "He enters a small rocky area.\\n"
+            "Eva and Lea wait on the path."
         ),
         "PAUSE_ATTENTE": (
-            "ELLES ONT GARDE LE PASSAGE",
-            "Thomas aurait du revenir par ici.\n"
-            "Elles regardent ce seul chemin de\n"
-            "retour : personne n'est passe."
+            "THEY WATCHED THE ONLY WAY BACK",
+            "Thomas should have returned this way.\\n"
+            "They watch the only route back:\\n"
+            "no one has passed them."
         ),
         "PAUSE_RECHERCHE": (
-            "UNE ABSENCE IMPOSSIBLE",
-            "La zone est minuscule : rochers,\n"
-            "paroi, puis precipice. Nul retour\n"
-            "visible. Eva craint une chute."
+            "AN IMPOSSIBLE DISAPPEARANCE",
+            "The area is tiny: rocks, a cliff wall,\\n"
+            "then the precipice. Thomas did not return.\\n"
+            "Eva fears he may have fallen."
         ),
         "PAUSE_REVELATION": (
-            "CE QU'ELLES N'ONT PAS VU",
-            "Derriere un angle de la paroi se\n"
-            "cache l'entree d'une petite grotte.\n"
-            "Thomas y est, ses ecouteurs aux oreilles."
+            "WHAT THEY COULD NOT SEE",
+            "Behind a bend in the rock face\\n"
+            "lies the entrance to a small cave.\\n"
+            "Thomas is inside, wearing headphones."
         ),
         "PAUSE_CONTACT": (
-            "18 H 00 - LE RENVERSEMENT",
-            "Dans l'histoire, Thomas touche\n"
-            "un anneau : son temps s'inverse.\n"
-            "Anneau et effets encore non animes."
+            "6:00 P.M. - TIME REVERSES",
+            "In the story, Thomas touches a ring\\n"
+            "and his direction in time reverses.\\n"
+            "The ring and effects are not yet animated."
         ),
         "PAUSE_OBSCURITE": (
-            "DEUX REGARDS DANS LE NOIR",
-            "Thomas inverse distingue une silhouette :\n"
-            "ses yeux se sont habitues au noir.\n"
-            "L'autre Thomas, ebloui, ne le voit pas."
+            "TWO SETS OF EYES IN THE DARK",
+            "Inverted Thomas spots a figure:\\n"
+            "his eyes have adjusted to the darkness.\\n"
+            "The other Thomas cannot see him yet."
         ),
         "PAUSE_FAMILLE": (
-            "DEUX CHEMINS, UN MEME INSTANT",
-            "Eva et Lea redescendent sur A pour\n"
-            "chercher de l'aide. Thomas inverse\n"
-            "descend sur B, vers le passe."
+            "TWO PATHS, THE SAME MOMENT",
+            "Eva and Lea go down path A to get help.\\n"
+            "Inverted Thomas descends path B,\\n"
+            "moving backward through time."
         ),
         "PAUSE_RETOUR": (
-            "LE PAYSAGE REMONTE LE TEMPS",
-            "Pour Thomas inverse, les gouttes,\n"
-            "les feuilles et les pierres reviennent\n"
-            "en arriere. Ces effets restent a creer."
+            "THE LANDSCAPE MOVES BACKWARD",
+            "For inverted Thomas, raindrops, leaves\\n"
+            "and stones retrace their movements.\\n"
+            "These environmental effects are not built yet."
         ),
         "PAUSE_PONT_RETOUR": (
-            "VERS 17 H 30 - LE MEME PONT",
-            "Thomas retrouve le mousqueton deja\n"
-            "decroche. Il n'a pas encore atteint\n"
-            "le moment ou Lea l'a traverse."
+            "ABOUT 5:30 P.M. - THE SAME BRIDGE",
+            "Thomas finds the carabiner already\\n"
+            "unclipped. He has not yet reached\\n"
+            "the moment when Lea crossed the bridge."
         ),
         "PAUSE_MOUSQUETON": (
-            "VERS 17 H 01 - LE CLAC",
-            "Dans l'histoire, Thomas inverse\n"
-            "raccroche le mousqueton, puis traverse.\n"
-            "Le geste reste a animer en 3D."
+            "ABOUT 5:01 P.M. - THE CLICK",
+            "In the story, inverted Thomas clips\\n"
+            "the carabiner back on and crosses.\\n"
+            "The precise gesture is not yet animated."
         ),
         "PAUSE_BOUCLE": (
-            "17 H 00 - LA RENCONTRE",
-            "Pres du rocher, les deux Thomas\n"
-            "se rencontrent au contact de l'anneau.\n"
-            "La cause exacte du retour reste ouverte."
+            "5:00 P.M. - THE ENCOUNTER",
+            "Near the rock, the two Thomases\\n"
+            "meet through contact with the ring.\\n"
+            "The precise cause of the return is still open."
         ),
         "PAUSE_ISSUE": (
-            "LE MEME INSTANT, AUTRE REGARD",
-            "Nous retrouvons Thomas au temps\n"
-            "normal, comme au debut du film.\n"
-            "Il demande a Lea de prendre le flanc."
+            "THE SAME MOMENT, A DIFFERENT VIEW",
+            "We return to Thomas in normal time,\\n"
+            "as at the beginning of the film.\\n"
+            "He asks Lea to take the hillside route."
         ),
-
     }
 
     def desired_pose(code, focus, offset, t):
@@ -6032,89 +6031,10 @@ def build_omniscient_edit():
             animated.append((name, channels, scale, converter))
     binding, camera_channels, _ = track_for(cam)
 
-    # Deux lignes de texte + un petit panneau sombre : tous sont attachés
-    # à la caméra du film, pas placés dans le monde près des personnages.
-    # Le track Visibility de Sequencer les montre uniquement pendant la pause.
-    def card_attach(actor, name, local_position, rotation=None):
-        actor.set_actor_label("PZ_OMNI_CARD_" + name)
-        actor.set_folder_path("POLOP/Film/Annotations")
-        result = actor.attach_to_actor(
-            cam, unreal.Name(""),
-            unreal.AttachmentRule.SNAP_TO_TARGET,
-            unreal.AttachmentRule.SNAP_TO_TARGET,
-            unreal.AttachmentRule.KEEP_WORLD, False)
-        if result is False:
-            raise RuntimeError("Attachement au cadre impossible : " + name)
-        actor.set_actor_relative_location(unreal.Vector(*local_position), False, False)
-        actor.set_actor_relative_rotation(rotation or unreal.Rotator(0, 0, 0),
-                                          False, False)
-        # Masque initialement; la piste Sequencer revele la carte
-        # pendant sa pause sans la laisser presente dans les autres plans.
-        actor.set_actor_hidden_in_game(True)
-        actor.set_is_temporarily_hidden_in_editor(False)
-        return actor
-
-    def card_text(name, content, height, font_size, color):
-        actor = actors.spawn_actor_from_class(
-            unreal.TextRenderActor, unreal.Vector(0, 0, 0))
-        # UE 5.8 : TextRenderActor n'expose pas get_text_render() en Python.
-        # Son composant est accessible via la classe Unreal exportee.
-        comp = actor.get_component_by_class(unreal.TextRenderComponent)
-        if comp is None:
-            raise RuntimeError("Le carton " + name + " n'a pas de TextRenderComponent")
-        # Même contrainte pour les deux lignes de texte attachées à la caméra.
-        comp.set_mobility(unreal.ComponentMobility.MOVABLE)
-        comp.set_text(content)
-        comp.set_world_size(float(font_size))
-        comp.set_horizontal_alignment(unreal.HorizTextAligment.EHTA_CENTER)
-        comp.set_text_render_color(color)
-        comp.set_cast_shadow(False)
-        # TextRender a un repere local different de la CineCamera : une
-        # rotation Yaw=180 seule produit le carton a l'envers (capture UE).
-        # Le roulis de 180 redresse l'inscription dans le cadre camera.
-        return card_attach(actor, name, (210.0, 0.0, height),
-                           unreal.Rotator(180, 180, 0))
-
-    def card_background(name):
-        cube = unreal.load_asset("/Engine/BasicShapes/Cube.Cube")
-        actor = actors.spawn_actor_from_object(
-            cube, unreal.Vector(0, 0, 0), unreal.Rotator(0, 0, 0), False)
-        # Cube 100 cm : 185 cm de large x 55 cm de haut a ~2 m de
-        # la camera. Ancien panneau 290 x 84 cm depassait le 16:9.
-        actor.set_actor_scale3d(unreal.Vector(0.01, 1.85, 0.55))
-        comp = actor.get_component_by_class(unreal.StaticMeshComponent)
-        if comp is None:
-            raise RuntimeError("Le panneau du carton n'a pas de StaticMeshComponent")
-        # A StaticMeshActor spawné à partir de Cube.Cube est STATIC par défaut.
-        # Une caméra CineCameraActor animée est MOVABLE : Unreal refuse
-        # explicitement l'attachement STATIC -> MOVABLE (log AttachTo).
-        # Rendre le panneau mobile AVANT card_attach / la piste Sequencer.
-        comp.set_mobility(unreal.ComponentMobility.MOVABLE)
-        comp.set_material(0, a["MAT_CAVE"])
-        comp.set_cast_shadow(False)
-        # Placer le fond dans le tiers inferieur sans couvrir toute la scene.
-        return card_attach(actor, name, (226.0, 0.0, -34.0))
-
-    def card_visibility(actor, first_frame, last_frame):
-        # Meme convention que les pistes visibilite du casting fonctionnel :
-        # True = acteur visible, False = masque dans MovieSceneVisibilityTrack.
-        # La valeur bHidden ne doit PAS etre inversee manuellement ici.
-        # MovieSceneBoolChannel.add_key n'accepte aucun argument interpolation.
-        if not (0 <= first_frame < last_frame <= duration*fps):
-            raise RuntimeError("Pause hors de la sequence: %s - %s" %
-                               (first_frame, last_frame))
-        binding = ls.add_actors([actor])[0]
-        track = binding.add_track(unreal.MovieSceneVisibilityTrack)
-        track.set_property_name_and_path("bHidden", "bHidden")
-        section = track.add_section()
-        section.set_range(0, duration*fps)
-        channel = section.get_all_channels()[0]
-        channel.set_default(False)
-        if first_frame > 0:
-            channel.add_key(unreal.FrameNumber(0), False)
-        channel.add_key(unreal.FrameNumber(first_frame), True)
-        channel.add_key(unreal.FrameNumber(last_frame), False)
-
+    # Story cards use the UE 5.8 Subtitles and Closed Captions plugin.
+    # Its text is a Slate/UMG viewport overlay, NOT a TextRenderActor in 3D.
+    # This avoids camera-plane texture filtering, TAA and depth-of-field blur.
+    # No new proxy or human Sequencer tracks are touched.
     # A9 is hundreds of metres from the bridge: a brief optical push makes
     # the 25 m crossing legible without a rapid physical flight or a camera cut.
     # Keep the camera's actual original focal length outside this one beat.
@@ -6213,7 +6133,13 @@ def build_omniscient_edit():
     # les mannequins articulés avant de construire les 17 annotations.
     # La fin de generation et la sauvegarde restent conditionnees au succes.
     add_human_performances(seq, performance_samples)
-    # Créer les cartes après l'animation : les autres plans restent intacts.
+    # Native screen-space UMG captions (UE 5.8 Subtitles and Closed Captions).
+    # Each caption is scoped to its own Sequencer section, so scrubbing,
+    # pausing and reverse playback evaluate the same active text.
+    subtitle_track = seq.add_track(unreal.MovieSceneSubtitlesTrack)
+    if subtitle_track is None:
+        raise RuntimeError("Cannot create the screen-space subtitle track")
+    subtitle_track.set_display_name("POLOP | English narrative annotations (UMG)")
     card_manifest = []
     for shot in manifest:
         if shot["scene"] not in pause_cards:
@@ -6221,17 +6147,30 @@ def build_omniscient_edit():
         scene = shot["scene"]
         title, explanation = pause_cards[scene]
         first, last = shot["start_frame"], shot["end_frame"]
-        panel = card_background(scene + "_FOND")
-        heading = card_text(scene + "_TITRE", title, -17.0, 6.8,
-                            unreal.Color(255, 225, 155, 255))
-        note = card_text(scene + "_NOTE", explanation, -31.0, 4.9,
-                         unreal.Color(245, 245, 245, 255))
-        for overlay in (panel, heading, note):
-            card_visibility(overlay, first, last)
+        if not (0 <= first < last <= duration*fps):
+            raise RuntimeError("Invalid caption range: " + scene)
+
+        section = subtitle_track.add_section()
+        if section is None:
+            raise RuntimeError("Cannot create UMG subtitle section: " + scene)
+        section.set_range(first, last)
+        subtitle_data = unreal.SubtitleAssetUserData(
+            outer=section, name="POLOP_" + scene)
+        subtitle_line = unreal.SubtitleAssetData()
+        subtitle_line.set_editor_property("text", title + "\n" + explanation)
+        subtitle_line.set_editor_property("subtitle_duration_type",
+            unreal.SubtitleDurationType.USE_DURATION_PROPERTY)
+        subtitle_line.set_editor_property("duration", float((last-first)/fps))
+        subtitle_line.set_editor_property("start_offset", 0.0)
+        subtitle_data.set_editor_property("subtitles", [subtitle_line])
+        section.set_editor_property("subtitle", subtitle_data)
+        if section.get_editor_property("subtitle") is None:
+            raise RuntimeError("UMG subtitle was not assigned: " + scene)
         card_manifest.append(dict(scene=scene, title=title, explanation=explanation,
-                                  start_frame=first, end_frame_exclusive=last))
+                                  start_frame=first, end_frame_exclusive=last,
+                                  renderer="native_subtitles_umg"))
     if len(card_manifest) != len(pause_cards):
-        raise RuntimeError("Cartons narratifs incomplets")
+        raise RuntimeError("Native UMG subtitle sections incomplete")
     if not a.get("human_audit_baked"):
         add_human_performances(a["sequence"], [(i, i/fps) for i in range(65*fps)])
         a["human_audit_baked"] = True
@@ -6624,6 +6563,19 @@ def main():
     dirty = unreal.EditorLoadingAndSavingUtils.get_dirty_map_packages()
     if dirty:
         raise RuntimeError("Save your current level before running POLOP; source levels are never saved automatically.")
+    # This is deliberately before duplicating /Game/Main or generating terrain.
+    # The native subtitle renderer needs an editor restart after the plugin
+    # is enabled in polop.uproject. Never silently return to blurry 3D cards.
+    required_subtitle_types = (
+        "MovieSceneSubtitlesTrack", "MovieSceneSubtitleSection",
+        "SubtitleAssetUserData", "SubtitleAssetData", "SubtitleDurationType")
+    missing = [name for name in required_subtitle_types
+               if not hasattr(unreal, name)]
+    if missing:
+        raise RuntimeError(
+            "Enable 'Subtitles and Closed Captions' in Edit > Plugins, "
+            "restart Unreal Engine, and rerun POLOP. "
+            "Required native UMG/Sequencer types unavailable: " + ", ".join(missing))
     journal("start", script=SOURCE_SCRIPT_PATH, engine=unreal.SystemLibrary.get_engine_version(),
             source_map=SOURCE_MAP, work_map=WORK_MAP,
             source_sha256=hashlib.sha256(open(SOURCE_SCRIPT_PATH, "rb").read()).hexdigest())
