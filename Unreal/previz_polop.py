@@ -6770,10 +6770,10 @@ def build_omniscient_edit():
             # Lea steps onto the bridge at objective t=.75 (A1 screen ~5 s),
             # reaches B at t=1.25 (~7 s), then turns to address her parents.
             (0.25, 2.30, "EVA: Is it much farther to the top?"),
-            (2.45, 4.20, "THOMAS: No, no. After this climb,\njust all the others."),
-            (4.35, 5.35, "EVA: Careful."),
+            (2.45, 4.50, "THOMAS: Just this climb...\nand all the others."),
+            (4.65, 5.40, "EVA: Careful."),
             (8.00, 9.35, "LEA: Are you coming?"),
-            (9.50, 11.90, "EVA: We're coming. But that's not the right trail."),
+            (9.50, 11.90, "EVA: We're coming. That's not our trail."),
         )
         last_dialogue_end = a1_start
         for cue_index, (cue_start_s, cue_end_s, cue_text) in enumerate(opening_cues):
@@ -6852,8 +6852,8 @@ def build_omniscient_edit():
         # each compressed 18-second shot. The short dialogue spans that
         # moment; exact lip sync is unavailable in this PREVIZ blockout.
         flank_dialogue = (
-            (5.85, 7.25, "LEA: Dad, I want to take the bridge back."),
-            (7.35, 9.25, "THOMAS: No, no. Keep going.\nTake the hillside path this time."),
+            (5.85, 7.25, "LEA: Can I take the bridge back?"),
+            (7.35, 9.25, "THOMAS: No. Keep going. Take the hillside path."),
             (9.35, 10.20, "LEA: It's longer."),
             (10.35, 11.10, "THOMAS: Yes."),
         )
