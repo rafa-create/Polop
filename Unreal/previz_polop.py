@@ -2150,12 +2150,13 @@ ANIM["LEA"] = [
     # (user-approved blocking; neither bridge nor path geometry is changed).
     # Leave the bridge BEFORE the closure. Pause for the request AFTER 17h01,
     # when the inverse has passed behind her on B, then continue the detour.
-    station_segment("FLANC", 1.5, 3.5, 0.0, 12.0),
-    hold_segment(3.5, 3.65,
+    station_segment("FLANC", 1.5, 3.35, 0.0, 12.0),
+    # Lea stays here throughout the bridge request, before taking the flank.
+    hold_segment(3.35, 5.05,
                  point_with_real_terrain(route_point_at_station("FLANC", 12.0))),
     station_segment(
         "FLANC",
-        3.65,
+        5.05,
         LEA_FLANK_RETURN_END_MIN - 0.4,
         12.0,
         LENGTH["FLANC"]
@@ -7096,18 +7097,23 @@ def build_omniscient_edit():
                     renderer="native_subtitles_umg"))
                 last_end = last
 
-        # One conversation, two views: match the A2 and B9 frame offsets.
-        # Lea pauses at objective t=3.5-3.65, roughly 6.5-6.8 seconds into
-        # each compressed 18-second shot. The short dialogue spans that
-        # moment; exact lip sync is unavailable in this PREVIZ blockout.
-        flank_dialogue = (
-            (5.85, 7.25, "LEA: Can I take the bridge back?"),
-            (7.35, 9.25, "THOMAS: No. Keep going. Take the hillside path."),
-            (9.35, 10.20, "LEA: It's longer."),
-            (10.35, 11.10, "THOMAS: Yes."),
+        # Both readings depict the same objective-time conversation while Lea
+        # waits at the start of the flank (t=3.35..5.05). A2 lasts 18 s
+        # and B9 lasts 12 s, so their local subtitle offsets must differ.
+        flank_dialogue_a2 = (
+            (4.35, 5.55, "LEA: Can I take the bridge back?"),
+            (5.65, 7.15, "THOMAS: No. Keep going. Take the hillside path."),
+            (7.25, 8.15, "LEA: It\'s longer."),
+            (8.25, 9.00, "THOMAS: Yes."),
         )
-        for reading in ("A2", "B9"):
-            add_speaker_cues(reading, flank_dialogue)
+        flank_dialogue_b9 = (
+            (2.90, 3.75, "LEA: Can I take the bridge back?"),
+            (3.85, 4.85, "THOMAS: No. Keep going. Take the hillside path."),
+            (4.95, 5.50, "LEA: It\'s longer."),
+            (5.60, 6.00, "THOMAS: Yes."),
+        )
+        add_speaker_cues("A2", flank_dialogue_a2)
+        add_speaker_cues("B9", flank_dialogue_b9)
 
         # The father's departure and the ensuing search are otherwise only
         # described by late summary cards. Label canonical speech when the
@@ -7137,7 +7143,7 @@ def build_omniscient_edit():
             (0.55, 2.60, "B BANK: THE CARABINER IS LOOSE."),
             (3.05, 5.65, "Thomas reattaches it and checks the fastening."),
         ))
-        expected = 2*len(flank_dialogue)+5+4+2+2
+        expected = len(flank_dialogue_a2)+len(flank_dialogue_b9)+5+4+2+2
         if len(later_dialogue_manifest) != expected:
             raise RuntimeError("Incomplete dialogue in A2/B9, disappearance or B6")
     if not a.get("human_audit_baked"):
