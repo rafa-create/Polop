@@ -6101,9 +6101,7 @@ def build_omniscient_edit():
     pause_cards = {
         "PAUSE_INTRO": (
             "THE LOOP - PREVISUALIZATION",
-            "Thomas, Eva and their daughter Lea climb\n"
-            "a mountain together.\n"
-            "We begin in normal time."
+            "Thomas, Eva and Lea begin their hike."
         ),
         "PAUSE_DETOUR": (
             "LEA'S DETOUR",
@@ -6584,24 +6582,28 @@ def build_omniscient_edit():
             if not (0 <= first < last <= duration*fps):
                 raise RuntimeError("Invalid caption range: " + scene)
     
+            # Intro caption is deliberately shorter than its six-second
+            # narrative PAUSE: clear the text before the hike continues.
+            caption_last = (min(last, first + int(round(3.0*fps)))
+                            if scene == "PAUSE_INTRO" else last)
             section = subtitle_track.add_section()
             if section is None:
                 raise RuntimeError("Cannot create UMG subtitle section: " + scene)
-            section.set_range(first, last)
+            section.set_range(first, caption_last)
             subtitle_data = unreal.SubtitleAssetUserData(
                 outer=section, name="POLOP_" + scene)
             subtitle_line = unreal.SubtitleAssetData()
             subtitle_line.set_editor_property("text", title + "\n" + explanation)
             subtitle_line.set_editor_property("subtitle_duration_type",
                 unreal.SubtitleDurationType.USE_DURATION_PROPERTY)
-            subtitle_line.set_editor_property("duration", float((last-first)/fps))
+            subtitle_line.set_editor_property("duration", float((caption_last-first)/fps))
             subtitle_line.set_editor_property("start_offset", 0.0)
             subtitle_data.set_editor_property("subtitles", [subtitle_line])
             section.set_editor_property("subtitle", subtitle_data)
             if section.get_editor_property("subtitle") is None:
                 raise RuntimeError("UMG subtitle was not assigned: " + scene)
             card_manifest.append(dict(scene=scene, title=title, explanation=explanation,
-                                      start_frame=first, end_frame_exclusive=last,
+                                      start_frame=first, end_frame_exclusive=caption_last,
                                       renderer="native_subtitles_umg"))
         if len(card_manifest) != len(pause_cards):
             raise RuntimeError("Native UMG subtitle sections incomplete")
