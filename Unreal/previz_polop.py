@@ -6605,10 +6605,17 @@ def build_omniscient_edit():
 
         if code == "A15_A16":
             return cave_point(1.0, 0.0, 1.85), aim(normal)
-        if code in ("A17", "PAUSE_CONTACT"):
-            return cave_point(3.0, 0.0, 1.75), aim(normal)
+        if code == "A17":
+            return cave_point(5.2, 0.0, 1.75), aim(normal)
         if code == "PAUSE_REVELATION":
-            return cave_point(1.0, 0.0, 1.85), aim(normal)
+            # The old lens at 1 m looked through the cave mouth/rock shell:
+            # the pause showed a flat wall instead of Thomas in the cave.
+            # Move along the clear CENTRAL gallery, keeping the same target.
+            return cave_point(5.2, 0.0, 1.75), aim(normal)
+        if code == "PAUSE_CONTACT":
+            # Slightly closer to Thomas and the ring, still on the open
+            # gallery axis rather than inside a side wall or the ceiling.
+            return cave_point(6.0, 0.0, 1.75), aim(normal)
         if code in ("B1", "PAUSE_OBSCURITE"):
             # Ordered in Thomas's PERSONAL direction after the 18 h contact.
             # The two exterior waypoints are the same ones used by his actor
