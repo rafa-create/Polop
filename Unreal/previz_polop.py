@@ -5780,6 +5780,76 @@ def prepare_human_cast():
             limitation="shared mannequin anatomy; not final human casting or acting")
 
 
+def f01_box_pose(objective_t):
+    """Small B9-only visual prop: Thomas checks a pocket box, then hides it.
+
+    Object presence is an editorial reveal, not a second A2/B9 worldline.
+    During the earlier reading the same object remains concealed in his pocket.
+    This proxy does not claim a finished hand/box skeletal interaction.
+    """
+    a = _ANIMATION
+    thomas = character_performance("THOMAS_NORMAL", objective_t)
+    foot = thomas["foot"]
+    yaw = math.radians(thomas["yaw"]+90.0)
+    forward = (math.cos(yaw), math.sin(yaw))
+    side = (-forward[1], forward[0])
+    # Tiny blockout object outside the mannequin's right hip, low enough to
+    # read as a pocket movement rather than a proposal or magic apparition.
+    return (foot[0]+0.20*side[0]+0.16*forward[0],
+            foot[1]+0.20*side[1]+0.16*forward[1],
+            foot[2]+0.93)
+
+
+def add_f01_box_to_film(sequence, samples):
+    """One unobtrusive box beat near the B9 ending; no new camera cut/time."""
+    a = _ANIMATION
+    mesh = unreal.load_asset("/Engine/BasicShapes/Cube.Cube")
+    if not mesh:
+        raise RuntimeError("F01 box blockout cube asset missing")
+    actor = actors.spawn_actor_from_object(mesh, unreal.Vector(0, 0, -100000))
+    actor.set_actor_label("PZ_ANIM_F01_SMALL_BOX")
+    actor.set_folder_path("POLOP/Accessoires/F01")
+    actor.set_actor_scale3d(unreal.Vector(0.12, 0.08, 0.035))
+    try:
+        actor.get_component_by_class(unreal.StaticMeshComponent).set_material(
+            0, a["ensure_material"]("M_POLOP_F01_BOX", (0.28, 0.20, 0.12)))
+    except Exception as exc:
+        unreal.log_warning("F01 small box material: "+str(exc))
+    subsystem = unreal.get_editor_subsystem(unreal.LevelSequenceEditorSubsystem)
+    binding = subsystem.add_actors([actor])[0]
+    for old in binding.get_tracks():
+        if isinstance(old, unreal.MovieScene3DTransformTrack):
+            binding.remove_track(old)
+    track = binding.add_track(unreal.MovieScene3DTransformTrack)
+    section = track.add_section()
+    section.set_range(0, samples[-1][0]+1)
+    channels = section.get_all_channels()
+    for channel, value in zip(channels[6:9], (0.12, 0.08, 0.035)):
+        channel.set_default(value)
+    visibility = binding.add_track(unreal.MovieSceneVisibilityTrack)
+    visibility.set_property_name_and_path("bHidden", "bHidden")
+    vis_section = visibility.add_section()
+    vis_section.set_range(0, samples[-1][0]+1)
+    vis_ch = vis_section.get_all_channels()[0]
+    b9 = next(item for item in a["f01_film_shots"] if item["scene"] == "B9")
+    pause = next(item for item in a["f01_film_shots"] if item["scene"] == "PAUSE_ISSUE")
+    # A2 is deliberately absent: box is physically still inside the pocket.
+    # B9 final frames: brief reach/reveal; hold only part of the existing pause.
+    start = b9["end_frame"]-int(round(0.65*a["FPS"]))
+    end = pause["start_frame"]+int(round(2.15*a["FPS"]))
+    for frame_index, objective_t in samples:
+        show = start <= frame_index < end
+        frame = unreal.FrameNumber(frame_index)
+        vis_ch.add_key(frame, not show,
+                       interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+        x, y, z = f01_box_pose(objective_t)
+        for channel, value in zip(channels[:3], (100.0*x, 100.0*y, 100.0*z)):
+            channel.add_key(frame, float(value),
+                            interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
+    journal("f01_box_blockout_baked", start_frame=start, end_frame=end,
+            limitation="Small pocket proxy only; true hand reach and holding rig pending")
+
+
 def add_human_performances(sequence, samples):
     """Bake a pose per display frame: scrubbing/reversing cannot desynchronise joints.
 
@@ -6844,6 +6914,9 @@ def build_omniscient_edit():
     # les mannequins articulés avant de construire les 17 annotations.
     # La fin de generation et la sauvegarde restent conditionnees au succes.
     add_human_performances(seq, performance_samples)
+    # F01 only: the reveal is in the B9 edit, not in the identical A2 world pose.
+    a["f01_film_shots"] = manifest
+    add_f01_box_to_film(seq, performance_samples)
     # F03 can be checked independently of the still-untested English/UMG
     # subtitle change. This mode does NOT replace the full-film renderer.
     card_manifest = []
