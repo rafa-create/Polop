@@ -4,6 +4,18 @@
 
 **Autorité narrative :** `Script_POLOP.md`. Le script Unreal reste un blockout : distinguer une contradiction à l'image d'un accessoire, dialogue, effet ou scène **pas encore réalisé**. Ne pas déclarer une erreur de trajectoire physique à partir d'une seule capture. Les figures et les annotations de préviz ne sont pas censées être dans le film final.
 
+## Dernière revue : vidéo du 19/09/2026 à 18 h 56 — première version exploitable, rythme à améliorer
+
+**Source nouvelle :** `2026-09-19_18h56_45.mp4`, capture vidéo de **375,63 s** du rendu dans Unreal (légèrement plus longue que les **372 s** de la séquence du script). Les minutages de revue ci-dessous correspondent à la **capture**, non aux heures 17 h/18 h de la fiction ; la capture se termine sur le retour de l'image d'introduction. **Aucune piste audio** dans le fichier, donc on ne peut pas juger les paroles réelles, le CLAC, les silences ou la musique. Les nouveaux constats complètent sans effacer les observations plus anciennes.
+
+**Bilan visuel :** les trois personnages et leurs itinéraires deviennent globalement suivables, le mousqueton B bénéficie d'un rapprochement lisible et la seconde lecture revient bien à la famille. **Les longues marches avec mouvements identiques, les 17 pauses (106 s des 372 s), le gros volume de l'ancrage, la recherche/grotte occultée et surtout le rocher couvrant la collision freinent fortement le visionnage.** Un sous-titre de la partie inversée apparaît sur l'image initiale de la capture ; contrôler le démarrage/bouclage UMG. F03 demeure **en pause** malgré la persistance de l'occultation dans cette vidéo.
+
+**Plan d'attaque recommandé :** (1) vérifier/corriger le plan **F07** de collision pour rendre l'accident visible depuis un angle latéral, sans toucher F03 ; (2) rendre la remise du mousqueton **F06** corporelle et claire avant la traversée ; (3) varier l'action et les regards sur la longue descente inversée **F05** ; (4) travailler le trio, la boîte et les émotions **F01**, ainsi que la lisibilité du pont **F02** ; (5) seulement ensuite proposer à l'utilisateur une **variante de rythme écran** qui traite les pauses redondantes et les marches répétées sans bouleverser les 17 repères ou les heures objectives, puis retester F08 sur un lancement froid. Le dossier **[F09 — Rythme et dynamisme](F09_RYTHME_DYNAMIQUE.md)** contient les repères vidéo détaillés et la méthode de remontage.
+
+**Point à clarifier avec l'utilisateur :** « animation de vote » n'identifie pas de façon certaine un geste dans la vidéo ; ne pas supposer qu'il s'agit de la petite boîte, de la marche, ou d'une autre action tant que le terme n'a pas été confirmé.
+
+**Statut de validation :** toutes les fiches restent ouvertes ; les retouches de rythme, d'acting et d'objets sont des **propositions**, non des modifications déjà réalisées dans Unreal. La Bible et `Unreal/previz_polop.py` n'ont pas été modifiés pendant cette revue. **F03 et sa fiche restent inchangées, gelées sur demande.**
+
 ## État courant — après les correctifs de caméra, convergence, mousqueton et sous-titres (19/09/2026)
 
 **Nouveau run Unreal en cours de validation par l'utilisateur ; aucun des éléments ci-dessous n'est réputé validé à l'image.** Les repères vidéo datés plus bas proviennent des enregistrements *antérieurs* aux derniers changements et servent d'historique, pas de constat sur le rendu à venir. `Script_POLOP.md` reste la Bible narrative ; les numéros de lignes cités dans les anciennes fiches peuvent être décalés depuis sa mise à jour A2/B6–B9.
@@ -33,6 +45,7 @@
 | [F06](F06_MOUSQUETON_PONT.md) | Retrouver le geste et le trajet du pont, préserver la révélation | 90–95 s et A1–A2 |
 | [F07](F07_CONVERGENCE_ET_FIN.md) | Rendre la rencontre des deux Thomas et la boucle lisibles sans montrer de fusion | 95–104 s |
 | [F08](F08_CARTONS_DIVULGATIONS.md) | Contrôler l'information narrative contenue dans les cartons (pas leur netteté) | 0–4, 34–36, 86–96 s |
+| [F09](F09_RYTHME_DYNAMIQUE.md) | Rendre le plan continu dynamique, supprimer les répétitions sans déplacer les événements objectifs | Nouvelle vidéo 18 h 56 : 00:45–01:03, 02:00–02:36, 04:00–04:42, 05:27–05:42 |
 
 ## Méthode de validation
 
