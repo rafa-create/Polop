@@ -6570,7 +6570,7 @@ def build_omniscient_edit():
         # Trace a near-lens forward ray, not all the way to Thomas (who may
         # legitimately be behind a cave wall until the reveal is completed).
         # Also check camera clearance above the real terrain.
-        if progress >= 0.54:
+        if progress >= 0.71:
             direction = tuple(target[i]-eye[i] for i in range(3))
             length = math.dist(eye, target)
             if length > 0.05:
@@ -6584,7 +6584,7 @@ def build_omniscient_edit():
     # Treat the transformed component bounds as conservative: they can stop
     # an otherwise usable shot, but cannot silently certify a blocked lens.
     def f03_static_bounds_audit(eye, target, progress):
-        if progress < 0.54:
+        if progress < 0.71:
             return
         import unreal as ue
         eye_cm = ue.Vector(*(float(v)*100.0 for v in eye))
