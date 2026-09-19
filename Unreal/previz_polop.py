@@ -1865,10 +1865,12 @@ spawn_box(
 # Reverse personal time: inverse Thomas repairs it BEFORE crossing B -> A.
 CARABINER_REPAIR_T0 = 3.04
 CARABINER_REPAIR_T1 = 3.08
+# The clip sits at the accessible OUTSIDE edge of the existing B anchor,
+# not buried within the anchor rock's visible blockout cube.
 CARABINER_CLOSED_POINT = (
-    bbx+1.35, bby+1.20, terrain_z_m(bbx+1.35, bby+1.20)+0.96)
+    bbx+0.48, bby+0.65, terrain_z_m(bbx+0.48, bby+0.65)+0.96)
 CARABINER_OPEN_POINT = (
-    bbx+0.42, bby+0.30, terrain_z_m(bbx+0.42, bby+0.30)+0.65)
+    bbx+0.10, bby+0.20, terrain_z_m(bbx+0.10, bby+0.20)+0.65)
 
 def carabiner_point_at_objective_time(t):
     alpha = clamp((t-CARABINER_REPAIR_T0) /
@@ -2169,12 +2171,20 @@ ANIM["THOMAS_INVERSE"] = [
         point_with_real_terrain(A_BRIDGE_POINT),
         point_with_real_terrain(B_BRIDGE_POINT)
     ),
+    # Inverse time reads this B segment in reverse: approach the B-bank
+    # fastening, stop close enough to secure/check it, step to the bridge,
+    # then cross B -> A. No side-trip or second worldline is introduced.
     station_segment(
-        "B",
-        3.0,
-        32.0,
-        LENGTH["B"],
-        B5_STATION
+        "B", 3.0, CARABINER_REPAIR_T0,
+        LENGTH["B"], LENGTH["B"]-1.5
+    ),
+    hold_segment(
+        CARABINER_REPAIR_T0, CARABINER_REPAIR_T1,
+        point_with_real_terrain(route_point_at_station("B", LENGTH["B"]-1.5))
+    ),
+    station_segment(
+        "B", CARABINER_REPAIR_T1, 32.0,
+        LENGTH["B"]-1.5, B5_STATION
     ),
     station_segment(
         "B",
@@ -2426,6 +2436,9 @@ def pov_story_target(actor_name, t, position):
     if actor_name == "THOMAS_NORMAL" and 1.95 <= t <= 2.045:
         return eval_actor("LEA", t)
 
+    if actor_name == "THOMAS_INVERSE" and CARABINER_REPAIR_T0 <= t <= CARABINER_REPAIR_T1:
+        return carabiner_point_at_objective_time(t)
+
     if actor_name == "THOMAS_NORMAL" and t >= NARRATIVE_SECONDS:
         # Tail technique : regard vers la fissure / intérieur, jamais vers l'extérieur.
         return cave_ground_point(max(1.2, _CAVE_AXIS_LEN-1.2), -0.35, 1.1)
@@ -2469,6 +2482,10 @@ def pov_direction(actor_name, t):
     # This orientation belongs to the world pose, not the film camera.
     if actor_name == "EVA" and 1.9 <= t <= GROUP_DEPART_AFTER_LEA:
         return (0.0, -1.0, 0.0)
+
+    # The inverse watches the B-bank clip while stationary at its repair.
+    if actor_name == "THOMAS_INVERSE" and CARABINER_REPAIR_T0 <= t <= CARABINER_REPAIR_T1:
+        return _vec_norm(_vec_sub(carabiner_point_at_objective_time(t), p))
 
     # The same normal-Thomas glance evaluates in A2 and B9.
     if actor_name == "THOMAS_NORMAL" and 1.975 <= t <= 2.025:
@@ -5644,10 +5661,9 @@ def character_performance(name, objective_time):
         # B7: turn, then retreat into the closure. Finish turning while the
         # roots are still >1.25 m apart; do not rotate through the other body.
         # This is a root turn, not a mesh/pose morph or a change of worldline.
-        normal_before = a["eval_actor"]("THOMAS_NORMAL", 1.99)
-        normal_after = a["eval_actor"]("THOMAS_NORMAL", 2.01)
-        closure_yaw = math.degrees(math.atan2(
-            normal_after[1]-normal_before[1], normal_after[0]-normal_before[0]))-90.0
+        # During the normal Thomas's pause, a finite difference of his
+        # root positions would be zero; take the real shared closure facing.
+        closure_yaw = character_performance("THOMAS_NORMAL", 2.0)["yaw"]
         weight = cinematic_ease(max(0.0, min(1.0, (t-2.05)/0.20)))
         yaw = closure_yaw + (a["unwrap_angle"](closure_yaw, yaw)-closure_yaw)*weight
     if name == "THOMAS_INVERSE" and abs(t-2.0) < 1e-9:
