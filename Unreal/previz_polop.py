@@ -6627,6 +6627,7 @@ def build_omniscient_edit():
     # F03 can be checked independently of the still-untested English/UMG
     # subtitle change. This mode does NOT replace the full-film renderer.
     card_manifest = []
+    opening_dialogue_manifest = []
     if F03_GEOMETRY_ONLY:
         journal("f03_geometry_only_captions_skipped",
                 pause_count=sum(shot["scene"].startswith("PAUSE_") for shot in manifest))
@@ -6672,6 +6673,52 @@ def build_omniscient_edit():
                                       renderer="native_subtitles_umg"))
         if len(card_manifest) != len(pause_cards):
             raise RuntimeError("Native UMG subtitle sections incomplete")
+
+        # F01: these are short, speaker-labelled English PREVIZ dialogue cues
+        # during the existing moving A1 shot, NOT additional story pauses.
+        # The mannequins have no dialogue/laugh acting yet. No cue reveals
+        # the temporal loop or the later carabiner action.
+        a1_shot = next(shot for shot in manifest if shot["scene"] == "A1")
+        a1_start = a1_shot["start_frame"]
+        a1_end = a1_shot["end_frame"]
+        opening_cues = (
+            (0.25, 2.75, "EVA: Is it much farther to the top?"),
+            (2.90, 5.35, "THOMAS: No, no. After this climb,\njust all the others."),
+            (5.55, 7.90, "EVA: Careful."),
+            (8.15, 10.25, "LEA crosses the short bridge from path A to B."),
+            (10.40, 11.90, "LEA: Are you coming?"),
+        )
+        last_dialogue_end = a1_start
+        for cue_index, (cue_start_s, cue_end_s, cue_text) in enumerate(opening_cues):
+            cue_first = a1_start + int(round(cue_start_s*fps))
+            cue_last = a1_start + int(round(cue_end_s*fps))
+            if not (last_dialogue_end <= cue_first < cue_last <= a1_end):
+                raise RuntimeError("F01 overlapping/out-of-bounds A1 subtitle")
+            section = subtitle_track.add_section()
+            if section is None:
+                raise RuntimeError("F01 unable to create A1 dialogue subtitle")
+            section.set_range(cue_first, cue_last)
+            subtitle_data = unreal.SubtitleAssetUserData(
+                outer=section, name="POLOP_A1_DIALOGUE_%02d" % cue_index)
+            subtitle_line = unreal.SubtitleAssetData()
+            subtitle_line.set_editor_property("text", cue_text)
+            subtitle_line.set_editor_property(
+                "subtitle_duration_type",
+                unreal.SubtitleDurationType.USE_DURATION_PROPERTY)
+            subtitle_line.set_editor_property(
+                "duration", float((cue_last-cue_first)/fps))
+            subtitle_line.set_editor_property("start_offset", 0.0)
+            subtitle_data.set_editor_property("subtitles", [subtitle_line])
+            section.set_editor_property("subtitle", subtitle_data)
+            if section.get_editor_property("subtitle") is None:
+                raise RuntimeError("F01 A1 subtitle was not assigned")
+            opening_dialogue_manifest.append(
+                dict(scene="A1", text=cue_text, start_frame=cue_first,
+                     end_frame_exclusive=cue_last,
+                     renderer="native_subtitles_umg"))
+            last_dialogue_end = cue_last
+        if len(opening_dialogue_manifest) != len(opening_cues):
+            raise RuntimeError("F01 A1 dialogue subtitles incomplete")
     if not a.get("human_audit_baked"):
         add_human_performances(a["sequence"], [(i, i/fps) for i in range(65*fps)])
         a["human_audit_baked"] = True
@@ -6679,6 +6726,7 @@ def build_omniscient_edit():
     with open(os.path.join(RUN_SAVED_ROOT, "omniscient_edit.json"), "w", encoding="utf-8") as output:
         json.dump(dict(status="CONTINUOUS_CAMERA_BLOCKING_NOT_FINAL", duration_seconds=duration,
                        shots=manifest, previz_pause_cards=card_manifest,
+                       opening_dialogue_cues=opening_dialogue_manifest,
                        note="Cartons d'aide à la lecture : uniquement pour la prévisualisation.",
                        camera_sections=1, join_steps_m=join_steps_m,
                        maximum_camera_speed_m_s=max_camera_step_m*fps,
