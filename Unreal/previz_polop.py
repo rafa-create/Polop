@@ -1795,20 +1795,22 @@ for _side, _label in ((-3.8, "R"), (3.8, "L")):
         "MicroGeo/CaverneV05/VersantB"
     )
 
-# F03: small connected mountain-side boundary, not a camera-only mask.
-# Short low volumes visually close the toilet nook on the north side
-# without intersecting Thomas's south-side passage or the searched shelf.
+# F03: keep the cave boundary recessed into the mountain, away from
+# the family trail at HIGH_POINT. The former near-trail rock was centered
+# just 1.2 m off that point and extended 3.3 m along the path: all three
+# walkers could visibly pass through it. Keep their established trajectories
+# and shrink/recess only these two outer pieces of the cave wall.
 spawn_rock(
     "SEARCH_LEDGE_WALL_NEAR_TRAIL",
-    high_x + 1.2, high_y - 0.7,
-    terrain_z_m(high_x + 1.2, high_y - 0.7) + 1.35,
-    (3.3, 1.3, 2.1), MAT_ROCK_READABLE, "MicroGeo/SearchLedge"
+    high_x + 2.8, high_y + 1.8,
+    terrain_z_m(high_x + 2.8, high_y + 1.8) + 1.10,
+    (1.0, 0.65, 1.8), MAT_ROCK_READABLE, "MicroGeo/SearchLedge"
 )
 spawn_rock(
     "SEARCH_LEDGE_WALL_JOIN",
-    high_x + 4.7, high_y - 0.7,
-    terrain_z_m(high_x + 4.7, high_y - 0.7) + 1.35,
-    (1.9, 1.25, 2.1), MAT_ROCK_READABLE, "MicroGeo/SearchLedge"
+    high_x + 5.0, high_y + 1.8,
+    terrain_z_m(high_x + 5.0, high_y + 1.8) + 1.10,
+    (1.0, 0.65, 1.8), MAT_ROCK_READABLE, "MicroGeo/SearchLedge"
 )
 # The terminal blind spur still hides the entrance from Eva and Lea.
 spawn_rock(
