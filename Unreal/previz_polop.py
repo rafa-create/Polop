@@ -6710,14 +6710,21 @@ def build_omniscient_edit():
             subject = a["eval_actor"]("EVA", t)
             near_eye = (subject[0]-8.0, subject[1]-11.0, subject[2]+4.5)
             near_target = (subject[0]+1.5, subject[1]-2.4, subject[2]+0.75)
-            # Short downstream view shows the women, shelf, wall and cliff
-            # without a distant overhead view of the surrounding open terrain.
-            far_x, far_y = ledge[0]+7.0, ledge[1]-7.2
+            # At the search pause, show the cliff edge AND the rocky cave
+            # exterior in the same shot. The previous eye sat over the drop
+            # and aimed at Eva, filling the frame with empty ground. Pull
+            # back to the trail side and aim between the edge and the blind
+            # spur: the cave's hidden mouth itself stays concealed until A15.
+            edge = a["PRECIPICE_EDGE_POINT"]
+            cave_exterior = a["CAVE_ZONE_POINT"]
+            far_x, far_y = ledge[0]-12.0, ledge[1]-15.0
             far_eye = (far_x, far_y,
-                       max(ledge[2]+4.3, a["terrain_z_m"](far_x, far_y)+2.0))
-            # Viser vers la femme et le bord, a GAUCHE du coude cache :
-            # l'angle A12 n'offre pas un point de vue explicatif sur la bouche.
-            far_target = (subject[0]-0.8, subject[1]-2.6, subject[2]+0.65)
+                       max(ledge[2]+9.0, a["terrain_z_m"](far_x, far_y)+3.0))
+            far_target = (
+                0.40*edge[0]+0.60*cave_exterior[0],
+                0.40*edge[1]+0.60*cave_exterior[1],
+                0.40*edge[2]+0.60*cave_exterior[2]+1.0
+            )
             alpha = 1.0 if code == "A14" else max(0.0, min(1.0, (t-57.0)/1.45))
             alpha = alpha*alpha*(3.0-2.0*alpha)
             eye = tuple(near_eye[i]*(1.0-alpha)+far_eye[i]*alpha for i in range(3))
