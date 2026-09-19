@@ -6386,13 +6386,30 @@ def build_omniscient_edit():
         return between(parents, lea_pose, (u-0.42)/0.39)
 
     def f07_normal_view(t):
-        """Thomas-centered side angle: allow Lea in the distant B-side depth."""
+        """A2 recovery after the 17:00 contact; preserve Lea in the distance."""
         thomas = a["eval_actor"]("THOMAS_NORMAL", t)
         lea = a["eval_actor"]("LEA", t)
         x, y = thomas[0]-7.5, thomas[1]-10.0
         z = max(thomas[2]+3.8, a["terrain_z_m"](x, y)+2.0)
-        target = tuple(thomas[i]*0.83 + lea[i]*0.17 for i in range(3))
+        target = tuple(thomas[i]*0.83+lea[i]*0.17 for i in range(3))
         return (x, y, z), (target[0], target[1], target[2]+1.2)
+
+    def f07_contact_view(t):
+        """F07: fixed OPEN trail-side sightline, shared by A2 and B7/B9.
+
+        The prior (Thomas.y-10) eye shot straight through the low FOREGROUND
+        outcrop at the convergence. The two existing rocks occupy the lateral
+        sides of the same A path; look along their central gap from x=-10 m.
+        Do not move either rock or any actor to fake an accidental collision.
+        """
+        normal = a["eval_actor"]("THOMAS_NORMAL", t)
+        closure = a["CONVERGENCE_POINT"]
+        x, y = closure[0]-10.0, closure[1]+0.10
+        z = max(closure[2]+3.6, a["terrain_z_m"](x, y)+3.0)
+        # Center the collision itself; looking 17% toward Lea would instead
+        # send the eye ray through the large mountain-side rock.
+        return ((x, y, z),
+                (normal[0], normal[1], normal[2]+1.20))
 
     def f07_carabiner_view(t):
         """B-bank close view used only in part B; no early A insert."""
@@ -6443,14 +6460,14 @@ def build_omniscient_edit():
         return (x, y, z), target
 
     def f07_17h_closure_pose(t):
-        """Stay chiefly with normal Thomas: inverse emerges only at the end.
+        """Keep Thomas normal at the center of the SAME objective 17:00 event.
 
-        Follow the existing A-side line of travel from a lateral viewpoint.
-        The two occurrences, real rock, closure instant and worldline are
-        unchanged. The viewer sees the accident; inverse Thomas may not see
-        normal Thomas until he rounds the physical rock.
+        In the last B7/B8 seconds inverse Thomas enters this central trail
+        frame from the far side of the rock. The seven-second PAUSE_BOUCLE
+        holds the aftermath; B9 then continues with Thomas normal.
+        Physical blind-spot and skeletal-contact validity need an Unreal test.
         """
-        return f07_normal_view(t)
+        return f07_contact_view(t)
 
     def desired_pose(code, focus, offset, t):
         if code in ("B6_REPAIR", "PAUSE_MOUSQUETON"):
@@ -6458,16 +6475,25 @@ def build_omniscient_edit():
         if code in ("B7_B8", "PAUSE_BOUCLE"):
             return f07_17h_closure_pose(t)
         if code == "A2":
-            # No hard camera jump when A2 returns to its original Lea/Eva
-            # coverage. The same objective-time pause is also replayed in B9.
+            # The normal timeline begins AT the sole collision, not before it.
+            # Start with the same OPEN view as B7/B8's last frame, then return
+            # to Lea/Eva AFTER the immediate impact; no invented second hit.
+            contact_view = f07_contact_view(t)
             normal_view = f07_normal_view(t)
-            lea_view = desired_pose("A2_LEA_CONTINUATION", "LEA", (-5, -9, 4), t)
-            return blend_camera_pose(normal_view, lea_view,
-                                     (t-2.28)/0.75)
+            with_normal = blend_camera_pose(contact_view, normal_view,
+                                            (t-2.29)/0.42)
+            family_view = desired_pose("A2_LEA_CONTINUATION", "LEA", (-5, -9, 4), t)
+            return blend_camera_pose(with_normal, family_view,
+                                     (t-3.60)/0.90)
         if code in ("PAUSE_INTRO", "A1"):
             # Used only as the END pose of the previous beat in camera handover.
             return f01_opening_pose(code, 1.0, t)
-        if code in ("B9", "PAUSE_ISSUE"):
+        if code == "B9":
+            # B9 replays the same 17:00 pose. Leave the lateral corridor only
+            # once Thomas has walked away from the small outcrop.
+            return blend_camera_pose(f07_contact_view(t), f01_return_pose(t),
+                                     (t-2.29)/0.65)
+        if code == "PAUSE_ISSUE":
             return f01_return_pose(t)
         if code == "B9_ELOIGNEMENT":
             return f01_pullback_pose(t)
