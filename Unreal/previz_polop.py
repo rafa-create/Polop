@@ -5806,7 +5806,7 @@ def add_f01_box_to_film(sequence, samples):
     if not mesh:
         raise RuntimeError("F01 box blockout cube asset missing")
     actor = actors.spawn_actor_from_object(mesh, unreal.Vector(0, 0, -100000))
-    actor.set_actor_hidden_in_game(True)
+    # The Sequencer bHidden track controls visibility; do not force-hide the actor.
     actor.set_actor_label("PZ_ANIM_F01_SMALL_BOX")
     actor.set_folder_path("POLOP/Accessoires/F01")
     actor.set_actor_scale3d(unreal.Vector(0.08, 0.055, 0.025))
