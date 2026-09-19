@@ -1861,16 +1861,24 @@ spawn_box(
     "MicroGeo/Pont"
 )
 
-spawn_sphere(
+# One physical B-bank clip. Objective forward: the clip detaches at ~17:01.
+# Reverse personal time: inverse Thomas repairs it BEFORE crossing B -> A.
+CARABINER_REPAIR_T0 = 3.04
+CARABINER_REPAIR_T1 = 3.08
+CARABINER_CLOSED_POINT = (
+    bbx+1.35, bby+1.20, terrain_z_m(bbx+1.35, bby+1.20)+0.96)
+CARABINER_OPEN_POINT = (
+    bbx+0.42, bby+0.30, terrain_z_m(bbx+0.42, bby+0.30)+0.65)
+
+def carabiner_point_at_objective_time(t):
+    alpha = clamp((t-CARABINER_REPAIR_T0) /
+                  (CARABINER_REPAIR_T1-CARABINER_REPAIR_T0), 0.0, 1.0)
+    return linear_point(CARABINER_CLOSED_POINT, CARABINER_OPEN_POINT, alpha)
+
+MOUSQUETON_PROXY = spawn_box(
     "MOUSQUETON_PROXY",
-    V(
-        (bbx+0.6)*100,
-        (bby+0.4)*100,
-        terrain_z_m(bbx, bby)*100 + 95
-    ),
-    18,
-    MAT_ANCHOR,
-    "MicroGeo/Pont"
+    V(*(v*100.0 for v in CARABINER_CLOSED_POINT)),
+    (18, 28, 8), MAT_ANCHOR, "MicroGeo/Pont"
 )
 
 
@@ -1961,8 +1969,10 @@ FAMILY_REJOIN_STATION = A_BRIDGE_STATION + (LENGTH["A"]-8.0-A_BRIDGE_STATION)*0.
 ANIM = {}
 
 ANIM["THOMAS_NORMAL"] = [
-    station_segment("A", 0.0, 2.0, normal_start_station, CONVERGENCE_STATION),
-    station_segment("A", 2.0, 3.0, CONVERGENCE_STATION, FAMILY_WAIT_STATION),
+    # F07: a shared objective-time hesitation on the SAME path A.
+    station_segment("A", 0.0, 1.975, normal_start_station, CONVERGENCE_STATION),
+    hold_segment(1.975, 2.025, point_with_real_terrain(CONVERGENCE_POINT)),
+    station_segment("A", 2.025, 3.0, CONVERGENCE_STATION, FAMILY_WAIT_STATION),
     custom_segment(3.0, 3.5, FAMILY_WAIT_POINT, NORMAL_FAMILY_POINT),
     hold_segment(3.5, GROUP_DEPART_AFTER_LEA, NORMAL_FAMILY_POINT),
     custom_segment(GROUP_DEPART_AFTER_LEA, FAMILY_REJOIN_TIME, NORMAL_FAMILY_POINT,
@@ -2413,6 +2423,9 @@ def _vec_norm(v):
 def pov_story_target(actor_name, t, position):
     """Cible de regard pendant les pauses / moments narratifs."""
 
+    if actor_name == "THOMAS_NORMAL" and 1.95 <= t <= 2.045:
+        return eval_actor("LEA", t)
+
     if actor_name == "THOMAS_NORMAL" and t >= NARRATIVE_SECONDS:
         # Tail technique : regard vers la fissure / intérieur, jamais vers l'extérieur.
         return cave_ground_point(max(1.2, _CAVE_AXIS_LEN-1.2), -0.35, 1.1)
@@ -2456,6 +2469,10 @@ def pov_direction(actor_name, t):
     # This orientation belongs to the world pose, not the film camera.
     if actor_name == "EVA" and 1.9 <= t <= GROUP_DEPART_AFTER_LEA:
         return (0.0, -1.0, 0.0)
+
+    # The same normal-Thomas glance evaluates in A2 and B9.
+    if actor_name == "THOMAS_NORMAL" and 1.975 <= t <= 2.025:
+        return _vec_norm(_vec_sub(eval_actor("LEA", t), p))
 
     # The short pause must not inherit movement from the 0.35-minute lookahead.
     # The cast and POV share this objective-time glance toward normal Thomas.
@@ -3384,7 +3401,7 @@ events = [
         "time": "17h01",
         "seq_second": 3.0,
         "source": "B6",
-        "event": "Lecture objective : Thomas inversé traverse A -> B ; temps propre : B -> A."
+        "event": "Thomas inversé traverse A -> B en lecture objective. Vers 17h01 le mousqueton B se décroche ; il est réparé avant la traversée en temps propre."
     },
     {
         "time": "17h30",
@@ -3423,6 +3440,12 @@ assumptions = [
         "id": "A_V05_01",
         "value": "Convergence 17h00 placée 25 m avant le pont sur A.",
         "reason": "B6=17h01 puis B7/B8≈17h00 impose une distance marchable en ~1 minute.",
+        "canon": False
+    },
+    {
+        "id": "A_V05_01B",
+        "value": "Attache rive B : t=3.04–3.08 en temps objectif.",
+        "reason": "En temps inversé Thomas répare l'attache sur B avant sa traversée B vers A.",
         "canon": False
     },
     {
@@ -5609,6 +5632,14 @@ def character_performance(name, objective_time):
     # Decreasing objective time advances the inverse's own gait. No film state
     # or camera decision may alter this phase or remove a later occurrence.
     phase = objective_gait_phase(name, t) if moving else t*0.1
+    if name == "THOMAS_NORMAL" and 1.955 <= t <= 2.055:
+        # Body-facing cue only: separate neck motion requires a later rig pass.
+        daughter = a["eval_actor"]("LEA", t)
+        look_yaw = math.degrees(math.atan2(
+            daughter[1]-p[1], daughter[0]-p[0]))-90.0
+        look_weight = (cinematic_ease((t-1.955)/0.02) *
+                       (1.0-cinematic_ease((t-2.025)/0.03)))
+        yaw += (a["unwrap_angle"](yaw, look_yaw)-yaw)*look_weight
     if name == "THOMAS_INVERSE" and t <= 2.25:
         # B7: turn, then retreat into the closure. Finish turning while the
         # roots are still >1.25 m apart; do not rotate through the other body.
@@ -5619,6 +5650,10 @@ def character_performance(name, objective_time):
             normal_after[1]-normal_before[1], normal_after[0]-normal_before[0]))-90.0
         weight = cinematic_ease(max(0.0, min(1.0, (t-2.05)/0.20)))
         yaw = closure_yaw + (a["unwrap_angle"](closure_yaw, yaw)-closure_yaw)*weight
+    if name == "THOMAS_INVERSE" and abs(t-2.0) < 1e-9:
+        # The single coincident, invisible inverse endpoint has the same pose.
+        closure = character_performance("THOMAS_NORMAL", 2.0)
+        yaw, moving, phase = closure["yaw"], closure["moving"], closure["phase"]
     return dict(foot=p, yaw=yaw, moving=moving, phase=phase,
                 # At the exact closure both branches share the same body pose.
                 # Draw that coincident endpoint once; BOTH are drawn for every
