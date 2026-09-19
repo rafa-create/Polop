@@ -518,27 +518,35 @@ B — LE TEMPS INVERSÉ
 
 ⸻
 
-B1 — LE PREMIER PAS
+B1 — LA SECONDE LUMIÈRE / LE GRAND DEHORS
 
-Thomas sort de la caverne par sa grande ouverture sur le versant B, après avoir suivi le second faisceau derrière le coude rocheux. Depuis cette zone haute, A et B offrent deux descentes distinctes. Il s’engage sur B, le chemin qu’il n’avait pas emprunté pendant la montée normale. L’eau, la poussière et les mouvements naturels du paysage se recomposent à rebours autour de lui.
+INT. CAVERNE — 18h00 — TEMPS DE THOMAS INVERSÉ
 
-Le relief sépare alors naturellement sa descente par B de la progression de son occurrence normale sur A.
+La goutte reprend son chemin vers la roche. L'anneau s'éloigne en contrebas, de contact en contact, sans quitter la fissure. Thomas suit son petit bruit jusqu'à ce qu'il se perde dans la pierre.
 
-Derrière lui, l’anneau poursuit la descente amorcée au contact de 18h00 et s’éloigne dans la fissure vers le relief inférieur. Thomas ne le porte pas.
+Il lève les yeux.
 
-Il avance vers 17h00.
+À l'autre bout de la première cavité, une forme humaine glisse à reculons entre deux blocs noirs. À contre-jour, les épaules, puis une main ; le visage reste dans l'ombre. Thomas se fige. La silhouette passe devant la petite entrée côté A et disparaît dans la lumière.
 
-La première partie de la caverne est très sombre. Du côté de Thomas normal, deux zones lumineuses structurent l’espace : l’entrée discrète sur A et la fente rocheuse qui éclaire l'anneau. Plus loin, derrière un coude qui coupe toute vue directe depuis cette première partie, un second faisceau annonce la grande sortie sur B. Les deux éclairages ne se confondent jamais dans le regard de Thomas normal.
+La caméra reste près de Thomas. Il fait un pas dans cette direction, s'arrête, écoute. Au fond de l'image, la petite entrée demeure vide. Il regarde les rochers entre elle et lui, sans retrouver personne.
 
-La caméra retrouve la cavité depuis la place de Thomas inversé. Les petites aspérités des parois et le bord des rochers, invisibles lors de l’entrée de Thomas normal, se distinguent maintenant dans la pénombre. Thomas inversé tourne la tête : ses yeux ont eu le temps de s’habituer à l’obscurité pendant les minutes passées dans la grotte avant le contact avec l’anneau.
+Un trait de lumière apparaît sur son épaule. Il pivote. La caméra pivote avec lui : sur une paroi que le premier cadrage laissait dans le noir, une bande claire glisse depuis un passage latéral. Thomas s'en approche. La bande disparaît derrière un coude rocheux, puis réapparaît sur le mur suivant. Il la suit, une main contre la pierre.
 
-Près de l’entrée, une silhouette humaine se déplace à reculons. Thomas inversé la remarque d’abord entre deux rochers sombres, puis la voit se découper nettement quand elle passe devant la lumière du dehors. Il s’arrête une fraction de seconde. Il ne distingue pas son visage et ne comprend pas encore qu’il regarde son occurrence normale.
+Derrière le coude, l'espace s'élargit. Un second jour découpe de plus en plus nettement les pierres sous ses pieds ; le bruit du vent prend de la place, sans qu'on voie encore l'extérieur. Thomas presse le pas. La caméra passe à son côté au moment où il franchit la dernière avancée rocheuse.
 
-La caméra revient un instant à l’angle de l’entrée, dans la lumière vive du dehors : Thomas normal avance vers la fente éclairée, les yeux encore peu habitués à la pénombre. La silhouette de son double, plus loin dans l’ombre, se confond avec la roche derrière lui. Thomas normal ne tourne pas la tête vers elle.
+EXT. VERSANT B — CONTINU
 
-Retour à Thomas inversé : la silhouette recule vers l’entrée discrète sur A et sort de son champ. Il reste immobile un instant. Il ne ressort pas sur la plateforme : un autre faisceau, aperçu plus loin dans la roche, attire son regard. Il poursuit prudemment son exploration dans la pénombre, contourne le coude rocheux et découvre que cette lumière provient d'une ouverture beaucoup plus vaste. Il débouche sur le versant B, hors de vue de la plateforme, de Thomas normal, d'Éva et de Léa. La découverte de cette sortie ouvre progressivement l'espace et laisse place aux premiers phénomènes inversés, puis au plaisir de les anticiper. Thomas cesse peu à peu de consulter sa montre et se laisse absorber par le jeu, jusqu'à ce que la vue du pont lui rappelle l'approche de 17h00.
+La lumière ouvre soudain tout le cadre. La caméra, sortie avec lui, poursuit son mouvement : au premier plan, Thomas ; bien plus bas, un repli du terrain, des arbres, le fond du creux ; au loin, le chemin A apparaît par morceaux sur l'autre versant. La roche cache entièrement la petite plateforme et l'entrée côté A.
 
-Aucun des deux ne cherche à se cacher. La différence se lit dans ce que la caméra laisse apparaître de la même grotte, selon les yeux auxquels elle s’attache : Thomas inversé distingue son double dans la pénombre ; Thomas normal, encore ébloui par l’extérieur et occupé par le faisceau de la fente, ne le remarque pas.
+Thomas cligne des yeux, laisse le vent lui frapper le visage. Il se retourne : derrière lui, la grande bouche de la caverne ; aucun regard possible jusqu'à la petite entrée. Il repart.
+
+Une goutte se détache du bord de sa manche, remonte jusqu'à une pointe de roche mouillée. Thomas la suit des yeux. Une seconde goutte fait le même trajet, puis une troisième, tout près de son visage. Il tend un doigt, le retire juste avant qu'elle ne le frôle.
+
+En descendant, il longe une dalle où de la poussière se resserre dans une fente. Son pied s'arrête à deux doigts du mouvement. Il regarde sa chaussure, la fente, puis essaie un pas plus loin.
+
+Au détour du sentier, la caméra reste sur la paroi et laisse Thomas sortir du cadre. Un filet d'eau court à rebours vers le haut d'une rigole ; un instant après, Thomas repasse au fond de l'image, déjà plus bas. La caméra le rejoint sans revenir à l'ouverture de la grotte.
+
+Le versant B tourne sous une épaule rocheuse. Le chemin A disparaît derrière le relief. Thomas descend de plus en plus librement, sans avoir à éviter son autre trajectoire.
 
 ⸻
 
@@ -568,119 +576,51 @@ Puis la caméra revient vers Thomas inversé.
 
 ⸻
 
-B4 — LA DESCENTE / LE PLAISIR DE L’INVERSION
+B4 — LA DESCENTE / LE JEU
 
-Thomas continue vers le passé. Une feuille quitte le sol et remonte vers sa branche. Il la suit des yeux jusqu’à ce qu’elle retrouve exactement sa place.
+EXT. VERSANT B — DE 18h00 VERS 17h30 — TEMPS DE THOMAS INVERSÉ
 
-Il avance encore, d’abord avec prudence.
+Une feuille quitte les pierres du sentier et remonte devant Thomas. La caméra monte avec elle, jusqu'à une branche au-dessus de sa tête. Quand elle retrouve sa place, Thomas est déjà passé sous l'arbre. La caméra redescend : il regarde derrière lui, amusé malgré lui.
 
-Un peu plus bas, le sentier traverse une zone humide alimentée par un mince ruissellement. Une petite flaque porte encore les traces d’un passage. Sous les yeux de Thomas, des gouttes quittent la roche et remontent vers le filet d’eau. Une éclaboussure se rassemble au lieu de se disperser.
+Un peu plus bas, le chemin coupe une rigole humide. Des gouttes s'arrachent aux cailloux pour rejoindre un mince courant qui paraît grimper la pente. Thomas approche le pied d'une flaque.
 
-Thomas s’arrête.
+L'eau se rassemble contre sa chaussure, une couronne d'éclaboussures revient au ras du sol, puis la surface se referme. Il retire vivement le pied. Une dernière goutte remonte le long de son pantalon jusqu'au bord de sa chaussure.
 
-Il approche le pied, hésite, puis traverse. L’eau semble se recomposer autour de son pas. Il se retourne pour regarder la flaque.
+Thomas regarde sa chaussure. Puis la flaque. Il avance l'autre pied avec précaution ; l'eau revient une nouvelle fois, au rythme exact de son pas. Un rire lui échappe. Il se retourne pour voir la surface se lisser derrière lui, et continue.
 
-Pour la première fois depuis la caverne, sa peur laisse place à une curiosité presque enfantine.
+La caméra recule face à lui sur le sentier. Une branche souple entre au bord du cadre. Thomas la voit tard, baisse l'épaule ; elle semble se retirer juste assez pour le laisser passer. Un petit claquement derrière lui. Il se retourne : la branche frémit encore, contre son sac. Il rit de nouveau, se décale sous la suivante sans s'arrêter. Le passage reste suffisamment large pour qu'il ne s'agisse pas d'un coup dangereux.
 
-Il reprend sa descente.
+Il prend de la vitesse.
 
-La caméra cesse progressivement de présenter les phénomènes comme des anomalies isolées. Elle accompagne Thomas dans une continuité plus fluide.
+À chacun de ses pas, de petits graviers remontent dans les interstices du chemin. La caméra reste basse un moment avec ses chaussures : gravier, semelle, poussière qui se resserre ; puis remonte d'un même mouvement jusqu'à son visage. Il choisit une pierre en mouvement, ralentit et ouvre la main. Le caillou remonte ses rebonds et vient dans sa paume.
 
-Une poignée de poussière se rassemble sur un rocher juste avant qu’il le dépasse.
+Thomas referme les doigts, stupéfait, puis sourit. Il regarde le caillou, le sentier devant lui et un point précis sur le côté. Son sourire devient un défi. Il recule le bras, hésite un battement, puis lance la pierre vers ce point.
 
-Des feuilles remontent du chemin dans son dos et viennent retrouver une branche.
+La caméra ne quitte pas la pierre pour ajouter un effet. Elle accompagne son départ, découvre la portion de roche et de gravier vers laquelle elle se dirige, puis retrouve Thomas dans la même continuité. Le mouvement a eu lieu. Thomas attend un instant, comme s'il cherchait une objection à ce qu'il vient de voir. Au lieu de cela, un petit choc, plus loin, répond à son geste ; un gravier revient à sa place sur la pente. Il regarde alternativement sa main vide et le relief, puis éclate de rire. La trajectoire exacte de ce jet, y compris sa cause dans le temps objectif, devra être arrêtée en prévisualisation 3D avant verrouillage de cette action.
 
-Un petit gravier quitte une rigole et remonte la pente à côté de sa chaussure. Thomas ralentit pour suivre sa course, comprend où il va passer, puis adapte son pas au dernier moment. Le gravier file exactement là où il l’avait anticipé.
+Il repart presque en courant. La caméra passe de face à trois quarts, puis se laisse distancer, sans couper la géographie. Au bord d'une courte marche naturelle, Thomas se propulse par-dessus un passage de pierres instables. Autour de lui, plusieurs petits cailloux regagnent leurs appuis dans le talus. Il atterrit sur une partie ferme du sentier. La caméra l'attend déjà en contrebas ; il arrive dans le cadre avec un sourire immense, se retourne une seconde sur ce qu'il vient de traverser, puis continue.
 
-Thomas sourit.
+Le chemin s'incurve. Thomas trouve son rythme entre l'eau, les feuilles et les petits impacts de pierre. Un pas, une goutte qui rejoint sa source ; un changement d'appui, une brindille qui remonte ; un regard, un caillou qui retrouve son creux. La caméra n'isole plus chaque phénomène : elle reste avec son corps et laisse les mouvements se répondre au premier plan, derrière lui, puis de nouveau devant.
 
-Plus loin, un petit caillou distinct de celui de A7/B3 remonte une trajectoire simple devant lui. Thomas observe sa course quelques secondes. Il tend la main à l’endroit où il pense qu’elle va arriver.
+Thomas lève une main au passage d'une feuille, manque son premier geste, recommence avec une autre. Il ne cherche plus sa montre. Ses bras s'écartent un instant comme pour accueillir la pente ; il accélère, rit tout seul et disparaît derrière un pli du terrain. La caméra glisse sur la crête, le retrouve plus bas, toujours en mouvement.
 
-Le caillou vient dans sa paume.
+Sur l'autre versant, le chemin A apparaît un instant entre deux masses rocheuses. Très loin, une silhouette progresse à rebours. Thomas, absorbé par le sentier sous ses pieds, ne lève pas les yeux. Le relief referme l'ouverture du cadre sur B.
 
-Thomas reste surpris une fraction de seconde.
+La caméra quitte brièvement Thomas pour accompagner un caillou qui remonte une petite rigole. Il disparaît sous des feuilles ; au bout de ce mouvement, un éclat métallique apparaît plus bas dans une autre fissure.
 
-Puis il rit, brièvement, presque malgré lui.
+L'anneau poursuit sa trajectoire, indépendant de Thomas.
 
-Il regarde le caillou dans sa main, puis le chemin devant lui. Il ne possède aucun pouvoir : il vient seulement de comprendre assez bien une trajectoire pour se trouver au bon endroit au bon moment.
+Il descend par petites chutes et rebonds dans la roche. La caméra n'en suit qu'un fragment, puis reprend Thomas plus bas au bruit de ses pas. Plus tard, elle retrouve l'anneau au bord d'un mince écoulement : il poursuit sa course vers le bas alors que l'eau, vue dans cette direction temporelle, semble remonter. Un rebord humide le masque ; la caméra revient sans expliquer son trajet.
 
-Il continue.
+Encore plus tard, dans une anfractuosité, l'anneau est immobile, maintenu entre deux pierres. Au-dessus, un chevreuil traverse le repli du terrain en mouvements inversés. Un sabot prend appui près de la fissure. Un petit gravier se replace, la roche vibre ; l'anneau retrouve une trajectoire et quitte son blocage. Le chevreuil poursuit son chemin sans le regarder. La caméra laisse l'anfractuosité derrière elle. Le raccord précis entre appui, blocage et libération, ainsi que la durée totale du trajet de l'anneau, restent à vérifier dans les deux sens en 3D.
 
-La descente devient progressivement une chorégraphie.
+Retour à Thomas. Il enjambe un mince filet d'eau qui remonte vers sa source, franchit deux pierres à la suite et poursuit la descente avec une énergie presque enfantine. La caméra ne fait plus de ses mouvements des démonstrations : elle suit un homme qui s'amuse.
 
-Thomas se baisse au moment où une branche revient vers sa position précédente. Il traverse un nuage de poussière qui se resserre derrière lui. Quelques pierres remontent une courte pente au rythme de ses pas. Un filet d’eau remonte le long d’une paroi au moment où il passe.
+Puis le sentier tourne.
 
-Il ne s’arrête plus après chaque phénomène.
+Au bas du cadre apparaît le creux. Le pont enjambe l'espace entre A et B. Thomas ralentit, d'abord à peine. La caméra poursuit sa descente une seconde sans lui, jusqu'au cordage détendu, puis revient vers lui.
 
-Il commence à anticiper.
-
-Un pas.
-
-Un impact de pierre.
-
-Un mouvement de feuille.
-
-Son souffle.
-
-L’eau.
-
-Le frottement de ses vêtements.
-
-Les sons physiques forment progressivement une partition avec ses mouvements. La musique peut se mêler à ce rythme sans recouvrir le paysage.
-
-Pendant quelques instants, Thomas ne subit plus l’inversion. Il joue avec elle.
-
-Il accélère légèrement. Il se place instinctivement avant qu’un phénomène n’arrive, corrige son mouvement, se trompe une fois, puis retrouve le rythme. Son sourire devient franc.
-
-La caméra accompagne Thomas dans cette découverte. Les événements restent petits, naturels et matériels.
-
-Par moments seulement, la caméra abandonne Thomas et retrouve l’anneau plus bas dans le relief. Ces fragments sont courts et appartiennent à la même partition visuelle, jamais à une seconde intrigue suivie.
-
-L’anneau chute dans une rigole rocheuse et frappe de petits éléments du décor. Autour de lui, dans la lecture inversée, gravier, poussière ou brindilles semblent retrouver leur place. L’impression est simple : l’anneau descend pendant que la montagne se recompose.
-
-Plus tard, l’anneau traverse un mince écoulement. L’eau remonte la pente tandis que l’anneau continue vers le bas. Des gouttes rejoignent le courant autour de lui : EAU VERS LE HAUT / ANNEAU VERS LE BAS dans la même image.
-
-Encore plus tard, la caméra retrouve l’anneau immobile, coincé dans une petite anfractuosité. Il peut être là depuis longtemps.
-
-Un chevreuil apparaît plus haut dans le relief. Dans la perception temporelle de Thomas, ses mouvements sont inversés : il recule à travers le terrain, ses appuis et les petits déplacements de végétation se recomposent autour de lui. La caméra peut suivre brièvement cette trajectoire étrange sans la transformer en événement fantastique autonome.
-
-En passant près de l’anfractuosité, l’un de ses sabots intervient dans la chaîne physique à rebours : une petite pierre revient sous son appui, une vibration traverse le sol et l’équilibre qui retenait l’anneau se défait. L’anneau est libéré et reprend immédiatement sa chute vers le bas.
-
-Le chevreuil continue sa trajectoire inversée sans regarder l’anneau. La rencontre reste purement causale et accidentelle : aucun animal ne semble guider volontairement l’objet.
-
-La caméra ne documente jamais tout son trajet. Ces apparitions espacées suffisent à faire sentir une longue chaîne de chutes, blocages et reprises.
-
-Par moments seulement, la caméra peut abandonner Thomas et retrouver l’anneau plus bas dans le relief. Ces fragments sont courts et intégrés à la même partition visuelle ; ils ne constituent pas une seconde intrigue suivie.
-
-PREMIER FRAGMENT — L’anneau chute dans une étroite rigole rocheuse. Il frappe un petit élément du décor. Dans cette lecture inversée du monde, le choc coïncide avec plusieurs éléments naturels qui semblent retrouver leur place : gravier qui remonte dans une encoche, poussière qui se rassemble, brindille qui revient contre la roche. L’impression est que l’anneau descend pendant que la montagne se recompose autour de lui. Chaque effet devra rester la lecture inversée d’une interaction physique ordinaire.
-
-Retour à Thomas.
-
-SECOND FRAGMENT — Plus tard, l’anneau atteint un mince écoulement. L’eau remonte la pente et rejoint la roche en sens inverse tandis que l’anneau, lui, continue vers le bas. Pendant quelques secondes, les deux directions coexistent clairement dans l’image : EAU VERS LE HAUT / ANNEAU VERS LE BAS. Des gouttes rejoignent le courant autour de lui. L’anneau disparaît ensuite sous un rebord humide.
-
-Retour à Thomas et à sa chorégraphie.
-
-TROISIÈME FRAGMENT — Encore plus tard, la caméra retrouve l’anneau immobile, coincé entre deux pierres ou dans une petite anfractuosité. Il peut manifestement être là depuis un certain temps. Aucun besoin de montrer la durée exacte. Un événement matériel très simple — eau, vibration, petit déplacement du terrain — rompt finalement l’équilibre. L’anneau se libère et reprend sa chute.
-
- Ces apparitions espacées suffisent à faire sentir qu’entre 18h00 et 17h00 il traverse une longue chaîne de chutes, de blocages et de reprises que le film choisit de ne montrer que par fragments.
-
-Éva et Léa demeurent séparées de lui par le relief. Elles ne le voient jamais.
-
-Puis Thomas reconnaît une portion du chemin.
-
-Son allure ralentit.
-
-Son sourire disparaît progressivement.
-
-Au loin, plus bas, la géographie du creux devient familière.
-
-Le pont apparaît.
-
-Le jeu s’arrête presque de lui-même.
-
-Thomas regarde sa montre, puis le pont.
-
-Les phénomènes inversés continuent autour de lui, mais ils ne sont plus amusants. Ils lui indiquent désormais qu’il se rapproche de 17h00.
+Il regarde le pont. Sa main rejoint sa montre. Son sourire s'efface. L'eau et les graviers continuent à rebours tout près de ses chaussures ; il ne les regarde plus.
 
 ⸻
 
