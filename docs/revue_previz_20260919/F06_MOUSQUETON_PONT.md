@@ -1,6 +1,6 @@
 # F06 — L'attache du pont : indices discrets et geste causal
 
-**Statut : À DISCUTER.** Type : révélation causale / accessoire encore schématique.
+**Statut actuel : ORDRE B→RÉPARATION→PONT ET ÉTAT DE L'ATTACHE CODÉS EN BLOCKOUT — NON VALIDÉE À L'IMAGE.** Type : révélation causale / accessoire encore schématique.
 
 ## Observation dans la vidéo
 
@@ -21,3 +21,11 @@ Contrôler d'abord positions du pont, ancrage, cordage, Léa sur le flanc, Éva 
 ## Critères de validation
 
 Au premier passage, l'attache est un détail banal; en B6, le geste et le CLAC sont compréhensibles sans commentaire. Léa revient par le flanc et ne traverse pas le pont à ce moment-là; Thomas inversé traverse B→A, hors du regard d'Éva/Léa. Aucune trajectoire n'est modifiée uniquement pour cacher une erreur.
+
+## État après choix de la rive B et modification de la Bible — 19/09/2026
+
+**Décision canonique désormais fixée :** le mousqueton est **sur la rive B**, accessible à Thomas inversé avant sa traversée B→A. Dans A2, il reste un détail de fond et son décrochage n'est pas montré ; A9 autorise une **brève vue du cordage détendu**, sans révélation écrite de la réparation. En B5–B6, Thomas inversé voit l'attache détachée, la remet et vérifie son geste, puis traverse B→A ; dans le temps objectif normal, le même mouvement de pièce est un décrochage vers 17 h 01, après la collision de 17 h 00. La Bible a été mise à jour selon ces décisions. Corriger à la lecture les renvois de lignes historiques ci-dessus : ils datent d'une version antérieure de `Script_POLOP.md`.
+
+**Implémentation de préviz publiée, non testée dans Unreal :** une seule pièce métallique proxy côté B, une piste de position déterminée par le temps objectif, une halte de Thomas inversé devant l'attache, le plan B6_REPAIR **avant** B6_TRAVERSEE, puis un cadrage B qui présente clairement la pièce. Les cartons de la première partie n'annoncent plus la réparation ; les sous-titres B nomment l'objet et son geste. **Il ne s'agit pas encore d'une animation de doigts, d'une véritable tension de corde ou d'une preuve de sécurité physique du pont.**
+
+**Reste à faire :** visionner A1, A2, A9, B5, B6_REPAIR et B6_TRAVERSEE ; vérifier positions des deux rives, pièce réellement visible sur B et accessible depuis le corps de Thomas, continuité d'un seul état d'attache et synchronisation geste/CLAC ; confirmer que Léa et Éva ne voient pas le double et que Léa ne reprend pas le pont. Si le cube ou la sphère proxy paraît inadapté, remplacer l'accessoire par une forme de mousqueton et cordage crédible lors d'une passe autorisée, sans changer le trajet validé. Aucune validation sur les seuls cartons.
