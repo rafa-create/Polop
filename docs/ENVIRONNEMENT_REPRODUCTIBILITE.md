@@ -43,7 +43,7 @@ Le code récent peut utiliser les assets tutoriels Unreal :
 - `Tutorial_Walk_Fwd`
 - `Tutorial_Idle`
 
-Ce ne sont pas des fichiers du dépôt. Le pipeline doit donc soit garantir leur présence, soit avoir un fallback. Voir la GitHub issue **#43** (`3d_codex`).
+Ce ne sont pas des fichiers du dépôt. Le pipeline doit donc soit garantir leur présence, soit avoir un fallback. Ce contrôle et le fallback sont désormais inclus dans la GitHub issue **#41** (`3d_codex`), qui conserve aussi le travail articulé déjà commencé.
 
 ## Fichiers générés
 
