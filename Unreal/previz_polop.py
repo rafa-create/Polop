@@ -5812,6 +5812,8 @@ def publish_current_film(sequence, camera):
     settings = entry.get_editor_property("playback_settings")
     settings.set_editor_property("auto_play", True)
     settings.set_editor_property("pause_at_end", True)
+    settings.set_editor_property("hide_hud", True)
+    settings.set_editor_property("hide_player", True)
     settings.set_editor_property("loop_count", unreal.MovieSceneSequenceLoopCount(0))
     entry.set_editor_property("playback_settings", settings)
     camera.set_actor_label("PZ_ANIM_CAM_OMNISCIENT_CURRENT")
