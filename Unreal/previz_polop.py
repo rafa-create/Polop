@@ -6235,17 +6235,17 @@ def build_omniscient_edit():
         ),
         "PAUSE_DETOUR": (
             "THE LONGER WAY BACK",
-            "Lea is on path B. She returns to her parents\n"
-            "on A by the hillside path, not the short bridge."
+            "After crossing the bridge, Lea takes the longer trail\n"
+            "around the hillside to rejoin her parents."
         ),
         "PAUSE_THOMAS": (
             "UP THE MOUNTAIN",
             "Thomas falls behind, distracted by the time."
         ),
         "PAUSE_CHEMINS": (
-            "THE TWO PATHS",
-            "A: the family's uphill trail. B: the opposite slope.\n"
-            "The short bridge and the longer hillside path connect them."
+            "THE MOUNTAIN TRAILS",
+            "The bridge leads to the opposite slope.\n"
+            "A winding trail also connects the two sides."
         ),
         "PAUSE_ATTACHE": (
             "THE BRIDGE BELOW",
@@ -6282,9 +6282,9 @@ def build_omniscient_edit():
             "the figure cannot make him out in the darkness."
         ),
         "PAUSE_FAMILLE": (
-            "TWO PATHS, THE SAME TIME",
-            "Eva and Lea head down A to seek help. Thomas\n"
-            "emerges on the hidden B side, moving into their past."
+            "ON OPPOSITE SIDES",
+            "Eva and Lea head downhill to seek help.\n"
+            "Unseen, Thomas emerges on the opposite slope."
         ),
         "PAUSE_RETOUR": (
             "THOMAS MOVES INTO THE PAST",
@@ -6292,12 +6292,12 @@ def build_omniscient_edit():
         ),
         "PAUSE_PONT_RETOUR": (
             "ABOUT 5:30 P.M. - THE BRIDGE",
-            "On the B bank, Thomas spots the loose carabiner.\nThe game is over: Lea crossed this bridge earlier."
+            "Thomas spots the loose carabiner by the bridge.\nThe game is over: Lea crossed here earlier."
         ),
         "PAUSE_MOUSQUETON": (
-            "5:01 P.M. - THE B BANK",
-            "Thomas secures the carabiner on the B bank.\n"
-            "He now crosses the bridge from B to A."
+            "5:01 P.M. - THE BRIDGE",
+            "Thomas secures the carabiner on the far bank.\n"
+            "Then he crosses back toward his family."
         ),
         "PAUSE_BOUCLE": (
             "5:00 P.M. - THE SAME INSTANT",
@@ -6306,7 +6306,8 @@ def build_omniscient_edit():
         ),
         "PAUSE_ISSUE": (
             "THE SAME MOMENT AGAIN",
-            "Thomas is back on path A. Lea is still on B."
+            "Thomas is back on the family trail.\n"
+            "Lea is still across the bridge."
         ),
     }
     if SUBTITLE_REVIEW_MODE:
