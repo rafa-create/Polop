@@ -1726,11 +1726,21 @@ A_DESCEND_3MIN = max(0.0, LENGTH["A"] - 100.0)
 B5_STATION = max(0.0, LENGTH["B"] - B5_DISTANCE_FROM_BRIDGE_M)
 
 # #49: local photographic stop beside A, near the unchanged flank arrival.
-# 12 m before the junction, 4 m off the path: blocking values, not new geography.
+# User-approved: wait at the photo spot until Lea returns, without returning
+# to the bridge. Blocking offsets do not alter the existing paths or terrain.
 FAMILY_WAIT_STATION = A_BRIDGE_STATION - 12.0
 FAMILY_WAIT_POINT = point_with_real_terrain(route_point_at_station("A", FAMILY_WAIT_STATION))
 EVA_PHOTO_POINT = point_with_real_terrain(
-    (FAMILY_WAIT_POINT[0], FAMILY_WAIT_POINT[1] - 4.0, FAMILY_WAIT_POINT[2]))
+    (FAMILY_WAIT_POINT[0], FAMILY_WAIT_POINT[1] - 12.0, FAMILY_WAIT_POINT[2]))
+
+NORMAL_FAMILY_POINT = point_with_real_terrain(
+    (EVA_PHOTO_POINT[0]-2.0, EVA_PHOTO_POINT[1]+1.0, 0.0))
+LEA_FAMILY_POINT = point_with_real_terrain(
+    (EVA_PHOTO_POINT[0]+2.0, EVA_PHOTO_POINT[1]+1.0, 0.0))
+# Reach the original ascent again at 17h06:30, without teleporting at departure.
+FAMILY_REJOIN_TIME = GROUP_DEPART_AFTER_LEA + 0.5
+NORMAL_REJOIN_STATION = A_BRIDGE_STATION + (LENGTH["A"]-A_BRIDGE_STATION)*0.5/(52.0-8.0)
+FAMILY_REJOIN_STATION = A_BRIDGE_STATION + (LENGTH["A"]-8.0-A_BRIDGE_STATION)*0.5/(52.0-8.0)
 
 # A 17h01 en lecture objective, Thomas inversé vient de traverser A -> B.
 # Dans son temps propre, c'est bien B -> A conformément à B6.
@@ -1739,18 +1749,15 @@ ANIM = {}
 ANIM["THOMAS_NORMAL"] = [
     station_segment("A", 0.0, 2.0, normal_start_station, CONVERGENCE_STATION),
     station_segment("A", 2.0, 3.0, CONVERGENCE_STATION, FAMILY_WAIT_STATION),
-    hold_segment(3.0, 3.5, FAMILY_WAIT_POINT),
-    station_segment("A", 3.5, 4.0, FAMILY_WAIT_STATION, A_BRIDGE_STATION),
-    hold_segment(
-        4.0,
-        GROUP_DEPART_AFTER_LEA,
-        point_with_real_terrain(A_BRIDGE_POINT)
-    ),
+    custom_segment(3.0, 3.5, FAMILY_WAIT_POINT, NORMAL_FAMILY_POINT),
+    hold_segment(3.5, GROUP_DEPART_AFTER_LEA, NORMAL_FAMILY_POINT),
+    custom_segment(GROUP_DEPART_AFTER_LEA, FAMILY_REJOIN_TIME, NORMAL_FAMILY_POINT,
+                   point_with_real_terrain(route_point_at_station("A", NORMAL_REJOIN_STATION))),
     station_segment(
         "A",
-        GROUP_DEPART_AFTER_LEA,
+        FAMILY_REJOIN_TIME,
         GROUP_HIGH_TIME,
-        A_BRIDGE_STATION,
+        NORMAL_REJOIN_STATION,
         LENGTH["A"]
     ),
     custom_segment(
@@ -1782,18 +1789,14 @@ ANIM["THOMAS_NORMAL"] = [
 ANIM["EVA"] = [
     station_segment("A", 0.0, 1.7, eva_start_station, FAMILY_WAIT_STATION),
     custom_segment(1.7, 1.9, FAMILY_WAIT_POINT, EVA_PHOTO_POINT),
-    hold_segment(1.9, 3.5, EVA_PHOTO_POINT),
-    custom_segment(3.5, 4.0, EVA_PHOTO_POINT, point_with_real_terrain(A_BRIDGE_POINT)),
-    hold_segment(
-        4.0,
-        GROUP_DEPART_AFTER_LEA,
-        point_with_real_terrain(A_BRIDGE_POINT)
-    ),
+    hold_segment(1.9, GROUP_DEPART_AFTER_LEA, EVA_PHOTO_POINT),
+    custom_segment(GROUP_DEPART_AFTER_LEA, FAMILY_REJOIN_TIME, EVA_PHOTO_POINT,
+                   point_with_real_terrain(route_point_at_station("A", FAMILY_REJOIN_STATION))),
     station_segment(
         "A",
-        GROUP_DEPART_AFTER_LEA,
+        FAMILY_REJOIN_TIME,
         52.0,
-        A_BRIDGE_STATION,
+        FAMILY_REJOIN_STATION,
         max(0.0, LENGTH["A"] - 8.0)
     ),
     hold_segment(
@@ -1849,15 +1852,19 @@ ANIM["LEA"] = [
     station_segment(
         "FLANC",
         3.65,
-        LEA_FLANK_RETURN_END_MIN,
+        LEA_FLANK_RETURN_END_MIN - 0.4,
         12.0,
         LENGTH["FLANC"]
     ),
+    custom_segment(LEA_FLANK_RETURN_END_MIN-0.4, LEA_FLANK_RETURN_END_MIN,
+                   point_with_real_terrain(A_BRIDGE_POINT), LEA_FAMILY_POINT),
+    custom_segment(LEA_FLANK_RETURN_END_MIN, FAMILY_REJOIN_TIME, LEA_FAMILY_POINT,
+                   point_with_real_terrain(route_point_at_station("A", FAMILY_REJOIN_STATION))),
     station_segment(
         "A",
-        LEA_FLANK_RETURN_END_MIN,
+        FAMILY_REJOIN_TIME,
         52.0,
-        A_BRIDGE_STATION,
+        FAMILY_REJOIN_STATION,
         max(0.0, LENGTH["A"] - 8.0)
     ),
     hold_segment(
@@ -2008,6 +2015,9 @@ def eval_actor(name, t):
     # Distinct walking lanes prevent the family from occupying identical bodies.
     # These 65 cm offsets are blockout choices, not additions to the story.
     p = eval_actor_base(name, t)
+    # The local connectors to/from the photo stop follow the existing ground.
+    if name == "THOMAS_NORMAL" and (3.0 <= t <= 3.5 or 8.0 <= t <= FAMILY_REJOIN_TIME):
+        p = point_with_real_terrain(p)
     lateral = 0.65 if name == "EVA" else 0.0
     if name == "LEA":
         lateral = -0.65 * clamp((t - 7.5) / 0.5, 0.0, 1.0)
@@ -2190,7 +2200,7 @@ def pov_direction(actor_name, t):
 
     # A2/B6: the photographer faces the landscape, away from the bridge.
     # This orientation belongs to the world pose, not the film camera.
-    if actor_name == "EVA" and 1.9 <= t <= 3.5:
+    if actor_name == "EVA" and 1.9 <= t <= GROUP_DEPART_AFTER_LEA:
         return (0.0, -1.0, 0.0)
 
     # The short pause must not inherit movement from the 0.35-minute lookahead.
