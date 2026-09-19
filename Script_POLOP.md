@@ -79,7 +79,7 @@ CLAC.
 
 Son métallique bref, net, naturel. Pas inquiétant. Pas amplifié comme un indice de thriller.
 
-La caméra omnisciente quitte très brièvement Léa pour voir clairement le mousqueton accroché contre la roche au moment du CLAC, puis retrouve immédiatement Léa qui termine sa traversée.
+La caméra reste avec Léa pendant toute la traversée. Le mousqueton demeure un élément ordinaire du pont, visible dans l'image sans gros plan ni mouvement de caméra destiné à le désigner.
 
 Thomas regarde le pont, puis Léa. Il ne dit rien.
 
@@ -109,7 +109,7 @@ Un bruit bref se perd parmi les voix et les pas, sans que la caméra cherche aus
 
 Un instant plus tard, Thomas revient naturellement au centre de l'image. Il s'arrête une seconde, troublé, puis reprend sa marche vers Éva et l'arrivée du flanc.
 
-La caméra poursuit son mouvement. Au passage, elle laisse voir le mousqueton du pont, déjà décroché de son point d'ancrage. Elle ne montre pas le geste qui l'a décroché et ne précise pas si Thomas l'a vu.
+La caméra poursuit son mouvement sans s'intéresser au pont. Dans la profondeur d'un plan suffisamment large, le mousqueton est déjà décroché de son point d'ancrage : sa position n'est perceptible qu'en arrêtant l'image et en l'agrandissant. Aucun insert, aucun changement de cadre et aucun accent sonore ne signalent ce détail. Le décrochage lui-même n'est jamais montré et rien n'indique si Thomas l'a vu.
 
 Léa ralentit sur B. Elle tourne légèrement la tête vers son père, sans retourner vers le pont.
 
@@ -127,12 +127,9 @@ Oui.
 
 Léa reprend sa descente, puis s'engage sur le flanc pour revenir de B vers A. La caméra accompagne brièvement son mouvement avant de retrouver Éva, qui abaisse son appareil.
 
-ÉVA
-Pourquoi tu lui fais prendre le détour ?
+Éva continue tranquillement de photographier le paysage pendant que Léa contourne le creux. Thomas regarde brièvement Léa s'éloigner sur le flanc, puis rejoint Éva sans que ce choix de chemin devienne un sujet de conversation.
 
-Thomas ne répond pas. Il regarde Léa s'éloigner sur le flanc.
-
-Quand elle les rejoint sur A, Thomas regarde le chemin qui monte vers la zone haute et la caverne.
+Quand Léa les rejoint sur A, Thomas regarde le chemin qui monte vers la zone haute et la caverne.
 
 THOMAS
 On est obligés de monter jusqu’en haut ?
@@ -683,7 +680,7 @@ En descendant par B, Thomas arrive dans la zone basse où B communique avec A pa
 
 Thomas arrive à portée visuelle du pont.
 
-Le cordage est détendu. Son mousqueton est décroché de son point d’ancrage, dans le même état que celui montré par la caméra à 17h30 pendant la randonnée.
+Le cordage est détendu. Son mousqueton est décroché de son point d’ancrage, dans le même état que celui discrètement présent à l'image pendant la randonnée.
 
 Il ne se raccroche pas spontanément.
 
@@ -709,7 +706,7 @@ Thomas vérifie l'attache du regard. Il se presse vers le pont et le traverse de
 
 B7 — VERS 17h00 — LA CONVERGENCE
 
-Thomas inversé débouche du pont sur A et se hâte le long du relief, en direction du chemin par lequel il est arrivé. Éva reste plus bas sur A, absorbée par ses photos. Léa poursuit son trajet sur le flanc, de l'autre côté du creux. Ni l'une ni l'autre ne regarde vers Thomas inversé.
+Thomas inversé débouche du pont sur A et se hâte le long du relief, en direction du chemin par lequel il est arrivé. Il accélère par un réflexe simple : éviter d'être aperçu par Éva et Léa, dont il perçoit les gestes à rebours. Il ne calcule pas la boucle et ne cherche pas à en changer le cours ; devant sa famille, il se soustrait instinctivement aux regards. Éva reste plus bas sur A, absorbée par ses photos. Léa poursuit son trajet sur le flanc, de l'autre côté du creux. Ni l'une ni l'autre ne regarde vers Thomas inversé.
 
 Au détour du rocher, Thomas normal apparaît devant lui. Dans le temps de Thomas inversé, il avance à reculons vers le pont, le long du chemin A.
 
@@ -759,7 +756,7 @@ Le même moment et les mêmes mouvements que dans A2, revus sans changer l'heure
 
 Après la rencontre près du rocher, Thomas reprend sa marche vers Éva, occupée à prendre des photos plus bas sur A. De l'autre côté du creux, Léa descend sur B vers le flanc.
 
-La caméra continue sans coupe. Elle découvre brièvement le mousqueton du pont, déjà décroché. Elle ne montre pas le décrochage et ne donne pas à voir ce que Thomas a personnellement aperçu.
+La caméra continue sans coupe et sans désigner le pont. Dans la profondeur du cadre, le mousqueton est déjà décroché, détail accessible seulement à qui arrête l'image et l'agrandit. Aucun gros plan, aucun mouvement dédié ni accent sonore n'en révèle l'importance. Le décrochage n'est pas montré et rien ne donne à voir ce que Thomas a personnellement aperçu.
 
 Léa ralentit, puis tourne légèrement la tête vers son père.
 
@@ -777,12 +774,7 @@ Oui.
 
 Léa reprend sa descente et s'engage sur le flanc.
 
-Éva abaisse son appareil photo.
-
-ÉVA
-Pourquoi tu lui fais prendre le détour ?
-
-Thomas ne répond pas. Il regarde Léa s'éloigner sur le flanc.
+Éva continue de photographier le paysage pendant que Léa revient par le flanc. Thomas la regarde brièvement, puis rejoint Éva sans que le détour fasse l'objet d'une remarque.
 
 Quand Léa les rejoint, Thomas regarde le chemin qui monte.
 
