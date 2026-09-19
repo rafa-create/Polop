@@ -6712,6 +6712,7 @@ def build_omniscient_edit():
     # subtitle change. This mode does NOT replace the full-film renderer.
     card_manifest = []
     opening_dialogue_manifest = []
+    later_dialogue_manifest = []
     if F03_GEOMETRY_ONLY:
         journal("f03_geometry_only_captions_skipped",
                 pause_count=sum(shot["scene"].startswith("PAUSE_") for shot in manifest))
@@ -6805,6 +6806,91 @@ def build_omniscient_edit():
             last_dialogue_end = cue_last
         if len(opening_dialogue_manifest) != len(opening_cues):
             raise RuntimeError("F01 A1 dialogue subtitles incomplete")
+
+        # Dialogue is distinct from pause annotations and is timed to the
+        # existing screen edit. The A2/B9 scene durations and the underlying
+        # objective-time trajectories remain identical in both readings.
+        # Actions impossible to see in the incomplete blockout must never
+        # become invented spoken dialogue attributed to the cast.
+        def add_speaker_cues(scene_name, cues):
+            beat = next((item for item in manifest
+                         if item["scene"] == scene_name), None)
+            if beat is None:
+                raise RuntimeError("Missing subtitle beat: "+scene_name)
+            last_end = beat["start_frame"]
+            for index, (local_start, local_end, cue_text) in enumerate(cues):
+                first = beat["start_frame"]+int(round(local_start*fps))
+                last = beat["start_frame"]+int(round(local_end*fps))
+                if not (last_end <= first < last <= beat["end_frame"]):
+                    raise RuntimeError(
+                        "Overlapping/out-of-range "+scene_name+" subtitle "+str(index))
+                section = subtitle_track.add_section()
+                if section is None:
+                    raise RuntimeError("Cannot add "+scene_name+" subtitle section")
+                section.set_range(first, last)
+                userdata = unreal.SubtitleAssetUserData(
+                    outer=section, name="POLOP_"+scene_name+"_CUE_%02d" % index)
+                cue = unreal.SubtitleAssetData()
+                cue.set_editor_property("text", cue_text)
+                cue.set_editor_property(
+                    "subtitle_duration_type",
+                    unreal.SubtitleDurationType.USE_DURATION_PROPERTY)
+                cue.set_editor_property("duration", float((last-first)/fps))
+                cue.set_editor_property("start_offset", 0.0)
+                userdata.set_editor_property("subtitles", [cue])
+                section.set_editor_property("subtitle", userdata)
+                if section.get_editor_property("subtitle") is None:
+                    raise RuntimeError("Cannot assign "+scene_name+" subtitle")
+                later_dialogue_manifest.append(dict(
+                    scene=scene_name, text=cue_text, start_frame=first,
+                    end_frame_exclusive=last,
+                    renderer="native_subtitles_umg"))
+                last_end = last
+
+        # One conversation, two views: match the A2 and B9 frame offsets.
+        # Lea pauses at objective t=3.5-3.65, roughly 6.5-6.8 seconds into
+        # each compressed 18-second shot. The short dialogue spans that
+        # moment; exact lip sync is unavailable in this PREVIZ blockout.
+        flank_dialogue = (
+            (5.85, 7.25, "LEA: Dad, I want to take the bridge back."),
+            (7.35, 9.25, "THOMAS: No, no. Keep going.\nTake the hillside path this time."),
+            (9.35, 10.20, "LEA: It's longer."),
+            (10.35, 11.10, "THOMAS: Yes."),
+        )
+        for reading in ("A2", "B9"):
+            add_speaker_cues(reading, flank_dialogue)
+
+        # The father's departure and the ensuing search are otherwise only
+        # described by late summary cards. Label canonical speech when the
+        # characters actually leave/wait/search, not during an unrelated beat.
+        add_speaker_cues("A11_ATTENTE", (
+            (0.30, 1.90, "THOMAS: I need to pee."),
+            (2.05, 2.95, "EVA: Now?"),
+            (3.10, 4.25, "THOMAS: Two minutes."),
+            (8.65, 10.40, "LEA: He's taking a while."),
+            (11.65, 12.85, "EVA: Thomas?"),
+        ))
+        add_speaker_cues("A12_A13", (
+            (6.55, 8.00, "EVA: Thomas!"),
+            (8.15, 9.40, "LEA: Dad!"),
+            (11.15, 12.40, "EVA: Thomas!"),
+            (13.50, 15.85, "LEA: Do you think he fell?"),
+        ))
+        add_speaker_cues("A14", (
+            (0.65, 3.65, "EVA: We should head down.\nFind some help."),
+            (3.85, 5.15, "LEA: Okay."),
+        ))
+
+        # B-side repair belongs ONLY to the second reading of the film.
+        # The first cue precedes the repair and the second tracks the
+        # single clip state change at objective t=3.08 -> 3.04.
+        add_speaker_cues("B6_REPAIR", (
+            (0.55, 2.60, "B BANK: THE CARABINER IS LOOSE."),
+            (3.05, 5.65, "Thomas reattaches it and checks the fastening."),
+        ))
+        expected = 2*len(flank_dialogue)+5+4+2+2
+        if len(later_dialogue_manifest) != expected:
+            raise RuntimeError("Incomplete dialogue in A2/B9, disappearance or B6")
     if not a.get("human_audit_baked"):
         add_human_performances(a["sequence"], [(i, i/fps) for i in range(65*fps)])
         a["human_audit_baked"] = True
@@ -6813,6 +6899,8 @@ def build_omniscient_edit():
         json.dump(dict(status="CONTINUOUS_CAMERA_BLOCKING_NOT_FINAL", duration_seconds=duration,
                        shots=manifest, previz_pause_cards=card_manifest,
                        opening_dialogue_cues=opening_dialogue_manifest,
+                       later_dialogue_cues=later_dialogue_manifest,
+                       subtitle_mode=("technical_review" if SUBTITLE_REVIEW_MODE else "spectator"),
                        carabiner=dict(bank="B", repair_objective_minutes=[3.08, 3.04],
                                       normal_reading="detaches", inverse_reading="repairs",
                                       track="MOUSQUETON_PROXY", acting="blockout"),
