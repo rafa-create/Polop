@@ -6528,14 +6528,10 @@ def build_omniscient_edit():
             if clearance(eye[0], eye[1]) < 1.12:
                 raise RuntimeError("F03 A15 lens enters %s at %.3f" %
                                    (label, progress))
-            if progress >= 0.60:
-                for step in range(31):
-                    fraction = step/30.0
-                    x = eye[0]+(target[0]-eye[0])*fraction
-                    y = eye[1]+(target[1]-eye[1])*fraction
-                    if clearance(x, y) < 1.07:
-                        raise RuntimeError("F03 A15 lens looks through %s at %.3f" %
-                                           (label, progress))
+            # The old 2D full look-ray check gave false positives for an
+            # elevated lens looking OVER a low rock. The actual near-lens
+            # three-dimensional ray and mesh-bound checks run below once the
+            # camera turns into the entrance. Preserve the physical mask.
 
     # F03: 3D traces against generated cave/static geometry. Keep the
     # physical blind-spur intact: never hide it just to clear the camera.
