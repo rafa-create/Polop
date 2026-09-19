@@ -6469,6 +6469,19 @@ def build_omniscient_edit():
         return ((x, y, z),
                 (normal[0], normal[1], normal[2]+1.20))
 
+    def f05_bridge_overview(t):
+        """Read the whole bridge from the far bank, including both landings.
+
+        This is the visual destination of the preceding B5 camera glide;
+        do not use the inverse's distant hillside position as the lens eye.
+        """
+        far = a["B_BRIDGE_POINT"]
+        near = a["A_BRIDGE_POINT"]
+        mid = tuple((far[i]+near[i])*0.5 for i in range(3))
+        x, y = far[0]-10.0, far[1]+9.0
+        z = max(far[2]+8.0, a["terrain_z_m"](x, y)+3.0)
+        return (x, y, z), (mid[0], mid[1], mid[2]+0.8)
+
     def f07_carabiner_view(t):
         """B-bank close view used only in part B; no early A insert."""
         p = a["carabiner_point_at_objective_time"](t)
@@ -6670,6 +6683,8 @@ def build_omniscient_edit():
         raise RuntimeError("Unexpected F03 cave shot: " + code)
 
     def desired_pose(code, focus, offset, t):
+        if code in ("B5_PONT", "PAUSE_PONT_RETOUR"):
+            return f05_bridge_overview(t)
         if code in ("B6_REPAIR", "PAUSE_MOUSQUETON"):
             return f07_carabiner_view(t)
         if code in ("B7_B8", "PAUSE_BOUCLE"):
