@@ -5237,6 +5237,40 @@ def blend_camera_pose(previous, desired, progress):
                  for old, new in zip(previous, desired))
 
 
+def objective_gait_phase(name, objective_time):
+    """Distance-driven clip clock, identical in every camera/edit direction.
+
+    The stock in-place walk is provisionally calibrated to 1.2 m/s for a 1.8 m
+    adult. No free-running animation time is used. Near B7 the inverse retreats:
+    signed distance along his facing reverses the walk rather than sliding a
+    forward-walking pose backwards. This is not foot IK or final contact acting.
+    """
+    a = _ANIMATION
+    cache = a.setdefault("gait_distance_cache", {})
+    key = (name, id(a["eval_actor"]), id(a["ANIM"][name]))
+    if key not in cache:
+        step = 0.005  # 0.3 objective seconds, independent of output frame rate.
+        distances = [0.0]
+        previous = a["eval_actor"](name, 0.0)
+        for index in range(1, 12401):
+            t = index*step
+            point = a["eval_actor"](name, t)
+            signed = 1.0
+            if name == "THOMAS_INVERSE":
+                turn = cinematic_ease(max(0.0, min(1.0, (t-step*0.5-2.05)/0.20)))
+                signed = math.cos(math.pi*turn)
+            distances.append(distances[-1]+math.dist(previous, point)*signed)
+            previous = point
+        cache[key] = distances
+    distances = cache[key]
+    position = max(0.0, min(62.0, objective_time))*200.0
+    index = min(12399, int(position))
+    distance = distances[index]+(distances[index+1]-distances[index])*(position-index)
+    speed = 1.2*a["ACTOR_HEIGHT_CM"][name]/180.0
+    anchor = distances[400] if name.startswith("THOMAS_") else 0.0
+    return (3.6 if name.startswith("THOMAS_") else 0.0)+(distance-anchor)/speed
+
+
 def character_performance(name, objective_time):
     """One deterministic world pose/animation phase, independent of camera/time direction."""
     a = _ANIMATION
@@ -5256,8 +5290,7 @@ def character_performance(name, objective_time):
     # The same walk pose is reached by both branches at objective minute 2.
     # Decreasing objective time advances the inverse's own gait. No film state
     # or camera decision may alter this phase or remove a later occurrence.
-    personal_time = 4.0-t if name == "THOMAS_INVERSE" else t
-    phase = personal_time * 1.8
+    phase = objective_gait_phase(name, t) if moving else t*0.1
     if name == "THOMAS_INVERSE" and t <= 2.25:
         # B7: turn, then retreat into the closure. Finish turning while the
         # roots are still >1.25 m apart; do not rotate through the other body.
@@ -5409,7 +5442,7 @@ def audit_cast_closure():
     report = dict(status="CAST_ENDPOINT_CHECKS_ONLY", checks=checks, samples=rows,
                   limitations=["Ring and hand/rock contact choreography not yet implemented",
                                "Root separation is not a skeletal collision proof",
-                               "Walk clip is retained WIP; foot sliding not yet calibrated",
+                               "Walk speed calibration is approximate; no planted-foot IK",
                                "18h endpoint articulated continuity still to validate"])
     path = os.path.join(RUN_SAVED_ROOT, "cast_closure_report.json")
     with open(path, "w", encoding="utf-8") as output:
@@ -5509,6 +5542,7 @@ def build_cast_closure_probe():
     The original articulated cast/clip baker is reused, not replaced by proxies.
     """
     a = _ANIMATION
+    unreal.LevelSequenceEditorBlueprintLibrary.pause()
     audit_cast_closure()
     fps = 30
     # 16:59:57 -> 17:00:21, then back and forward again (24 s per pass).
