@@ -6154,7 +6154,52 @@ def build_omniscient_edit():
                         raise RuntimeError("F03 A15 lens looks through %s at %.3f" %
                                            (label, progress))
 
+    # F01 camera-only pass: no actor movement or retiming. At t=0 Lea
+    # already walks ahead of Thomas/Eva in the existing validated blocking.
+    # Show all three honestly in a wide frame, then follow Lea to the bridge.
+    def f01_family_pose(t):
+        people = [a["eval_actor"](name, t)
+                  for name in ("THOMAS_NORMAL", "EVA", "LEA")]
+        center = tuple(sum(p[i] for p in people)/3.0 for i in range(3))
+        spread = max(math.dist(p, center) for p in people)
+        distance = max(23.0, spread*2.0)
+        x, y = center[0]-distance, center[1]-max(18.0, distance*0.65)
+        z = max(center[2]+max(6.5, spread*0.22),
+                a["terrain_z_m"](x, y)+2.0)
+        return (x, y, z), (center[0], center[1], center[2]+1.15)
+
+    def f01_return_pose(t):
+        thomas = a["eval_actor"]("THOMAS_NORMAL", t)
+        eva = a["eval_actor"]("EVA", t)
+        # Thomas carries more visual weight on the second reading of A2.
+        target = tuple(thomas[i]*0.82+eva[i]*0.18 for i in range(3))
+        x, y = thomas[0]-10.0, thomas[1]-14.0
+        z = max(thomas[2]+4.6, a["terrain_z_m"](x, y)+2.0)
+        return (x, y, z), (target[0], target[1], target[2]+1.2)
+
+    def f01_pullback_pose(t):
+        people = [a["eval_actor"](name, t)
+                  for name in ("THOMAS_NORMAL", "EVA", "LEA")]
+        center = tuple(sum(p[i] for p in people)/3.0 for i in range(3))
+        u = cinematic_ease((t-8.0)/4.0)
+        x, y = center[0]-14.0-58.0*u, center[1]-17.0-74.0*u
+        z = max(center[2]+5.0+37.0*u,
+                a["terrain_z_m"](x, y)+2.0)
+        return (x, y, z), (center[0], center[1], center[2]+1.3)
+
     def desired_pose(code, focus, offset, t):
+        if code in ("PAUSE_INTRO", "A1"):
+            family = f01_family_pose(t)
+            if code == "PAUSE_INTRO" or t <= 0.55:
+                return family
+            bridge = desired_pose("F01_BRIDGE", "LEA", (-8, -12, 7), t)
+            weight = cinematic_ease((t-0.55)/0.45)
+            return tuple(tuple(p+(q-p)*weight for p, q in zip(left, right))
+                         for left, right in zip(family, bridge))
+        if code in ("B9", "PAUSE_ISSUE"):
+            return f01_return_pose(t)
+        if code == "B9_ELOIGNEMENT":
+            return f01_pullback_pose(t)
         if code == "PAUSE_RECHERCHE":
             code = "A12_A13"
         elif code == "PAUSE_OBSCURITE":
