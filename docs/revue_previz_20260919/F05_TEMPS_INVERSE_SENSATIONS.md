@@ -1,6 +1,6 @@
 # F05 — Donner une réalité sensible au temps inversé
 
-**Statut : À DISCUTER.** Type : développement visuel et sonore encore absent du blockout.
+**Statut actuel : EFFETS MATÉRIELS ET JEU À CRÉER ; CONTRÔLES TEMPORELS DU BLOCKOUT À TESTER — NON VALIDÉE.** Type : développement visuel et sonore encore absent du blockout.
 
 ## Observation dans la vidéo
 
@@ -21,3 +21,9 @@ Commencer par deux événements lisibles dans le **même cadre que Thomas** (pie
 ## Critères de validation
 
 Un spectateur distingue le changement de temps même sans carton; il voit Thomas découvrir puis anticiper au moins un événement naturel inversé. Les effets restent matériels, sans pouvoirs ni effets lumineux explicatifs. Le sentiment change avant le retour au pont.
+
+## État de suivi au 19/09/2026 — nouvelle préviz non encore revue
+
+**Déjà préparé :** les trajectoires de Thomas inversé et des autres personnages s'évaluent suivant le même temps objectif dans le script Unreal ; les sous-titres orientent le spectateur après la révélation. **Encore absent visuellement :** vraie inversion de l'eau, des feuilles et de la poussière, caillou qui remonte, micro-réactions de Thomas, sa montée du plaisir puis sa retenue avant le pont, ainsi que les fragments matériels du trajet de l'anneau avec blocages et libération. Un libellé « le paysage remonte le temps » n'est pas un effet effectivement rendu.
+
+**Prochaine passe dédiée, après validation des séquences en cours :** réaliser et examiner deux actions naturelles visibles auprès de Thomas (par exemple caillou et eau), puis un geste anticipateur et sa réaction. Contrôler l'inversion de leurs instants objectifs dans les deux lectures, sans rewind global d'image. Réserver la trajectoire longue de l'anneau, le chevreuil et le travail sonore/émotionnel à une passe distincte. Montrer B2–B4 et l'approche de B5 dans le prochain extrait ; ne pas annoncer F05 résolue parce qu'un texte la décrit.
