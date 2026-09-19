@@ -7279,6 +7279,26 @@ def build_omniscient_edit():
         expected = 2*len(flank_dialogue)+5+4+2+2
         if len(later_dialogue_manifest) != expected:
             raise RuntimeError("Incomplete dialogue in A2/B9, disappearance or B6")
+    # F08: audit the ACTUAL Sequencer section count, not just our manifests.
+    # Some editor capture modes omit screen-space UMG subtitles entirely.
+    subtitle_audit = dict(
+        geometry_only=F03_GEOMETRY_ONLY,
+        track_count=0,
+        actual_sections=0,
+        expected_sections=(len(card_manifest)+len(opening_dialogue_manifest)+
+                           len(later_dialogue_manifest)))
+    if not F03_GEOMETRY_ONLY:
+        native_tracks = [track for track in seq.get_tracks()
+                         if isinstance(track, unreal.MovieSceneSubtitlesTrack)]
+        subtitle_audit["track_count"] = len(native_tracks)
+        subtitle_audit["actual_sections"] = sum(len(track.get_sections())
+                                                 for track in native_tracks)
+        if (subtitle_audit["track_count"] != 1 or
+                subtitle_audit["actual_sections"] != subtitle_audit["expected_sections"]):
+            raise RuntimeError("F08 subtitle Sequencer mismatch: "+str(subtitle_audit))
+        journal("f08_subtitle_sections_verified", **subtitle_audit)
+    else:
+        journal("f08_subtitles_intentionally_disabled", **subtitle_audit)
     if not a.get("human_audit_baked"):
         add_human_performances(a["sequence"], [(i, i/fps) for i in range(65*fps)])
         a["human_audit_baked"] = True
@@ -7288,7 +7308,10 @@ def build_omniscient_edit():
                        shots=manifest, previz_pause_cards=card_manifest,
                        opening_dialogue_cues=opening_dialogue_manifest,
                        later_dialogue_cues=later_dialogue_manifest,
-                       subtitle_mode=("technical_review" if SUBTITLE_REVIEW_MODE else "spectator"),
+                       subtitle_mode=("geometry_only_no_captions" if F03_GEOMETRY_ONLY
+                                      else "technical_review" if SUBTITLE_REVIEW_MODE
+                                      else "spectator"),
+                       subtitle_audit=subtitle_audit,
                        carabiner=dict(bank="B", repair_objective_minutes=[3.08, 3.04],
                                       normal_reading="detaches", inverse_reading="repairs",
                                       track="MOUSQUETON_PROXY", acting="blockout"),
