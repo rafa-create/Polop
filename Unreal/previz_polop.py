@@ -5682,7 +5682,7 @@ def build_omniscient_edit():
         ("A3_A4", 16, 8, 20, "EVA", (-8, -10, 5)),
         ("A5_GEOGRAPHIE", 8, 20, 24, "EVA", (-45, -65, 40)),
         ("A6_A8", 16, 24, 32, "THOMAS_NORMAL", (-8, -12, 6)),
-        ("A9_PONT", 4, 32, 32.2, "THOMAS_NORMAL", (-12, -18, 10)),
+        ("A9_PONT", 4, 32, 32.2, "THOMAS_NORMAL", (-18, -35, 20)),
         ("A10", 14, 32.2, 52, "EVA", (-10, -12, 6)),
         ("A11_ATTENTE", 18, 52, 56, "EVA", (-5, -7, 3)),
         ("A12_A13", 16, 56, 59, "EVA", (-5, -6, 3)),
@@ -5718,8 +5718,15 @@ def build_omniscient_edit():
                 target = (900, 12.5, a["terrain_z_m"](900, 0)) if focus == "BRIDGE" else a["eval_actor"](focus, t)
             eye = tuple(target[i]+offset[i] for i in range(3))
             eye = (eye[0], eye[1], max(eye[2], a["terrain_z_m"](eye[0], eye[1])+2.0))
-            if code in ("A9_PONT", "B5_PONT"):
-                # Look down from the current trail, without flying to the bridge.
+            if code == "A9_PONT":
+                # Only this distant bridge view: reveal the gap and both landings,
+                # with a modest sideways/high move from Thomas's current trail.
+                # Aim at the EXISTING endpoints; geography and cast stay untouched.
+                za = a["terrain_z_m"](900.0, 0.0)
+                zb = a["terrain_z_m"](900.0, 25.0)
+                target = (900.0, 12.5, (za+zb)*0.5+0.59)
+            elif code == "B5_PONT":
+                # Inverse's later bridge glance remains unchanged.
                 target = (900.0, 12.5, a["terrain_z_m"](900.0, 0.0)+0.59)
         return eye, (target[0], target[1], target[2]+1.1)
 
@@ -5770,6 +5777,31 @@ def build_omniscient_edit():
                 scale = (normal_scale.x, normal_scale.y, normal_scale.z)
             animated.append((name, channels, scale, converter))
     binding, camera_channels, _ = track_for(cam)
+    # A9 is hundreds of metres from the bridge: a brief optical push makes
+    # the 25 m crossing legible without a rapid physical flight or a camera cut.
+    # Keep the camera's actual original focal length outside this one beat.
+    baseline_focal = float(cam.get_cine_camera_component().get_editor_property(
+        "current_focal_length"))
+    lens_binding = seq.add_possessable(cam.get_cine_camera_component())
+    lens_track = lens_binding.add_track(unreal.MovieSceneFloatTrack)
+    lens_track.set_property_name_and_path("CurrentFocalLength", "CurrentFocalLength")
+    lens_section = lens_track.add_section()
+    lens_section.set_range(0, duration*fps)
+    lens_channel = lens_section.get_all_channels()[0]
+    lens_channel.set_default(baseline_focal)
+    a9_start = sum(shot[1] for shot in shots[:5])*fps
+    a9_end = a9_start + shots[5][1]*fps
+    for frame_number, focal_mm in (
+        (0, baseline_focal),
+        (a9_start, baseline_focal),
+        (a9_start+fps, 72.0),
+        (a9_end, 72.0),
+        (a9_end+2*fps, baseline_focal),
+        (duration*fps-1, baseline_focal),
+    ):
+        lens_channel.add_key(
+            unreal.FrameNumber(frame_number), focal_mm,
+            interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
     cuts = seq.add_track(unreal.MovieSceneCameraCutTrack)
     # Remove Sequencer's auto-cut before writing the single authoritative cut.
     for automatic_cut in list(cuts.get_sections()):
