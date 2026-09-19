@@ -5834,9 +5834,10 @@ def add_f01_box_to_film(sequence, samples):
     b9 = next(item for item in a["f01_film_shots"] if item["scene"] == "B9")
     pause = next(item for item in a["f01_film_shots"] if item["scene"] == "PAUSE_ISSUE")
     # A2 is deliberately absent: the box stays inside Thomas's pocket.
-    # B9 final frames: brief pocket reveal within the already-existing pause.
-    start = b9["end_frame"]-int(round(0.65*a["FPS"]))
-    end = pause["start_frame"]+int(round(2.15*a["FPS"]))
+    # In this existing B9 pause, Thomas hesitates, briefly reveals the box,
+    # then conceals it again before he follows the family. No new hold/retime.
+    start = pause["start_frame"]+int(round(1.20*a["FPS"]))
+    end = pause["start_frame"]+int(round(4.65*a["FPS"]))
     # The narrator's only camera is not modified; crop/reframe is a later pass.
     # Hide at frame zero even if the spawned static mesh default is visible.
     vis_ch.add_key(unreal.FrameNumber(0), True,
