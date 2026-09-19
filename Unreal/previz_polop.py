@@ -6489,6 +6489,65 @@ def build_omniscient_edit():
         """
         return f07_contact_view(t)
 
+    def f07_rock_blocks_ray_xy(origin, subject):
+        """Conservative PLAN-VIEW audit of the unchanged convergence boxes.
+
+        This tests the actual box footprints at 17:00; the engine mesh,
+        camera field of view, real height and inverse's perceptual blind
+        spot still require the rendered/POV review in Unreal.
+        """
+        cx, cy = a["CONVERGENCE_POINT"][:2]
+        rocks = (
+            (cx+2.5, cy+5.0, 4.5, 2.25, 20.0, "MOUNTAINSIDE"),
+            (cx, cy-2.0, 1.90, 0.70, 0.0, "FOREGROUND"),
+        )
+        blocked = []
+        for rx, ry, hx, hy, yaw_deg, name in rocks:
+            phi = math.radians(yaw_deg)
+            cp, sp = math.cos(phi), math.sin(phi)
+            for i in range(1, 151):
+                u = i/151.0
+                x = origin[0]*(1.0-u)+subject[0]*u-rx
+                y = origin[1]*(1.0-u)+subject[1]*u-ry
+                local_x, local_y = x*cp+y*sp, -x*sp+y*cp
+                if abs(local_x) <= hx and abs(local_y) <= hy:
+                    blocked.append(name)
+                    break
+        return blocked
+
+    # A cheap pre-render guard against the failure in the 18:56 capture:
+    # the OLD y=-10 m camera ray crossed FOREGROUND, filling the whole shot.
+    # A miss from inverse Thomas's eyes is an unresolved PHYSICAL blindspot,
+    # not a reason to fake the collision with a camera or move the approved rock.
+    f07_camera_rays = []
+    for _t in (2.001, 2.01, 2.025, 2.045):
+        _eye, _target = f07_contact_view(_t)
+        f07_camera_rays.append(dict(
+            objective_minute=_t,
+            blocking_rocks=f07_rock_blocks_ray_xy(_eye, _target)))
+    report_check(
+        "F07", "17h_camera_ray_clear_of_convergence_boxes_xy",
+        "OK" if all(not entry["blocking_rocks"] for entry in f07_camera_rays)
+        else "FAIL", "BLOCKER",
+        {"samples": f07_camera_rays, "scope": "2D bounds; Unreal render still required"},
+        "Inspect the F07 lateral eye/subject line. Do not move the F03 cave rocks.")
+    f07_inverse_rays = []
+    for _t in (2.07, 2.12, 2.20):
+        _inverse = a["eval_actor"]("THOMAS_INVERSE", _t)
+        _normal = a["eval_actor"]("THOMAS_NORMAL", _t)
+        f07_inverse_rays.append(dict(
+            objective_minute=_t, separation_m=round(math.dist(_inverse, _normal), 2),
+            blocking_rocks=f07_rock_blocks_ray_xy(_inverse, _normal)))
+    f07_blindspot_present = any(
+        entry["blocking_rocks"] for entry in f07_inverse_rays)
+    report_check(
+        "F07", "inverse_17h_rock_blindspot_needs_visual_proof",
+        "OK" if f07_blindspot_present else "WARN", "INFO",
+        {"samples": f07_inverse_rays,
+         "scope": "2D diagnostic only; real eye-height mesh occlusion unverified"},
+        "If no physical blind spot exists, request a separate F07 geometry decision; "
+        "do not hide a visible approach with editing.")
+
     def desired_pose(code, focus, offset, t):
         if code in ("B6_REPAIR", "PAUSE_MOUSQUETON"):
             return f07_carabiner_view(t)
