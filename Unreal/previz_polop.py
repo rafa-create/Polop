@@ -5543,7 +5543,10 @@ def add_human_performances(sequence, samples):
             scale = info["scale"]
             values = tuple(v*100.0 for v in pose["foot"])+(0.0, 0.0, yaw)+(scale,)*3
             frame = unreal.FrameNumber(frame_index)
-            visibility_channel.add_key(frame, bool(pose["visible"]))
+            # bHidden=True signifie invisible : inverser la valeur narrative.
+            visibility_channel.add_key(
+                frame, not bool(pose["visible"]),
+                interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
             for channel, value in zip(channels, values):
                 channel.add_key(frame, float(value), interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
             clip = a["human_animations"][pose["moving"]]
@@ -6027,6 +6030,17 @@ def build_omniscient_edit():
             if name == "THOMAS_INVERSE":
                 normal_scale = objects["THOMAS_NORMAL"].get_actor_scale3d()
                 scale = (normal_scale.x, normal_scale.y, normal_scale.z)
+            # Conserver la trajectoire de diagnostic pour les audits sans
+            # afficher les cylindres / tetes dans la sequence film.
+            proxy = objects[name]
+            proxy.set_actor_hidden_in_game(True)
+            proxy.set_is_temporarily_hidden_in_editor(True)
+            proxy_binding = bindings[-1]
+            proxy_track = proxy_binding.add_track(unreal.MovieSceneVisibilityTrack)
+            proxy_track.set_property_name_and_path("bHidden", "bHidden")
+            proxy_section = proxy_track.add_section()
+            proxy_section.set_range(0, duration*fps)
+            proxy_section.get_all_channels()[0].set_default(True)
             animated.append((name, channels, scale, converter))
     binding, camera_channels, _ = track_for(cam)
 
@@ -6046,7 +6060,9 @@ def build_omniscient_edit():
         actor.set_actor_relative_location(unreal.Vector(*local_position), False, False)
         actor.set_actor_relative_rotation(rotation or unreal.Rotator(0, 0, 0),
                                           False, False)
-        actor.set_actor_hidden_in_game(True)
+        # Le Sequencer seul pilote l'apparition du carton.
+        actor.set_actor_hidden_in_game(False)
+        actor.set_is_temporarily_hidden_in_editor(False)
         return actor
 
     def card_text(name, content, height, font_size, color):
@@ -6089,6 +6105,9 @@ def build_omniscient_edit():
         section.set_range(0, duration*fps)
         channel = section.get_all_channels()[0]
         channel.set_default(True)
+        if first_frame > 0:
+            channel.add_key(unreal.FrameNumber(0), True,
+                            interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
         channel.add_key(unreal.FrameNumber(first_frame), False,
                         interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
         channel.add_key(unreal.FrameNumber(last_frame), True,
