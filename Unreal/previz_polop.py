@@ -6913,9 +6913,10 @@ def build_omniscient_edit():
     # les mannequins articulés avant de construire les 17 annotations.
     # La fin de generation et la sauvegarde restent conditionnees au succes.
     add_human_performances(seq, performance_samples)
-    # F01 only: the reveal is in the B9 edit, not in the identical A2 world pose.
+    # F01 only: the reveal is in B9, never in the shared A2 world pose.
     a["f01_film_shots"] = manifest
-    add_f01_box_to_film(seq, performance_samples)
+    if not F03_GEOMETRY_ONLY:
+        add_f01_box_to_film(seq, performance_samples)
     # F03 can be checked independently of the still-untested English/UMG
     # subtitle change. This mode does NOT replace the full-film renderer.
     card_manifest = []
