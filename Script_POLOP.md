@@ -58,7 +58,7 @@ EXT. MONTAGNE — FIN D’APRÈS-MIDI
 
 Thomas, Éva et Léa avancent sur le chemin A, le vrai chemin de randonnée, sur le flanc de la montagne.
 
-La géographie forme une boucle simple autour du relief. Deux itinéraires distincts relient la partie basse de la montagne à la zone haute de la caverne : le chemin A, emprunté par le groupe pour monter, et le chemin B, qui suit un autre versant du relief. A et B se rejoignent en haut, à proximité de la zone de la caverne.
+La géographie forme une boucle simple autour du relief. Deux itinéraires distincts relient la partie basse de la montagne à la zone haute de la caverne : le chemin A, emprunté par le groupe pour monter, et le chemin B, qui suit un autre versant du relief. A et B se rejoignent en haut par le relief et par une caverne traversante : une entrée discrète s'ouvre du côté de la petite plateforme accessible depuis A ; une seconde ouverture, beaucoup plus vaste et plus loin dans la roche, débouche sur B. Depuis A et depuis la plateforme, la montagne masque entièrement cette grande sortie.
 
 Plus bas, dans un creux, A et B peuvent communiquer de deux façons : un petit pont constitue le passage court ; un chemin rocheux plus long contourne le creux par le flanc. Sous cette zone de liaison, la descente rejoint la partie basse du chemin principal.
 
@@ -310,7 +310,7 @@ La caméra le montre brièvement, sans commentaire des personnages. La musique r
 
 A10 — 17h50 — LA PAUSE
 
-Le chemin A continue en hauteur jusqu’à la zone où A et B se rejoignent près de la caverne. À quelques mètres se trouve une petite zone rocheuse fermée : quelques dizaines de mètres carrés entre la paroi et le précipice. Depuis le chemin, aucune autre sortie n’est visible.
+Le chemin A continue en hauteur jusqu’à la zone où A et B se rejoignent près de la caverne. À quelques mètres se trouve une petite zone rocheuse qui paraît fermée : quelques dizaines de mètres carrés entre la paroi et le précipice. Depuis le chemin et depuis cette plateforme, aucune autre sortie n’est visible. La caverne traverse pourtant le relief jusqu'au versant B ; son débouché lointain est entièrement caché par la montagne.
 
 L’entrée de la caverne existe dans cette zone, mais son angle est masqué par un décrochement rocheux. Depuis le sentier, elle se confond avec une partie sombre de la paroi.
 
@@ -399,7 +399,7 @@ A13 — LA RECHERCHE
 
 La recherche est courte précisément parce que l’espace est petit. Il n’y a pas des centaines de mètres carrés à fouiller.
 
-La caverne reste naturellement manquée : son ouverture est masquée par l’angle du décrochement rocheux et, depuis leur trajectoire, se lit comme une continuité sombre de la paroi.
+La caverne reste naturellement manquée : son entrée côté A est masquée par l’angle du décrochement rocheux et, depuis leur trajectoire, se lit comme une continuité sombre de la paroi. Sa grande sortie sur B se trouve de l'autre côté de la montagne : elle est invisible depuis la plateforme et ne fait pas partie de l'espace qu'elles inspectent.
 
 ÉVA
 Thomas !
@@ -456,9 +456,9 @@ Elle revient vers la petite zone rocheuse qu’elles viennent d’inspecter et a
 
 Le décrochement de la paroi révèle alors l’entrée de la caverne : c’est la même zone sombre qui avait brièvement retenu le regard de Thomas.
 
-La caméra y pénètre et découvre Thomas déjà à l’intérieur, seulement à quelques pas de l’entrée. Il n’a pas entrepris une longue exploration et rien ne l’a attiré jusque-là : il a simplement regardé dans l’ouverture puis avancé assez pour découvrir la petite cavité.
+La caméra y pénètre et découvre Thomas déjà à l’intérieur, seulement à quelques pas de l’entrée. Il n’a pas entrepris une longue exploration et rien ne l’a attiré jusque-là : il a simplement regardé dans l’ouverture puis avancé assez pour découvrir la première partie de la caverne. Plus loin, hors de son regard et derrière un coude rocheux, le passage continue vers une grande ouverture sur B.
 
-La lumière du dehors reste vive derrière lui. Thomas plisse les yeux en entrant ; pendant un instant, les parois de la cavité se perdent dans le noir et seule la fente lumineuse, plus loin, se détache nettement. La caméra reste à sa hauteur : ce qui se trouve dans les coins sombres demeure indistinct.
+La lumière du dehors reste vive derrière lui. Thomas plisse les yeux en entrant ; pendant un instant, les parois de la cavité se perdent dans le noir et seule la première fente lumineuse, près de l'anneau, se détache nettement. Le second faisceau, plus loin derrière un coude rocheux, n'est pas visible depuis sa position. La caméra reste à sa hauteur : ce qui se trouve dans les coins sombres demeure indistinct.
 
 On ne l’a pas vu entrer.
 
@@ -520,7 +520,7 @@ B — LE TEMPS INVERSÉ
 
 B1 — LE PREMIER PAS
 
-Thomas sort de la caverne. Depuis cette zone haute, A et B offrent deux descentes distinctes. Il s’engage sur B, le chemin qu’il n’avait pas emprunté pendant la montée normale. L’eau, la poussière et les mouvements naturels du paysage se recomposent à rebours autour de lui.
+Thomas sort de la caverne par sa grande ouverture sur le versant B, après avoir suivi le second faisceau derrière le coude rocheux. Depuis cette zone haute, A et B offrent deux descentes distinctes. Il s’engage sur B, le chemin qu’il n’avait pas emprunté pendant la montée normale. L’eau, la poussière et les mouvements naturels du paysage se recomposent à rebours autour de lui.
 
 Le relief sépare alors naturellement sa descente par B de la progression de son occurrence normale sur A.
 
@@ -528,7 +528,7 @@ Derrière lui, l’anneau poursuit la descente amorcée au contact de 18h00 et s
 
 Il avance vers 17h00.
 
-La caverne est très sombre. Deux zones lumineuses seulement structurent naturellement l’espace : l’ouverture vers l’extérieur et, plus profondément, une fente rocheuse qui laisse entrer un faisceau étroit.
+La première partie de la caverne est très sombre. Du côté de Thomas normal, deux zones lumineuses structurent l’espace : l’entrée discrète sur A et la fente rocheuse qui éclaire l'anneau. Plus loin, derrière un coude qui coupe toute vue directe depuis cette première partie, un second faisceau annonce la grande sortie sur B. Les deux éclairages ne se confondent jamais dans le regard de Thomas normal.
 
 La caméra retrouve la cavité depuis la place de Thomas inversé. Les petites aspérités des parois et le bord des rochers, invisibles lors de l’entrée de Thomas normal, se distinguent maintenant dans la pénombre. Thomas inversé tourne la tête : ses yeux ont eu le temps de s’habituer à l’obscurité pendant les minutes passées dans la grotte avant le contact avec l’anneau.
 
@@ -536,7 +536,7 @@ Près de l’entrée, une silhouette humaine se déplace à reculons. Thomas inv
 
 La caméra revient un instant à l’angle de l’entrée, dans la lumière vive du dehors : Thomas normal avance vers la fente éclairée, les yeux encore peu habitués à la pénombre. La silhouette de son double, plus loin dans l’ombre, se confond avec la roche derrière lui. Thomas normal ne tourne pas la tête vers elle.
 
-Retour à Thomas inversé : la silhouette recule vers l’ouverture lumineuse et sort de son champ. Il reste immobile un instant, puis reprend son propre chemin vers la sortie.
+Retour à Thomas inversé : la silhouette recule vers l’entrée discrète sur A et sort de son champ. Il reste immobile un instant. Il ne ressort pas sur la plateforme : un autre faisceau, aperçu plus loin dans la roche, attire son regard. Il poursuit prudemment son exploration dans la pénombre, contourne le coude rocheux et découvre que cette lumière provient d'une ouverture beaucoup plus vaste. Il débouche sur le versant B, hors de vue de la plateforme, de Thomas normal, d'Éva et de Léa. La découverte de cette sortie ouvre progressivement l'espace et laisse place aux premiers phénomènes inversés, puis au plaisir de les anticiper. Thomas cesse peu à peu de consulter sa montre et se laisse absorber par le jeu, jusqu'à ce que la vue du pont lui rappelle l'approche de 17h00.
 
 Aucun des deux ne cherche à se cacher. La différence se lit dans ce que la caméra laisse apparaître de la même grotte, selon les yeux auxquels elle s’attache : Thomas inversé distingue son double dans la pénombre ; Thomas normal, encore ébloui par l’extérieur et occupé par le faisceau de la fente, ne le remarque pas.
 
