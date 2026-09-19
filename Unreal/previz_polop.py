@@ -6080,14 +6080,19 @@ def build_omniscient_edit():
         comp.set_horizontal_alignment(unreal.HorizTextAligment.EHTA_CENTER)
         comp.set_text_render_color(color)
         comp.set_cast_shadow(False)
+        # TextRender a un repere local different de la CineCamera : une
+        # rotation Yaw=180 seule produit le carton a l'envers (capture UE).
+        # Le roulis de 180 redresse l'inscription dans le cadre camera.
         return card_attach(actor, name, (210.0, 0.0, height),
-                           unreal.Rotator(0, 180, 0))
+                           unreal.Rotator(180, 180, 0))
 
     def card_background(name):
         cube = unreal.load_asset("/Engine/BasicShapes/Cube.Cube")
         actor = actors.spawn_actor_from_object(
             cube, unreal.Vector(0, 0, 0), unreal.Rotator(0, 0, 0), False)
-        actor.set_actor_scale3d(unreal.Vector(0.02, 2.90, 0.84))
+        # Cube 100 cm : 185 cm de large x 55 cm de haut a ~2 m de
+        # la camera. Ancien panneau 290 x 84 cm depassait le 16:9.
+        actor.set_actor_scale3d(unreal.Vector(0.01, 1.85, 0.55))
         comp = actor.get_component_by_class(unreal.StaticMeshComponent)
         if comp is None:
             raise RuntimeError("Le panneau du carton n'a pas de StaticMeshComponent")
@@ -6098,7 +6103,8 @@ def build_omniscient_edit():
         comp.set_mobility(unreal.ComponentMobility.MOVABLE)
         comp.set_material(0, a["MAT_CAVE"])
         comp.set_cast_shadow(False)
-        return card_attach(actor, name, (226.0, 0.0, -52.0))
+        # Placer le fond dans le tiers inferieur sans couvrir toute la scene.
+        return card_attach(actor, name, (226.0, 0.0, -34.0))
 
     def card_visibility(actor, first_frame, last_frame):
         # bHidden=True hors carton. MovieSceneBoolChannel est discret :
@@ -6208,6 +6214,11 @@ def build_omniscient_edit():
         boundary_pose = previous_pose
         previous_beat = (code, focus, offset)
         first_frame += count
+    # Ne pas livrer une sequence PARTIELLE avec cylindres visibles et
+    # premier carton orphelin si une API de texte echoue : baker d'abord
+    # les mannequins articulés avant de construire les 17 annotations.
+    # La fin de generation et la sauvegarde restent conditionnees au succes.
+    add_human_performances(seq, performance_samples)
     # Créer les cartes après l'animation : les autres plans restent intacts.
     card_manifest = []
     for shot in manifest:
@@ -6217,9 +6228,9 @@ def build_omniscient_edit():
         title, explanation = pause_cards[scene]
         first, last = shot["start_frame"], shot["end_frame"]
         panel = card_background(scene + "_FOND")
-        heading = card_text(scene + "_TITRE", title, -24.0, 12.0,
+        heading = card_text(scene + "_TITRE", title, -17.0, 6.8,
                             unreal.Color(255, 225, 155, 255))
-        note = card_text(scene + "_NOTE", explanation, -48.0, 9.0,
+        note = card_text(scene + "_NOTE", explanation, -31.0, 4.9,
                          unreal.Color(245, 245, 245, 255))
         for overlay in (panel, heading, note):
             card_visibility(overlay, first, last)
@@ -6227,7 +6238,6 @@ def build_omniscient_edit():
                                   start_frame=first, end_frame_exclusive=last))
     if len(card_manifest) != len(pause_cards):
         raise RuntimeError("Cartons narratifs incomplets")
-    add_human_performances(seq, performance_samples)
     if not a.get("human_audit_baked"):
         add_human_performances(a["sequence"], [(i, i/fps) for i in range(65*fps)])
         a["human_audit_baked"] = True
