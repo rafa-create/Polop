@@ -6279,6 +6279,42 @@ def build_omniscient_edit():
                 a["terrain_z_m"](x, y)+2.0)
         return (x, y, z), (center[0], center[1], center[2]+1.15)
 
+    def f01_opening_pose(code, u, t):
+        """One continuous camera: family, Eva, Thomas, then Lea's bridge.
+
+        u is local SCREEN progress, independent of objective-time compression.
+        """
+        if code not in ("PAUSE_INTRO", "A1"):
+            raise RuntimeError("F01 opening pose for "+code)
+
+        def between(left, right, weight):
+            w = cinematic_ease(weight)
+            return tuple(tuple(p+(q-p)*w for p, q in zip(old, new))
+                         for old, new in zip(left, right))
+
+        thomas = a["eval_actor"]("THOMAS_NORMAL", t)
+        eva = a["eval_actor"]("EVA", t)
+        lea = a["eval_actor"]("LEA", t)
+        middle = tuple((thomas[i]+eva[i])*0.5 for i in range(3))
+        x, y = middle[0]-11.0, middle[1]-15.0
+        z = max(middle[2]+4.7, a["terrain_z_m"](x, y)+2.0)
+        parent_eye = (x, y, z)
+        eva_focus = tuple(0.73*eva[i]+0.27*thomas[i] for i in range(3))
+        thomas_focus = tuple(0.75*thomas[i]+0.25*eva[i] for i in range(3))
+        eva_pose = parent_eye, (eva_focus[0], eva_focus[1], eva_focus[2]+1.1)
+        thomas_pose = parent_eye, (thomas_focus[0], thomas_focus[1], thomas_focus[2]+1.1)
+        x, y = lea[0]-7.5, lea[1]-11.0
+        z = max(lea[2]+4.0, a["terrain_z_m"](x, y)+2.0)
+        lea_pose = ((x, y, z), (lea[0], lea[1], lea[2]+1.1))
+        if code == "PAUSE_INTRO":
+            # The subtitle clears at 3 s. The following 3 s of this
+            # unchanged pause move from the establishing shot to Eva.
+            return between(f01_family_pose(t), eva_pose, (u-0.48)/0.52)
+        # During the 12 s A1 shot, remain close to the parents for the
+        # opening exchange and glide towards Lea before the crossing.
+        parents = between(eva_pose, thomas_pose, (u-0.22)/0.20)
+        return between(parents, lea_pose, (u-0.42)/0.39)
+
     def f01_return_pose(t):
         thomas = a["eval_actor"]("THOMAS_NORMAL", t)
         eva = a["eval_actor"]("EVA", t)
@@ -6350,13 +6386,8 @@ def build_omniscient_edit():
         if code in ("B7_B8", "PAUSE_BOUCLE"):
             return f07_17h_closure_pose(t)
         if code in ("PAUSE_INTRO", "A1"):
-            family = f01_family_pose(t)
-            if code == "PAUSE_INTRO" or t <= 0.55:
-                return family
-            bridge = desired_pose("F01_BRIDGE", "LEA", (-8, -12, 7), t)
-            weight = cinematic_ease((t-0.55)/0.45)
-            return tuple(tuple(p+(q-p)*weight for p, q in zip(left, right))
-                         for left, right in zip(family, bridge))
+            # Used only as the END pose of the previous beat in camera handover.
+            return f01_opening_pose(code, 1.0, t)
         if code in ("B9", "PAUSE_ISSUE"):
             return f01_return_pose(t)
         if code == "B9_ELOIGNEMENT":
