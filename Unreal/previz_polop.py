@@ -1279,6 +1279,17 @@ CAVE_EXIT_B_POINT = (
     terrain_z_m(high_x - 12.0, high_y + 24.0)
 )
 
+# B station 0 is the shared A/B summit, NOT the B-side cave mouth.
+# Clear the last gallery and its rock lips before turning downhill onto B.
+# These local blocking distances leave the existing routes/terrain untouched.
+CAVE_EXIT_B_CLEAR_POINT = (
+    CAVE_EXIT_B_POINT[0] - 4.0, CAVE_EXIT_B_POINT[1],
+    terrain_z_m(CAVE_EXIT_B_POINT[0] - 4.0, CAVE_EXIT_B_POINT[1])
+)
+CAVE_B_JOIN_STATION = nearest_station(
+    "B", CAVE_EXIT_B_CLEAR_POINT[0], CAVE_EXIT_B_CLEAR_POINT[1] + 12.0)
+CAVE_B_JOIN_POINT = route_point_at_station("B", CAVE_B_JOIN_STATION)
+
 CAVE_GUARD_POINT = route_point_at_station(
     "A",
     max(0.0, LENGTH["A"] - 8.0)
@@ -2251,14 +2262,19 @@ ANIM["THOMAS_INVERSE"] = [
         32.0,
         60.2,
         B5_STATION,
-        0.0
+        CAVE_B_JOIN_STATION
     ),
     # En temps propre : apres le contact, l'inverse suit le second faisceau,
     # sort directement sur B et ne revient jamais sur la plateforme A.
     # Le Sequencer est en temps OBJECTIF : les points se lisent B -> anneau.
     custom_segment(
-        60.2, 60.35,
-        point_with_real_terrain(route_point_at_station("B", 0.0)),
+        60.2, 60.28,
+        point_with_real_terrain(CAVE_B_JOIN_POINT),
+        point_with_real_terrain(CAVE_EXIT_B_CLEAR_POINT)
+    ),
+    custom_segment(
+        60.28, 60.35,
+        point_with_real_terrain(CAVE_EXIT_B_CLEAR_POINT),
         point_with_real_terrain(CAVE_EXIT_B_POINT)
     ),
     custom_segment(
@@ -2335,6 +2351,9 @@ def eval_actor(name, t):
     p = eval_actor_base(name, t)
     # The local connectors to/from the photo stop follow the existing ground.
     if name == "THOMAS_NORMAL" and (3.0 <= t <= 3.5 or 8.0 <= t <= FAMILY_REJOIN_TIME):
+        p = point_with_real_terrain(p)
+    # Only the exterior B connector follows the ground between its waypoints.
+    if name == "THOMAS_INVERSE" and 60.2 <= t <= 60.35:
         p = point_with_real_terrain(p)
     lateral = 0.65 if name == "EVA" else 0.0
     if name == "LEA":
@@ -6630,9 +6649,21 @@ def build_omniscient_edit():
                 return gallery_lens(bend, beam, 0.50), aim(inverse)
             if t >= 60.35:
                 return gallery_lens(beam, exit_b, 0.45), aim(inverse)
-            # The final connector leads out onto B; keep the camera at the
-            # actual B mouth rather than looking through the interior rock.
-            return gallery_lens(beam, exit_b, 0.85), aim(inverse)
+            # Leave the mouth with Thomas, then hand over to B2's exterior
+            # framing at the actual downhill join, not the shared A/B summit.
+            mouth_pose = (gallery_lens(beam, exit_b, 0.45), aim(inverse))
+            exterior_eye = (inverse[0]-14.0, inverse[1]+20.0,
+                            max(inverse[2]+9.0,
+                                a["terrain_z_m"](inverse[0]-14.0, inverse[1]+20.0)+2.0))
+            exterior_pose = (exterior_eye,
+                             (inverse[0], inverse[1], inverse[2]+1.1))
+            clear = a["CAVE_EXIT_B_CLEAR_POINT"]
+            clear_pose = ((clear[0], clear[1], clear[2]+1.65), aim(inverse))
+            # First move straight through the opening; only then move sideways
+            # and rise outside, avoiding a diagonal sweep through the last wall.
+            if t >= 60.28:
+                return blend_camera_pose(mouth_pose, clear_pose, (60.35-t)/0.07)
+            return blend_camera_pose(clear_pose, exterior_pose, (60.28-t)/0.08)
         raise RuntimeError("Unexpected F03 cave shot: " + code)
 
     def desired_pose(code, focus, offset, t):
@@ -7399,6 +7430,20 @@ def validate_narrative_motion():
                 jumps.append(dict(actor=name, time=left["t1"], distance_m=distance))
     report_check("STORY", "continuous_character_trajectories", "OK" if not jumps else "FAIL",
                  "BLOCKER", {"discontinuities": jumps})
+    # In personal time, B stations must increase immediately after the exit.
+    join = a["CAVE_B_JOIN_STATION"]
+    descent = [s for s in a["ANIM"]["THOMAS_INVERSE"]
+               if s["type"] == "station" and s["route"] == "B"
+               and s["t0"] == 32.0 and s["t1"] == 60.2]
+    joined = a["eval_actor"]("THOMAS_INVERSE", 60.2)
+    expected = a["point_with_real_terrain"](a["CAVE_B_JOIN_POINT"])
+    join_error = math.dist(joined, expected)
+    downhill = (0.0 < join < a["B5_STATION"] and len(descent) == 1
+                and descent[0]["s1"] == join and descent[0]["s0"] > join)
+    report_check("STORY", "inverse_cave_exit_joins_downhill_B",
+                 "OK" if downhill and join_error < 0.05 else "FAIL", "BLOCKER",
+                 {"join_station_m": join, "join_error_m": join_error,
+                  "scope": "model continuity/direction; Unreal visual review required"})
     separation = min(math.dist(a["eval_actor"]("EVA", t/10), a["eval_actor"]("LEA", t/10))
                      for t in range(80, 620))
     report_check("STORY", "eva_lea_distinct_positions", "OK" if separation >= 0.5 else "FAIL",
