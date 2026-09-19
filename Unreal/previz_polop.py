@@ -5793,11 +5793,10 @@ def f01_box_pose(objective_t):
     yaw = math.radians(thomas["yaw"]+90.0)
     forward = (math.cos(yaw), math.sin(yaw))
     side = (-forward[1], forward[0])
-    # Tiny blockout object outside the mannequin's right hip, low enough to
-    # read as a pocket movement rather than a proposal or magic apparition.
-    return (foot[0]+0.20*side[0]+0.16*forward[0],
-            foot[1]+0.20*side[1]+0.16*forward[1],
-            foot[2]+0.93)
+    # A small part of the box emerges from the pocket; no floating box handoff.
+    return (foot[0]+0.23*side[0]+0.11*forward[0],
+            foot[1]+0.23*side[1]+0.11*forward[1],
+            foot[2]+0.92)
 
 
 def add_f01_box_to_film(sequence, samples):
@@ -5809,7 +5808,7 @@ def add_f01_box_to_film(sequence, samples):
     actor = actors.spawn_actor_from_object(mesh, unreal.Vector(0, 0, -100000))
     actor.set_actor_label("PZ_ANIM_F01_SMALL_BOX")
     actor.set_folder_path("POLOP/Accessoires/F01")
-    actor.set_actor_scale3d(unreal.Vector(0.12, 0.08, 0.035))
+    actor.set_actor_scale3d(unreal.Vector(0.08, 0.055, 0.025))
     try:
         actor.get_component_by_class(unreal.StaticMeshComponent).set_material(
             0, a["ensure_material"]("M_POLOP_F01_BOX", (0.28, 0.20, 0.12)))
@@ -5824,7 +5823,7 @@ def add_f01_box_to_film(sequence, samples):
     section = track.add_section()
     section.set_range(0, samples[-1][0]+1)
     channels = section.get_all_channels()
-    for channel, value in zip(channels[6:9], (0.12, 0.08, 0.035)):
+    for channel, value in zip(channels[6:9], (0.08, 0.055, 0.025)):
         channel.set_default(value)
     visibility = binding.add_track(unreal.MovieSceneVisibilityTrack)
     visibility.set_property_name_and_path("bHidden", "bHidden")
@@ -5834,7 +5833,7 @@ def add_f01_box_to_film(sequence, samples):
     b9 = next(item for item in a["f01_film_shots"] if item["scene"] == "B9")
     pause = next(item for item in a["f01_film_shots"] if item["scene"] == "PAUSE_ISSUE")
     # A2 is deliberately absent: box is physically still inside the pocket.
-    # B9 final frames: brief reach/reveal; hold only part of the existing pause.
+    # B9 final frames: brief pocket reveal; hold only part of the existing pause.
     start = b9["end_frame"]-int(round(0.65*a["FPS"]))
     end = pause["start_frame"]+int(round(2.15*a["FPS"]))
     for frame_index, objective_t in samples:
