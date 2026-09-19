@@ -2429,6 +2429,27 @@ def pov_direction(actor_name, t):
             if _vec_len(d) >= 0.05:
                 return _vec_norm(d)
 
+    # F03: a tight turn now connects the cliffside pocket to the cave.
+    # The ordinary +/-0.35 s lookahead cuts across several corners at t=60.5,
+    # pointing inverted Thomas away from his path. Follow the actual current
+    # segment in his PERSONAL time here, retaining the old POV elsewhere.
+    if actor_name == "THOMAS_INVERSE" and 60.2 <= t < 60.6:
+        approach = next(
+            (segment for segment in ANIM["THOMAS_INVERSE"]
+             if segment["t0"] <= t < segment["t1"]
+             and segment["t0"] >= 60.2 and segment["t1"] <= 60.6),
+            None
+        )
+        if approach is None:
+            raise RuntimeError("F03: no active segment on the inverse cave approach")
+        local_objective = _vec_sub(
+            eval_segment(approach, approach["t1"]),
+            eval_segment(approach, approach["t0"])
+        )
+        if _vec_len(local_objective) < 0.05:
+            raise RuntimeError("F03: degenerate inverse cave approach segment")
+        return _vec_norm(tuple(-value for value in local_objective))
+
     before = eval_actor(actor_name, max(0.0, t-POV_LOOK_AHEAD_SECONDS))
     after = eval_actor(actor_name, min(SEQUENCE_SECONDS, t+POV_LOOK_AHEAD_SECONDS))
     direction = _vec_sub(after, before)
