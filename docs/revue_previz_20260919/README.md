@@ -14,6 +14,8 @@
 
 **Point à clarifier avec l'utilisateur :** « animation de vote » n'identifie pas de façon certaine un geste dans la vidéo ; ne pas supposer qu'il s'agit de la petite boîte, de la marche, ou d'une autre action tant que le terme n'a pas été confirmé.
 
+**Exécution engagée — P1 / F07, 19/09/2026 :** une première correction ciblée de la caméra 17 h, un léger jeu d'impact des mannequins et un diagnostic d'occultation ont été publiés dans `Unreal/previz_polop.py` après « go 1 ». **Non testés dans Unreal** : le choc, l'angle mort réel pour Thomas inversé et la continuité à l'image restent à vérifier. Voir la section « Passe 1 F07 » de [F07](F07_CONVERGENCE_ET_FIN.md). Les priorités F06/F05, la révision des longueurs F09 et F03 ne sont pas lancées.
+
 **Statut de validation :** toutes les fiches restent ouvertes ; les retouches de rythme, d'acting et d'objets sont des **propositions**, non des modifications déjà réalisées dans Unreal. La Bible et `Unreal/previz_polop.py` n'ont pas été modifiés pendant cette revue. **F03 et sa fiche restent inchangées, gelées sur demande.**
 
 ## État courant — après les correctifs de caméra, convergence, mousqueton et sous-titres (19/09/2026)
