@@ -6579,6 +6579,48 @@ def build_omniscient_edit():
                 trace(eye, near, "lens_forward")
             trace(eye, (eye[0], eye[1], eye[2]-0.65), "lens_floor")
 
+    # F03: query each generated static mesh directly; some preview meshes have
+    # collision disabled, so a line_trace alone cannot establish visibility.
+    # Treat the transformed component bounds as conservative: they can stop
+    # an otherwise usable shot, but cannot silently certify a blocked lens.
+    def f03_static_bounds_audit(eye, target, progress):
+        if progress < 0.54:
+            return
+        import unreal as ue
+        eye_cm = ue.Vector(*(float(v)*100.0 for v in eye))
+        diff = tuple(target[i]-eye[i] for i in range(3))
+        dist = math.dist(eye, target)
+        limit = min(110.0, 100.0*dist)
+        if limit <= 0.01:
+            return
+        end_cm = ue.Vector(*(eye_cm.to_tuple()[i]+
+                             (diff[i]/dist)*limit for i in range(3)))
+        watch = ("CAVE_REVIEW_", "CAVE_WALL_", "CAVE_SIDE_",
+                 "CAVE_ENTRY_ROCK_", "CAVE_ENTRANCE_BLIND_SPUR",
+                 "SEARCH_LEDGE_MOUNTAIN_WALL", "F03_SHADOW_RECESS_")
+        for actor in actors.get_all_level_actors():
+            name = actor.get_actor_label()
+            if not name.startswith("PZ_ANIM_"):
+                continue
+            if not any(name.startswith("PZ_ANIM_"+part) for part in watch):
+                continue
+            comp = actor.get_component_by_class(unreal.StaticMeshComponent)
+            if comp is None:
+                continue
+            center, extent = comp.get_actor_bounds(False)
+            # Inflate to catch near-plane rock even with collision disabled.
+            bx, by, bz = center.x, center.y, center.z
+            ex, ey, ez = extent.x+12.0, extent.y+12.0, extent.z+12.0
+            for i in range(9):
+                u = i/8.0
+                x = eye_cm.x+(end_cm.x-eye_cm.x)*u
+                y = eye_cm.y+(end_cm.y-eye_cm.y)*u
+                z = eye_cm.z+(end_cm.z-eye_cm.z)*u
+                if abs(x-bx) < ex and abs(y-by) < ey and abs(z-bz) < ez:
+                    raise RuntimeError(
+                        "F03 A15 near lens bounds of %s at progress %.3f" %
+                        (name, progress))
+
     # F01 camera-only pass: no actor movement or retiming. At t=0 Lea
     # already walks ahead of Thomas/Eva in the existing validated blocking.
     # Show all three honestly in a wide frame, then follow Lea to the bridge.
@@ -7003,6 +7045,7 @@ def build_omniscient_edit():
                 eye, target = f03_reveal_pose(u, t, boundary_pose)
                 f03_reveal_clearance(eye, target, u)
                 f03_mesh_clearance(eye, target, u)
+                f03_static_bounds_audit(eye, target, u)
                 # Avoid frames of opaque Landscape under the lens. The
                 # previous XY rock test could not detect this failure.
                 if u >= 0.60 and eye[2] < a["terrain_z_m"](eye[0], eye[1]) + 1.25:
