@@ -6589,25 +6589,25 @@ def build_omniscient_edit():
 
     # F03: keep the lens in the traversable gallery, not at the old entrance.
     def f03_corridor_pose(code, t):
-        """F03 camera pose; never abort film assembly on an editorial handover.
+        """F03: keep the lens on the same gallery leg as the visible Thomas.
 
-        A15_A16 is a CAVE-focus reveal shot: its pose is needed as the
-        preceding shot's handover boundary, even though the actual reveal
-        frames are built separately by f03_reveal_pose(). A RuntimeError
-        here aborts build_omniscient_edit before the complete film sequence
-        and caption tracks can be delivered; it does NOT disable animation
-        or subtitles. See issue #59 and the A15_A16 failure log.
+        A15_A16 is also queried for editorial handover; never reject it.
+        Coordinates are read from the embedded animation namespace (a),
+        not inferred by projecting the B gallery onto the A entrance axis.
         """
         normal = a["eval_actor"]("THOMAS_NORMAL", t)
         inverse = a["eval_actor"]("THOMAS_INVERSE", t)
-        # Use the V05 animation export's supported cave coordinates. The
-        # former corridor-camera patch referenced CAVE_CONTACT_POINT,
-        # CAVE_INNER_BEND_POINT, CAVE_SECOND_BEAM_POINT and CAVE_EXIT_B_POINT
-        # through a[], but those keys are not exported by _ANIMATION.
         cave_point = a["cave_ground_point"]
 
         def aim(p):
             return (p[0], p[1], p[2]+1.25)
+
+        def gallery_lens(p, q, fraction=0.5):
+            # Both endpoints are gallery waypoints, not an exterior camera
+            # offset. Aim down the current leg rather than through a bend.
+            x = p[0]+(q[0]-p[0])*fraction
+            y = p[1]+(q[1]-p[1])*fraction
+            return (x, y, a["terrain_z_m"](x, y)+1.65)
 
         if code == "A15_A16":
             return cave_point(1.0, 0.0, 1.85), aim(normal)
@@ -6616,10 +6616,23 @@ def build_omniscient_edit():
         if code == "PAUSE_REVELATION":
             return cave_point(1.0, 0.0, 1.85), aim(normal)
         if code in ("B1", "PAUSE_OBSCURITE"):
-            entry = a["CAVE_ENTRY_POINT"]
-            along = ((inverse[0]-entry[0])*a["CAVE_UX"] +
-                     (inverse[1]-entry[1])*a["CAVE_UY"])
-            return cave_point(min(4.8, along+1.5), -1.3, 1.75), aim(inverse)
+            contact = a["CAVE_CONTACT_POINT"]
+            bend = a["CAVE_INNER_BEND_POINT"]
+            beam = a["CAVE_SECOND_BEAM_POINT"]
+            exit_b = a["CAVE_EXIT_B_POINT"]
+            if t >= 61.5:
+                # Inverse Thomas waits near the ring; the other silhouette
+                # is at the entrance, but the camera remains in the chamber.
+                return gallery_lens(contact, bend, 0.20), aim(inverse)
+            if t >= 61.15:
+                return gallery_lens(contact, bend, 0.55), aim(inverse)
+            if t >= 60.8:
+                return gallery_lens(bend, beam, 0.50), aim(inverse)
+            if t >= 60.35:
+                return gallery_lens(beam, exit_b, 0.45), aim(inverse)
+            # The final connector leads out onto B; keep the camera at the
+            # actual B mouth rather than looking through the interior rock.
+            return gallery_lens(beam, exit_b, 0.85), aim(inverse)
         raise RuntimeError("Unexpected F03 cave shot: " + code)
 
     def desired_pose(code, focus, offset, t):
