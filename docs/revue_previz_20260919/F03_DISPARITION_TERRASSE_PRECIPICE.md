@@ -1,6 +1,6 @@
 # F03 — Disparition : terrasse, paroi, précipice, chemin gardé
 
-**Statut : EN PAUSE À LA DEMANDE DE L’UTILISATEUR — NON VALIDÉE.** Type : enjeu causal majeur / géographie et mise en scène.
+**Statut courant : RÉOUVERTE pour la correction ciblée du trajet caméra A15 — correctif GitHub publié, rendu Unreal NON VALIDÉ.** (Les mentions « en pause » plus bas documentent les décisions antérieures.) Type : enjeu causal majeur / géographie et mise en scène.
 
 ## Observation dans la vidéo
 
@@ -109,3 +109,14 @@ Le rendu vidéo du run précédent montrait encore un grand bloc sombre/gris dev
 ## Décision de suivi — 19/09/2026, capture de 17 h 28
 
 **F03 EST EN PAUSE À LA DEMANDE DE L'UTILISATEUR, ET NON VALIDÉE.** Dans le nouvel extrait, vers **72–76 s**, une grande masse rocheuse masque encore le cadrage pendant la zone de recherche / révélation. Cette observation est compatible avec l'occultation déjà documentée mais ne permet pas d'identifier avec certitude le mesh responsable. Ne pas recommencer des corrections de la grotte, du précipice ou d'A15 à l'occasion du travail F01 / sous-titres. Reprendre ultérieurement la recherche de l'obstacle précis dans Unreal et les critères physiques déjà consignés.
+
+
+## Réouverture ciblée A15 — caméra lisible (19/09/2026)
+
+À la demande explicite de l'utilisateur, le périmètre F03 est réouvert **pour le trajet de caméra de la grotte**, pas pour changer le relief, les trajets de la famille ni le rocher de convergence F07. Commits du générateur : `8d6d148` (nouvelle progression de caméra autour de la lèvre extérieure, puis dans l'axe réel de l'ouverture), `c2e2df9` (contrôles 3D de dégagement), `24a9349` (retrait du test de rayon purement XY qui bloquait aussi une caméra passant au-dessus d'un rocher). Les deux masses d'occultation depuis les femmes et la géométrie de la cavité sont conservées : il ne faut PAS supprimer un masque physique pour obtenir un plan clair.
+
+**Correction éditoriale :** A15 utilise désormais des jalons lisibles de caméra — vue extérieure, contournement du relief, arrivée à la bouche, entrée au centre du couloir, découverte de Thomas — au lieu de conserver un objectif dirigé vers l'intérieur d'un rocher lors du virage. Le mouvement est continu sur la même piste, sans nouvelle coupe, sans changement du temps objectif 18 h, de la durée du master (372 s) ou des 17 pauses.
+
+**Diagnostics ajoutés :** en fin d'approche, le script vérifie un rayon réel depuis l'objectif dans le monde Unreal et une enveloppe conservatrice des meshes statiques de la grotte, y compris si leur collision est désactivée. Le journal nomme l'acteur devant l'objectif lorsqu'un contrôle échoue. Les anciens tests 2D de position de la caméra restent présents ; l'ancien rayon de regard **entièrement 2D** ne sert plus de preuve d'occultation. Ces contrôles ne sont pas une certification de l'image : l'effet d'une masse rocheuse dans le champ complet, la lumière et l'angle depuis les yeux d'Éva et Léa demandent encore une inspection du rendu.
+
+**Test à effectuer sur le nouveau run complet :** partir d'une carte sauvegardée, exécuter `Unreal/previz_polop.py` avec `FAST_CAMERA_ONLY=False`. Pour tester **simultanément caméra ET sous-titres**, veiller à ne PAS avoir `POLOP_F03_GEOMETRY_ONLY=1` dans la console/processus Unreal. Vérifier `complete`, puis regarder un extrait **continu** A12–A15–A17–B1, pas uniquement des captures isolées : la caméra doit conserver du paysage lisible dans son contour et ne pas traverser une roche, tout en laissant l'entrée masquée aux femmes jusqu'à A15. En cas de blocage de génération, relever le premier message `F03 A15 ...` du même run, qui identifie désormais l'obstacle candidat. **F03 non validée avant visionnage et accord de l'utilisateur.**
