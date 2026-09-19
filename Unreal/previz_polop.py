@@ -6188,24 +6188,24 @@ def build_omniscient_edit():
     that props, acting, sound or the canonical opening are finished.
     """
     a = _ANIMATION
-    # code, screen seconds, objective minute endpoints, focus, camera offset (m)
+    # code, screen seconds, objective minute endpoints, focus, camera offset (m)\n    # Pitch rhythm: compress repetitive travel/search, not the cave contact,\n    # inverse cave exit, carabiner repair, bridge crossing or causal closure.
     shots = [
         ("PAUSE_INTRO", 6, 0, 0, "LEA", (-8, -12, 7)),
         ("A1", 12, 0, 2, "LEA", (-8, -12, 7)),
         ("A2", 18, 2, 8, "LEA", (-5, -9, 4)),
         ("PAUSE_DETOUR", 6, 8, 8, "LEA", (-5, -9, 4)),
-        ("A3_A4", 16, 8, 20, "EVA", (-8, -10, 5)),
+        ("A3_A4", 12, 8, 20, "EVA", (-8, -10, 5)),
         ("PAUSE_THOMAS", 5, 20, 20, "EVA", (-8, -10, 5)),
-        ("A5_GEOGRAPHIE", 8, 20, 24, "EVA", (-45, -65, 40)),
+        ("A5_GEOGRAPHIE", 7, 20, 24, "EVA", (-45, -65, 40)),
         ("PAUSE_CHEMINS", 7, 24, 24, "EVA", (-45, -65, 40)),
-        ("A6_A8", 16, 24, 32, "THOMAS_NORMAL", (-8, -12, 6)),
+        ("A6_A8", 12, 24, 32, "THOMAS_NORMAL", (-8, -12, 6)),
         ("A9_PONT", 4, 32, 32.2, "THOMAS_NORMAL", (-18, -35, 20)),
         ("PAUSE_ATTACHE", 6, 32.2, 32.2, "THOMAS_NORMAL", (-18, -35, 20)),
-        ("A10", 14, 32.2, 52, "EVA", (-10, -12, 6)),
+        ("A10", 10, 32.2, 52, "EVA", (-10, -12, 6)),
         ("PAUSE_DEPART", 6, 52, 52, "EVA", (-10, -12, 6)),
-        ("A11_ATTENTE", 18, 52, 56, "EVA", (-8, -11, 4.5)),
+        ("A11_ATTENTE", 12, 52, 56, "EVA", (-8, -11, 4.5)),
         ("PAUSE_ATTENTE", 7, 56, 56, "EVA", (-8, -11, 4.5)),
-        ("A12_A13", 16, 56, 59, "EVA", (9, -16, 6)),
+        ("A12_A13", 12, 56, 59, "EVA", (9, -16, 6)),
         ("PAUSE_RECHERCHE", 7, 59, 59, "EVA", (9, -16, 6)),
         ("A14", 6, 59, 60, "EVA", (9, -16, 6)),
         ("A15_A16", 16, 60, 61.95, "CAVE", (0, 0, 0)),
@@ -6216,19 +6216,19 @@ def build_omniscient_edit():
         ("PAUSE_OBSCURITE", 6, 60.2, 60.2, "CAVE", (0, 0, 0)),
         ("B2", 10, 60.2, 59.4, "THOMAS_INVERSE", (-14, 20, 9)),
         ("PAUSE_FAMILLE", 6, 59.4, 59.4, "THOMAS_INVERSE", (-14, 20, 9)),
-        ("B3_B4", 25, 59.4, 32, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("B3_B4", 16, 59.4, 32, "THOMAS_INVERSE", (-9, 12, 5)),
         ("PAUSE_RETOUR", 6, 32, 32, "THOMAS_INVERSE", (-9, 12, 5)),
         ("B5_PONT", 4, 32, 31.9, "THOMAS_INVERSE", (-12, 18, 10)),
         ("PAUSE_PONT_RETOUR", 5, 31.9, 31.9, "THOMAS_INVERSE", (-12, 18, 10)),
         # Preserve the same 22 s B6 screen budget, but reserve six seconds
         # for the B-bank repair BEFORE crossing, in the inverse's own time.
-        ("B6", 16, 31.9, 3.16, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("B6", 12, 31.9, 3.16, "THOMAS_INVERSE", (-9, 12, 5)),
         ("B6_REPAIR", 6, 3.16, 3.0, "THOMAS_INVERSE", (-5, 5, 3)),
         ("PAUSE_MOUSQUETON", 7, 3.0, 3.0, "THOMAS_INVERSE", (-5, 5, 3)),
         ("B6_TRAVERSEE", 6, 3.0, 2.5, "THOMAS_INVERSE", (-6, -8, 3)),
         ("B7_B8", 8, 2.5, 2, "THOMAS_INVERSE", (-6, -8, 3)),
         ("PAUSE_BOUCLE", 7, 2, 2, "THOMAS_INVERSE", (-6, -8, 3)),
-        ("B9", 18, 2, 8, "THOMAS_NORMAL", (-5, -9, 4)),
+        ("B9", 12, 2, 8, "THOMAS_NORMAL", (-5, -9, 4)),
         ("PAUSE_ISSUE", 6, 8, 8, "THOMAS_NORMAL", (-5, -9, 4)),
         ("B9_ELOIGNEMENT", 8, 8, 12, "THOMAS_NORMAL", (-45, -65, 35)),
     ]
@@ -6236,7 +6236,7 @@ def build_omniscient_edit():
     # Chaque pause maintient le temps objectif exact, y compris le casting.
     # English-only narrative annotations. No text is shortened or repositioned
     # to conceal a rendering problem; the screen-space renderer fixes clarity.
-    # Narrative order, pause lengths and objective-time trajectories are unchanged.
+    # Narrative order, all 17 pause lengths and objective-time trajectories are unchanged.\n    # Only redundant walking/search screen beats are shortened for the pitch.
     # The fixed 17 narrative PAUSE beats stay in the film. The default text
     # gives a first-time viewer orientation at the instant it becomes useful;
     # it never advertises the B-side carabiner's future repair during A.
@@ -6244,7 +6244,7 @@ def build_omniscient_edit():
     pause_cards = {
         "PAUSE_INTRO": (
             "THOMAS, EVA & LEA",
-            "A family hike in the late afternoon."
+            "Three friends hike together. Nothing seems unusual yet."
         ),
         "PAUSE_DETOUR": (
             "THE LONGER WAY BACK",
@@ -6253,7 +6253,7 @@ def build_omniscient_edit():
         ),
         "PAUSE_THOMAS": (
             "UP THE MOUNTAIN",
-            "Eva and Lea keep walking. Thomas lags behind."
+            "Thomas falls behind. Soon, they will lose sight of him."
         ),
         "PAUSE_CHEMINS": (
             "THE TWO PATHS",
@@ -6276,7 +6276,7 @@ def build_omniscient_edit():
         ),
         "PAUSE_RECHERCHE": (
             "NO SIGN OF THOMAS",
-            "The rocky space ends at a cliff.\n"
+            "The search ends at a cliff.\n"
             "Eva and Lea cannot find Thomas."
         ),
         "PAUSE_REVELATION": (
@@ -6291,21 +6291,21 @@ def build_omniscient_edit():
         ),
         "PAUSE_OBSCURITE": (
             "A FIGURE IN THE DARK",
-            "Inverted Thomas can see a figure near the entrance;\n"
+            "Thomas glimpses a silhouette by the small entrance;\n"
             "the figure cannot make him out in the darkness."
         ),
         "PAUSE_FAMILLE": (
             "TWO PATHS, THE SAME TIME",
-            "Eva and Lea descend path A to get help.\n"
-            "Thomas follows path B toward earlier moments."
+            "Eva and Lea seek help on A, unaware that Thomas\n"
+            "has emerged on B and is travelling into their past."
         ),
         "PAUSE_RETOUR": (
             "THOMAS MOVES INTO THE PAST",
-            "From his point of view, the landscape moves backward."
+            "The world runs backward around Thomas.\nHis fear gives way to curiosity - then delight."
         ),
         "PAUSE_PONT_RETOUR": (
             "ABOUT 5:30 P.M. - THE BRIDGE",
-            "On path B, Thomas finds the carabiner hanging loose."
+            "Thomas spots the loose carabiner on the B bank.\nHis playful discovery of time now has consequences."
         ),
         "PAUSE_MOUSQUETON": (
             "5:01 P.M. - THE B BANK",
