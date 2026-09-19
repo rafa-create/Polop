@@ -5806,7 +5806,8 @@ def add_f01_box_to_film(sequence, samples):
     if not mesh:
         raise RuntimeError("F01 box blockout cube asset missing")
     actor = actors.spawn_actor_from_object(mesh, unreal.Vector(0, 0, -100000))
-    # The Sequencer bHidden track controls visibility; do not force-hide the actor.
+    # MovieSceneVisibilityTrack BoolChannel uses True=VISIBLE (commit 66b40fda).
+    # Do not invert bHidden manually or pass unsupported interpolation=.
     actor.set_actor_label("PZ_ANIM_F01_SMALL_BOX")
     actor.set_folder_path("POLOP/Accessoires/F01")
     actor.set_actor_scale3d(unreal.Vector(0.08, 0.055, 0.025))
@@ -5841,15 +5842,11 @@ def add_f01_box_to_film(sequence, samples):
     end = pause["start_frame"]+int(round(4.65*a["FPS"]))
     # The narrator's only camera is not modified; crop/reframe is a later pass.
     # Hide at frame zero even if the spawned static mesh default is visible.
-    vis_ch.add_key(unreal.FrameNumber(0), True,
-                   interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+    vis_ch.add_key(unreal.FrameNumber(0), False)
     if start > 0:
-        vis_ch.add_key(unreal.FrameNumber(start-1), True,
-                       interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
-    vis_ch.add_key(unreal.FrameNumber(start), False,
-                   interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
-    vis_ch.add_key(unreal.FrameNumber(end), True,
-                   interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+        vis_ch.add_key(unreal.FrameNumber(start-1), False)
+    vis_ch.add_key(unreal.FrameNumber(start), True)
+    vis_ch.add_key(unreal.FrameNumber(end), False)
     # The box remains at one physical position in the pocket for a fixed
     # objective instant; never key on film-time elapsed or the edit direction.
     for frame_index, objective_t in samples:
@@ -5888,19 +5885,17 @@ def add_f04_ring_blockout(sequence, samples):
     visibility.set_property_name_and_path("bHidden", "bHidden")
     vis_section = visibility.add_section()
     vis_section.set_range(0, samples[-1][0]+1)
-    hidden = vis_section.get_all_channels()[0]
-    hidden.add_key(unreal.FrameNumber(0), True,
-                   interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+    visible = vis_section.get_all_channels()[0]
+    # Match the validated human visibility convention (66b40fda).
+    visible.add_key(unreal.FrameNumber(0), False)
     # Ring stays offscreen until the cave contact sequence, then follows one
     # deterministic objective-time curve in BOTH film directions.
     cave_shots = [shot for shot in a["f04_film_shots"]
                   if shot["scene"] in ("A15_A16", "A17", "PAUSE_CONTACT", "B1")]
     start = cave_shots[0]["start_frame"]
     end = cave_shots[-1]["end_frame"]
-    hidden.add_key(unreal.FrameNumber(start), False,
-                   interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
-    hidden.add_key(unreal.FrameNumber(end), True,
-                   interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+    visible.add_key(unreal.FrameNumber(start), True)
+    visible.add_key(unreal.FrameNumber(end), False)
     fissure = a["CAVE_FISSURE_POINT"]
     contact = a["CAVE_CONTACT_POINT"]
     for frame_index, t in samples:
