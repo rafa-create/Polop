@@ -5834,8 +5834,9 @@ def add_f01_box_to_film(sequence, samples):
     b9 = next(item for item in a["f01_film_shots"] if item["scene"] == "B9")
     pause = next(item for item in a["f01_film_shots"] if item["scene"] == "PAUSE_ISSUE")
     # A2 is deliberately absent: the box stays inside Thomas's pocket.
-    # In this existing B9 pause, Thomas hesitates, briefly reveals the box,
-    # then conceals it again before he follows the family. No new hold/retime.
+    # In the B9-only PAUSE_ISSUE, Thomas hesitates, briefly reveals the box,
+    # then conceals it again. The final 18 s B9 track's world pose is shared
+    # with A2; the pocket prop never changes that shared objective-time pose.
     start = pause["start_frame"]+int(round(1.20*a["FPS"]))
     end = pause["start_frame"]+int(round(4.65*a["FPS"]))
     # The narrator's only camera is not modified; crop/reframe is a later pass.
