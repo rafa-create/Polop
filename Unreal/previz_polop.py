@@ -29,6 +29,11 @@ import time
 import zlib
 import unreal
 
+# Test ONLY F03 geometry, without requiring the unrelated, as-yet-untested
+# English/UMG subtitle plugin. Set the environment variable to "1" before
+# executing the script in Unreal. Default: full film with all 17 captions.
+F03_GEOMETRY_ONLY = os.environ.get("POLOP_F03_GEOMETRY_ONLY", "") == "1"
+
 # Unreal restores/removes __file__ once Execute Python Script returns. Slate
 # callbacks run later, so retain our own immutable source path while it exists.
 SOURCE_SCRIPT_PATH = os.path.abspath(__file__)
@@ -6242,44 +6247,50 @@ def build_omniscient_edit():
     # les mannequins articulés avant de construire les 17 annotations.
     # La fin de generation et la sauvegarde restent conditionnees au succes.
     add_human_performances(seq, performance_samples)
-    # Native screen-space UMG captions (UE 5.8 Subtitles and Closed Captions).
-    # Each caption is scoped to its own Sequencer section, so scrubbing,
-    # pausing and reverse playback evaluate the same active text.
-    subtitle_track = seq.add_track(unreal.MovieSceneSubtitlesTrack)
-    if subtitle_track is None:
-        raise RuntimeError("Cannot create the screen-space subtitle track")
-    subtitle_track.set_display_name("POLOP | English narrative annotations (UMG)")
+    # F03 can be checked independently of the still-untested English/UMG
+    # subtitle change. This mode does NOT replace the full-film renderer.
     card_manifest = []
-    for shot in manifest:
-        if shot["scene"] not in pause_cards:
-            continue
-        scene = shot["scene"]
-        title, explanation = pause_cards[scene]
-        first, last = shot["start_frame"], shot["end_frame"]
-        if not (0 <= first < last <= duration*fps):
-            raise RuntimeError("Invalid caption range: " + scene)
-
-        section = subtitle_track.add_section()
-        if section is None:
-            raise RuntimeError("Cannot create UMG subtitle section: " + scene)
-        section.set_range(first, last)
-        subtitle_data = unreal.SubtitleAssetUserData(
-            outer=section, name="POLOP_" + scene)
-        subtitle_line = unreal.SubtitleAssetData()
-        subtitle_line.set_editor_property("text", title + "\n" + explanation)
-        subtitle_line.set_editor_property("subtitle_duration_type",
-            unreal.SubtitleDurationType.USE_DURATION_PROPERTY)
-        subtitle_line.set_editor_property("duration", float((last-first)/fps))
-        subtitle_line.set_editor_property("start_offset", 0.0)
-        subtitle_data.set_editor_property("subtitles", [subtitle_line])
-        section.set_editor_property("subtitle", subtitle_data)
-        if section.get_editor_property("subtitle") is None:
-            raise RuntimeError("UMG subtitle was not assigned: " + scene)
-        card_manifest.append(dict(scene=scene, title=title, explanation=explanation,
-                                  start_frame=first, end_frame_exclusive=last,
-                                  renderer="native_subtitles_umg"))
-    if len(card_manifest) != len(pause_cards):
-        raise RuntimeError("Native UMG subtitle sections incomplete")
+    if F03_GEOMETRY_ONLY:
+        journal("f03_geometry_only_captions_skipped",
+                pause_count=sum(shot["scene"].startswith("PAUSE_") for shot in manifest))
+    else:
+        # Native screen-space UMG captions (UE 5.8 Subtitles and Closed Captions).
+        # Each caption is scoped to its own Sequencer section, so scrubbing,
+        # pausing and reverse playback evaluate the same active text.
+        subtitle_track = seq.add_track(unreal.MovieSceneSubtitlesTrack)
+        if subtitle_track is None:
+            raise RuntimeError("Cannot create the screen-space subtitle track")
+        subtitle_track.set_display_name("POLOP | English narrative annotations (UMG)")
+        for shot in manifest:
+            if shot["scene"] not in pause_cards:
+                continue
+            scene = shot["scene"]
+            title, explanation = pause_cards[scene]
+            first, last = shot["start_frame"], shot["end_frame"]
+            if not (0 <= first < last <= duration*fps):
+                raise RuntimeError("Invalid caption range: " + scene)
+    
+            section = subtitle_track.add_section()
+            if section is None:
+                raise RuntimeError("Cannot create UMG subtitle section: " + scene)
+            section.set_range(first, last)
+            subtitle_data = unreal.SubtitleAssetUserData(
+                outer=section, name="POLOP_" + scene)
+            subtitle_line = unreal.SubtitleAssetData()
+            subtitle_line.set_editor_property("text", title + "\n" + explanation)
+            subtitle_line.set_editor_property("subtitle_duration_type",
+                unreal.SubtitleDurationType.USE_DURATION_PROPERTY)
+            subtitle_line.set_editor_property("duration", float((last-first)/fps))
+            subtitle_line.set_editor_property("start_offset", 0.0)
+            subtitle_data.set_editor_property("subtitles", [subtitle_line])
+            section.set_editor_property("subtitle", subtitle_data)
+            if section.get_editor_property("subtitle") is None:
+                raise RuntimeError("UMG subtitle was not assigned: " + scene)
+            card_manifest.append(dict(scene=scene, title=title, explanation=explanation,
+                                      start_frame=first, end_frame_exclusive=last,
+                                      renderer="native_subtitles_umg"))
+        if len(card_manifest) != len(pause_cards):
+            raise RuntimeError("Native UMG subtitle sections incomplete")
     if not a.get("human_audit_baked"):
         add_human_performances(a["sequence"], [(i, i/fps) for i in range(65*fps)])
         a["human_audit_baked"] = True
@@ -6680,11 +6691,14 @@ def main():
         "SubtitleAssetUserData", "SubtitleAssetData", "SubtitleDurationType")
     missing = [name for name in required_subtitle_types
                if not hasattr(unreal, name)]
-    if missing:
+    if missing and not F03_GEOMETRY_ONLY:
         raise RuntimeError(
             "Enable 'Subtitles and Closed Captions' in Edit > Plugins, "
             "restart Unreal Engine, and rerun POLOP. "
             "Required native UMG/Sequencer types unavailable: " + ", ".join(missing))
+    if F03_GEOMETRY_ONLY:
+        unreal.log("POLOP F03: geometry-only run; no UMG subtitles generated. "
+                   "The 17 pauses remain but their texts are omitted.")
     journal("start", script=SOURCE_SCRIPT_PATH, engine=unreal.SystemLibrary.get_engine_version(),
             source_map=SOURCE_MAP, work_map=WORK_MAP,
             source_sha256=hashlib.sha256(open(SOURCE_SCRIPT_PATH, "rb").read()).hexdigest())
