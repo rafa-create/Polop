@@ -6415,9 +6415,11 @@ def build_omniscient_edit():
         return (x, y, z), (center[0], center[1], center[2]+1.15)
 
     def f01_opening_pose(code, u, t):
-        """One continuous camera: family, Eva, Thomas, then Lea's bridge.
+        """One continuous opening: establish family, follow Lea across A->B.
 
-        u is local SCREEN progress, independent of objective-time compression.
+        The bridge crossing is at objective t=0.75..1.25 (A1 screen
+        seconds 4.5..7.5). Keep Lea in frame throughout that interval,
+        then hand back to Eva and Thomas in A2; never reveal inverse Thomas.
         """
         if code not in ("PAUSE_INTRO", "A1"):
             raise RuntimeError("F01 opening pose for "+code)
@@ -6427,28 +6429,16 @@ def build_omniscient_edit():
             return tuple(tuple(p+(q-p)*w for p, q in zip(old, new))
                          for old, new in zip(left, right))
 
-        thomas = a["eval_actor"]("THOMAS_NORMAL", t)
-        eva = a["eval_actor"]("EVA", t)
         lea = a["eval_actor"]("LEA", t)
-        middle = tuple((thomas[i]+eva[i])*0.5 for i in range(3))
-        x, y = middle[0]-11.0, middle[1]-15.0
-        z = max(middle[2]+4.7, a["terrain_z_m"](x, y)+2.0)
-        parent_eye = (x, y, z)
-        eva_focus = tuple(0.73*eva[i]+0.27*thomas[i] for i in range(3))
-        thomas_focus = tuple(0.75*thomas[i]+0.25*eva[i] for i in range(3))
-        eva_pose = parent_eye, (eva_focus[0], eva_focus[1], eva_focus[2]+1.1)
-        thomas_pose = parent_eye, (thomas_focus[0], thomas_focus[1], thomas_focus[2]+1.1)
         x, y = lea[0]-7.5, lea[1]-11.0
         z = max(lea[2]+4.0, a["terrain_z_m"](x, y)+2.0)
         lea_pose = ((x, y, z), (lea[0], lea[1], lea[2]+1.1))
         if code == "PAUSE_INTRO":
-            # The subtitle clears at 3 s. The following 3 s of this
-            # unchanged pause move from the establishing shot to Eva.
-            return between(f01_family_pose(t), eva_pose, (u-0.48)/0.52)
-        # During the 12 s A1 shot, remain close to the parents for the
-        # opening exchange and glide towards Lea before the crossing.
-        parents = between(eva_pose, thomas_pose, (u-0.22)/0.20)
-        return between(parents, lea_pose, (u-0.42)/0.39)
+            # Establish the family, then reach Lea BEFORE the A1 crossing.
+            return between(f01_family_pose(t), lea_pose, (u-0.40)/0.60)
+        # A1 is devoted to Lea: both feet crossing and her arrival on B
+        # stay visible rather than being lost during an Eva/Thomas pan.
+        return lea_pose
 
     def f07_normal_view(t):
         """A2 recovery after the 17:00 contact; preserve Lea in the distance."""
@@ -6673,9 +6663,19 @@ def build_omniscient_edit():
             normal_view = f07_normal_view(t)
             with_normal = blend_camera_pose(contact_view, normal_view,
                                             (t-2.29)/0.42)
-            family_view = desired_pose("A2_LEA_CONTINUATION", "LEA", (-5, -9, 4), t)
-            return blend_camera_pose(with_normal, family_view,
-                                     (t-3.60)/0.90)
+            # After Lea has crossed on screen in A1, return to Eva and
+            # then Thomas; keep the inverse outside the opening composition.
+            eva = a["eval_actor"]("EVA", t)
+            normal = a["eval_actor"]("THOMAS_NORMAL", t)
+            x, y = eva[0]-8.0, eva[1]-10.0
+            eva_eye = (x, y, max(eva[2]+4.2, a["terrain_z_m"](x, y)+2.0))
+            eva_view = eva_eye, (eva[0], eva[1], eva[2]+1.1)
+            x, y = normal[0]-8.0, normal[1]-10.0
+            thomas_eye = (x, y, max(normal[2]+4.2, a["terrain_z_m"](x, y)+2.0))
+            thomas_view = thomas_eye, (normal[0], normal[1], normal[2]+1.1)
+            return blend_camera_pose(
+                blend_camera_pose(with_normal, eva_view, (t-2.65)/0.70),
+                thomas_view, (t-4.25)/0.85)
         if code in ("PAUSE_INTRO", "A1"):
             # Used only as the END pose of the previous beat in camera handover.
             return f01_opening_pose(code, 1.0, t)
