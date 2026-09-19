@@ -23,6 +23,8 @@ import html
 import json
 import math
 import os
+import sys
+import types
 import traceback
 import datetime
 import time
@@ -33,6 +35,14 @@ import unreal
 # English/UMG subtitle plugin. Set the environment variable to "1" before
 # executing the script in Unreal. Default: full film with all 17 captions.
 F03_GEOMETRY_ONLY = os.environ.get("POLOP_F03_GEOMETRY_ONLY", "") == "1"
+
+# Switch to True for CAMERA-ONLY changes after a successful FULL run with
+# this script in the SAME Unreal session, while still in its generated map.
+# False: full generation (required after restarting Unreal, moving to another
+# map, or changing landscape, actors, timing, captions or embedded sources).
+# True: edit the existing omniscient camera track in place; no new run map,
+# landscape import, character bake, subtitle rebuild or new film sequence.
+FAST_CAMERA_ONLY = False
 
 # Unreal restores/removes __file__ once Execute Python Script returns. Slate
 # callbacks run later, so retain our own immutable source path while it exists.
@@ -3940,6 +3950,10 @@ unreal.log("============================================================")
 # MASTER V08 — RAPPORT DE COHERENCE / VALIDATION PAR ETAPES
 # =============================================================================
 
+_CAMERA_BASE_SIGNATURE = hashlib.sha256(
+    (_SOURCE_V11 + chr(0) + _SOURCE_V05).encode("utf-8")).hexdigest()
+_CAMERA_CACHE_KEY = "_polop_live_omniscient_camera_cache_v1"
+
 MASTER_REPORT = {
     "master_version": MASTER_VERSION,
     "checks": [],
@@ -6290,6 +6304,9 @@ def build_omniscient_edit():
     # These remain narrative beats within one continuous camera binding.
     fps = a["FPS"]
     duration = sum(s[1] for s in shots)
+    if FAST_CAMERA_ONLY:
+        return update_existing_omniscient_camera(
+            shots, desired_pose, f03_reveal_pose, f03_reveal_clearance)
     sequence_name = "LS_POLOP_OMNISCIENT"
     if unreal.EditorAssetLibrary.does_asset_exist(RUN_ASSET_ROOT + "/Sequences/" + sequence_name):
         sequence_name += "_" + datetime.datetime.now().strftime("%H%M%S_%f")
@@ -6334,6 +6351,7 @@ def build_omniscient_edit():
             # commit valide. Ne pas y ajouter des pistes de visibilite.
             animated.append((name, channels, scale, converter))
     binding, camera_channels, _ = track_for(cam)
+    a["omniscient_camera_binding"] = binding
 
     # Story cards use the UE 5.8 Subtitles and Closed Captions plugin.
     # Its text is a Slate/UMG viewport overlay, NOT a TextRenderActor in 3D.
@@ -6505,6 +6523,7 @@ def build_omniscient_edit():
             status="blocking pass; canonical coverage incomplete")
     a["omniscient_sequence"] = seq
     a["omniscient_camera"] = cam
+    a["omniscient_shots"] = tuple(shots)
     publish_current_film(seq, cam)
     # End generation on the film, not the separate objective-time audit.
     play_omniscient_film(play=False)
