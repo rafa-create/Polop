@@ -5579,6 +5579,9 @@ def build_cast_closure_probe():
     camera = a["create_camera"]("CAST_CLOSURE_DEBUG", position, target, 28.0)
     binding = ls.add_actors([camera])[0]
     cuts = sequence.add_track(unreal.MovieSceneCameraCutTrack)
+    # add_actors(camera) may have inserted an automatic cut already.
+    for automatic_cut in list(cuts.get_sections()):
+        cuts.remove_section(automatic_cut)
     cut = cuts.add_section()
     cut.set_range(0, len(samples))
     binding_id = unreal.MovieSceneObjectBindingID()
@@ -5700,6 +5703,9 @@ def build_omniscient_edit():
             animated.append((name, channels, scale, converter))
     binding, camera_channels, _ = track_for(cam)
     cuts = seq.add_track(unreal.MovieSceneCameraCutTrack)
+    # Remove Sequencer's auto-cut before writing the single authoritative cut.
+    for automatic_cut in list(cuts.get_sections()):
+        cuts.remove_section(automatic_cut)
     cut = cuts.add_section()
     cut.set_range(0, duration*fps)
     binding_id = unreal.MovieSceneObjectBindingID()
