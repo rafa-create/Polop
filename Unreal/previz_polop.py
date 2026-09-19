@@ -5669,8 +5669,11 @@ def character_performance(name, objective_time):
         # During the normal Thomas's pause, a finite difference of his
         # root positions would be zero; take the real shared closure facing.
         closure_yaw = character_performance("THOMAS_NORMAL", 2.0)["yaw"]
-        weight = cinematic_ease(max(0.0, min(1.0, (t-2.05)/0.20)))
-        yaw = closure_yaw + (a["unwrap_angle"](closure_yaw, yaw)-closure_yaw)*weight
+        # In the inverse's PERSONAL direction t decreases: keep looking down
+        # the actual A path until the last few steps, then react to the
+        # unsuspected body. The prior weighting rotated him the wrong way.
+        weight = cinematic_ease((2.11-t)/0.07)
+        yaw += (a["unwrap_angle"](yaw, closure_yaw)-yaw)*weight
     # F07: provisional, deterministic contact acting. The STOCK mannequin
     # has no bespoke impact clip or planted-foot IK: tip the upper/root body
     # very slightly as inverse Thomas recoils into the collision, then return
