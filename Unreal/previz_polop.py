@@ -1192,42 +1192,54 @@ HIGH_POINT = ROUTES["A"][-1]
 
 high_x, high_y, high_z = HIGH_POINT
 
-# Accès en crochet derrière un éperon : la famille ne voit pas la bouche
-# de la grotte. Les deux Thomas contournent réellement l'éperon côté est.
+# F03 — Thomas quitte A POUR LA MEME PETITE POCHE que fouillent ensuite
+# Eva et Lea : il semble simplement chercher un coin a l'ecart pour uriner.
+# Au bout de la paroi, un rocher masque un coude et une ouverture sombre.
+# Depuis le chemin et la recherche, ce coude ressemble a une impasse.
+# Il n'existe qu'un seul acces praticable depuis la poche; Thomas passe
+# reellement derriere le bloc par son cote PRECIPICE, sans traverser la roche.
 CAVE_ACCESS_POINT = (
-    high_x + 4.0,
-    high_y - 1.0,
-    terrain_z_m(high_x + 4.0, high_y - 1.0)
+    high_x + 3.0,
+    high_y - 4.5,
+    terrain_z_m(high_x + 3.0, high_y - 4.5)
 )
-
+CAVE_LEDGE_TURN_POINT = (
+    high_x + 6.5,
+    high_y - 7.6,
+    terrain_z_m(high_x + 6.5, high_y - 7.6)
+)
+CAVE_LEDGE_PASS_POINT = (
+    high_x + 12.0,
+    high_y - 8.2,
+    terrain_z_m(high_x + 12.0, high_y - 8.2)
+)
 CAVE_ZONE_POINT = (
-    high_x + 16.0,
-    high_y + 0.0,
-    terrain_z_m(high_x + 16.0, high_y + 0.0)
+    high_x + 15.0,
+    high_y - 6.0,
+    terrain_z_m(high_x + 15.0, high_y - 6.0)
 )
-
+# La vraie bouche est desormais au bout de la paroi de cette poche.
+# Le reste du petit couloir plonge derriere la roche, et non a 15 m
+# au nord dans un second espace ouvert que les femmes pourraient voir.
 CAVE_ENTRY_POINT = (
     high_x + 13.0,
-    high_y + 8.0,
-    terrain_z_m(high_x + 13.0, high_y + 8.0)
+    high_y - 2.0,
+    terrain_z_m(high_x + 13.0, high_y - 2.0)
 )
-
 CAVE_DARK_SLOT = (
-    high_x + 15.0,
-    high_y + 9.5,
-    terrain_z_m(high_x + 15.0, high_y + 9.5) + 0.2
+    high_x + 14.2,
+    high_y - 0.4,
+    terrain_z_m(high_x + 14.2, high_y - 0.4) + 0.2
 )
-
 CAVE_FISSURE_POINT = (
     high_x + 17.0,
-    high_y + 11.0,
-    terrain_z_m(high_x + 17.0, high_y + 11.0) + 0.4
+    high_y + 4.0,
+    terrain_z_m(high_x + 17.0, high_y + 4.0) + 0.4
 )
-
 CAVE_CONTACT_POINT = (
     high_x + 19.0,
-    high_y + 12.0,
-    terrain_z_m(high_x + 19.0, high_y + 12.0) + 0.8
+    high_y + 6.0,
+    terrain_z_m(high_x + 19.0, high_y + 6.0) + 0.8
 )
 
 CAVE_GUARD_POINT = route_point_at_station(
@@ -1261,6 +1273,49 @@ CAVE_SEARCH_LEA_POINT_2 = (
     high_x + 5.0, high_y - 7.0,
     terrain_z_m(high_x + 5.0, high_y - 7.0)
 )
+
+# Test GEOMETRIQUE de PREVIZ : ellipses XY enveloppant les deux volumes de
+# rocher reels, avec origine et dimensions identiques a spawn_rock ci-dessous.
+# Ne pas prendre un resultat 2D pour une certification du rendu UE : reverifier
+# la hauteur des yeux, les meshes et les ombres a chaque position dans Unreal.
+F03_MASKS_XY = (
+    ("SEARCH_LEDGE_MOUNTAIN_WALL", high_x+8.0, high_y-1.4, 2.5, 1.3),
+    ("CAVE_ENTRANCE_BLIND_SPUR", high_x+9.0, high_y-4.8, 3.0, 2.1),
+)
+
+
+def f03_mask_clearance_xy(p, q, mask, steps=160):
+    _, cx, cy, rx, ry = mask
+    # Valeur <1 : le segment rencontre physiquement le volume (projection XY).
+    return min(math.hypot((p[0]+(q[0]-p[0])*i/steps-cx)/rx,
+                          (p[1]+(q[1]-p[1])*i/steps-cy)/ry)
+               for i in range(steps+1))
+
+
+F03_WOMEN_VIEWS = (
+    ("Eva garde le retour", CAVE_GUARD_POINT),
+    ("Eva recherche 1", CAVE_SEARCH_POINT_1),
+    ("Eva recherche 2", CAVE_SEARCH_POINT_2),
+    ("Lea garde le retour", CAVE_GUARD_POINT),
+    ("Lea recherche 1", CAVE_SEARCH_LEA_POINT_1),
+    ("Lea recherche 2", CAVE_SEARCH_LEA_POINT_2),
+)
+for _who, _view in F03_WOMEN_VIEWS:
+    if min(f03_mask_clearance_xy(_view, CAVE_ENTRY_POINT, _mask)
+           for _mask in F03_MASKS_XY) >= 0.95:
+        raise RuntimeError("F03: la bouche est visible depuis " + _who)
+
+F03_THOMAS_OUTDOOR = (
+    HIGH_POINT, CAVE_ACCESS_POINT, CAVE_LEDGE_TURN_POINT,
+    CAVE_LEDGE_PASS_POINT, CAVE_ZONE_POINT, CAVE_ENTRY_POINT
+)
+for _start, _end in zip(F03_THOMAS_OUTDOOR, F03_THOMAS_OUTDOOR[1:]):
+    if min(f03_mask_clearance_xy(_start, _end, _mask)
+           for _mask in F03_MASKS_XY) < 1.12:
+        raise RuntimeError("F03: le crochet de Thomas traverse un rocher")
+for _waypoint in F03_THOMAS_OUTDOOR[1:5]:
+    if _waypoint[1] < high_y - 9.0:
+        raise RuntimeError("F03: le passage de Thomas touche le precipice")
 
 # Axe local de la cavité. Toute la géométrie V05 et les caméras de contrôle
 # sont construites dans ce repère afin d'éviter les collisions caméra/paroi.
@@ -1645,45 +1700,56 @@ spawn_box(
     _cave_rot
 )
 
-# Paroi du côté montagne : elle borde la terrasse sans barrer
-# ni l'accès des deux Thomas à la grotte, ni le trajet des femmes.
+# F03 : DEUX LEVRES DE LA MEME PAROI, et non un cache de camera.
+# Depuis A (au nord-ouest) et la recherche (au sud-ouest), les rochers
+# se chevauchent visuellement : la fente sombre a l'extremite semble
+# etre la suite de la paroi. Le passage physique des deux Thomas contourne
+# le bloc cote precipice puis revient vers la petite entree derriere lui.
 spawn_rock(
     "SEARCH_LEDGE_MOUNTAIN_WALL",
-    high_x + 8.2, high_y - 3.0,
-    terrain_z_m(high_x + 8.2, high_y - 3.0) + 2.3,
-    (3.6, 0.85, 3.6),
+    high_x + 8.0, high_y - 1.4,
+    terrain_z_m(high_x + 8.0, high_y - 1.4) + 2.35,
+    (2.5, 1.3, 3.0),
+    MAT_ROCK_READABLE,
+    "MicroGeo/SearchLedge"
+)
+spawn_rock(
+    "CAVE_ENTRANCE_BLIND_SPUR",
+    high_x + 9.0, high_y - 4.8,
+    terrain_z_m(high_x + 9.0, high_y - 4.8) + 2.5,
+    (3.0, 2.1, 3.35),
     MAT_ROCK_READABLE,
     "MicroGeo/SearchLedge"
 )
 
-# Lèvre discrète et courte face sous le rebord, sans faux plancher
-# qui ferait flotter les personnages au-dessus du Landscape.
+# Le petit bord est reellement suivi d'une chute dans le Landscape.
+# Ne pas reconstruire devant lui une fausse face en cube haute de 21 m :
+# l'ancien SEARCH_LEDGE_CLIFF_FACE cachait la vraie rupture de terrain.
 ledge_x, ledge_y, ledge_z = PRECIPICE_EDGE_POINT
 spawn_box(
     "SEARCH_LEDGE_LIP",
-    V(ledge_x*100, ledge_y*100, (ledge_z+0.10)*100),
-    (650, 16, 14),
-    MAT_ROCK_READABLE,
-    "MicroGeo/SearchLedge"
-)
-spawn_box(
-    "SEARCH_LEDGE_CLIFF_FACE",
-    V(ledge_x*100, (ledge_y-3.4)*100, (ledge_z-11.0)*100),
-    (650, 24, 2100),
+    V(ledge_x*100, ledge_y*100, (ledge_z+0.04)*100),
+    (650, 12, 8),
     MAT_ROCK_READABLE,
     "MicroGeo/SearchLedge"
 )
 
-# Éperon RÉEL conservé : Éva et Léa ne voient pas l'entrée ; les
-# deux Thomas suivent le crochet d'accès sans traverser le rocher.
-spawn_rock(
-    "CAVE_ENTRANCE_BLIND_SPUR",
-    high_x + 8.0, high_y + 6.0,
-    terrain_z_m(high_x + 8.0, high_y + 6.0) + 2.9,
-    (4.0, 4.5, 4.6),
-    MAT_ROCK_READABLE,
-    "MicroGeo/CaverneV05/Rocks"
-)
+# La penombre du coude est renforcee DANS la cavite, le centre demeure
+# physiquement libre. Depuis le point de vue des femmes, les deux levres
+# rocheuses masquent ces bandes sombres; seul A15 doit les devoiler.
+for _shadow_side, _shadow_name in (
+    (1.95, "F03_SHADOW_RECESS_LEFT"), (-1.95, "F03_SHADOW_RECESS_RIGHT")
+):
+    _sx, _sy = cave_xy(0.65, _shadow_side)
+    _sz = terrain_z_m(_sx, _sy) + 1.20
+    spawn_box(
+        _shadow_name,
+        V(_sx*100, _sy*100, _sz*100),
+        (65, 25, 235),
+        MAT_CAVE,
+        "MicroGeo/SearchLedge/HiddenMouth",
+        unreal.Rotator(0, CAVE_YAW_DEG, 0)
+    )
 
 # Deux rochers d'entrée latéraux, aucune obstruction dans l'axe intérieur.
 for _side, _name, _yaw in ((2.2, "CAVE_ENTRY_ROCK_L", 12), (-2.2, "CAVE_ENTRY_ROCK_R", -12)):
@@ -1857,16 +1923,34 @@ ANIM["THOMAS_NORMAL"] = [
         NORMAL_REJOIN_STATION,
         LENGTH["A"]
     ),
+    # F03 : il quitte A pour faire pipi DANS la petite poche rocheuse.
+    # Puis il longe le bloc, tourne derriere et decouvre sa bouche sombre.
+    # Les femmes restent a l'entree de la poche, sans cette ligne de vue.
     custom_segment(
-        52.0,
-        52.5,
+        52.0, 52.5,
         point_with_real_terrain(HIGH_POINT),
         point_with_real_terrain(CAVE_ACCESS_POINT)
     ),
-    custom_segment(52.5, 53.0, point_with_real_terrain(CAVE_ACCESS_POINT),
-                   point_with_real_terrain(CAVE_ZONE_POINT)),
-    custom_segment(53.0, 54.0, point_with_real_terrain(CAVE_ZONE_POINT),
-                   point_with_real_terrain(CAVE_ENTRY_POINT)),
+    custom_segment(
+        52.5, 52.8,
+        point_with_real_terrain(CAVE_ACCESS_POINT),
+        point_with_real_terrain(CAVE_LEDGE_TURN_POINT)
+    ),
+    custom_segment(
+        52.8, 53.1,
+        point_with_real_terrain(CAVE_LEDGE_TURN_POINT),
+        point_with_real_terrain(CAVE_LEDGE_PASS_POINT)
+    ),
+    custom_segment(
+        53.1, 53.5,
+        point_with_real_terrain(CAVE_LEDGE_PASS_POINT),
+        point_with_real_terrain(CAVE_ZONE_POINT)
+    ),
+    custom_segment(
+        53.5, 54.0,
+        point_with_real_terrain(CAVE_ZONE_POINT),
+        point_with_real_terrain(CAVE_ENTRY_POINT)
+    ),
     custom_segment(54.0, 54.5, point_with_real_terrain(CAVE_ENTRY_POINT), cave_ground_point(1.15, 0.0, 0.05)),
     hold_segment(54.5, 60.0, cave_ground_point(1.15, 0.0, 0.05)),
     custom_segment(
@@ -2038,17 +2122,31 @@ ANIM["THOMAS_INVERSE"] = [
         B5_STATION,
         0.0
     ),
-    # En temps objectif, le Thomas inversé contourne le même éperon.
-    # Le segment direct HIGH_POINT -> entrée traverserait le rocher.
+    # F03 : inverse de l'acces de Thomas normal, dans le TEMPS OBJECTIF.
+    # En temps propre, l'inverse sort du coude, puis rejoint A sans etre
+    # vu d'Eva et Lea, qui sont deja en train de redescendre.
     custom_segment(
-        60.2,
-        60.38,
+        60.2, 60.26,
         point_with_real_terrain(HIGH_POINT),
+        point_with_real_terrain(CAVE_ACCESS_POINT)
+    ),
+    custom_segment(
+        60.26, 60.32,
+        point_with_real_terrain(CAVE_ACCESS_POINT),
+        point_with_real_terrain(CAVE_LEDGE_TURN_POINT)
+    ),
+    custom_segment(
+        60.32, 60.4,
+        point_with_real_terrain(CAVE_LEDGE_TURN_POINT),
+        point_with_real_terrain(CAVE_LEDGE_PASS_POINT)
+    ),
+    custom_segment(
+        60.4, 60.48,
+        point_with_real_terrain(CAVE_LEDGE_PASS_POINT),
         point_with_real_terrain(CAVE_ZONE_POINT)
     ),
     custom_segment(
-        60.38,
-        60.6,
+        60.48, 60.6,
         point_with_real_terrain(CAVE_ZONE_POINT),
         point_with_real_terrain(CAVE_ENTRY_POINT)
     ),
@@ -5795,8 +5893,8 @@ def build_omniscient_edit():
         ("PAUSE_ATTACHE", 6, 32.2, 32.2, "THOMAS_NORMAL", (-18, -35, 20)),
         ("A10", 14, 32.2, 52, "EVA", (-10, -12, 6)),
         ("PAUSE_DEPART", 6, 52, 52, "EVA", (-10, -12, 6)),
-        ("A11_ATTENTE", 18, 52, 56, "EVA", (-3, 9, 4.5)),
-        ("PAUSE_ATTENTE", 7, 56, 56, "EVA", (-3, 9, 4.5)),
+        ("A11_ATTENTE", 18, 52, 56, "EVA", (-8, -11, 4.5)),
+        ("PAUSE_ATTENTE", 7, 56, 56, "EVA", (-8, -11, 4.5)),
         ("A12_A13", 16, 56, 59, "EVA", (9, -16, 6)),
         ("PAUSE_RECHERCHE", 7, 59, 59, "EVA", (9, -16, 6)),
         ("A14", 6, 59, 60, "EVA", (9, -16, 6)),
@@ -5941,16 +6039,27 @@ def build_omniscient_edit():
         elif code == "PAUSE_MOUSQUETON":
             code = "B6_TRAVERSEE"
         if code in ("A12_A13", "A14"):
-            # Vue courte côté aval : les deux personnages sur la petite
-            # banquette, la paroi derrière, la face du précipice dessous.
+            # A12 commence SUR LE CHEMIN, cote femmes : on voit l'UNIQUE
+            # retour qu'elles ont surveille. La camera accompagne leur
+            # recherche, puis se decale progressivement cote precipice :
+            # quelques m2 de sol entre elles, la paroi, et le vide.
+            # Ne viser ni l'entree de la grotte ni le revers de l'eperon
+            # avant A15. A14 garde ce cadrage pendant leur depart.
             ledge = a["SEARCH_LEDGE_CENTER"]
-            eye_x, eye_y = ledge[0] + 10.0, ledge[1] - 16.0
-            eye_z = max(ledge[2] + 6.2,
-                        a["terrain_z_m"](eye_x, eye_y) + 3.0)
             subject = a["eval_actor"]("EVA", t)
-            target = (subject[0] + 1.1, subject[1] - 1.6,
-                      subject[2] + 0.65)
-            return (eye_x, eye_y, eye_z), target
+            near_eye = (subject[0]-8.0, subject[1]-11.0, subject[2]+4.5)
+            near_target = (subject[0]+1.5, subject[1]-2.4, subject[2]+0.75)
+            far_x, far_y = ledge[0]+10.0, ledge[1]-16.0
+            far_eye = (far_x, far_y,
+                       max(ledge[2]+6.2, a["terrain_z_m"](far_x, far_y)+3.0))
+            # Viser vers la femme et le bord, a GAUCHE du coude cache :
+            # l'angle A12 n'offre pas un point de vue explicatif sur la bouche.
+            far_target = (subject[0]-0.8, subject[1]-2.6, subject[2]+0.65)
+            alpha = 1.0 if code == "A14" else max(0.0, min(1.0, (t-57.0)/1.45))
+            alpha = alpha*alpha*(3.0-2.0*alpha)
+            eye = tuple(near_eye[i]*(1.0-alpha)+far_eye[i]*alpha for i in range(3))
+            target = tuple(near_target[i]*(1.0-alpha)+far_target[i]*alpha for i in range(3))
+            return eye, target
         if focus == "CAVE":
             target = a["eval_actor"]("THOMAS_INVERSE" if code == "B1" else "THOMAS_NORMAL", t)
             if code == "B1":
