@@ -53,3 +53,11 @@ Puis fermer et rouvrir Unreal plus tard pour tester les vrais sous-titres avec l
 Captures demandées pour la validation : A10 Thomas s'écarte; A11 ligne de vue des femmes vers l'unique sortie; A12–A13 (vue à hauteur humaine et caméra film) paroi + petite terrasse + bord du vide; A15 **première apparition** de l'entrée; vérifier également dans le journal l'absence d'erreur F03 et la fin de génération. Étiqueter les captures du même run.
 
 **Important :** statut « À TESTER » ne signifie **pas** que la mise en scène est validée. Attendre la vidéo/captures et l'accord de l'utilisateur avant toute autre fiche.
+
+## Correctif de régression du regard inversé (19/09/2026)
+
+**Commit du script :** `1973734fd9d4f1c395ab49a1e3916b8f72a6e832`. Le dernier run F03 est resté **BLOCKED** sur `inverse_gaze_follows_personal_time` (produit scalaire à t=60,5 : `-0.2050496489`) et n'a donc pas construit la caméra `PZ_ANIM_CAM_OMNISCIENT`. Il ne s'agissait pas d'une suppression de la caméra : le master n'appelle sa création qu'après la validation narrative.
+
+Le virage serré nouvellement introduit entre la poche rocheuse et la grotte est incompatible avec le regard interpolé sur ±0,35 s, qui coupe plusieurs segments du trajet. Dans `pov_direction`, uniquement pour Thomas inversé et `60.2 <= t < 60.6`, le regard suit désormais la direction locale du segment de marche **dans son temps personnel**. Le reste de la fonction, l'ensemble des trajets, les visibilités du casting, les 17 pauses et le contrôle narratif bloquant sont inchangés. Aucun contournement des validations n'a été ajouté.
+
+**À tester dans Unreal :** vérifier d'abord `inverse_gaze_follows_personal_time : OK`, puis `complete` et la présence de `LS_POLOP_OMNISCIENT` / `PZ_ANIM_CAM_OMNISCIENT` dans le nouveau run. Si un autre contrôle bloque, conserver le journal du **même run**. La géographie et les regards réels de F03 restent à valider visuellement.
