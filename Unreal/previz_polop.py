@@ -5782,39 +5782,154 @@ def build_omniscient_edit():
     a = _ANIMATION
     # code, screen seconds, objective minute endpoints, focus, camera offset (m)
     shots = [
+        ("PAUSE_INTRO", 6, 0, 0, "LEA", (-8, -12, 7)),
         ("A1", 12, 0, 2, "LEA", (-8, -12, 7)),
         ("A2", 18, 2, 8, "LEA", (-5, -9, 4)),
+        ("PAUSE_DETOUR", 6, 8, 8, "LEA", (-5, -9, 4)),
         ("A3_A4", 16, 8, 20, "EVA", (-8, -10, 5)),
+        ("PAUSE_THOMAS", 5, 20, 20, "EVA", (-8, -10, 5)),
         ("A5_GEOGRAPHIE", 8, 20, 24, "EVA", (-45, -65, 40)),
-        ("PAUSE_CHEMINS", 3, 24, 24, "EVA", (-45, -65, 40)),
+        ("PAUSE_CHEMINS", 7, 24, 24, "EVA", (-45, -65, 40)),
         ("A6_A8", 16, 24, 32, "THOMAS_NORMAL", (-8, -12, 6)),
         ("A9_PONT", 4, 32, 32.2, "THOMAS_NORMAL", (-18, -35, 20)),
+        ("PAUSE_ATTACHE", 6, 32.2, 32.2, "THOMAS_NORMAL", (-18, -35, 20)),
         ("A10", 14, 32.2, 52, "EVA", (-10, -12, 6)),
+        ("PAUSE_DEPART", 6, 52, 52, "EVA", (-10, -12, 6)),
         ("A11_ATTENTE", 18, 52, 56, "EVA", (-3, 9, 4.5)),
+        ("PAUSE_ATTENTE", 7, 56, 56, "EVA", (-3, 9, 4.5)),
         ("A12_A13", 16, 56, 59, "EVA", (9, -16, 6)),
-        ("PAUSE_RECHERCHE", 3, 59, 59, "EVA", (9, -16, 6)),
+        ("PAUSE_RECHERCHE", 7, 59, 59, "EVA", (9, -16, 6)),
         ("A14", 6, 59, 60, "EVA", (9, -16, 6)),
         ("A15_A16", 16, 60, 61.95, "CAVE", (0, 0, 0)),
+        ("PAUSE_REVELATION", 6, 61.95, 61.95, "CAVE", (0, 0, 0)),
         ("A17", 5, 61.95, 62, "CAVE", (0, 0, 0)),
-        ("PAUSE_CONTACT", 3, 62, 62, "CAVE", (0, 0, 0)),
+        ("PAUSE_CONTACT", 7, 62, 62, "CAVE", (0, 0, 0)),
         ("B1", 16, 62, 60.2, "CAVE", (0, 0, 0)),
-        ("PAUSE_OBSCURITE", 3, 60.2, 60.2, "CAVE", (0, 0, 0)),
+        ("PAUSE_OBSCURITE", 6, 60.2, 60.2, "CAVE", (0, 0, 0)),
         ("B2", 10, 60.2, 59.4, "THOMAS_INVERSE", (-14, 20, 9)),
+        ("PAUSE_FAMILLE", 6, 59.4, 59.4, "THOMAS_INVERSE", (-14, 20, 9)),
         ("B3_B4", 25, 59.4, 32, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("PAUSE_RETOUR", 6, 32, 32, "THOMAS_INVERSE", (-9, 12, 5)),
         ("B5_PONT", 4, 32, 31.9, "THOMAS_INVERSE", (-12, 18, 10)),
+        ("PAUSE_PONT_RETOUR", 5, 31.9, 31.9, "THOMAS_INVERSE", (-12, 18, 10)),
         ("B6", 22, 31.9, 3, "THOMAS_INVERSE", (-9, 12, 5)),
         ("B6_TRAVERSEE", 6, 3, 2.5, "THOMAS_INVERSE", (-6, -8, 3)),
+        ("PAUSE_MOUSQUETON", 7, 2.5, 2.5, "THOMAS_INVERSE", (-6, -8, 3)),
         ("B7_B8", 8, 2.5, 2, "THOMAS_INVERSE", (-6, -8, 3)),
+        ("PAUSE_BOUCLE", 7, 2, 2, "THOMAS_INVERSE", (-6, -8, 3)),
         ("B9", 18, 2, 8, "THOMAS_NORMAL", (-5, -9, 4)),
+        ("PAUSE_ISSUE", 6, 8, 8, "THOMAS_NORMAL", (-5, -9, 4)),
         ("B9_ELOIGNEMENT", 8, 8, 12, "THOMAS_NORMAL", (-45, -65, 35)),
     ]
     # Aides de lecture pour la PREVIZ uniquement, pas des dialogues canoniques.
     # Chaque pause maintient le temps objectif exact, y compris le casting.
     pause_cards = {
-        "PAUSE_CHEMINS": ("DEUX CHEMINS", "A monte ; B redescend de l'autre côté."),
-        "PAUSE_RECHERCHE": ("17 H 55", "Une petite terrasse : la paroi, puis le vide."),
-        "PAUSE_CONTACT": ("18 H 00", "Deux parcours de Thomas se rejoignent ici."),
-        "PAUSE_OBSCURITE": ("DANS LE NOIR", "Thomas inversé s'y est habitué ; l'autre, non."),
+        # Notes courtes mais suffisantes pour un spectateur qui découvre l'histoire.
+        # La caméra ne doit jamais révéler la grotte avant A15 ou la causalité
+        # du pont avant B6. Les objets non animés sont indiqués comme tels.
+        "PAUSE_INTRO": (
+            "LA BOUCLE - PREVISUALISATION",
+            "Thomas, Eva et leur fille Lea montent\n"
+            "ensemble sur une montagne.\n"
+            "Nous suivons d'abord le temps normal."
+        ),
+        "PAUSE_DETOUR": (
+            "LE DETOUR DE LEA",
+            "Lea a traverse le pont vers le chemin B.\n"
+            "Thomas lui demande de revenir par\n"
+            "le flanc, plus long, plutot que le pont."
+        ),
+        "PAUSE_THOMAS": (
+            "THOMAS EST DISTRAIT",
+            "Eva et Lea profitent de la balade.\n"
+            "Thomas reste en retrait et regarde\n"
+            "souvent l'heure."
+        ),
+        "PAUSE_CHEMINS": (
+            "RETENIR CES TROIS PASSAGES",
+            "A : la montee empruntee en famille.\n"
+            "B : un autre versant, rejoint en haut.\n"
+            "Pont court ou long flanc entre A et B."
+        ),
+        "PAUSE_ATTACHE": (
+            "LE PONT, PLUS TARD",
+            "Vers 17 h 30, son mousqueton est\n"
+            "decroche : l'attache n'est plus sure.\n"
+            "Le geste n'est pas encore anime."
+        ),
+        "PAUSE_DEPART": (
+            "17 H 50 - THOMAS S'ECARTE",
+            "Thomas dit qu'il va faire une pause.\n"
+            "Il entre dans une petite zone rocheuse.\n"
+            "Eva et Lea attendent sur le chemin."
+        ),
+        "PAUSE_ATTENTE": (
+            "ELLES ONT GARDE LE PASSAGE",
+            "Thomas aurait du revenir par ici.\n"
+            "Elles regardent ce seul chemin de\n"
+            "retour : personne n'est passe."
+        ),
+        "PAUSE_RECHERCHE": (
+            "UNE ABSENCE IMPOSSIBLE",
+            "La zone est minuscule : rochers,\n"
+            "paroi, puis precipice. Nul retour\n"
+            "visible. Eva craint une chute."
+        ),
+        "PAUSE_REVELATION": (
+            "CE QU'ELLES N'ONT PAS VU",
+            "Derriere un angle de la paroi se\n"
+            "cache l'entree d'une petite grotte.\n"
+            "Thomas y est, ses ecouteurs aux oreilles."
+        ),
+        "PAUSE_CONTACT": (
+            "18 H 00 - LE RENVERSEMENT",
+            "Dans l'histoire, Thomas touche\n"
+            "un anneau : son temps s'inverse.\n"
+            "Anneau et effets encore non animes."
+        ),
+        "PAUSE_OBSCURITE": (
+            "DEUX REGARDS DANS LE NOIR",
+            "Thomas inverse distingue une silhouette :\n"
+            "ses yeux se sont habitues au noir.\n"
+            "L'autre Thomas, ebloui, ne le voit pas."
+        ),
+        "PAUSE_FAMILLE": (
+            "DEUX CHEMINS, UN MEME INSTANT",
+            "Eva et Lea redescendent sur A pour\n"
+            "chercher de l'aide. Thomas inverse\n"
+            "descend sur B, vers le passe."
+        ),
+        "PAUSE_RETOUR": (
+            "LE PAYSAGE REMONTE LE TEMPS",
+            "Pour Thomas inverse, les gouttes,\n"
+            "les feuilles et les pierres reviennent\n"
+            "en arriere. Ces effets restent a creer."
+        ),
+        "PAUSE_PONT_RETOUR": (
+            "VERS 17 H 30 - LE MEME PONT",
+            "Thomas retrouve le mousqueton deja\n"
+            "decroche. Il n'a pas encore atteint\n"
+            "le moment ou Lea l'a traverse."
+        ),
+        "PAUSE_MOUSQUETON": (
+            "VERS 17 H 01 - LE CLAC",
+            "Dans l'histoire, Thomas inverse\n"
+            "raccroche le mousqueton, puis traverse.\n"
+            "Le geste reste a animer en 3D."
+        ),
+        "PAUSE_BOUCLE": (
+            "17 H 00 - LA RENCONTRE",
+            "Pres du rocher, les deux Thomas\n"
+            "se rencontrent au contact de l'anneau.\n"
+            "La cause exacte du retour reste ouverte."
+        ),
+        "PAUSE_ISSUE": (
+            "LE MEME INSTANT, AUTRE REGARD",
+            "Nous retrouvons Thomas au temps\n"
+            "normal, comme au debut du film.\n"
+            "Il demande a Lea de prendre le flanc."
+        ),
+
     }
 
     def desired_pose(code, focus, offset, t):
@@ -5822,6 +5937,10 @@ def build_omniscient_edit():
             code = "A12_A13"
         elif code == "PAUSE_OBSCURITE":
             code = "B1"
+        elif code == "PAUSE_ATTACHE":
+            code = "A9_PONT"
+        elif code == "PAUSE_MOUSQUETON":
+            code = "B6_TRAVERSEE"
         if code in ("A12_A13", "A14"):
             # Vue courte côté aval : les deux personnages sur la petite
             # banquette, la paroi derrière, la face du précipice dessous.
@@ -5946,11 +6065,11 @@ def build_omniscient_edit():
         cube = unreal.load_asset("/Engine/BasicShapes/Cube.Cube")
         actor = actors.spawn_actor_from_object(
             cube, unreal.Vector(0, 0, 0), unreal.Rotator(0, 0, 0), False)
-        actor.set_actor_scale3d(unreal.Vector(0.02, 2.24, 0.61))
+        actor.set_actor_scale3d(unreal.Vector(0.02, 2.90, 0.84))
         comp = actor.get_component_by_class(unreal.StaticMeshComponent)
         comp.set_material(0, a["MAT_CAVE"])
         comp.set_cast_shadow(False)
-        return card_attach(actor, name, (226.0, 0.0, -51.0))
+        return card_attach(actor, name, (226.0, 0.0, -52.0))
 
     def card_visibility(actor, first_frame, last_frame):
         # bHidden=True hors carton. Les clés CONSTANT ne créent aucun fondu.
@@ -6068,9 +6187,9 @@ def build_omniscient_edit():
         title, explanation = pause_cards[scene]
         first, last = shot["start_frame"], shot["end_frame"]
         panel = card_background(scene + "_FOND")
-        heading = card_text(scene + "_TITRE", title, -40.0, 13.0,
+        heading = card_text(scene + "_TITRE", title, -24.0, 12.0,
                             unreal.Color(255, 225, 155, 255))
-        note = card_text(scene + "_NOTE", explanation, -61.0, 9.5,
+        note = card_text(scene + "_NOTE", explanation, -48.0, 9.0,
                          unreal.Color(245, 245, 245, 255))
         for overlay in (panel, heading, note):
             card_visibility(overlay, first, last)
