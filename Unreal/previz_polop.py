@@ -423,41 +423,40 @@ for iy in range(max(0, cy-radius_px), min(HM_SIZE-1, cy+radius_px)+1):
         height_grid[idx] = height_grid[idx] * (1.0-w) + CAVE_TERRACE_Z * w
 
 
-# A12/A13 : VRAIE banquette de ~12 x 6 m entre paroi et précipice.
-# La rupture de pente commence à y=-11.5 m : les femmes sont à ~4 m
-# du bord. Retouche locale hors des routes A/B, du pont et du flanc.
-LEDGE_Z_M = 158.0  # Niveau de la jonction haute / arrivée du sentier A.
+# F03: a smaller real search shelf, bounded by rock and the Landscape cliff.
+# Women search at y=-5..-7; both Thomas approaches remain at y>=-8.2.
+LEDGE_Z_M = 158.0
 for iy in range(HM_SIZE):
     wy = WORLD_Y_MIN_M + iy * GRID_STEP_M
-    if wy < -12.0 or wy > -1.5:
+    if wy < -10.8 or wy > -2.2:
         continue
-    plateau_y = min(smoothstep((wy + 12.0) / 2.0),
-                    smoothstep((-1.5 - wy) / 2.0))
+    plateau_y = min(smoothstep((wy + 10.8) / 1.6),
+                    smoothstep((-2.2 - wy) / 1.8))
     row = iy * HM_SIZE
     for ix in range(HM_SIZE):
         wx = WORLD_X_MIN_M + ix * GRID_STEP_M
-        if wx < 1754.0 or wx > 1773.0:
+        if wx < 1757.0 or wx > 1774.0:
             continue
-        plateau_x = min(smoothstep((wx - 1754.0) / 3.0),
-                        smoothstep((1773.0 - wx) / 4.0))
+        plateau_x = min(smoothstep((wx - 1757.0) / 2.0),
+                        smoothstep((1774.0 - wx) / 2.8))
         w = plateau_x * plateau_y
         idx = row + ix
         height_grid[idx] = height_grid[idx]*(1.0-w) + LEDGE_Z_M*w
 
-# Précipice creusé immédiatement au sud de la banquette : 38 m au
-# plus bas. La face est visible depuis un contrechamp pris côté aval.
+# Extend the real precipice slightly eastward so it borders the pocket,
+# but stop before the separate HAUT path turns south (x~1785).
 for iy in range(HM_SIZE):
     wy = WORLD_Y_MIN_M + iy * GRID_STEP_M
-    if wy > -11.5 or wy < -46.0:
+    if wy > -11.1 or wy < -46.0:
         continue
-    cliff_across = smoothstep((-11.5 - wy) / 5.0)
+    cliff_across = smoothstep((-11.1 - wy) / 3.0)
     row = iy * HM_SIZE
     for ix in range(HM_SIZE):
         wx = WORLD_X_MIN_M + ix * GRID_STEP_M
-        if wx < 1752.0 or wx > 1778.0:
+        if wx < 1752.0 or wx > 1785.0:
             continue
         cliff_along = min(smoothstep((wx - 1752.0) / 4.0),
-                          smoothstep((1778.0 - wx) / 4.0))
+                          smoothstep((1785.0 - wx) / 4.0))
         cut = 38.0 * cliff_along * cliff_across
         idx = row + ix
         height_grid[idx] = max(0.0, height_grid[idx] - cut)
@@ -6121,9 +6120,11 @@ def build_omniscient_edit():
             subject = a["eval_actor"]("EVA", t)
             near_eye = (subject[0]-8.0, subject[1]-11.0, subject[2]+4.5)
             near_target = (subject[0]+1.5, subject[1]-2.4, subject[2]+0.75)
-            far_x, far_y = ledge[0]+10.0, ledge[1]-16.0
+            # Short downstream view shows the women, shelf, wall and cliff
+            # without a distant overhead view of the surrounding open terrain.
+            far_x, far_y = ledge[0]+7.0, ledge[1]-7.2
             far_eye = (far_x, far_y,
-                       max(ledge[2]+6.2, a["terrain_z_m"](far_x, far_y)+3.0))
+                       max(ledge[2]+4.3, a["terrain_z_m"](far_x, far_y)+2.0))
             # Viser vers la femme et le bord, a GAUCHE du coude cache :
             # l'angle A12 n'offre pas un point de vue explicatif sur la bouche.
             far_target = (subject[0]-0.8, subject[1]-2.6, subject[2]+0.65)
