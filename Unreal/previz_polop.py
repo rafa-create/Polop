@@ -6623,6 +6623,12 @@ def build_omniscient_edit():
                         "F03 A15 near lens bounds of %s at progress %.3f" %
                         (name, progress))
 
+    # F03: geometry of the generated cave is represented with PZ_ANIM_
+    # actors. A camera may remain outside at the start of A15; once it
+    # enters the opening the near lens MUST NOT overlap any cave surface.
+    # This independent test complements (not replaces) the XY mask checks.
+    # No rock gets disabled or moved as a shortcut.
+
     # F01 camera-only pass: no actor movement or retiming. At t=0 Lea
     # already walks ahead of Thomas/Eva in the existing validated blocking.
     # Show all three honestly in a wide frame, then follow Lea to the bridge.
