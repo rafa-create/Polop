@@ -5671,11 +5671,25 @@ def character_performance(name, objective_time):
         closure_yaw = character_performance("THOMAS_NORMAL", 2.0)["yaw"]
         weight = cinematic_ease(max(0.0, min(1.0, (t-2.05)/0.20)))
         yaw = closure_yaw + (a["unwrap_angle"](closure_yaw, yaw)-closure_yaw)*weight
+    # F07: provisional, deterministic contact acting. The STOCK mannequin
+    # has no bespoke impact clip or planted-foot IK: tip the upper/root body
+    # very slightly as inverse Thomas recoils into the collision, then return
+    # normal Thomas upright in objective time. Both film readings sample this
+    # one pose function; the worldline and 17:00 instant remain untouched.
+    pitch, roll = 0.0, 0.0
+    if name == "THOMAS_NORMAL" and 2.0 <= t <= 2.075:
+        pitch = 6.0*(1.0-cinematic_ease((t-2.0)/0.075))
+    elif name == "THOMAS_INVERSE" and 2.0 < t <= 2.095:
+        pulse = 1.0-cinematic_ease((t-2.0)/0.095)
+        pitch = 6.0*pulse
+        roll = 3.0*pulse*(1.0-cinematic_ease((t-2.0)/0.070))
     if name == "THOMAS_INVERSE" and abs(t-2.0) < 1e-9:
-        # The single coincident, invisible inverse endpoint has the same pose.
+        # The sole coincident endpoint is drawn once, with equal rig pose.
         closure = character_performance("THOMAS_NORMAL", 2.0)
         yaw, moving, phase = closure["yaw"], closure["moving"], closure["phase"]
-    return dict(foot=p, yaw=yaw, moving=moving, phase=phase,
+        pitch, roll = closure["pitch"], closure["roll"]
+    return dict(foot=p, yaw=yaw, pitch=pitch, roll=roll,
+                moving=moving, phase=phase,
                 # At the exact closure both branches share the same body pose.
                 # Draw that coincident endpoint once; BOTH are drawn for every
                 # strict interior time, including B9's return to normal time.
@@ -5771,7 +5785,8 @@ def add_human_performances(sequence, samples):
             # Never shrink a body into/out of existence. Visibility represents
             # objective branch domain only, not whether B8 was already shown.
             scale = info["scale"]
-            values = tuple(v*100.0 for v in pose["foot"])+(0.0, 0.0, yaw)+(scale,)*3
+            values = (tuple(v*100.0 for v in pose["foot"])+
+                      (pose["roll"], pose["pitch"], yaw)+(scale,)*3)
             frame = unreal.FrameNumber(frame_index)
             visibility_channel.add_key(frame, bool(pose["visible"]))
             for channel, value in zip(channels, values):
@@ -5836,6 +5851,8 @@ def audit_cast_closure():
         closure_yaw=abs((n["yaw"]-i["yaw"]+180.0) % 360.0-180.0) < 1e-6,
         closure_clip=n["moving"] == i["moving"],
         closure_phase=abs(n["phase"]-i["phase"]) < 1e-6,
+        closure_root_tilt=(abs(n["pitch"]-i["pitch"]) < 1e-6
+                           and abs(n["roll"]-i["roll"]) < 1e-6),
         before_closure_one=not character_performance(names[1], 1.999999)["visible"],
         interior_two=all(all(character_performance(name, 2.0+k*0.01)["visible"]
                             for name in names) for k in range(1, 6000)))
