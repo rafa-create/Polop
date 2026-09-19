@@ -5832,15 +5832,26 @@ def add_f01_box_to_film(sequence, samples):
     vis_ch = vis_section.get_all_channels()[0]
     b9 = next(item for item in a["f01_film_shots"] if item["scene"] == "B9")
     pause = next(item for item in a["f01_film_shots"] if item["scene"] == "PAUSE_ISSUE")
-    # A2 is deliberately absent: box is physically still inside the pocket.
-    # B9 final frames: brief pocket reveal; hold only part of the existing pause.
+    # A2 is deliberately absent: the box stays inside Thomas's pocket.
+    # B9 final frames: brief pocket reveal within the already-existing pause.
     start = b9["end_frame"]-int(round(0.65*a["FPS"]))
     end = pause["start_frame"]+int(round(2.15*a["FPS"]))
-    for frame_index, objective_t in samples:
-        show = start <= frame_index < end
-        frame = unreal.FrameNumber(frame_index)
-        vis_ch.add_key(frame, not show,
+    # The narrator's only camera is not modified; crop/reframe is a later pass.
+    # Hide at frame zero even if the spawned static mesh default is visible.
+    vis_ch.set_default(True)
+    vis_ch.add_key(unreal.FrameNumber(0), True,
+                   interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+    if start > 0:
+        vis_ch.add_key(unreal.FrameNumber(start-1), True,
                        interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+    vis_ch.add_key(unreal.FrameNumber(start), False,
+                   interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+    vis_ch.add_key(unreal.FrameNumber(end), True,
+                   interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+    # The box remains at one physical position in the pocket for a fixed
+    # objective instant; never key on film-time elapsed or the edit direction.
+    for frame_index, objective_t in samples:
+        frame = unreal.FrameNumber(frame_index)
         x, y, z = f01_box_pose(objective_t)
         for channel, value in zip(channels[:3], (100.0*x, 100.0*y, 100.0*z)):
             channel.add_key(frame, float(value),
