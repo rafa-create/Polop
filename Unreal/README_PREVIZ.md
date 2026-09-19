@@ -299,3 +299,69 @@ réelle à un seul corps, incompatible en l'état avec la coexistence après 17 
 Aucune issue n'est fermée ; aucune sophistication supplémentaire n'a été ajoutée
 pendant cet audit. #41 demeure le prochain chantier global après résolution de
 cette sous-passe immédiate de #44.
+
+## Reprise du 19 septembre — cast articulé et film courant
+
+La clarification canonique lève le blocage du checkpoint précédent : avant
+17 h, une occurrence ; à 17 h, raccord local ; pour chaque instant strictement
+entre 17 h et 18 h, **deux occurrences présentes**. B9 suit Thomas normal sans
+supprimer Thomas inversé. Les issues #44, #12 et #21 portent déjà cette règle.
+
+Le WIP articulé est conservé. Les deux branches atteignent une même orientation,
+un même clip et une même phase à 17 h. Le demi-tour de B7 se termine avant le
+rapprochement final ; le cycle du recul est inversé. La cadence de marche dépend
+désormais de la distance objective parcourue, avec une calibration provisoire
+du mannequin adulte à 1,2 m/s, et non du temps écoulé à l'écran. Aucun morphing
+ni changement d'échelle ne réalise le raccord. La visibilité exprime seulement
+le domaine temporel de la branche ; le point exactement commun est dessiné une
+seule fois. Les os continuent d'être évalués hors champ.
+
+Les fonctions de contrôle sont intégrées au seul Python actif :
+- `audit_cast_closure()` : raccord et coexistence sur 5 999 instants intérieurs ;
+- `build_cast_closure_probe()` : nouveau test, sans écraser `LS_CAST_PROBE`,
+  de 16:59:57 à 17:00:21, puis retour et relecture des mêmes instants ;
+- `validate_cast_closure_evaluation()` : contrôle asynchrone dans Unreal des
+  racines, de la visibilité et des 68 os, sur 21 échantillons.
+
+Run contrôlé : `20260918_212116_518810`, UE 5.8.2, Windows.
+Test : `LS_CAST_CLOSURE_20260919_073346_364121`.
+Rapports locaux : `cast_closure_report.json` et `cast_closure_evaluated.json`.
+Avec la marche par distance : erreur maximale des racines 0,003904 cm ;
+écart des os au raccord inférieur à 0,000001 cm ; écart de relecture inférieur
+à 0,000001 cm ; visibilité conforme sur les échantillons.
+**Cela valide le raccord du cast et sa relecture, pas toute la physique de #44.**
+L'appui de la main sur la roche, l'anneau, le mousqueton, les collisions détaillées
+et le raccord articulé de 18 h restent à terminer. La marche reste provisoire.
+
+### Une entrée de lancement, une caméra active
+
+Le générateur désigne maintenant dans chaque map produite :
+- `POLOP_FILM_CURRENT` : acteur Level Sequence pointant vers le film courant ;
+- `PZ_ANIM_CAM_OMNISCIENT_CURRENT` : sa caméra ;
+- `POLOP/Cameras/Archives` : anciennes caméras conservées pour les essais.
+
+Un doublon technique a été corrigé : Sequencer créait une coupe caméra
+automatiquement, puis le script en ajoutait une seconde. La piste est désormais
+créée avec **une seule coupe couvrant toute la plage de lecture**.
+
+Après génération, le film courant s'ouvre dans Sequencer à la frame zéro.
+Utiliser la lecture de Sequencer pour le regarder. L'acteur
+`POLOP_FILM_CURRENT` est aussi configuré pour lancer ce film avec Play (PIE)
+dans la map générée ; ce chemin doit être contrôlé dans Unreal.
+La fonction `play_omniscient_film()` revient au début et lance la lecture ;
+`play_omniscient_film(play=False)` l'ouvre simplement au début.
+Il ne faut pas choisir une caméra au hasard dans la liste des essais.
+
+Le fichier local `Saved/POLOP/Runs/<run_id>/current_film.json` indique la map,
+la séquence exacte, la caméra, la durée et le SHA-256 du Python publié.
+La version courante de cette passe est `LS_POLOP_OMNISCIENT_073733_588799`,
+7980 frames à 30 fps, soit **4 min 26**, de A1 à B9.
+**Lecture intégrale de cette prévisualisation ne signifie pas adaptation
+complète du scénario** : A0 rivière, les contacts/gestes, les effets inversés,
+le jeu et le son ne sont pas tous réalisés. Ne pas fermer #44 ni #46 sur la
+seule base de ces tests.
+
+Le Python et ses outils de contrôle sont sur GitHub ; les scripts de reprise
+sous Saved ne sont pas des dépendances. Le bootstrap d'un ordinateur neuf reste
+le chantier #41 : une installation Unreal et la coquille Landscape source sont
+encore nécessaires.
