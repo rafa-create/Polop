@@ -38,7 +38,7 @@ Issue : **#44** (`3d_codex`).
 
 **Critère de sortie :** les causalités fonctionnent même si toutes les caméras sont masquées.
 
-## PHASE 3 — Personnages et performance
+## PHASE 3 — Personnages et performance (intégrés au bootstrap #41)
 
 Déjà acquis :
 - poses dérivées du temps objectif ;
@@ -50,7 +50,7 @@ Déjà acquis :
 - fallback vers proxies ;
 - coût du sampling image par image.
 
-Issue : **#43** (`3d_codex`).
+La disponibilité des assets, le fallback proxies et un relevé léger du coût Sequencer sont intégrés à **#41**. Ne pas lancer une optimisation lourde du bake sans problème mesuré.
 
 ## PHASE 4 — Plan-séquence omniscient
 
@@ -123,9 +123,8 @@ Quand quelque chose ne marche pas à l'image, identifier d'abord **la couche res
 1. **#41** — reproductibilité totale depuis Git / autre machine ;
 2. **#44** — vérité physique fermeture / anneau / mousqueton / grotte ;
 3. **#47** — séparation réelle Thomas inversé / Éva-Léa vers 17h58 et absence de révélation prématurée ;
-4. **#43** — personnages reproductibles et coût Sequencer ;
-5. **#45** — validation automatique caméra ;
-6. **#42** — modularisation ;
-7. **#46** — film virtuel complet / polish narratif et visuel.
+4. **#45** — validation automatique caméra ;
+5. **#42** — modularisation ;
+6. **#46** — film virtuel complet / polish narratif et visuel.
 
-Les issues #12, #14 et #21 sont des sous-tâches de #44 ; #13 et #29 sont des sous-tâches de #46 ; #32 est une règle transversale de validation 3D.
+Les issues #12, #14 et #21 sont des sous-tâches de #44 ; #13 est une sous-tâche de #46 ; #29 est une idée narrative distincte, sans tâche Codex pour l'instant ; #32 est une règle transversale de validation 3D. #43 a été fusionnée dans #41.
