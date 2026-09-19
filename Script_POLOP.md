@@ -64,7 +64,17 @@ Plus bas, dans un creux, A et B peuvent communiquer de deux façons : un petit p
 
 Le pont est étroit. Son cordage est usé, mais tient. Un mousqueton simple assure l’un de ses points d’attache.
 
-Éva et Léa parlent et plaisantent. Thomas participe peu. Il est là, légèrement en retrait.
+Éva et Léa parlent en marchant. Thomas est avec elles, détendu.
+
+Éva regarde la pente qui les attend.
+
+ÉVA
+C’est encore loin, en haut ?
+
+THOMAS
+Non, non. Après cette montée, il reste juste toutes les autres.
+
+Léa éclate de rire. Éva donne une petite tape sur le bras de Thomas. Il rit avec elles et reprend la marche.
 
 Léa aperçoit le pont. Sans prévenir, elle quitte A, traverse le creux par le pont et rejoint brièvement B.
 
