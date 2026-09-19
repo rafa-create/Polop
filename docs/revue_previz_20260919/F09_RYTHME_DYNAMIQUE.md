@@ -42,3 +42,25 @@ Le film vise un plan-séquence à caméra omnisciente unique : le dynamisme vien
 
 La passe ciblée **F07 collision 17 h** est maintenant publiée dans le générateur, sans remontage et **sans validation Unreal** : nouvelle ligne de vue ouverte de la caméra unique autour de la convergence, léger mouvement corporel provisoire au choc, regard tardif de Thomas inversé et diagnostic distinct des occultations caméra / regard du personnage. Les 17 pauses (106 s) et les 372 s du film restent inchangés : **la réduction des longueurs relève encore de P3**, après validation des images qui doivent porter l'histoire. La priorité 2 F06, puis F05, n'a pas été engagée par le « go 1 ». F03 reste en pause, sans changement de grotte, terrain, rochers ni cadrage A15.
 
+
+
+## Passe suivante autorisée — variante de rythme à comparer, pas de retiming du master (19/09/2026)
+
+L'utilisateur reporte la validation F01/F02 et demande de poursuivre après la grotte avec le rythme. **Conserver le master 372 s et les 17 repères tant que le montage plus court n'a pas été visionné et choisi.** Ne pas raccourcir un plan qui cache actuellement un défaut de géométrie, de collision ou de geste : la version courte ne doit pas maquiller F03/F04/F07.
+
+### Variante spectateur — hypothèses chiffrées à tester sur une COPIE
+
+| Zone écran de la capture 18 h 56 (repère approximatif) | Proposition de réduction | Information à conserver |
+| --- | ---: | --- |
+| 00:45–01:03, 01:24–01:33 et 01:45–01:57, marches familiales répétées | 8–12 s au total | Trio et chemin A reconnaissables ; Léa déjà sur son itinéraire. |
+| 02:00–02:36, attente/recherche | 5–8 s seulement après une vue probante de l'unique sortie | Le passage reste sous surveillance ; inquiétude croissante, puis recherche effective. |
+| 04:00–04:42, descente inversée | 10–14 s après deux micro-événements inversés visibles | Sens du temps, réaction puis plaisir de Thomas, repère spatial de la famille. |
+| 04:42–05:06, approche de la rive B | 5–7 s | Trajet jusqu'au mousqueton côté B avant traversée. |
+| 05:06–05:18, réparation | 0–2 s seulement si main–attache–vérification sont visibles | État avant/après et CLAC au bon instant. |
+| 05:43–06:12, conclusion | 2–4 s dans la marche finale, jamais dans le geste de boîte | Hésitation, boîte discrète, réunion familiale, dézoom final. |
+
+**Fourchette de travail :** environ 30–47 s de moins, soit une version d'essai d'environ 325–342 s, calculée sur les 372 s du master (la capture dure ~375,6 s à cause de l'enregistrement). Ce ne sont ni des coupes appliquées ni une durée cible approuvée. Les fenêtres de capture sont approximatives et doivent être recalées aux identifiants de plans du manifeste avant toute opération. Ne pas supprimer les 17 repères dans cette première comparaison : raccourcir d'abord les portions de marche répétitive, et seulement ensuite proposer une variante de pauses avec justification scène par scène.
+
+**Ordre :** (1) établir un extrait grotte réellement visible ; (2) vérifier les actions F05/F06/F07 nécessaires à la compréhension ; (3) produire côte à côte un master inchangé et une copie spectateur avec manifeste de correspondance heure objective ↔ temps écran ; (4) demander à l'utilisateur de choisir après visionnage. Une caméra omnisciente continue n'autorise pas de saut spatial ou temporel inexpliqué : tout raccord doit préserver la position des personnages et les événements objectifs.
+
+**Statut : variante éditoriale documentée, non implémentée et non validée dans Unreal.**
