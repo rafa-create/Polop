@@ -61,3 +61,22 @@ Captures demandées pour la validation : A10 Thomas s'écarte; A11 ligne de vue 
 Le virage serré nouvellement introduit entre la poche rocheuse et la grotte est incompatible avec le regard interpolé sur ±0,35 s, qui coupe plusieurs segments du trajet. Dans `pov_direction`, uniquement pour Thomas inversé et `60.2 <= t < 60.6`, le regard suit désormais la direction locale du segment de marche **dans son temps personnel**. Le reste de la fonction, l'ensemble des trajets, les visibilités du casting, les 17 pauses et le contrôle narratif bloquant sont inchangés. Aucun contournement des validations n'a été ajouté.
 
 **À tester dans Unreal :** vérifier d'abord `inverse_gaze_follows_personal_time : OK`, puis `complete` et la présence de `LS_POLOP_OMNISCIENT` / `PZ_ANIM_CAM_OMNISCIENT` dans le nouveau run. Si un autre contrôle bloque, conserver le journal du **même run**. La géographie et les regards réels de F03 restent à valider visuellement.
+
+## Deuxième passe F03 — terrasse et révélation (19/09/2026)
+
+**Statut : correction publiée, à contrôler sur la nouvelle vidéo Unreal. Pas encore validée.**
+
+**Commits du script :** `6c8cd7bf35f448318b7bd324b6415042f9c3acae` (caméra A15), puis `a1d5c3a98c7faf74a0cbbc8bcb48289a02f8b9b9` (terrasse et précipice).
+
+**Problème observé dans la vidéo de 16 h 19 :** la recherche des femmes paraît se dérouler dans une grande zone ouverte; le passage A15 devient majoritairement gris/noir parce que la caméra traverse une masse rocheuse avant de découvrir Thomas, au lieu de dévoiler la petite entrée dissimulée. L'animation des mannequins et la caméra omnisciente fonctionnent : ne pas les reconstruire.
+
+**Modifications ciblées :**
+
+- Le plateau local artificiellement aplani est resserré autour des positions de recherche. Le **vrai** précipice dans le Landscape commence juste au sud de la poche et se prolonge un peu plus à l'est. Sa retouche reste strictement à l'écart du sentier `HAUT` et ne touche ni A/B, ni le pont, ni le flanc.
+- Le contrechamp A12–A14 est rapproché de la terrasse pour lire ensemble les femmes, la paroi et la rupture de terrain, au lieu de révéler un vaste terrain non borné dans un plan aérien éloigné.
+- **A15 seule** reçoit une trajectoire cinématographique en quatre étapes depuis la dernière pose A14 : face apparemment fermée, décalage latéral côté inaccessible aux femmes, dévoilement de la fente sombre, progression par l'ouverture vers Thomas. Le mouvement reste dans la même piste et la même caméra omnisciente; aucun montage additionnel ni téléportation.
+- La position intérieure de la caméra de la grotte a été recentrée, car l'ancienne coordonnée latérale passait dans le volume géométrique du rocher droit. Un contrôle des enveloppes elliptiques des quatre rochers est appliqué aux images de la révélation. Il faut encore vérifier dans Unreal le dégagement réel en Z, les maillages, ombres, silhouettes et la lisibilité du cadre.
+
+**Critères visuels de validation :** montrer A11 (sortie surveillée), A12–A14 (petite poche + paroi + bord du vide dans un même plan), A15 (paroi semblant fermée, puis fente révélée SANS obstruction prolongée ni caméra passant dans la roche), puis Thomas dans la cavité. Vérifier que les femmes n'ont jamais l'angle de A15, et que le trajet des deux Thomas reste dégagé. Vérifier aussi que le film omniscient est publié en fin de run et que les contrôles n'ont pas régressé.
+
+**Tester sans mélanger avec le chantier des sous-titres anglais :** utiliser `POLOP_F03_GEOMETRY_ONLY=1` selon la procédure plus haut. Cela laisse les 17 pauses temporelles présentes **sans texte** pour ce run. Revenir ensuite au mode normal pour tester séparément le rendu UMG.
