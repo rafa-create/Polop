@@ -2009,13 +2009,13 @@ A_DESCEND_3MIN = max(0.0, LENGTH["A"] - 100.0)
 # Route B est orientée HAUT -> PONT.
 B5_STATION = max(0.0, LENGTH["B"] - B5_DISTANCE_FROM_BRIDGE_M)
 
-# #49: local photographic stop beside A, near the unchanged flank arrival.
-# User-approved: wait at the photo spot until Lea returns, without returning
-# to the bridge. Blocking offsets do not alter the existing paths or terrain.
+# Eva waits lower down beside the flank arrival, off the family trail.
+# Thomas returns to her after the collision; the bridge and the inverse
+# remain outside her deliberately angled line of sight.
 FAMILY_WAIT_STATION = A_BRIDGE_STATION - 12.0
 FAMILY_WAIT_POINT = point_with_real_terrain(route_point_at_station("A", FAMILY_WAIT_STATION))
 EVA_PHOTO_POINT = point_with_real_terrain(
-    (FAMILY_WAIT_POINT[0], FAMILY_WAIT_POINT[1] - 12.0, FAMILY_WAIT_POINT[2]))
+    (FAMILY_WAIT_POINT[0] - 6.0, FAMILY_WAIT_POINT[1] - 12.0, FAMILY_WAIT_POINT[2]))
 
 NORMAL_FAMILY_POINT = point_with_real_terrain(
     (EVA_PHOTO_POINT[0]-2.0, EVA_PHOTO_POINT[1]+1.0, 0.0))
@@ -2530,10 +2530,11 @@ def pov_story_target(actor_name, t, position):
 def pov_direction(actor_name, t):
     p = eval_actor(actor_name, t)
 
-    # A2/B6: the photographer faces the landscape, away from the bridge.
-    # This orientation belongs to the world pose, not the film camera.
+    # Eva watches the flank arrival from below, with a slight rightward
+    # turn away from the bridge and the inverse Thomas approach.
+    # This world-space gaze is shared by both timelines and all cameras.
     if actor_name == "EVA" and 1.9 <= t <= GROUP_DEPART_AFTER_LEA:
-        return (0.0, -1.0, 0.0)
+        return (-0.25, -1.0, 0.0)
 
     # The inverse watches the B-bank clip while stationary at its repair.
     if actor_name == "THOMAS_INVERSE" and CARABINER_REPAIR_T0 <= t <= CARABINER_REPAIR_T1:
