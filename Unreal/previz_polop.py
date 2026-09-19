@@ -418,24 +418,44 @@ for iy in range(max(0, cy-radius_px), min(HM_SIZE-1, cy+radius_px)+1):
         height_grid[idx] = height_grid[idx] * (1.0-w) + CAVE_TERRACE_Z * w
 
 
-# Précipice près de la recherche d'Éva et Léa (17h55). Entaille LOCALISÉE
-# au sud du chemin haut : bord à y=-14 m, profondeur 30 m à y<=-22 m.
-# Les routes A, HAUT, B, le pont et le flanc ne changent pas.
-# Les extrémités sont estompées pour éviter une tranchée rectangulaire.
+# A12/A13 : VRAIE banquette de ~12 x 6 m entre paroi et précipice.
+# La rupture de pente commence à y=-11.5 m : les femmes sont à ~4 m
+# du bord. Retouche locale hors des routes A/B, du pont et du flanc.
+LEDGE_Z_M = 158.0  # Niveau de la jonction haute / arrivée du sentier A.
 for iy in range(HM_SIZE):
     wy = WORLD_Y_MIN_M + iy * GRID_STEP_M
-    if wy >= -14.0 or wy < -55.0:
+    if wy < -12.0 or wy > -1.5:
         continue
-    cliff_across = smoothstep((-14.0 - wy) / 8.0)
+    plateau_y = min(smoothstep((wy + 12.0) / 2.0),
+                    smoothstep((-1.5 - wy) / 2.0))
     row = iy * HM_SIZE
     for ix in range(HM_SIZE):
         wx = WORLD_X_MIN_M + ix * GRID_STEP_M
-        if wx <= 1744.0 or wx >= 1794.0:
+        if wx < 1754.0 or wx > 1773.0:
             continue
-        cliff_along = min(smoothstep((wx - 1744.0) / 9.0),
-                          smoothstep((1794.0 - wx) / 9.0))
-        cut = 30.0 * cliff_along * cliff_across
-        height_grid[row + ix] = max(0.0, height_grid[row + ix] - cut)
+        plateau_x = min(smoothstep((wx - 1754.0) / 3.0),
+                        smoothstep((1773.0 - wx) / 4.0))
+        w = plateau_x * plateau_y
+        idx = row + ix
+        height_grid[idx] = height_grid[idx]*(1.0-w) + LEDGE_Z_M*w
+
+# Précipice creusé immédiatement au sud de la banquette : 38 m au
+# plus bas. La face est visible depuis un contrechamp pris côté aval.
+for iy in range(HM_SIZE):
+    wy = WORLD_Y_MIN_M + iy * GRID_STEP_M
+    if wy > -11.5 or wy < -46.0:
+        continue
+    cliff_across = smoothstep((-11.5 - wy) / 5.0)
+    row = iy * HM_SIZE
+    for ix in range(HM_SIZE):
+        wx = WORLD_X_MIN_M + ix * GRID_STEP_M
+        if wx < 1752.0 or wx > 1778.0:
+            continue
+        cliff_along = min(smoothstep((wx - 1752.0) / 4.0),
+                          smoothstep((1778.0 - wx) / 4.0))
+        cut = 38.0 * cliff_along * cliff_across
+        idx = row + ix
+        height_grid[idx] = max(0.0, height_grid[idx] - cut)
 
 
 def height_to_u16(h):
@@ -1215,18 +1235,31 @@ CAVE_GUARD_POINT = route_point_at_station(
     max(0.0, LENGTH["A"] - 8.0)
 )
 
-# Elles fouillent le rebord praticable côté précipice ; elles ne vont pas
-# jusqu'à l'arrière de l'éperon, d'où l'entrée redeviendrait visible.
-CAVE_SEARCH_POINT_1 = (
-    high_x + 0.0,
-    high_y - 5.0,
-    terrain_z_m(high_x + 0.0, high_y - 5.0)
+# Éva et Léa cherchent sur la banquette, chacune dans une zone distincte.
+# Aucune ne passe derrière l'éperon qui cache la bouche de la grotte.
+SEARCH_LEDGE_CENTER = (
+    high_x + 3.0, high_y - 6.5,
+    terrain_z_m(high_x + 3.0, high_y - 6.5)
 )
-
+PRECIPICE_EDGE_POINT = (
+    high_x + 3.0, high_y - 11.5,
+    terrain_z_m(high_x + 3.0, high_y - 11.5)
+)
+CAVE_SEARCH_POINT_1 = (
+    high_x + 0.0, high_y - 6.0,
+    terrain_z_m(high_x + 0.0, high_y - 6.0)
+)
 CAVE_SEARCH_POINT_2 = (
-    high_x + 3.0,
-    high_y - 7.0,
+    high_x + 3.0, high_y - 7.0,
     terrain_z_m(high_x + 3.0, high_y - 7.0)
+)
+CAVE_SEARCH_LEA_POINT_1 = (
+    high_x + 2.6, high_y - 5.0,
+    terrain_z_m(high_x + 2.6, high_y - 5.0)
+)
+CAVE_SEARCH_LEA_POINT_2 = (
+    high_x + 5.0, high_y - 7.0,
+    terrain_z_m(high_x + 5.0, high_y - 7.0)
 )
 
 # Axe local de la cavité. Toute la géométrie V05 et les caméras de contrôle
@@ -1612,9 +1645,37 @@ spawn_box(
     _cave_rot
 )
 
-# Éperon RÉEL entre le poste d'Éva/Léa et la bouche de la grotte.
-# Il masque l'ouverture sans traverser le crochet d'accès des deux Thomas
-# ni le couloir intérieur. Ne pas le remplacer par un simple cache caméra.
+# Paroi du côté montagne : elle borde la terrasse sans barrer
+# ni l'accès des deux Thomas à la grotte, ni le trajet des femmes.
+spawn_rock(
+    "SEARCH_LEDGE_MOUNTAIN_WALL",
+    high_x + 8.2, high_y - 3.0,
+    terrain_z_m(high_x + 8.2, high_y - 3.0) + 2.3,
+    (3.6, 0.85, 3.6),
+    MAT_ROCK_READABLE,
+    "MicroGeo/SearchLedge"
+)
+
+# Lèvre discrète et courte face sous le rebord, sans faux plancher
+# qui ferait flotter les personnages au-dessus du Landscape.
+ledge_x, ledge_y, ledge_z = PRECIPICE_EDGE_POINT
+spawn_box(
+    "SEARCH_LEDGE_LIP",
+    V(ledge_x*100, ledge_y*100, (ledge_z+0.10)*100),
+    (650, 16, 14),
+    MAT_ROCK_READABLE,
+    "MicroGeo/SearchLedge"
+)
+spawn_box(
+    "SEARCH_LEDGE_CLIFF_FACE",
+    V(ledge_x*100, (ledge_y-3.4)*100, (ledge_z-11.0)*100),
+    (650, 24, 2100),
+    MAT_ROCK_READABLE,
+    "MicroGeo/SearchLedge"
+)
+
+# Éperon RÉEL conservé : Éva et Léa ne voient pas l'entrée ; les
+# deux Thomas suivent le crochet d'accès sans traverser le rocher.
 spawn_rock(
     "CAVE_ENTRANCE_BLIND_SPUR",
     high_x + 8.0, high_y + 6.0,
@@ -1912,18 +1973,18 @@ ANIM["LEA"] = [
         57.0,
         58.0,
         point_with_real_terrain(CAVE_GUARD_POINT),
-        point_with_real_terrain(CAVE_SEARCH_POINT_1)
+        point_with_real_terrain(CAVE_SEARCH_LEA_POINT_1)
     ),
     custom_segment(
         58.0,
         59.0,
-        point_with_real_terrain(CAVE_SEARCH_POINT_1),
-        point_with_real_terrain(CAVE_SEARCH_POINT_2)
+        point_with_real_terrain(CAVE_SEARCH_LEA_POINT_1),
+        point_with_real_terrain(CAVE_SEARCH_LEA_POINT_2)
     ),
     custom_segment(
         59.0,
         59.3,
-        point_with_real_terrain(CAVE_SEARCH_POINT_2),
+        point_with_real_terrain(CAVE_SEARCH_LEA_POINT_2),
         point_with_real_terrain(HIGH_POINT)
     ),
     station_segment(
@@ -5728,9 +5789,9 @@ def build_omniscient_edit():
         ("A6_A8", 16, 24, 32, "THOMAS_NORMAL", (-8, -12, 6)),
         ("A9_PONT", 4, 32, 32.2, "THOMAS_NORMAL", (-18, -35, 20)),
         ("A10", 14, 32.2, 52, "EVA", (-10, -12, 6)),
-        ("A11_ATTENTE", 18, 52, 56, "EVA", (0, 10, 4.5)),
-        ("A12_A13", 16, 56, 59, "EVA", (0, 11, 5)),
-        ("A14", 6, 59, 60, "EVA", (0, 10, 4.5)),
+        ("A11_ATTENTE", 18, 52, 56, "EVA", (-3, 9, 4.5)),
+        ("A12_A13", 16, 56, 59, "EVA", (9, -16, 6)),
+        ("A14", 6, 59, 60, "EVA", (9, -16, 6)),
         ("A15_A16", 16, 60, 61.95, "CAVE", (0, 0, 0)),
         ("A17", 5, 61.95, 62, "CAVE", (0, 0, 0)),
         ("B1", 16, 62, 60.2, "CAVE", (0, 0, 0)),
@@ -5744,6 +5805,17 @@ def build_omniscient_edit():
         ("B9_ELOIGNEMENT", 8, 8, 12, "THOMAS_NORMAL", (-45, -65, 35)),
     ]
     def desired_pose(code, focus, offset, t):
+        if code in ("A12_A13", "A14"):
+            # Vue courte côté aval : les deux personnages sur la petite
+            # banquette, la paroi derrière, la face du précipice dessous.
+            ledge = a["SEARCH_LEDGE_CENTER"]
+            eye_x, eye_y = ledge[0] + 10.0, ledge[1] - 16.0
+            eye_z = max(ledge[2] + 6.2,
+                        a["terrain_z_m"](eye_x, eye_y) + 3.0)
+            subject = a["eval_actor"]("EVA", t)
+            target = (subject[0] + 1.1, subject[1] - 1.6,
+                      subject[2] + 0.65)
+            return (eye_x, eye_y, eye_z), target
         if focus == "CAVE":
             target = a["eval_actor"]("THOMAS_INVERSE" if code == "B1" else "THOMAS_NORMAL", t)
             if code == "B1":
@@ -5761,10 +5833,6 @@ def build_omniscient_edit():
             else:
                 target = (900, 12.5, a["terrain_z_m"](900, 0)) if focus == "BRIDGE" else a["eval_actor"](focus, t)
             eye = tuple(target[i]+offset[i] for i in range(3))
-            if code == "A12_A13":
-                # Voir les femmes ET la rupture du terrain derrière elles,
-                # plutôt qu'une paroi de grotte géante remplissant l'image.
-                target = (target[0], target[1]-3.0, target[2]-0.35)
             eye = (eye[0], eye[1], max(eye[2], a["terrain_z_m"](eye[0], eye[1])+2.0))
             if code == "A9_PONT":
                 # Only this distant bridge view: reveal the gap and both landings,
