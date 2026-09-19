@@ -125,6 +125,31 @@ La préviz actuelle reste un **blockout technique de la boucle montagne + timeli
 
 Le nouveau plan canonique d'ouverture **rivière → vallée → montagne → famille** présent dans `Script_POLOP.md` est accepté narrativement mais n'est pas encore construit dans la préviz de 65 secondes. L'anneau complet, certains effets environnementaux inversés et le montage cinématographique final restent également des étapes ultérieures.
 
+## Screen-space narrative captions (UE 5.8.2; test pending)
+
+The omniscient preview now uses Unreal's built-in **Subtitles and Closed
+Captions** Sequencer track. The 17 English-only explanatory cards are rendered
+through its Slate/UMG screen-space subtitle widget rather than via
+`TextRenderActor` meshes attached to the CineCamera. This addresses the
+specific issue of fuzzy camera-plane text; card wording has not been shortened
+as a workaround, and shot/pause timings and the articulated cast are unchanged.
+
+The root `polop.uproject` enables the engine plugin
+`SubtitlesAndClosedCaptions`. **After pulling, close and reopen Unreal
+Engine** before running `Unreal/previz_polop.py`. Use the .uproject and
+script from the same checkout. The script now checks the subtitle API before
+duplicating the source map, and asks for a restart if the plugin is unavailable.
+Do not bypass this check or fall back to the 3D cards.
+
+This plugin provides a native subtitle TextBlock; its position and styling
+come from **Edit > Project Settings > Subtitles and Closed Captions**, not
+from the old camera-attached cubes. Check appearance in Sequencer at a pause
+and compare text sharpness in the same viewport at the same resolution.
+The new renderer has **not been run or visually approved in UE 5.8.2 in this
+editing session**. If the subtitle track API or widget fails, retain the
+previous working reference `66b40fda45b4dbd45ca69a2f91d61d02d72c0d89`
+for the cast/3D-card build and share the current run's error log.
+
 ## Exécution
 
 Dans Unreal Engine 5.8 :
