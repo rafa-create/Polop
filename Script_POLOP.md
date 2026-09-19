@@ -451,6 +451,8 @@ Le décrochement de la paroi révèle alors l’entrée de la caverne : c’est 
 
 La caméra y pénètre et découvre Thomas déjà à l’intérieur, seulement à quelques pas de l’entrée. Il n’a pas entrepris une longue exploration et rien ne l’a attiré jusque-là : il a simplement regardé dans l’ouverture puis avancé assez pour découvrir la petite cavité.
 
+La lumière du dehors reste vive derrière lui. Thomas plisse les yeux en entrant ; pendant un instant, les parois de la cavité se perdent dans le noir et seule la fente lumineuse, plus loin, se détache nettement. La caméra reste à sa hauteur : ce qui se trouve dans les coins sombres demeure indistinct.
+
 On ne l’a pas vu entrer.
 
 Ses écouteurs sont toujours dans ses oreilles. Il regarde sa montre : 17h58.
@@ -461,7 +463,7 @@ Il n’a pas entendu leurs appels.
 
 A16 — 17h58 → 18h00 — L’ANNEAU
 
-Thomas avance de quelques pas supplémentaires dans la caverne.
+Thomas avance de quelques pas supplémentaires dans la caverne. Peu à peu, des aspérités de roche émergent de la pénombre autour de lui, tandis que son regard reste fixé sur la fente éclairée.
 
 Ce n’est qu’alors que, dans une fissure rocheuse, un mouvement impossible attire son attention.
 
@@ -519,17 +521,17 @@ Derrière lui, l’anneau poursuit la descente amorcée au contact de 18h00 et s
 
 Il avance vers 17h00.
 
-La caverne est très sombre. Deux zones lumineuses seulement structurent naturellement l’espace : l’ouverture vers l’extérieur et, plus profondément, une fente rocheuse qui laisse entrer un faisceau étroit. C’est cette fente qui attire le regard de Thomas normal et vers laquelle remontera l’anneau.
+La caverne est très sombre. Deux zones lumineuses seulement structurent naturellement l’espace : l’ouverture vers l’extérieur et, plus profondément, une fente rocheuse qui laisse entrer un faisceau étroit.
 
-Dans la chronologie normale, lorsque Thomas entre et avance dans la cavité, son occurrence inversée est déjà présente dans une partie sombre. Thomas normal ne la distingue pas : sombre sur sombre, tandis que son regard s’adapte à la pénombre et se fixe naturellement sur le faisceau de la fente. Il n’a aucune raison de chercher une silhouette dans l’obscurité.
+La caméra retrouve la cavité depuis la place de Thomas inversé. Les petites aspérités des parois et le bord des rochers, invisibles lors de l’entrée de Thomas normal, se distinguent maintenant dans la pénombre. Thomas inversé tourne la tête : ses yeux ont eu le temps de s’habituer à l’obscurité pendant les minutes passées dans la grotte avant le contact avec l’anneau.
 
-Après la bascule, Thomas inversé commence au contraire à percevoir une présence humaine qui se déplace étrangement vers la sortie en marche arrière. Il ne la voit pas grâce à des détails du visage ou des vêtements : la silhouette devient lisible lorsqu’elle masque momentanément la lumière de l’entrée de la grotte.
+Près de l’entrée, une silhouette humaine se déplace à reculons. Thomas inversé la remarque d’abord entre deux rochers sombres, puis la voit se découper nettement quand elle passe devant la lumière du dehors. Il s’arrête une fraction de seconde. Il ne distingue pas son visage et ne comprend pas encore qu’il regarde son occurrence normale.
 
-Thomas inversé s’arrête une fraction de seconde. Il vient à peine de découvrir que le monde évolue à rebours. Il ne comprend pas que cette silhouette est sa propre occurrence normale. Il voit seulement quelqu’un — ou quelque chose de manifestement humain — quitter la cavité d’une manière impossible.
+La caméra revient un instant à l’angle de l’entrée, dans la lumière vive du dehors : Thomas normal avance vers la fente éclairée, les yeux encore peu habitués à la pénombre. La silhouette de son double, plus loin dans l’ombre, se confond avec la roche derrière lui. Thomas normal ne tourne pas la tête vers elle.
 
-La visibilité est donc asymétrique par la lumière elle-même : pour Thomas normal, une silhouette sombre se perd dans une cavité sombre ; pour Thomas inversé, la même silhouette se découpe brièvement devant une ouverture lumineuse.
+Retour à Thomas inversé : la silhouette recule vers l’ouverture lumineuse et sort de son champ. Il reste immobile un instant, puis reprend son propre chemin vers la sortie.
 
-La scène ne doit pas donner l’impression que l’un des Thomas se cache de l’autre. L’obscurité, l’adaptation des yeux, le faisceau de la fente, l’ouverture extérieure et les orientations corporelles suffisent.
+Aucun des deux ne cherche à se cacher. La différence se lit dans ce que la caméra laisse apparaître de la même grotte, selon les yeux auxquels elle s’attache : Thomas inversé distingue son double dans la pénombre ; Thomas normal, encore ébloui par l’extérieur et occupé par le faisceau de la fente, ne le remarque pas.
 
 ⸻
 
