@@ -6121,9 +6121,12 @@ def build_omniscient_edit():
         ("PAUSE_RETOUR", 6, 32, 32, "THOMAS_INVERSE", (-9, 12, 5)),
         ("B5_PONT", 4, 32, 31.9, "THOMAS_INVERSE", (-12, 18, 10)),
         ("PAUSE_PONT_RETOUR", 5, 31.9, 31.9, "THOMAS_INVERSE", (-12, 18, 10)),
-        ("B6", 22, 31.9, 3, "THOMAS_INVERSE", (-9, 12, 5)),
-        ("B6_TRAVERSEE", 6, 3, 2.5, "THOMAS_INVERSE", (-6, -8, 3)),
-        ("PAUSE_MOUSQUETON", 7, 2.5, 2.5, "THOMAS_INVERSE", (-6, -8, 3)),
+        # Preserve the same 22 s B6 screen budget, but reserve six seconds
+        # for the B-bank repair BEFORE crossing, in the inverse's own time.
+        ("B6", 16, 31.9, 3.16, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("B6_REPAIR", 6, 3.16, 3.0, "THOMAS_INVERSE", (-5, 5, 3)),
+        ("PAUSE_MOUSQUETON", 7, 3.0, 3.0, "THOMAS_INVERSE", (-5, 5, 3)),
+        ("B6_TRAVERSEE", 6, 3.0, 2.5, "THOMAS_INVERSE", (-6, -8, 3)),
         ("B7_B8", 8, 2.5, 2, "THOMAS_INVERSE", (-6, -8, 3)),
         ("PAUSE_BOUCLE", 7, 2, 2, "THOMAS_INVERSE", (-6, -8, 3)),
         ("B9", 18, 2, 8, "THOMAS_NORMAL", (-5, -9, 4)),
@@ -6160,9 +6163,8 @@ def build_omniscient_edit():
         ),
         "PAUSE_ATTACHE": (
             "THE BRIDGE, LATER",
-            "Around 5:30 p.m., his carabiner is\n"
-            "unclipped: the attachment is no longer secure.\n"
-            "The action has not been animated yet."
+            "The short bridge and the longer hillside path\n"
+            "still connect A and B."
         ),
         "PAUSE_DEPART": (
             "5:50 P.M. - THOMAS STEPS AWAY",
@@ -6219,16 +6221,16 @@ def build_omniscient_edit():
             "the moment when Lea crossed the bridge."
         ),
         "PAUSE_MOUSQUETON": (
-            "ABOUT 5:01 P.M. - THE CLICK",
-            "In the story, inverted Thomas clips\n"
-            "the carabiner back on and crosses.\n"
-            "The precise gesture is not yet animated."
+            "5:01 P.M. - ON THE B BANK",
+            "The carabiner is now secured. Inverted Thomas\n"
+            "checks the fastening, then crosses B to A.\n"
+            "Hand choreography is still a blockout."
         ),
         "PAUSE_BOUCLE": (
-            "5:00 P.M. - THE ENCOUNTER",
-            "Near the rock, the two Thomases\n"
-            "meet through contact with the ring.\n"
-            "The precise cause of the return is still open."
+            "5:00 P.M. - ONE ACCIDENTAL COLLISION",
+            "At the same instant, the two Thomases collide\n"
+            "and the ring touches Thomas. Neither contact\n"
+            "is identified as the certain cause of his return."
         ),
         "PAUSE_ISSUE": (
             "THE SAME MOMENT, A DIFFERENT VIEW",
@@ -6352,6 +6354,22 @@ def build_omniscient_edit():
         parents = between(eva_pose, thomas_pose, (u-0.22)/0.20)
         return between(parents, lea_pose, (u-0.42)/0.39)
 
+    def f07_normal_view(t):
+        """Thomas-centered side angle: allow Lea in the distant B-side depth."""
+        thomas = a["eval_actor"]("THOMAS_NORMAL", t)
+        lea = a["eval_actor"]("LEA", t)
+        x, y = thomas[0]-7.5, thomas[1]-10.0
+        z = max(thomas[2]+3.8, a["terrain_z_m"](x, y)+2.0)
+        target = tuple(thomas[i]*0.83 + lea[i]*0.17 for i in range(3))
+        return (x, y, z), (target[0], target[1], target[2]+1.2)
+
+    def f07_carabiner_view(t):
+        """B-bank close view used only in part B; no early A insert."""
+        p = a["carabiner_point_at_objective_time"](t)
+        x, y = p[0]-3.4, p[1]+3.2
+        z = max(p[2]+2.6, a["terrain_z_m"](x, y)+1.9)
+        return (x, y, z), (p[0], p[1], p[2]+0.10)
+
     def f01_return_pose(t):
         thomas = a["eval_actor"]("THOMAS_NORMAL", t)
         eva = a["eval_actor"]("EVA", t)
@@ -6420,8 +6438,12 @@ def build_omniscient_edit():
                 (subject[0], subject[1], subject[2]+1.15))
 
     def desired_pose(code, focus, offset, t):
+        if code in ("B6_REPAIR", "PAUSE_MOUSQUETON"):
+            return f07_carabiner_view(t)
         if code in ("B7_B8", "PAUSE_BOUCLE"):
             return f07_17h_closure_pose(t)
+        if code == "A2" and t <= 2.35:
+            return f07_normal_view(t)
         if code in ("PAUSE_INTRO", "A1"):
             # Used only as the END pose of the previous beat in camera handover.
             return f01_opening_pose(code, 1.0, t)
@@ -6435,8 +6457,8 @@ def build_omniscient_edit():
             code = "B1"
         elif code == "PAUSE_ATTACHE":
             code = "A9_PONT"
-        elif code == "PAUSE_MOUSQUETON":
-            code = "B6_TRAVERSEE"
+        # PAUSE_MOUSQUETON has a dedicated B-bank pose above. It is
+        # deliberately BEFORE B6_TRAVERSEE, never after crossing.
         if code in ("A12_A13", "A14"):
             # A12 commence SUR LE CHEMIN, cote femmes : on voit l'UNIQUE
             # retour qu'elles ont surveille. La camera accompagne leur
@@ -6533,6 +6555,9 @@ def build_omniscient_edit():
         bindings.append(binding)
         return binding, channels, (scale.x, scale.y, scale.z)
 
+    # Single physical B-bank clip, evaluated at each objective time in the
+    # same omniscient sequence for A, inverted B and normal-time B9.
+    _, carabiner_channels, _ = track_for(a["MOUSQUETON_PROXY"])
     animated = []
     for name in POV_ORDER:
         for objects, converter in ((a["actor_objects"], a["actor_location_from_foot"]),
@@ -6613,6 +6638,10 @@ def build_omniscient_edit():
                     for channel, value in zip(channels[6:9], scale):
                         channel.add_key(frame, float(value if visible else 0.001),
                                         interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+            clip_xyz = a["carabiner_point_at_objective_time"](t)
+            for channel, value in zip(carabiner_channels[:3], clip_xyz):
+                channel.add_key(frame, float(value*100.0),
+                                interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
             # Both subjects keep moving during a camera handover. Blending from
             # yesterday's fixed look target would leave the family out of frame.
             moving_origin = boundary_pose
@@ -6762,6 +6791,9 @@ def build_omniscient_edit():
         json.dump(dict(status="CONTINUOUS_CAMERA_BLOCKING_NOT_FINAL", duration_seconds=duration,
                        shots=manifest, previz_pause_cards=card_manifest,
                        opening_dialogue_cues=opening_dialogue_manifest,
+                       carabiner=dict(bank="B", repair_objective_minutes=[3.08, 3.04],
+                                      normal_reading="detaches", inverse_reading="repairs",
+                                      track="MOUSQUETON_PROXY", acting="blockout"),
                        note="Cartons d'aide à la lecture : uniquement pour la prévisualisation.",
                        camera_sections=1, join_steps_m=join_steps_m,
                        maximum_camera_speed_m_s=max_camera_step_m*fps,
