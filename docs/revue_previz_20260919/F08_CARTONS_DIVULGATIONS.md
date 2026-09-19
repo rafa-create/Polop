@@ -21,3 +21,11 @@ Choisir explicitement deux modes d'évaluation : (A) **technique**, avec cartons
 ## Critères de validation
 
 Pour chaque carton, indiquer s'il s'agit d'un repère d'espace, d'une action encore non animée ou d'une information qui doit rester une révélation. Aucun carton du mode spectateur ne révèle prématurément le mousqueton ni n'affirme la cause définitive du retour. Le test de netteté/UMG en anglais est **reporté**, indépendant de cette fiche.
+
+## Nouveau signalement distinct : durée du premier sous-titre (19/09/2026, capture de 17 h 28)
+
+L'utilisateur indique que **le tout premier sous-titre reste affiché trop longtemps**. Il s'agit d'un **problème technique de durée UMG**, indépendant du fond narratif et des divulgations évaluées par F08. Le script initial assignait au cue `PAUSE_INTRO` une section et une durée de **6 s**. Correctif publié : texte intro raccourci, section native UMG et durée du cue ramenées à **3 s**; la pause de six secondes, les 16 autres sous-titres, les 17 pauses et la chronologie restent inchangés.
+
+**À tester :** régénérer le film en mode complet (`FAST_CAMERA_ONLY=False` : son mode rapide ne retouche pas le texte), puis contrôler le début image par image : texte visible pendant la courte introduction, disparu au plus tard vers la troisième seconde de film, sans survivre sur A1. Les API UMG ou le widget peuvent conserver un état à vérifier : ce correctif statique ne prouve pas à lui seul la disparition effective. Si l'affichage persiste, demander un extrait avec le temps de Sequencer avant d'étendre la correction.
+
+**Contenu des autres cartons :** la vidéo ne tranche pas les questions déjà soulevées sur les révélations prématurées, notamment le mousqueton décroché indiqué dans `PAUSE_ATTACHE`. Ne pas modifier ces annonces ni déclarer F08 validée à partir du problème de durée du premier sous-titre.
