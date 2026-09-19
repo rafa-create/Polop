@@ -1,5 +1,7 @@
 # POLOP — Unreal Previz
 
+> **Bootstrap Git versionné depuis le 19/09/2026 :** le projet de référence se trouve à la racine du clone officiel, dans `polop.uproject` (minuscules). `Content/Main.umap` est fourni par Git LFS ; ne pas recréer manuellement le Landscape. Ouvrir **le projet et le script du même clone** (`Unreal/previz_polop.py`). Lire `AGENTS.md` et `docs/ENVIRONNEMENT_REPRODUCTIBILITE.md` pour la procédure Codex et la migration vers un autre ordinateur. UE 5.8.2 + run MASTER V10 OK (35/0/0/0) vérifiés localement ; aucun run dans le second clone ni essai sur un autre PC. La préviz reste un blockout et non le film final.
+
 ## Source de vérité
 
 ### Révision du rythme — 18 septembre 2026
@@ -132,14 +134,14 @@ Ces quatre corrections ont permis au run local V09 du 18 septembre de terminer s
 
 ## Reprise sur un autre ordinateur — prérequis actuels
 
-1. Récupérer **la version courante** de `Unreal/previz_polop.py` sur `main`, plutôt qu'une ancienne copie téléchargée.
-2. Utiliser Unreal Engine **5.8** (essai local : 5.8.2), avec **Python Editor Script Plugin** et **Sequencer Scripting** activés ; redémarrer l'éditeur après activation.
-3. Ouvrir un projet Unreal et disposer actuellement d'une carte **/Game/Main** avec un seul Landscape **1009 × 1009 sommets** : 63 quads par section, 1 section par composant, 16 × 16 composants. Enregistrer cette carte. Le générateur normalise ensuite son échelle et son emplacement.
-4. Exécuter le fichier **dans l'éditeur Unreal**, via Outils / Tools > Execute Python Script. Un interpréteur Python en ligne ou GitHub seul ne fournit pas le module `unreal`.
-5. Attendre l'événement `complete` dans `Saved/POLOP/Runs/<run_id>/keylog.jsonl`. En cas de `failed`, lire ce journal et le rapport du même run.
-6. Ouvrir la carte générée et sa séquence dans le dossier Content correspondant au même `run_id`.
+1. Installer Git LFS, puis **cloner le dépôt officiel** `https://github.com/rafa-create/Polop.git` sur `main` ; ne pas télécharger un script isolé.
+2. Utiliser Unreal Engine **5.8.2** (version validée localement). Ouvrir **`polop.uproject` à la racine du clone** ; Python Editor Script Plugin et Sequencer Scripting y sont activés.
+3. Charger la carte source `/Game/Main` fournie sous `Content/Main.umap` via Git LFS : son Landscape 1009 × 1009 sommets, 63 quads par section, 1 section par composant, 16 × 16 composants est déjà enregistré. Ne pas le reconstruire manuellement et ne pas y enregistrer les modifications d'un run.
+4. Exécuter le **`Unreal/previz_polop.py` de ce clone** dans l'éditeur Unreal, via Outils / Tools > Execute Python Script. Python système ne fournit pas le module `unreal`.
+5. Attendre l'événement `complete` dans `Saved/POLOP/Runs/<run_id>/keylog.jsonl` ; en cas de `failed`, examiner le journal du même run.
+6. Vérifier le rapport du même `run_id`, puis la carte générée et sa séquence omnisciente. Ne pas commiter `Content/POLOP/Generated_*/` ni `Saved/`.
 
-**Limite actuelle : le .py ne crée pas encore la coquille Landscape à partir d'un projet vide.** La préparation de la carte décrite ci-dessus reste nécessaire.
+**Limite :** le script ne crée pas un Landscape à partir d'un projet Unreal vide ; **ce n'est plus une préparation manuelle nécessaire** lorsque l'on ouvre le `polop.uproject` du clone officiel, car le dépôt inclut `Content/Main.umap`. Le test local validé ne démontre pas encore la portabilité du cast sur un autre PC.
 
 ## Ordre de contrôle demandé
 
@@ -253,12 +255,13 @@ des deux Thomas et leur occultation nécessitent une reprise de mise en scène.
 
 ## Fichier nécessaire sur GitHub
 
-Le **seul fichier de code à télécharger et exécuter** est
+Le **seul script de génération à modifier et exécuter** est
 `Unreal/previz_polop.py`. Il contient la géographie, l'animation, le montage et les
 outils de contrôle ; il ne charge pas les scripts `old/` ou `reference/`.
-`README_PREVIZ.md` fournit les prérequis et limites, sans être une dépendance du
-code. Cela ne signifie pas qu'un PC vide peut exécuter le fichier seul : Unreal,
-les deux plugins et le Landscape source décrits plus haut restent nécessaires.
+**Le projet Unreal à cloner inclut toutefois aussi** `polop.uproject`,
+`Config/Default*.ini` et `Content/Main.umap` via Git LFS : ne pas se limiter
+au téléchargement isolé du fichier Python. `README_PREVIZ.md` décrit les
+prérequis et limites sans être une dépendance du code.
 
 
 ## Checkpoint du cast avant validation physique de #44 — 19 septembre 2026
