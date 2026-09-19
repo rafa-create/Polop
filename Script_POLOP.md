@@ -113,13 +113,13 @@ De l'autre côté du creux, Léa s'éloigne du pont. Elle descend quelques pas s
 
 Plus bas sur A, près de l'arrivée du flanc, Éva prend des photos. Elle cadre la montagne, puis s'écarte du sentier pour chercher un autre angle.
 
-La caméra omnisciente reste d'abord avec Léa et Éva. Thomas avance seul sur A, en retrait, le long du relief rocheux.
+La caméra omnisciente reste d'abord avec Léa et Éva. Thomas avance seul sur A, en retrait, le long du relief rocheux. Il ralentit et regarde au loin Léa qui marche sur B, du pont vers le départ du flanc. Il s'arrête brièvement, absorbé par sa fille : son attention quitte le sentier devant lui.
 
-Un bruit bref se perd parmi les voix et les pas, sans que la caméra cherche aussitôt sa source. Léa continue à descendre.
+À 17 h 00 exactement, l'autre Thomas surgit au dernier moment du détour du rocher et le percute accidentellement. Le même instant objectif correspond au contact de l'anneau avec Thomas, dont la trajectoire complète reste hors champ. La caméra demeure principalement avec Thomas normal et laisse le rocher masquer une partie du choc, jamais la totalité de l'image. Un bruit bref se perd parmi les voix et les pas ; Léa continue à descendre sur B, sans voir l'autre Thomas.
 
-Un instant plus tard, Thomas revient naturellement au centre de l'image. Il s'arrête une seconde, troublé, puis reprend sa marche vers Éva et l'arrivée du flanc.
+Thomas normal reste un instant immobile, troublé, puis reprend quelques pas vers Éva et l'arrivée du flanc. Le même mouvement et le même instant de collision seront retrouvés en B7–B9, sans inventer une seconde rencontre.
 
-La caméra poursuit son mouvement sans s'intéresser au pont. Dans la profondeur d'un plan suffisamment large, le mousqueton est déjà décroché de son point d'ancrage : sa position n'est perceptible qu'en arrêtant l'image et en l'agrandissant. Aucun insert, aucun changement de cadre et aucun accent sonore ne signalent ce détail. Le décrochage lui-même n'est jamais montré et rien n'indique si Thomas l'a vu.
+Vers 17 h 01, dans la profondeur d'un plan suffisamment large, le mousqueton côté B est décroché de son point d'ancrage : sa position reste un détail de fond, perceptible en arrêtant l'image et en l'agrandissant. Le décrochage lui-même n'est jamais montré dans la première partie, sans insert ni accent sonore. Thomas remarque discrètement l'attache, sans geste explicatif ni mouvement de caméra qui la désigne ; cette information n'est pas donnée explicitement au spectateur à ce moment. Léa, déjà sur B, envisage de revenir par le pont.
 
 Léa ralentit sur B. Elle tourne légèrement la tête vers son père, sans retourner vers le pont.
 
@@ -702,7 +702,7 @@ B6 — VERS 17h01 — LE GESTE QUI SAUVE LÉA
 
 En approchant du pont par B, Thomas aperçoit Léa, plus bas, sur le chemin du flanc. Elle marche à reculons, remontant vers le côté B dans le mouvement inversé du paysage. Thomas la suit du regard. Au-delà du creux, Éva, elle aussi à rebours, tient son appareil photo près de l'arrivée du flanc sur A.
 
-Léa disparaît derrière un tournant du chemin. Thomas rejoint l'attache du pont : le cordage pend, le mousqueton est décroché.
+Léa disparaît derrière un tournant du chemin. Thomas rejoint l'attache du pont, accessible **sur la rive B avant la traversée** : le cordage pend et le mousqueton est manifestement décroché. À la différence de son apparition discrète dans la partie A, la partie B montre clairement l'état de cette attache.
 
 Il s'arrête net, regarde vers le flanc, puis revient au mousqueton. Il s'approche et effectue un geste court, précis. Le mousqueton reprend sa place sur son point d'ancrage.
 
@@ -710,17 +710,15 @@ CLAC.
 
 Le même son métallique que lors de la traversée de Léa à 16h59.
 
-Thomas vérifie l'attache du regard. Il se presse vers le pont et le traverse de B vers A. Léa reste sur le flanc et ne le voit pas. De l'autre côté du creux, Éva photographie toujours le paysage, le dos tourné vers son passage.
+Thomas vérifie visiblement l'attache, puis se presse vers le pont et le traverse de B vers A. Dans la chronologie objective unique, le geste de raccrochage que vit Thomas inversé correspond, en lecture normale, au décrochage du mousqueton **vers 17 h 01**, après la collision de 17 h 00. Le cordage doit rester traversable dans les deux lectures de cette même histoire. Léa reste sur le flanc et ne voit pas Thomas inversé. De l'autre côté du creux, Éva photographie toujours le paysage, le dos tourné vers son passage.
 
 ⸻
 
 B7 — VERS 17h00 — LA CONVERGENCE
 
-Thomas inversé débouche du pont sur A et se hâte le long du relief, en direction du chemin par lequel il est arrivé. Il accélère par un réflexe simple : éviter d'être aperçu par Éva et Léa, dont il perçoit les gestes à rebours. Il ne calcule pas la boucle et ne cherche pas à en changer le cours ; devant sa famille, il se soustrait instinctivement aux regards. Éva reste plus bas sur A, absorbée par ses photos. Léa poursuit son trajet sur le flanc, de l'autre côté du creux. Ni l'une ni l'autre ne regarde vers Thomas inversé.
+Thomas inversé débouche du pont sur A et se hâte le long du relief, sur **la même portion du chemin A qu'emprunte Thomas normal**, parcourue dans l'autre sens de temps. Il accélère par un réflexe simple : éviter d'être aperçu par Éva et Léa, dont il perçoit les gestes à rebours. Il ne calcule pas la boucle et ne cherche pas à en changer le cours ; devant sa famille, il se soustrait instinctivement aux regards. Éva reste plus bas sur A, absorbée par ses photos. Léa poursuit son trajet sur le flanc, de l'autre côté du creux. Ni l'une ni l'autre ne regarde vers Thomas inversé.
 
-Au détour du rocher, Thomas normal apparaît devant lui. Dans le temps de Thomas inversé, il avance à reculons vers le pont, le long du chemin A.
-
-Thomas inversé tente de se décaler. Trop tard.
+La masse du rocher lui cache physiquement Thomas normal jusqu'au dernier moment. Celui-ci ralentit puis marque une courte pause en regardant Léa au loin sur B. Du point de vue de Thomas inversé, le mouvement de son double s'effectue à rebours sur ce même sentier. Thomas inversé découvre l'autre Thomas en débouchant du détour, tente de se décaler, mais n'a plus le temps de l'éviter.
 
 Au même instant, l'anneau arrive contre la paroi.
 
@@ -728,17 +726,17 @@ Au même instant, l'anneau arrive contre la paroi.
 
 B8 — 17h00 — LA FERMETURE
 
-Thomas inversé percute accidentellement Thomas normal près du rocher.
+Thomas inversé percute accidentellement Thomas normal près du rocher, à **17 h 00 exactement**. Le spectateur reste principalement avec Thomas normal : son autre occurrence surgit au dernier moment. Le rocher masque le point d'approche du regard de Thomas inversé, sans boucher entièrement la collision pour la caméra.
 
-L'anneau touche Thomas au même instant.
+L'anneau touche Thomas au même instant objectif.
 
 CONTACT THOMAS ↔ THOMAS.
 
 CONTACT THOMAS ↔ ANNEAU.
 
-Leurs mouvements se confondent brièvement au contact du relief. La caméra poursuit son trajet sans isoler un geste qui donnerait la cause certaine du retour au temps normal.
+Les deux contacts sont simultanés ; le film n'affirme pas lequel provoque le retour au temps normal. Leurs mouvements se confondent brièvement au contact du relief, sans seconde collision ni changement de trajectoire imposé par le montage. La caméra poursuit son trajet sans isoler un geste qui donnerait la cause certaine du retour au temps normal.
 
-À la sortie de ce mouvement, elle retrouve Thomas avançant dans le temps normal, seul dans le cadre, encore troublé.
+À la sortie de ce mouvement, elle retrouve Thomas dans le temps normal, immobile une courte seconde, troublé ; il reprend ensuite sa marche, seul dans le cadre.
 
 Pas de flash. Pas de dissolution. Pas de morphing. Pas d’image de deux corps qui fondent l’un dans l’autre.
 
@@ -764,9 +762,9 @@ B9 — VERS 17h00–17h01 — LE RETOUR / LE DÉCLIC
 
 Le même moment et les mêmes mouvements que dans A2, revus sans changer l'heure ni les positions de la famille. Le regard de la caméra et la musique rendent cette fois plus sensible le trouble de Thomas.
 
-Après la rencontre près du rocher, Thomas reprend sa marche vers Éva, occupée à prendre des photos plus bas sur A. De l'autre côté du creux, Léa descend sur B vers le flanc.
+La scène reprend **les mêmes mouvements et la même collision à 17 h 00 qu'en A2**, sans seconde occurrence de l'accident : Thomas normal ralentit, regarde Léa sur B, est heurté par surprise près du rocher, demeure un instant immobile et repart vers Éva, occupée à prendre des photos plus bas sur A. De l'autre côté du creux, Léa descend sur B vers le flanc.
 
-La caméra continue sans coupe et sans désigner le pont. Dans la profondeur du cadre, le mousqueton est déjà décroché, détail accessible seulement à qui arrête l'image et l'agrandit. Aucun gros plan, aucun mouvement dédié ni accent sonore n'en révèle l'importance. Le décrochage n'est pas montré et rien ne donne à voir ce que Thomas a personnellement aperçu.
+Vers 17 h 01, le mousqueton côté B est décroché dans la profondeur du cadre. Thomas normal le remarque discrètement, sans geste explicatif ; la caméra continue sans coupe et sans désigner le pont. Dans la première partie A, le détail reste accessible seulement en arrêtant l'image et en l'agrandissant : aucun gros plan, mouvement dédié ou accent sonore ne révèle l'attache, et le décrochage n'est jamais montré. C'est la réparation par Thomas inversé en B6, clairement présentée dans la seconde partie, qui donne rétrospectivement sa portée à cet indice.
 
 Léa ralentit, puis tourne légèrement la tête vers son père.
 
