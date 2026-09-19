@@ -5543,10 +5543,7 @@ def add_human_performances(sequence, samples):
             scale = info["scale"]
             values = tuple(v*100.0 for v in pose["foot"])+(0.0, 0.0, yaw)+(scale,)*3
             frame = unreal.FrameNumber(frame_index)
-            # bHidden=True signifie invisible : inverser la valeur narrative.
-            # MovieSceneBoolChannel.add_key n'accepte pas interpolation=.
-            # Ses cles discretes ont naturellement un comportement en palier.
-            visibility_channel.add_key(frame, not bool(pose["visible"]))
+            visibility_channel.add_key(frame, bool(pose["visible"]))
             for channel, value in zip(channels, values):
                 channel.add_key(frame, float(value), interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
             clip = a["human_animations"][pose["moving"]]
@@ -6030,17 +6027,8 @@ def build_omniscient_edit():
             if name == "THOMAS_INVERSE":
                 normal_scale = objects["THOMAS_NORMAL"].get_actor_scale3d()
                 scale = (normal_scale.x, normal_scale.y, normal_scale.z)
-            # Conserver la trajectoire de diagnostic pour les audits sans
-            # afficher les cylindres / tetes dans la sequence film.
-            proxy = objects[name]
-            proxy.set_actor_hidden_in_game(True)
-            proxy.set_is_temporarily_hidden_in_editor(True)
-            proxy_binding = bindings[-1]
-            proxy_track = proxy_binding.add_track(unreal.MovieSceneVisibilityTrack)
-            proxy_track.set_property_name_and_path("bHidden", "bHidden")
-            proxy_section = proxy_track.add_section()
-            proxy_section.set_range(0, duration*fps)
-            proxy_section.get_all_channels()[0].set_default(True)
+            # prepare_human_cast masque deja les proxies comme dans le
+            # commit valide. Ne pas y ajouter des pistes de visibilite.
             animated.append((name, channels, scale, converter))
     binding, camera_channels, _ = track_for(cam)
 
@@ -6060,8 +6048,9 @@ def build_omniscient_edit():
         actor.set_actor_relative_location(unreal.Vector(*local_position), False, False)
         actor.set_actor_relative_rotation(rotation or unreal.Rotator(0, 0, 0),
                                           False, False)
-        # Le Sequencer seul pilote l'apparition du carton.
-        actor.set_actor_hidden_in_game(False)
+        # Masque initialement; la piste Sequencer revele la carte
+        # pendant sa pause sans la laisser presente dans les autres plans.
+        actor.set_actor_hidden_in_game(True)
         actor.set_is_temporarily_hidden_in_editor(False)
         return actor
 
@@ -6107,19 +6096,24 @@ def build_omniscient_edit():
         return card_attach(actor, name, (226.0, 0.0, -34.0))
 
     def card_visibility(actor, first_frame, last_frame):
-        # bHidden=True hors carton. MovieSceneBoolChannel est discret :
-        # add_key(frame, valeur) sans interpolation= sous Unreal 5.8.
+        # Meme convention que les pistes visibilite du casting fonctionnel :
+        # True = acteur visible, False = masque dans MovieSceneVisibilityTrack.
+        # La valeur bHidden ne doit PAS etre inversee manuellement ici.
+        # MovieSceneBoolChannel.add_key n'accepte aucun argument interpolation.
+        if not (0 <= first_frame < last_frame <= duration*fps):
+            raise RuntimeError("Pause hors de la sequence: %s - %s" %
+                               (first_frame, last_frame))
         binding = ls.add_actors([actor])[0]
         track = binding.add_track(unreal.MovieSceneVisibilityTrack)
         track.set_property_name_and_path("bHidden", "bHidden")
         section = track.add_section()
         section.set_range(0, duration*fps)
         channel = section.get_all_channels()[0]
-        channel.set_default(True)
+        channel.set_default(False)
         if first_frame > 0:
-            channel.add_key(unreal.FrameNumber(0), True)
-        channel.add_key(unreal.FrameNumber(first_frame), False)
-        channel.add_key(unreal.FrameNumber(last_frame), True)
+            channel.add_key(unreal.FrameNumber(0), False)
+        channel.add_key(unreal.FrameNumber(first_frame), True)
+        channel.add_key(unreal.FrameNumber(last_frame), False)
 
     # A9 is hundreds of metres from the bridge: a brief optical push makes
     # the 25 m crossing legible without a rapid physical flight or a camera cut.
