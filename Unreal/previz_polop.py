@@ -32,10 +32,12 @@ import time
 import zlib
 import unreal
 
-# Test ONLY F03 geometry, without requiring the unrelated, as-yet-untested
-# English/UMG subtitle plugin. Set the environment variable to "1" before
-# executing the script in Unreal. Default: full film with all 17 captions.
-F03_GEOMETRY_ONLY = os.environ.get("POLOP_F03_GEOMETRY_ONLY", "") == "1"
+# F03 geometry-only was a temporary diagnostic before subtitles were
+# validated. It silently removed narrative text and the F01/F04 props from
+# the film, and could remain enabled in an Unreal process across reruns.
+# Retired: ALWAYS generate the complete cast, props and native subtitles.
+# Ignore a stale POLOP_F03_GEOMETRY_ONLY environment variable.
+F03_GEOMETRY_ONLY = False
 
 # Switch to True for CAMERA-ONLY changes after a successful FULL run with
 # this script in the SAME Unreal session, while still in its generated map.
