@@ -37,3 +37,8 @@ Le film vise un plan-séquence à caméra omnisciente unique : le dynamisme vien
 5. **P4 — Dernière lecture sans assistance :** visionnage complet sans les cartons techniques/debug de l'éditeur, sous-titres de dialogue synchronisés et image non obstruée ; faire reformuler par un spectateur nouveau le trajet de Léa, la disparition, le temps inversé, la réparation puis la collision, avant de fermer F01–F09.
 
 **Décision de périmètre :** le présent document note une observation et des options ; il ne demande pas et ne valide pas encore la modification des 17 pauses, de la durée de 372 s, des trajectoires, de la Bible ou de F03.
+
+## Suivi d'exécution du plan — priorité 1 enclenchée (19/09/2026)
+
+La passe ciblée **F07 collision 17 h** est maintenant publiée dans le générateur, sans remontage et **sans validation Unreal** : nouvelle ligne de vue ouverte de la caméra unique autour de la convergence, léger mouvement corporel provisoire au choc, regard tardif de Thomas inversé et diagnostic distinct des occultations caméra / regard du personnage. Les 17 pauses (106 s) et les 372 s du film restent inchangés : **la réduction des longueurs relève encore de P3**, après validation des images qui doivent porter l'histoire. La priorité 2 F06, puis F05, n'a pas été engagée par le « go 1 ». F03 reste en pause, sans changement de grotte, terrain, rochers ni cadrage A15.
+
