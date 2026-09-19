@@ -6270,8 +6270,8 @@ def build_omniscient_edit():
         ),
         "PAUSE_REVELATION": (
             "BEHIND THE ROCK FACE",
-            "Thomas is inside a hidden cave.\n"
-            "His headphones kept him from hearing their calls."
+            "Thomas is inside a hidden cave, deaf to their calls.\n"
+            "Near the entrance, he glimpses a figure in the dark."
         ),
         "PAUSE_CONTACT": (
             "6:00 P.M. - TIME REVERSES",
@@ -6279,9 +6279,9 @@ def build_omniscient_edit():
             "through time while the world follows its usual course."
         ),
         "PAUSE_OBSCURITE": (
-            "A FIGURE IN THE DARK",
-            "In the dark, Thomas glimpses a silhouette near the entrance;\n"
-            "the figure cannot make him out in the darkness."
+            "THOMAS LEAVES THE CAVE",
+            "Moving backward through time, Thomas follows the passage\n"
+            "toward the far side of the mountain."
         ),
         "PAUSE_FAMILLE": (
             "ON OPPOSITE SIDES",
@@ -6656,6 +6656,15 @@ def build_omniscient_edit():
                     x = path[i][0]+(path[i+1][0]-path[i][0])*u
                     y = path[i][1]+(path[i+1][1]-path[i][1])*u
                     eye = (x, y, a["terrain_z_m"](x, y)+1.95)
+                    if code == "PAUSE_OBSCURITE":
+                        # Normal Thomas is already outside the other exit.
+                        # Favor the inverse and his onward passage, not a
+                        # false normal-Thomas viewpoint near the entrance.
+                        forward = a["CAVE_EXIT_B_POINT"]
+                        target = (0.72*inverse[0]+0.28*forward[0],
+                                  0.72*inverse[1]+0.28*forward[1],
+                                  inverse[2]+1.25)
+                        return eye, target
                     return eye, aim(inverse)
                 camera_distance -= segment_length
         raise RuntimeError("Unexpected F03 cave shot: " + code)
