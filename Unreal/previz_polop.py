@@ -6171,21 +6171,43 @@ def build_omniscient_edit():
     def f01_return_pose(t):
         thomas = a["eval_actor"]("THOMAS_NORMAL", t)
         eva = a["eval_actor"]("EVA", t)
-        # Thomas carries more visual weight on the second reading of A2.
-        target = tuple(thomas[i]*0.82+eva[i]*0.18 for i in range(3))
-        x, y = thomas[0]-10.0, thomas[1]-14.0
-        z = max(thomas[2]+4.6, a["terrain_z_m"](x, y)+2.0)
+        # Repeat A2 in EXACTLY the same objective time, but reserve a closer
+        # view for the final moment after Lea rejoins the family. No acting
+        # or box gesture has been added in this camera-only pass.
+        close = cinematic_ease((t-7.45)/0.55)
+        x = thomas[0]-10.0+4.0*close
+        y = thomas[1]-14.0+5.0*close
+        z = max(thomas[2]+4.6-0.6*close,
+                a["terrain_z_m"](x, y)+2.0)
+        eva_weight = 0.18*(1.0-close)
+        target = tuple(thomas[i]*(1.0-eva_weight)+eva[i]*eva_weight
+                       for i in range(3))
         return (x, y, z), (target[0], target[1], target[2]+1.2)
 
     def f01_pullback_pose(t):
         people = [a["eval_actor"](name, t)
                   for name in ("THOMAS_NORMAL", "EVA", "LEA")]
         center = tuple(sum(p[i] for p in people)/3.0 for i in range(3))
-        u = cinematic_ease((t-8.0)/4.0)
-        x, y = center[0]-14.0-58.0*u, center[1]-17.0-74.0*u
-        z = max(center[2]+5.0+37.0*u,
+        # B9_ELOIGNEMENT runs for eight screen seconds. Retain Thomas's
+        # closer B9/PAUSE_ISSUE framing for the first ~2.4 s, THEN let
+        # the camera discover all three walkers before widening to the
+        # existing mountain geography. Earlier it pulled away immediately.
+        u = cinematic_ease(((t-8.0)/4.0-0.30)/0.70)
+        thomas_eye, thomas_target = f01_return_pose(t)
+        x = thomas_eye[0]+(-14.0-58.0*u)*u
+        y = thomas_eye[1]+(-17.0-74.0*u)*u
+        # Correct the final position relative to the MOVING family, not to
+        # Thomas's earlier position. This avoids framing an empty trail.
+        wide_x = center[0]-14.0-58.0*u
+        wide_y = center[1]-17.0-74.0*u
+        x = thomas_eye[0]*(1.0-u)+wide_x*u
+        y = thomas_eye[1]*(1.0-u)+wide_y*u
+        z = max(thomas_eye[2]*(1.0-u)+(center[2]+5.0+37.0*u)*u,
                 a["terrain_z_m"](x, y)+2.0)
-        return (x, y, z), (center[0], center[1], center[2]+1.3)
+        wide_target = (center[0], center[1], center[2]+1.3)
+        target = tuple(thomas_target[i]*(1.0-u)+wide_target[i]*u
+                       for i in range(3))
+        return (x, y, z), target
 
     def desired_pose(code, focus, offset, t):
         if code in ("PAUSE_INTRO", "A1"):
