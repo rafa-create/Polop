@@ -1,6 +1,6 @@
 # LA BOUCLE — revue de la prévisualisation du 19 septembre 2026
 
-**Statut : registre de problèmes ouverts, aucune solution approuvée.** Revue de la capture utilisateur `2026-09-19_15h33_22.mp4` (enregistrement écran de **105,6 secondes**, avec une lecture accélérée/consultation du montage : les temps ci-dessous repèrent **la vidéo envoyée**, non les heures du récit ni les secondes du film). Elle montre l'ancien rendu **avant** la modification de sous-titres en anglais/UMG, qui sera testée plus tard.
+**Statut : registre de revue et correctifs successifs ; fiches non validées, F03 en pause.** Revue de la capture utilisateur `2026-09-19_15h33_22.mp4` (enregistrement écran de **105,6 secondes**, avec une lecture accélérée/consultation du montage : les temps ci-dessous repèrent **la vidéo envoyée**, non les heures du récit ni les secondes du film). Elle montre l'ancien rendu **avant** la modification de sous-titres en anglais/UMG, qui sera testée plus tard.
 
 **Autorité narrative :** `Script_POLOP.md`. Le script Unreal reste un blockout : distinguer une contradiction à l'image d'un accessoire, dialogue, effet ou scène **pas encore réalisé**. Ne pas déclarer une erreur de trajectoire physique à partir d'une seule capture. Les figures et les annotations de préviz ne sont pas censées être dans le film final.
 
@@ -26,3 +26,11 @@
 5. Marquer **VALIDÉE** seulement après confirmation explicite de l'utilisateur, puis choisir la suivante.
 
 **Aucune fiche de ce registre n'autorise à elle seule la modification du scénario ou de `previz_polop.py`.** La correction technique du texte UMG/anglais est une piste séparée déjà publiée, **non testée dans la capture analysée**.
+
+## Mise à jour — enregistrement du 19/09/2026 à 17 h 28
+
+La vidéo plus récente montre le **véritable début** de la prévisualisation (confirmation de l'utilisateur). F01 reste ouverte : la famille est trop éloignée dans les premières secondes malgré la passe de caméra publiée; les personnages se distinguent mieux vers 36–52 s près du pont, mais B9 et le dézoom révisés ne sont pas entièrement montrés. **F03 reste explicitement en pause et non validée** : une masse rocheuse continue à gêner un plan vers 72–76 s, sans nouveau diagnostic physique. F02 reste à discuter : présence du trio au pont ≠ lisibilité de toutes les routes.
+
+Le premier **sous-titre UMG** dure trop longtemps selon l'utilisateur. Un correctif technique limité au cue `PAUSE_INTRO` est publié (3 s au lieu de 6 s, texte réduit); son rendu n'est pas encore validé. La correction exige **un run complet** : `FAST_CAMERA_ONLY=True` ne change que les clés de caméra et laisse tous les cues existants intacts. La question des spoilers et du contenu des cartons demeure distincte (F08). Les fiches F04–F07 et F06 gardent leurs statuts existants faute de nouveaux plans assez concluants dans cette capture; aucun critère de validation n'est présumé rempli.
+
+**Méthode courante :** les anciennes observations et repères de la vidéo du 15 h 33 restent des archives, pas des descriptions exhaustives du rendu du 17 h 28. Aucun fichier de fiche ne valide un effet encore invisible, et chaque nouvelle correction doit être vérifiée dans son propre run.
