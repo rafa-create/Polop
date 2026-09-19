@@ -447,9 +447,11 @@ for iy in range(HM_SIZE):
 # but stop before the separate HAUT path turns south (x~1785).
 for iy in range(HM_SIZE):
     wy = WORLD_Y_MIN_M + iy * GRID_STEP_M
-    if wy > -11.1 or wy < -46.0:
+    if wy > -10.2 or wy < -46.0:
         continue
-    cliff_across = smoothstep((-11.1 - wy) / 3.0)
+    # Actual Landscape drop begins ~3 m beyond the women's farthest
+    # search positions, ~2 m beyond Thomas's narrow bend at y=-8.2.
+    cliff_across = smoothstep((-10.2 - wy) / 2.0)
     row = iy * HM_SIZE
     for ix in range(HM_SIZE):
         wx = WORLD_X_MIN_M + ix * GRID_STEP_M
@@ -1332,6 +1334,17 @@ CAVE_PX = -CAVE_UY
 CAVE_PY = CAVE_UX
 CAVE_YAW_DEG = math.degrees(math.atan2(CAVE_UY, CAVE_UX))
 
+# The visibility blockers alone do not protect the actual walking route:
+# also test the entrance boulder against every outdoor Thomas segment.
+_f03_right_mask = (
+    "CAVE_ENTRY_ROCK_R",
+    CAVE_ENTRY_POINT[0]-0.15*CAVE_UX-3.5*CAVE_PX,
+    CAVE_ENTRY_POINT[1]-0.15*CAVE_UY-3.5*CAVE_PY, 1.05, 0.95
+)
+for _p, _q in zip(F03_THOMAS_OUTDOOR, F03_THOMAS_OUTDOOR[1:]):
+    if f03_mask_clearance_xy(_p, _q, _f03_right_mask) <= 1.15:
+        raise RuntimeError("F03: Thomas crosses the right entrance boulder")
+
 
 def cave_xy(along_m, side_m=0.0):
     return (
@@ -1704,11 +1717,22 @@ spawn_box(
     _cave_rot
 )
 
-# F03 : DEUX LEVRES DE LA MEME PAROI, et non un cache de camera.
-# Depuis A (au nord-ouest) et la recherche (au sud-ouest), les rochers
-# se chevauchent visuellement : la fente sombre a l'extremite semble
-# etre la suite de la paroi. Le passage physique des deux Thomas contourne
-# le bloc cote precipice puis revient vers la petite entree derriere lui.
+# F03: small connected mountain-side boundary, not a camera-only mask.
+# Short low volumes visually close the toilet nook on the north side
+# without intersecting Thomas's south-side passage or the searched shelf.
+spawn_rock(
+    "SEARCH_LEDGE_WALL_NEAR_TRAIL",
+    high_x + 1.2, high_y - 0.7,
+    terrain_z_m(high_x + 1.2, high_y - 0.7) + 1.35,
+    (3.3, 1.3, 2.1), MAT_ROCK_READABLE, "MicroGeo/SearchLedge"
+)
+spawn_rock(
+    "SEARCH_LEDGE_WALL_JOIN",
+    high_x + 4.7, high_y - 0.7,
+    terrain_z_m(high_x + 4.7, high_y - 0.7) + 1.35,
+    (1.9, 1.25, 2.1), MAT_ROCK_READABLE, "MicroGeo/SearchLedge"
+)
+# The terminal blind spur still hides the entrance from Eva and Lea.
 spawn_rock(
     "SEARCH_LEDGE_MOUNTAIN_WALL",
     high_x + 8.0, high_y - 1.4,
@@ -1755,15 +1779,18 @@ for _shadow_side, _shadow_name in (
         unreal.Rotator(0, CAVE_YAW_DEG, 0)
     )
 
-# Deux rochers d'entrée latéraux, aucune obstruction dans l'axe intérieur.
-for _side, _name, _yaw in ((2.2, "CAVE_ENTRY_ROCK_L", 12), (-2.2, "CAVE_ENTRY_ROCK_R", -12)):
+# F03: old right-hand entrance boulder intersected Thomas's physical
+# CAVE_ZONE_POINT -> CAVE_ENTRY_POINT path and the A15 lens trajectory.
+# Keep the left lip, move/shrink the right lip toward the cliff side.
+for _side, _name, _yaw, _sx, _sy in (
+    (2.2, "CAVE_ENTRY_ROCK_L", 12, 1.65, 1.35),
+    (-3.5, "CAVE_ENTRY_ROCK_R", -12, 1.05, 0.95)
+):
     _rx, _ry = cave_xy(-0.15, _side)
     _rz = terrain_z_m(_rx, _ry) + 1.45
     spawn_rock(
-        _name, _rx, _ry, _rz,
-        (1.65, 1.35, 2.7),
-        MAT_ROCK_READABLE,
-        "MicroGeo/CaverneV05/Rocks",
+        _name, _rx, _ry, _rz, (_sx, _sy, 2.7),
+        MAT_ROCK_READABLE, "MicroGeo/CaverneV05/Rocks",
         CAVE_YAW_DEG + _yaw
     )
 
@@ -6054,8 +6081,8 @@ def build_omniscient_edit():
         ),
     }
 
-    # F03: continuously move around the physical outcrop before revealing
-    # the mouth. Only A15 may use this angle; A10-A14 stay on the women side.
+    # F03: A15 alone travels along the real cliff-side bend around the
+    # outcrop. Previous version looked through a lateral entrance rock.
     def f03_reveal_pose(progress, objective_t, start):
         entry = a["CAVE_ENTRY_POINT"]
         ledge = a["SEARCH_LEDGE_CENTER"]
@@ -6063,13 +6090,16 @@ def build_omniscient_edit():
         thomas = a["eval_actor"]("THOMAS_NORMAL", objective_t)
         stages = (
             (0.0, start[0], start[1]),
-            (0.24, (entry[0]-1.3, entry[1]-8.0, ledge[2]+4.3),
-             (entry[0]-4.0, entry[1]-2.8, terrain(entry[0]-4.0, entry[1]-2.8)+1.8)),
-            (0.52, (entry[0]+0.15, entry[1]-4.4, ledge[2]+3.2),
-             (entry[0], entry[1], terrain(entry[0], entry[1])+1.45)),
-            (0.75, (entry[0]-0.12, entry[1]-1.2,
-                    terrain(entry[0]-0.12, entry[1]-1.2)+1.85),
-             a["cave_ground_point"](2.4, 0.0, 1.45)),
+            (0.18, (entry[0]-1.7, entry[1]-8.3, ledge[2]+4.6),
+             (entry[0]-1.0, entry[1]-6.2, ledge[2]+1.8)),
+            (0.43, (entry[0]-0.6, entry[1]-6.9, ledge[2]+4.2),
+             (entry[0]+2.0, entry[1]-4.0, ledge[2]+1.8)),
+            (0.60, (entry[0]+1.6, entry[1]-4.6,
+                    max(ledge[2]+3.35, terrain(entry[0]+1.6, entry[1]-4.6)+2.8)),
+             (entry[0], entry[1], terrain(entry[0], entry[1])+1.65)),
+            (0.80, (entry[0]+0.7, entry[1]-2.0,
+                    terrain(entry[0]+0.7, entry[1]-2.0)+2.2),
+             a["cave_ground_point"](1.0, 0.0, 1.5)),
             (1.0, a["cave_ground_point"](1.0, 0.0, 1.85),
              (thomas[0], thomas[1], thomas[2]+1.1))
         )
@@ -6084,21 +6114,36 @@ def build_omniscient_edit():
                 return eye, target
         raise RuntimeError("F03: invalid camera reveal progress")
 
-    def f03_reveal_clearance(eye, progress):
+    def f03_reveal_clearance(eye, target, progress):
         entry = a["CAVE_ENTRY_POINT"]
-        masks = [
+        masks = (
             (entry[0]-5.0, entry[1]+0.6, 2.5, 1.3, "mountain wall"),
-            (entry[0]-4.0, entry[1]-2.8, 3.0, 2.1, "blind spur")
-        ]
-        for side, label in ((2.2, "left entrance"), (-2.2, "right entrance")):
-            masks.append((
-                entry[0]-0.15*a["CAVE_UX"]+side*a["CAVE_PX"],
-                entry[1]-0.15*a["CAVE_UY"]+side*a["CAVE_PY"],
-                1.65, 1.35, label))
+            (entry[0]-4.0, entry[1]-2.8, 3.0, 2.1, "blind spur"),
+            (entry[0]-0.15*a["CAVE_UX"]-3.5*a["CAVE_PX"],
+             entry[1]-0.15*a["CAVE_UY"]-3.5*a["CAVE_PY"],
+             1.05, 0.95, "right entrance"),
+            (entry[0]-0.15*a["CAVE_UX"]+2.2*a["CAVE_PX"],
+             entry[1]-0.15*a["CAVE_UY"]+2.2*a["CAVE_PY"],
+             1.65, 1.35, "left entrance")
+        )
+        # An XY envelope audit, not a substitute for the 3D Unreal video.
+        # After revealing the bend also test the full camera LOOK RAY:
+        # an unobstructed camera point alone does not prevent an opaque
+        # boulder from filling the screen in the middle of the shot.
         for cx, cy, rx, ry, label in masks:
-            if math.hypot((eye[0]-cx)/rx, (eye[1]-cy)/ry) < 1.04:
-                raise RuntimeError("F03 A15 camera intersects %s at %.3f" %
+            def clearance(x, y):
+                return math.hypot((x-cx)/rx, (y-cy)/ry)
+            if clearance(eye[0], eye[1]) < 1.12:
+                raise RuntimeError("F03 A15 lens enters %s at %.3f" %
                                    (label, progress))
+            if progress >= 0.60:
+                for step in range(31):
+                    fraction = step/30.0
+                    x = eye[0]+(target[0]-eye[0])*fraction
+                    y = eye[1]+(target[1]-eye[1])*fraction
+                    if clearance(x, y) < 1.07:
+                        raise RuntimeError("F03 A15 lens looks through %s at %.3f" %
+                                           (label, progress))
 
     def desired_pose(code, focus, offset, t):
         if code == "PAUSE_RECHERCHE":
@@ -6290,7 +6335,7 @@ def build_omniscient_edit():
             if code == "A15_A16":
                 # Former generic handover moved the lens through opaque rock.
                 eye, target = f03_reveal_pose(u, t, boundary_pose)
-                f03_reveal_clearance(eye, u)
+                f03_reveal_clearance(eye, target, u)
             else:
                 eye, target = blend_camera_pose(moving_origin, desired_pose(code, focus, offset, t),
                                                 u*seconds/handover_seconds)
