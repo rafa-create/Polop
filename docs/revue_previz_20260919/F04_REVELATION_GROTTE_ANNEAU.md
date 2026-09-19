@@ -47,3 +47,10 @@ L'utilisateur reporte la validation F01/F02 et demande de poursuivre avec la gro
 4. **Intégration seulement après les tests :** conserver le temps objectif 18 h, les 17 pauses, la durée actuelle et le trajet de chacun ; insérer le proxy et les regards dans la séquence existante après preuve que la caméra et l'entrée sont dégagées. Puis contrôler A15 → A17 → B1 en lecture continue et sur les deux sens temporels.
 
 **Statut de cette passe : spécification prête ; aucun nouveau rendu Unreal ni animation d'anneau n'est prétendu réalisé.** Les prochaines corrections géométriques dépendent d'une capture et d'un diagnostic du même run, pour ne pas défaire le masquage depuis les femmes.
+
+
+## Implémentation provisoire — proxy d'anneau F04 (19/09/2026)
+
+**Commit du générateur :** `8ade24aaa39b3d5b524fcec4e0dd9e324afbb71a`. Le run complet crée un proxy sphérique aplati `PZ_ANIM_F04_RING_BLOCKOUT`, dont la position est calculée selon le temps objectif : déplacement de la fissure vers `CAVE_CONTACT_POINT` entre 61,65 et 62,00 avec une petite oscillation amortie. Il apparaît pendant A15_A16, A17, PAUSE_CONTACT et B1, sans ajouter de secondes ni modifier F03/F07. Il est exclu du mode diagnostic `POLOP_F03_GEOMETRY_ONLY=1` pour ne pas mélanger les tests.
+
+**Limites importantes :** c'est une sphère aplatie de préviz, pas un anneau modélisé ; `CAVE_CONTACT_POINT` n'est pas une main animée et le contact physique n'est pas prouvé. La descente ultérieure et les rebonds détaillés de l'anneau ne sont pas encore construits. La visibilité réelle peut être nulle si A15 reste obstrué ; il faut d'abord un run Unreal complet et une capture A15–B1 pour identifier le mesh fautif. Ne pas marquer F04 ou F03 comme validées. Vérifier l'apparition, l'absence de saut de position, le passage à l'instant objectif 62 et la cohérence de la lecture inverse.
