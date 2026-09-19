@@ -6535,14 +6535,27 @@ def build_omniscient_edit():
 
     # F03: 3D traces against generated cave/static geometry. Keep the
     # physical blind-spur intact: never hide it just to clear the camera.
+    # Cache actor lists once, not on each of the 480 A15 frames.
+    f03_scene_actors = actors.get_all_level_actors()
+    f03_ignored = [actor for actor in f03_scene_actors
+                   if actor.get_actor_label().startswith((
+                       "PZ_ANIM_HUMAN_", "PZ_ANIM_EVENT_", "PZ_ANIM_CAM_",
+                       "PZ_ANIM_F04_RING_", "PZ_ANIM_F01_SMALL_BOX"))]
+    f03_bounds_names = ("CAVE_REVIEW_", "CAVE_WALL_", "CAVE_SIDE_",
+                        "CAVE_ENTRY_ROCK_", "CAVE_ENTRANCE_BLIND_SPUR",
+                        "SEARCH_LEDGE_MOUNTAIN_WALL", "F03_SHADOW_RECESS_")
+    f03_meshes = [
+        actor for actor in f03_scene_actors
+        if actor.get_actor_label().startswith("PZ_ANIM_")
+        and any(actor.get_actor_label().startswith("PZ_ANIM_"+part)
+                for part in f03_bounds_names)
+        and actor.get_component_by_class(unreal.StaticMeshComponent) is not None
+    ]
+
     def f03_mesh_clearance(eye, target, progress):
         query = (unreal.TraceTypeQuery.ECC_VISIBILITY
                  if hasattr(unreal.TraceTypeQuery, "ECC_VISIBILITY")
                  else unreal.TraceTypeQuery.TRACE_TYPE_QUERY1)
-        ignored = [actor for actor in actors.get_all_level_actors()
-                   if actor.get_actor_label().startswith((
-                       "PZ_ANIM_HUMAN_", "PZ_ANIM_EVENT_", "PZ_ANIM_CAM_",
-                       "PZ_ANIM_F04_RING_", "PZ_ANIM_F01_SMALL_BOX"))]
         def trace(start, end, label):
             # Ignore the animated cast and review cameras, NOT landscape,
             # cave shell or rock meshes. This checks real Unreal collision
@@ -6551,7 +6564,7 @@ def build_omniscient_edit():
                 world,
                 unreal.Vector(*(float(v)*100.0 for v in start)),
                 unreal.Vector(*(float(v)*100.0 for v in end)),
-                query, True, ignored, unreal.DrawDebugTrace.NONE, True)
+                query, True, f03_ignored, unreal.DrawDebugTrace.NONE, True)
             if not result:
                 return
             data = result.to_tuple()
@@ -6593,18 +6606,8 @@ def build_omniscient_edit():
             eye_cm.x+(diff[0]/dist)*limit,
             eye_cm.y+(diff[1]/dist)*limit,
             eye_cm.z+(diff[2]/dist)*limit)
-        watch = ("CAVE_REVIEW_", "CAVE_WALL_", "CAVE_SIDE_",
-                 "CAVE_ENTRY_ROCK_", "CAVE_ENTRANCE_BLIND_SPUR",
-                 "SEARCH_LEDGE_MOUNTAIN_WALL", "F03_SHADOW_RECESS_")
-        for actor in actors.get_all_level_actors():
+        for actor in f03_meshes:
             name = actor.get_actor_label()
-            if not name.startswith("PZ_ANIM_"):
-                continue
-            if not any(name.startswith("PZ_ANIM_"+part) for part in watch):
-                continue
-            comp = actor.get_component_by_class(unreal.StaticMeshComponent)
-            if comp is None:
-                continue
             center, extent = actor.get_actor_bounds(False)
             # Inflate to catch near-plane rock even with collision disabled.
             bx, by, bz = center.x, center.y, center.z
