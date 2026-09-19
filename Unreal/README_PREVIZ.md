@@ -10,6 +10,22 @@ Le plan-séquence de blocage passe de 693 à 266 secondes (4 min 26).
 Les changements ordinaires de cadrage durent au plus trois secondes ; les
 vues larges A5 et finale durent huit secondes. La caméra reste près du chemin
 pour regarder le pont, au lieu d'effectuer un aller-retour jusqu'à lui.
+
+### Retouche ciblée A9 — 19 septembre 2026
+
+Sur le **seul plan A9_PONT** (pont vu de loin), la caméra se décale légèrement
+sur le côté et s'élève depuis le chemin actuel, vise le milieu des deux
+extrémités existantes et effectue un bref resserrement optique de sa focale
+jusqu'à 72 mm. Elle retrouve ensuite sa focale initiale pendant le raccord
+vers A10. Durée A9 inchangée : 4 secondes, caméra toujours continue, pas de
+vol rapide vers le pont. Le relief, les chemins, la position du pont, la
+première traversée de Léa et le plan B5_PONT restent inchangés.
+
+Modification publiée dans `Unreal/previz_polop.py` ; contrôles statiques des
+blocs modifiés et de leur présence sur GitHub effectués. **Aucun nouveau run
+Unreal ni contrôle visuel du cadrage n'a été exécuté ici** : vérifier sur le
+run du clone synchronisé que le tablier, les deux extrémités et le sentier du
+flanc sont effectivement lisibles, et que le raccord vers A10 reste fluide.
 La traversée B6 dispose de six secondes distinctes, suivies de huit secondes
 pour B7/B8. B9 suit désormais Thomas normal, comme demandé par le scénario.
 
