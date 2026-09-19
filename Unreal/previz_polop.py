@@ -1664,11 +1664,20 @@ spawn_box(
 # Micro-zone caverne V05 : shell lisible construit sur l'axe entrée -> contact.
 # Largeur intérieure ~4,4 m ; hauteur libre ~3,2 m. Aucune masse n'est placée
 # au centre de l'axe, ce qui garantit une ligne de vue exploitable pour les POV.
-_cave_mid_along = _CAVE_AXIS_LEN * 0.52
+# F03: the previous roof, floor and walls protruded outside the
+# entrance, occluding the A15 reveal despite camera-rock XY clearance.
+# Leave the first 3.2 metres OPEN. The shadowed passage is still hidden
+# from Eva and Lea by the existing physical mountain-side blind spur.
+_CAVE_MOUTH_CLEAR_M = 3.2
+_cave_shell_end_m = _CAVE_AXIS_LEN + 1.0
+if _cave_shell_end_m - _CAVE_MOUTH_CLEAR_M <= 2.0:
+    raise RuntimeError("F03: cave too short for a clear opening")
+_cave_mid_along = (_CAVE_MOUTH_CLEAR_M + _cave_shell_end_m)*0.5
 _cave_mid_x, _cave_mid_y = cave_xy(_cave_mid_along, 0.0)
 _cave_mid_z = terrain_z_m(_cave_mid_x, _cave_mid_y)
 _cave_rot = unreal.Rotator(0, CAVE_YAW_DEG, 0)
-_cave_shell_length_cm = int(round((_CAVE_AXIS_LEN + 2.4) * 100.0))
+_cave_shell_length_cm = int(round(
+    (_cave_shell_end_m - _CAVE_MOUTH_CLEAR_M)*100.0))
 
 # Sol fin, volontairement visible pour lire les distances.
 spawn_box(
@@ -6336,6 +6345,10 @@ def build_omniscient_edit():
                 # Former generic handover moved the lens through opaque rock.
                 eye, target = f03_reveal_pose(u, t, boundary_pose)
                 f03_reveal_clearance(eye, target, u)
+                # Avoid frames of opaque Landscape under the lens. The
+                # previous XY rock test could not detect this failure.
+                if u >= 0.60 and eye[2] < a["terrain_z_m"](eye[0], eye[1]) + 1.25:
+                    raise RuntimeError("F03 A15 camera below terrain clearance at %.3f" % u)
             else:
                 eye, target = blend_camera_pose(moving_origin, desired_pose(code, focus, offset, t),
                                                 u*seconds/handover_seconds)
