@@ -1,0 +1,54 @@
+name: Synchroniser la Bible vers Google Drive
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - Script_POLOP.md
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: polop-script-drive
+  cancel-in-progress: false
+
+jobs:
+  publier-script:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Récupérer la version canonique du script
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Configurer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Installer les dépendances Google
+        run: python -m pip install --disable-pip-version-check "google-api-python-client>=2.0,<3" "google-auth>=2.0,<3"
+
+      - name: Vérifier la configuration OAuth
+        env:
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+        run: |
+          for key in GOOGLE_CLIENT_ID GOOGLE_CLIENT_SECRET GOOGLE_REFRESH_TOKEN; do
+            if [ -z "${!key}" ]; then
+              echo "::error title=Configuration Drive manquante::Ajouter le secret GitHub $key pour activer la synchronisation."
+              exit 1
+            fi
+          done
+        shell: bash
+
+      - name: Mettre à jour le Google Doc et son PDF
+        env:
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+        run: python scripts/sync_script_drive.py
