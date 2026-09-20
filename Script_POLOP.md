@@ -489,45 +489,47 @@ Il n’a pas entendu leurs appels.
 
 A16 — 17h58 → 18h00 — L’ANNEAU
 
-Thomas avance de quelques pas supplémentaires dans la caverne. Peu à peu, des aspérités de roche émergent de la pénombre autour de lui, tandis que son regard reste fixé sur la fente éclairée.
+Thomas avance de quelques pas dans la caverne. La lumière de l'entrée s'éloigne derrière lui. Il regarde sa montre : 17h59.
 
-Ce n’est qu’alors que, dans une fissure rocheuse, un mouvement impossible attire son attention.
+Un petit son métallique lui parvient à travers la musique de ses écouteurs. Il s'arrête. Le bruit recommence : un frottement, suivi de deux impacts brefs, dans un ordre et un rythme qui ne ressemblent pas à ceux d'un objet qui tombe.
 
-Un anneau simple remonte progressivement les reliefs de la roche. Il ne vole pas : chaque petit bond semble être l’exact inverse d’une chute et de rebonds mécaniques ordinaires.
+Thomas met sa musique en pause et retire ses deux écouteurs. Il les range dans sa poche. Le vent, un ruissellement discret et ce bruit métallique prennent toute la place.
 
-Thomas l’observe. Il ne le touche pas encore.
+Le son revient, comme si un choc contre la pierre précédait le frottement qui devrait y conduire. Thomas cherche d'où il vient.
 
-L’anneau poursuit sa remontée à travers la fissure, se rapprochant de lui. Thomas regarde sa montre.
+Dans une fissure, un anneau simple remonte contre la roche. Il quitte une pierre, rejoint celle du dessus et reprend appui plus haut. Le plan laisse voir toute cette remontée, nettement, avant que Thomas s'en approche.
 
-17h59.
+Thomas regarde la fissure, puis la cavité autour de lui. Le bruit recommence.
 
-Ses écouteurs restent dans ses oreilles.
+Plan sur l'anneau : il remonte encore, de pierre en pierre.
 
-Le mouvement de l’anneau est étrange mais matériel : roche, petits impacts, rebonds. Aucun effet lumineux ne lui donne une origine ou une nature explicative.
+Plan sur Thomas : il tend l'oreille, cherchant la source de ces petits impacts.
 
-Thomas tend finalement la main vers sa trajectoire.
+Plan sur l'anneau : un rebond le porte plus haut.
+
+Plan sur Thomas : il s'accroupit.
+
+Les plans alternent de plus en plus vite. L'anneau poursuit sa remontée tandis que Thomas, absorbé par le son et la recherche de sa source, s'approche pour examiner la fissure. Aucun gros plan sur son visage ne suggère qu'il a compris ce qu'il vient de voir.
+
+Il tend la main vers l'anneau.
 
 ⸻
 
 A17 — 18h00 — LE CONTACT / LE RETOURNEMENT
 
-Thomas regarde sa montre : 18h00 pile.
+La montre de Thomas indique 18h00.
 
-Au même instant, ses doigts touchent l’anneau.
+Ses doigts touchent l'anneau.
 
 CONTACT.
 
-Le monde autour de Thomas change de lecture temporelle.
+Le bruit métallique s'interrompt. L'anneau repart aussitôt dans l'autre direction : il retombe le long de la fissure, heurte une pierre, rebondit vers le bas et disparaît plus loin dans la roche. Sa chute a désormais le mouvement et le son ordinaires d'un petit objet qui tombe.
 
-Une goutte qui semblait évoluer normalement pour lui repart sur sa trajectoire. La poussière et de petits éléments du décor commencent à évoluer à rebours.
+Thomas détourne les yeux de l'anneau. Derrière lui, un ruissellement semble remonter la pierre. Il se retourne. Une goutte rejoint le bord de roche d'où elle venait de tomber ; un peu de poussière se rassemble dans une fente.
 
-Thomas retire ses écouteurs. Le son extérieur revient.
+Thomas écoute, immobile. Le son de la caverne lui parvient à rebours. L'anneau ne retient plus son attention.
 
-Au contact des doigts de Thomas, la trajectoire de l’anneau change immédiatement de direction. Le contact reste sec et matériel : aucun flash, aucune énergie visible. L’anneau repart vers le bas de la fissure et du relief.
-
-Thomas le voit clairement s’éloigner vers le bas avant de faire son premier pas hors de la cavité. Le film associe ainsi visuellement le contact à deux conséquences simultanées : Thomas repart vers son passé et l’anneau repart vers le bas de la montagne.
-
-Thomas est inversé.
+Sans flash ni lumière nouvelle, le monde autour de lui poursuit ces mouvements inversés.
 
 ⸻
 
