@@ -6419,14 +6419,14 @@ def build_omniscient_edit():
         ("A1", 12, 0.25, 2, "LEA", (-8, -12, 7)),
         ("A2", 18, 2, 8, "LEA", (-5, -9, 4)),
         ("PAUSE_DETOUR", 6, 8, 9, "LEA", (-5, -9, 4)),
-        ("A3_A4", 12, 9, 20, "EVA", (-8, -10, 5)),
+        ("A3_A4", 8, 9, 20, "EVA", (-8, -10, 5)),
         ("PAUSE_THOMAS", 5, 20, 21, "EVA", (-8, -10, 5)),
         ("A5_GEOGRAPHIE", 7, 21, 24, "EVA", (-45, -65, 40)),
         ("PAUSE_CHEMINS", 7, 24, 25, "EVA", (-45, -65, 40)),
-        ("A6_A8", 12, 25, 32, "THOMAS_NORMAL", (-8, -12, 6)),
+        ("A6_A8", 9, 25, 32, "THOMAS_NORMAL", (-8, -12, 6)),
         ("A9_PONT", 4, 32, 32.2, "THOMAS_NORMAL", (-18, -35, 20)),
         ("PAUSE_ATTACHE", 6, 32.2, 32.4, "THOMAS_NORMAL", (-18, -35, 20)),
-        ("A10", 10, 32.4, 52, "EVA", (-10, -12, 6)),
+        ("A10", 7, 32.4, 52, "EVA", (-10, -12, 6)),
         ("PAUSE_DEPART", 6, 52, 52.4, "EVA", (-10, -12, 6)),
         ("A11_ATTENTE", 12, 52.4, 56, "EVA", (-8, -11, 4.5)),
         ("PAUSE_ATTENTE", 7, 56, 56.15, "EVA", (-8, -11, 4.5)),
@@ -6441,7 +6441,7 @@ def build_omniscient_edit():
         ("PAUSE_OBSCURITE", 6, 60.2, 60.12, "CAVE", (0, 0, 0)),
         ("B2", 10, 60.12, 59.4, "THOMAS_INVERSE", (-14, 20, 9)),
         ("PAUSE_FAMILLE", 6, 59.4, 59.1, "THOMAS_INVERSE", (-14, 20, 9)),
-        ("B3_B4", 16, 59.1, 42, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("B3_B4", 11, 59.1, 42, "THOMAS_INVERSE", (-9, 12, 5)),
         # ONE ring insert during the inverse descent; same underlying worldline.
         ("B4_ANNEAU", 6, 42, 37, "THOMAS_INVERSE", (-9, 12, 5)),
         ("PAUSE_RETOUR", 6, 37, 36.5, "THOMAS_INVERSE", (-9, 12, 5)),
@@ -6455,7 +6455,7 @@ def build_omniscient_edit():
         # walk backwards with their existing reversed skeletal animations.
         ("PAUSE_FAMILY_REVERSE", 5, 25.5, 24.5, "THOMAS_INVERSE", (-9, 12, 5)),
         ("B6_FAMILY_RETURN", 4, 24.5, 24.3, "THOMAS_INVERSE", (-9, 12, 5)),
-        ("B6", 12, 24.3, 3.16, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("B6", 8, 24.3, 3.16, "THOMAS_INVERSE", (-9, 12, 5)),
         ("B6_REPAIR", 6, 3.16, 3.0, "THOMAS_INVERSE", (-5, 5, 3)),
         ("PAUSE_MOUSQUETON", 7, 3.0, 2.98, "THOMAS_INVERSE", (-5, 5, 3)),
         ("B6_TRAVERSEE", 6, 2.98, 2.5, "THOMAS_INVERSE", (-6, -8, 3)),
@@ -6465,10 +6465,12 @@ def build_omniscient_edit():
         ("PAUSE_ISSUE", 6, 8, 8.1, "THOMAS_NORMAL", (-5, -9, 4)),
         ("B9_ELOIGNEMENT", 8, 8.1, 12, "THOMAS_NORMAL", (-45, -65, 35)),
     ]
-    # Retiming checks: no unintended freezes, no lost objective-time joins,
-    # no changed film length. The pre-existing B4_ANNEAU editorial repeat
-    # (42..37) is retained but now joins continuously to B3 and the return
-    # beat. Verify its lens reorientation and sightlines in the new render.
+    # Pacing pass: only five uneventful travel beats have shorter SCREEN time.
+    # All objective-time boundaries, event/dialogue beats and character worldlines
+    # remain unchanged. Fast movement in these five beats is an editorial
+    # time-compression placeholder, not a validated natural-speed film cut.
+    # A genuine invisible jump would require camera-matched inserts/cuts; the
+    # continuous single-camera track is preserved here for easy A/B review.
     held_contacts = {"PAUSE_CONTACT": 62.0, "PAUSE_BOUCLE": 2.0}
     for index, (code, seconds, t0, t1, focus, offset) in enumerate(shots):
         if code in held_contacts:
@@ -6481,8 +6483,13 @@ def build_omniscient_edit():
             if abs(previous[3]-t0) > 1e-6:
                 raise RuntimeError("Objective-time join broken: %s -> %s" %
                                    (previous[0], code))
-    if sum(shot[1] for shot in shots) != 349:
-        raise RuntimeError("Screen duration changed during caption retiming")
+    expected_screen_seconds = 330  # Before this pacing pass: 349 seconds.
+    if len(shots) != 43 or sum(shot[1] for shot in shots) != expected_screen_seconds:
+        raise RuntimeError("Shot count or screen duration changed during pacing pass")
+    if {shot[0]: shot[1] for shot in shots if shot[0] in DIALOGUE_CUES} != {
+            "A1": 12, "A2": 18, "A11_ATTENTE": 12,
+            "A12_A13": 12, "A14": 6, "B9": 12}:
+        raise RuntimeError("Dialogue beat duration changed during pacing pass")
 
     # Aides de lecture pour la PREVIZ uniquement, pas des dialogues canoniques.
     # The 17 narrative annotations retain their screen duration, but most
@@ -7110,8 +7117,9 @@ def build_omniscient_edit():
                 target = (900.0, 12.5, a["terrain_z_m"](900.0, 0.0)+0.59)
         return eye, (target[0], target[1], target[2]+1.1)
 
-    # Preserve all story durations and one continuous physical camera binding.
-    # The matched approach and retreat occupy the existing opening/end beats.
+    # Preserve every objective-time event and one continuous camera binding.
+    # Five low-information travel beats occupy fewer screen seconds; all
+    # subtitles and film frame ranges use the recalculated shot manifest.
     fps = a["FPS"]
     duration = sum(s[1] for s in shots)
     if FAST_CAMERA_ONLY:
@@ -7457,9 +7465,8 @@ def build_omniscient_edit():
                     renderer="native_subtitles_umg"))
                 last_end = last
 
-        # Both readings depict the same objective-time conversation while Lea
-        # waits at the start of the flank (t=3.35..5.05). A2 lasts 18 s
-        # and B9 lasts 12 s, so their local subtitle offsets must differ.
+        # Preserve the existing A2 (18 s) and B9 (12 s) dialogue windows.
+        # Subtitle sections use the recomputed beat start frames after pacing.
         flank_dialogue_a2 = DIALOGUE_CUES['A2']
         flank_dialogue_b9 = DIALOGUE_CUES['B9']
         add_speaker_cues("A2", flank_dialogue_a2)
