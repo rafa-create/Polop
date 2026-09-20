@@ -45,6 +45,12 @@ F03_GEOMETRY_ONLY = os.environ.get("POLOP_F03_GEOMETRY_ONLY", "") == "1"
 # landscape import, character bake, subtitle rebuild or new film sequence.
 FAST_CAMERA_ONLY = False
 
+# Optional scenery only. No paths, cameras, character poses or story timings change.
+# Disable any layer independently to compare with the previously generated film.
+ENABLE_SCENIC_SPIRES = True
+ENABLE_SCENIC_TRAIL_STONES = True
+ENABLE_SCENIC_RAVINE_MIST = True
+
 # False: spectator-readable narrative captions; no technical notes/spoilers in A.
 # True: optional PREVIZ diagnostic notes about unfinished effects and acting.
 # Changing this setting (or any subtitles) requires FAST_CAMERA_ONLY=False.
@@ -7151,6 +7157,8 @@ def build_omniscient_edit():
     _, carabiner_channels, _ = track_for(a["MOUSQUETON_PROXY"])
     # One bound ring actor with one transform track throughout the FULL film.
     _, ring_channels, _ = track_for(a["ring_actor"])
+    mist_channels = [(track_for(actor)[1], x, y, z, phase)
+                     for actor, x, y, z, phase in a.get("scenic_mist", ())]
     animated = []
     for name in POV_ORDER:
         for objects, converter in ((a["actor_objects"], a["actor_location_from_foot"]),
@@ -7233,6 +7241,11 @@ def build_omniscient_edit():
                     for channel, value in zip(channels[6:9], scale):
                         channel.add_key(frame, float(value if visible else 0.001),
                                         interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+            for channels, mx, my, mz, phase in mist_channels:
+                mist_xyz = scenic_mist_position(mx, my, mz, phase, t)
+                for channel, value in zip(channels[:3], mist_xyz):
+                    channel.add_key(frame, float(value*100.0),
+                                    interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
             ring_xyz = a["ring_at_objective_time"](t)
             for channel, value in zip(ring_channels[:3], ring_xyz):
                 channel.add_key(frame, float(value*100.0),
@@ -7651,6 +7664,194 @@ def _omniscient_review_tick(delta_seconds):
         _OMNI_REVIEW_BUSY = False
 
 
+# =============================================================================
+# OPTIONAL SCENERY — generated-map actors only; never edit /Game/Main
+# =============================================================================
+
+SCENIC_PREFIX = "PZ_SCENIC_"
+SCENIC_FOLDER = "POLOP/Scenery"
+SCENIC_MIST_SPECS = (
+    # Name, centre x/y in metres, elevation over the EXISTING gorge floor,
+    # horizontal size in metres, thickness in metres, phase.
+    ("BRIDGE_W", 891.0, 12.5, 2.0, 7.5, 0.34, 0.0),
+    ("BRIDGE_E", 911.0, 12.5, 1.8, 6.5, 0.27, 1.8),
+)
+
+
+def _scenic_spawn(mesh, label, x_m, y_m, z_m, sx_m, sy_m, sz_m, material):
+    """One removable, collision-free prop in the copied work map."""
+    actor = actors.spawn_actor_from_object(
+        mesh, unreal.Vector(x_m*100.0, y_m*100.0, z_m*100.0),
+        unreal.Rotator(0.0, 0.0, 0.0), False)
+    if actor is None:
+        raise RuntimeError("Scenic spawn failed: " + label)
+    actor.set_actor_label(SCENIC_PREFIX + label, True)
+    actor.set_folder_path(SCENIC_FOLDER + "/" + label.split("_")[0])
+    actor.set_actor_scale3d(unreal.Vector(sx_m, sy_m, sz_m))
+    actor.set_actor_enable_collision(False)
+    component = actor.get_component_by_class(unreal.StaticMeshComponent)
+    if component:
+        component.set_collision_enabled(unreal.CollisionEnabled.NO_COLLISION)
+        component.set_material(0, material)
+        component.set_editor_property("cast_shadow", label.startswith("SPIRE_"))
+    return actor
+
+
+def _scenic_mist_material():
+    """Separate translucent asset in this run only; no edits to source materials."""
+    name = "M_POLOP_SCENIC_MIST"
+    folder = RUN_ASSET_ROOT + "/Materials"
+    unreal.EditorAssetLibrary.make_directory(folder)
+    path = folder + "/" + name
+    if unreal.EditorAssetLibrary.does_asset_exist(path):
+        return unreal.load_asset(path)
+    material = unreal.AssetToolsHelpers.get_asset_tools().create_asset(
+        name, folder, unreal.Material, unreal.MaterialFactoryNew())
+    if material is None:
+        raise RuntimeError("Could not create scenic mist material")
+    material.set_editor_property("blend_mode", unreal.BlendMode.BLEND_TRANSLUCENT)
+    color = unreal.MaterialEditingLibrary.create_material_expression(
+        material, unreal.MaterialExpressionConstant3Vector, -320, 0)
+    color.set_editor_property("constant", unreal.LinearColor(0.53, 0.58, 0.61, 1.0))
+    unreal.MaterialEditingLibrary.connect_material_property(
+        color, "", unreal.MaterialProperty.MP_BASE_COLOR)
+    alpha = unreal.MaterialEditingLibrary.create_material_expression(
+        material, unreal.MaterialExpressionConstant, -320, 180)
+    alpha.set_editor_property("r", 0.13)
+    unreal.MaterialEditingLibrary.connect_material_property(
+        alpha, "", unreal.MaterialProperty.MP_OPACITY)
+    unreal.MaterialEditingLibrary.recompile_material(material)
+    unreal.EditorAssetLibrary.save_loaded_asset(material)
+    return material
+
+
+def create_optional_scenery():
+    """Use current run's real heightmap and authored routes, without moving them.
+
+    Failure is non-fatal and all partially spawned scenic actors are removed;
+    no visual layer may block film generation. The manual viewport review remains
+    essential for occlusion, material and camera effects.
+    """
+    if not (ENABLE_SCENIC_SPIRES or ENABLE_SCENIC_TRAIL_STONES
+            or ENABLE_SCENIC_RAVINE_MIST):
+        journal("scenery_disabled")
+        return ()
+    a = _ANIMATION
+    mesh_sphere = unreal.load_asset("/Engine/BasicShapes/Sphere.Sphere")
+    mesh_cone = unreal.load_asset("/Engine/BasicShapes/Cone.Cone")
+    if mesh_sphere is None:
+        journal("scenery_skipped", reason="BasicShapes sphere unavailable")
+        return ()
+    # The cone is optional: elongated rock shapes still work with the sphere.
+    rock_mesh = mesh_cone or mesh_sphere
+    rock_material = a["MAT_ROCK_READABLE"]
+    terrain = a["terrain_z_m"]
+    created = []
+    mist = []
+    counts = dict(spires=0, trail_stones=0, mist=0)
+    try:
+        if ENABLE_SCENIC_SPIRES:
+            # The bridge ravine is only ~9 m below its deck. Keep the highest
+            # decorative spires several metres BELOW the deck, outside the
+            # landing zones x=900/y=0 and y=25.
+            bridge = (
+                (883.0, 10.5, 2.7), (888.0, 15.3, 3.3),
+                (895.0, 9.2, 2.2), (903.5, 15.1, 3.0),
+                (909.0, 9.8, 2.4), (916.0, 16.0, 2.8),
+            )
+            # Search-ledge precipice is independent of the bridge; all rocks
+            # stay below its rim and south of Thomas's y >= -8.2 m passage.
+            ledge = (
+                (1756.0, -27.0, 5.2), (1762.0, -33.0, 7.6),
+                (1769.0, -25.0, 5.8), (1775.0, -35.0, 8.2),
+                (1781.0, -28.0, 5.3),
+            )
+            for index, (x, y, height) in enumerate(bridge + ledge):
+                floor = terrain(x, y)
+                # BasicShapes cone is 1 m tall, sphere is 1 m in diameter.
+                # A sunken foot and varied, narrow silhouettes read as shards.
+                width = 1.05 + (index % 4)*0.21
+                if index < len(bridge):
+                    rim = min(terrain(900.0, 0.0), terrain(900.0, 25.0))
+                    height = min(height, max(0.65, rim-floor-3.0))
+                z = floor + height*0.5 - 0.24
+                actor = _scenic_spawn(
+                    rock_mesh, "SPIRE_%02d" % index, x, y, z,
+                    width, width*(0.80+(index % 3)*0.10), height,
+                    rock_material)
+                created.append(actor)
+                counts["spires"] += 1
+
+        if ENABLE_SCENIC_TRAIL_STONES:
+            # Sample the ORIGINAL route without modifying its samples. The
+            # closest stone edge is >= 6 m from its route sample; avoid all
+            # summit/cave approaches and the bridge/convergence neighbourhood.
+            for route_name in ("A", "B", "FLANC"):
+                route = a["ROUTES"][route_name]
+                for index in range(14, len(route)-14, 19):
+                    x, y, _ = route[index]
+                    if x > 1660.0 or 810.0 < x < 1000.0:
+                        continue
+                    left, right = route[index-5], route[index+5]
+                    dx, dy = right[0]-left[0], right[1]-left[1]
+                    length = math.hypot(dx, dy)
+                    if length < 0.01:
+                        continue
+                    nx, ny = -dy/length, dx/length
+                    side = 1.0 if index % 2 else -1.0
+                    distance = 9.0 + (index % 5)
+                    px, py = x + nx*side*distance, y + ny*side*distance
+                    if not (10.0 < px < 1650.0 and -900.0 < py < 900.0):
+                        continue
+                    # Guard against adjacent hairpin bends / the OTHER trail.
+                    if any(math.hypot(px-qx, py-qy) < 7.0
+                           for other in a["ROUTES"].values()
+                           for qx, qy, _ in other[::4]):
+                        continue
+                    radius = 0.45 + (index % 4)*0.12
+                    actor = _scenic_spawn(
+                        mesh_sphere, "TRAIL_%s_%03d" % (route_name, index),
+                        px, py, terrain(px, py) + radius*0.38,
+                        radius*1.65, radius*1.10, radius*0.82,
+                        rock_material)
+                    created.append(actor)
+                    counts["trail_stones"] += 1
+
+        if ENABLE_SCENIC_RAVINE_MIST:
+            material = _scenic_mist_material()
+            for name, x, y, lift, width, thickness, phase in SCENIC_MIST_SPECS:
+                # Low-opacity, flattened volumes are BELOW the walking deck;
+                # objective-time keys are written only to the final film.
+                floor = terrain(x, y)
+                actor = _scenic_spawn(
+                    mesh_sphere, "MIST_" + name, x, y,
+                    floor + lift, width, 4.0, thickness, material)
+                created.append(actor)
+                mist.append((actor, x, y, floor+lift, phase))
+                counts["mist"] += 1
+        journal("scenery_created", counts=counts,
+                collisions="disabled", time_model="objective_time",
+                note="Visual clearance and transparency need Unreal inspection")
+        return tuple(mist)
+    except Exception as exc:
+        for actor in reversed(created):
+            try:
+                actors.destroy_actor(actor)
+            except Exception:
+                pass
+        journal("scenery_skipped", reason=str(exc),
+                note="Optional scenery removed; film generation continues")
+        return ()
+
+
+def scenic_mist_position(x, y, z, phase, objective_minute):
+    """Pure objective-time drift: identical in A, reversed B and camera scrubs."""
+    t = max(0.0, min(62.0, objective_minute))
+    return (x+0.55*math.sin(t*0.11+phase),
+            y+0.45*math.sin(t*0.075+phase),
+            z+0.12*math.sin(t*0.16+phase))
+
+
 def configure_poc_dynamic_shadows():
     """Configure shadows in the generated work map, never in /Game/Main.
 
@@ -7722,6 +7923,9 @@ def finish_generation():
     cleanup_non_animation_polop_cameras()
     _ANIMATION = run_animation_v05_with_legacy_landscape_mapping(_GEOGRAPHY["landscape"])
     configure_poc_dynamic_shadows()
+    # Add props only after the authored terrain/animation have been built.
+    # They are not part of camera, cast, story, or world-coherence checks.
+    _ANIMATION["scenic_mist"] = create_optional_scenery()
     validate_narrative_motion()
     audit_bridge_family_blocking()
     validate_sequencer_evaluation()
