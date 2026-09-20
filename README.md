@@ -2,7 +2,7 @@
 
 ## Source canonique
 
-La bible narrative absolue est **`Script_POLOP.md`**. Les anciennes versions dans `archive/` sont historiques uniquement.
+Le **film — manuscrit** de référence est **`Script_POLOP.md`** : il suit les plans, les gestes, les dialogues et les découvertes du spectateur, sans exposer à l'avance la mécanique du récit. Les explications de géographie et de continuité temporelle sont regroupées dans **`docs/BIBLE_EXPLICATIVE_POLOP.md`** (annexe de travail, non filmique). Les anciennes versions dans `archive/` sont historiques uniquement.
 
 ## Projet de référence — un seul dépôt
 
