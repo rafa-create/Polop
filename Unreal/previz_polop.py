@@ -6837,10 +6837,14 @@ def build_omniscient_edit():
             far_x, far_y = ledge[0]-12.0, ledge[1]-15.0
             far_eye = (far_x, far_y,
                        max(ledge[2]+9.0, a["terrain_z_m"](far_x, far_y)+3.0))
+            # Keep Eva and Lea as the dramatic center; place the apparent
+            # closed rock face and the cliff lip in the surrounding frame.
+            # Do not aim down the cliff slope or toward the hidden entrance.
+            lea = a["eval_actor"]("LEA", t)
             far_target = (
-                0.40*edge[0]+0.60*cave_exterior[0],
-                0.40*edge[1]+0.60*cave_exterior[1],
-                0.40*edge[2]+0.60*cave_exterior[2]+1.0
+                0.55*subject[0]+0.20*lea[0]+0.15*edge[0]+0.10*cave_exterior[0],
+                0.55*subject[1]+0.20*lea[1]+0.15*edge[1]+0.10*cave_exterior[1],
+                0.55*subject[2]+0.20*lea[2]+0.15*edge[2]+0.10*cave_exterior[2]+1.1
             )
             alpha = 1.0 if code == "A14" else max(0.0, min(1.0, (t-57.0)/1.45))
             alpha = alpha*alpha*(3.0-2.0*alpha)
