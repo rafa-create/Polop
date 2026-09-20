@@ -51,6 +51,7 @@ ENABLE_SCENIC_SPIRES = True
 ENABLE_SCENIC_TRAIL_STONES = True
 ENABLE_SCENIC_RAVINE_MIST = True
 ENABLE_SCENIC_BRIDGE_WATER = True  # Optional still-water visual under the bridge.
+ENABLE_SCENIC_BRIDGE_MASONRY = True  # Collision-free, local generated bridge facing.
 
 # False: spectator-readable narrative captions; no technical notes/spoilers in A.
 # True: optional PREVIZ diagnostic notes about unfinished effects and acting.
@@ -7900,6 +7901,33 @@ def _scenic_water_material():
     return material
 
 
+def _scenic_bridge_stone_material():
+    """Matte stone for the optional bridge-facing details in this run only."""
+    name = "M_POLOP_SCENIC_BRIDGE_STONE"
+    folder = RUN_ASSET_ROOT + "/Materials"
+    unreal.EditorAssetLibrary.make_directory(folder)
+    path = folder + "/" + name
+    if unreal.EditorAssetLibrary.does_asset_exist(path):
+        return unreal.load_asset(path)
+    material = unreal.AssetToolsHelpers.get_asset_tools().create_asset(
+        name, folder, unreal.Material, unreal.MaterialFactoryNew())
+    if material is None:
+        raise RuntimeError("Could not create scenic bridge-stone material")
+    color = unreal.MaterialEditingLibrary.create_material_expression(
+        material, unreal.MaterialExpressionConstant3Vector, -320, 0)
+    color.set_editor_property("constant", unreal.LinearColor(0.29, 0.27, 0.23, 1.0))
+    unreal.MaterialEditingLibrary.connect_material_property(
+        color, "", unreal.MaterialProperty.MP_BASE_COLOR)
+    roughness = unreal.MaterialEditingLibrary.create_material_expression(
+        material, unreal.MaterialExpressionConstant, -320, 160)
+    roughness.set_editor_property("r", 0.90)
+    unreal.MaterialEditingLibrary.connect_material_property(
+        roughness, "", unreal.MaterialProperty.MP_ROUGHNESS)
+    unreal.MaterialEditingLibrary.recompile_material(material)
+    unreal.EditorAssetLibrary.save_loaded_asset(material)
+    return material
+
+
 def create_optional_scenery():
     """Use current run's real heightmap and authored routes, without moving them.
 
@@ -7908,7 +7936,8 @@ def create_optional_scenery():
     essential for occlusion, material and camera effects.
     """
     if not (ENABLE_SCENIC_SPIRES or ENABLE_SCENIC_TRAIL_STONES
-            or ENABLE_SCENIC_RAVINE_MIST or ENABLE_SCENIC_BRIDGE_WATER):
+            or ENABLE_SCENIC_RAVINE_MIST or ENABLE_SCENIC_BRIDGE_WATER
+            or ENABLE_SCENIC_BRIDGE_MASONRY):
         journal("scenery_disabled")
         return ()
     a = _ANIMATION
@@ -7923,7 +7952,8 @@ def create_optional_scenery():
     terrain = a["terrain_z_m"]
     created = []
     mist = []
-    counts = dict(spires=0, trail_stones=0, mist=0, bridge_water=0)
+    counts = dict(spires=0, trail_stones=0, mist=0, bridge_water=0,
+                  bridge_masonry=0)
     try:
         if ENABLE_SCENIC_SPIRES:
             # The bridge ravine is only ~9 m below its deck. Keep the highest
@@ -7992,6 +8022,32 @@ def create_optional_scenery():
                     created.append(actor)
                     counts["trail_stones"] += 1
 
+        if ENABLE_SCENIC_BRIDGE_MASONRY:
+            # Give the underside a readable stone face, without replacing the
+            # existing walkable deck, guardrails, pillar or collision geometry.
+            # All pieces are beneath the deck and well clear of the landings.
+            masonry_mesh = unreal.load_asset("/Engine/BasicShapes/Cube.Cube")
+            if masonry_mesh is None:
+                raise RuntimeError("BasicShapes cube unavailable for bridge facing")
+            masonry_material = _scenic_bridge_stone_material()
+            left_bank, right_bank = terrain(900.0, 0.0), terrain(900.0, 25.0)
+            deck_level = min(left_bank, right_bank) + 0.45
+            # The old tablier spans y=0..25 at x=900. Stone ribs run across its
+            # underside; two short side strips mask the uniform block silhouette.
+            for index, y in enumerate((3.0, 8.0, 13.0, 18.0, 23.0)):
+                actor = _scenic_spawn(
+                    masonry_mesh, "BRIDGE_RIB_%02d" % index,
+                    900.0, y, deck_level-0.32,
+                    2.0, 0.32, 0.24, masonry_material)
+                created.append(actor)
+                counts["bridge_masonry"] += 1
+            for index, x in enumerate((898.98, 901.02)):
+                actor = _scenic_spawn(
+                    masonry_mesh, "BRIDGE_SIDE_%02d" % index,
+                    x, 12.5, deck_level-0.26,
+                    0.12, 24.0, 0.27, masonry_material)
+                created.append(actor)
+                counts["bridge_masonry"] += 1
         if ENABLE_SCENIC_BRIDGE_WATER:
             # Narrow, shallow visual river on the existing ravine floor. Keep
             # the bridge landings dry and the surface well below the deck.
