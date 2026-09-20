@@ -8072,6 +8072,12 @@ def create_optional_scenery():
                         px, py, terrain(px, py) + radius*0.38,
                         radius*1.65, radius*1.10, radius*0.82,
                         rock_material)
+                    # Varied orientation and slight embedding reduce the
+                    # repeated smooth-sphere appearance along the trail.
+                    actor.set_actor_rotation(unreal.Rotator(
+                        (index % 5 - 2)*5.0,
+                        (index*37 + len(route_name)*19) % 180,
+                        (index % 3 - 1)*7.0), False)
                     created.append(actor)
                     counts["trail_stones"] += 1
 
