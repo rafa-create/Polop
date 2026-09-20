@@ -12,7 +12,8 @@
 
 | Rôle | Fichier ou dossier versionné | Consigne |
 | --- | --- | --- |
-| Bible narrative absolue | `Script_POLOP.md` | Aucune ancienne version, capture, storyboard ou run ne la contredit. Ne pas modifier sans demande narrative explicite. |
+| Film — manuscrit de référence | `Script_POLOP.md` | Décrit seulement ce qui est montré, entendu ou découvert au fil du film ; ne pas le charger d'explications anticipées. Aucune ancienne version, capture, storyboard ou run ne le contredit. | 
+| Bible explicative de travail | `docs/BIBLE_EXPLICATIVE_POLOP.md` | Géographie réelle, raccords et mécanique temporelle destinés à l'équipe, non au spectateur. En cas d'écart narratif, le film — manuscrit prime. |
 | Projet Unreal à ouvrir | **`polop.uproject`** (minuscules, à la racine) | UE **5.8.2** est la version locale testée. `EngineAssociation: "5.8"` ; conserver PythonScriptPlugin et SequencerScripting actifs. |
 | Carte source de démarrage | `Content/Main.umap` = `/Game/Main` | Carte versionnée via **Git LFS**, avec Landscape source 1009 × 1009, 16 × 16 composants. **Ne pas enregistrer un run sur cette carte**. Si une évolution du bootstrap doit modifier la carte source, faire une sauvegarde et demander validation spécifique. |
 | Générateur actif unique | **`Unreal/previz_polop.py`** | C'est CE script qu'il faut modifier pour changer la préviz et lancer dans Unreal avec **Tools/Outils > Execute Python Script**. Les fichiers `Unreal/old/` et scripts copiés ailleurs sont historiques, jamais une entrée de production. |
