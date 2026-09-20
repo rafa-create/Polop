@@ -495,3 +495,66 @@ La trajectoire de prévisualisation remplace les grandes cordes droites au-dessu
 Le proxy reste une sphère de blockout ; l'anneau définitif, le contact physique des doigts à 18 h, le contact simultané près du rocher à 17 h, la géométrie et la causalité de l'anfractuosité, la physique des impacts, ainsi que l'ouverture A0 au fond de la rivière **restent à réaliser et à valider**. Le point initial sous le pont est seulement le marqueur temporaire déjà présent, pas le fond de rivière canonique. Les transitions sous le pont et dans la grotte ne sont pas projetées artificiellement sur le Landscape. L'animation par arcs est une approximation visuelle, pas une affirmation de simulation rigide.
 
 À la génération complète (FAST_CAMERA_ONLY=False), le script contrôle l'ordre de ses clés temporelles, l'unicité de la pause et la garde au sol des positions échantillonnées entre 16 h 59 et 17 h 58. Le fichier local Saved/POLOP/Runs/<run_id>/omniscient_edit.json contient un objet ring_blockout avec les repères du trajet et ses limites. Contrôler dans Unreal le passage B4_ANNEAU, les raccords caméra adjacents, la visibilité/occlusion du proxy, le relief de chaque segment et la réversibilité de la lecture A/B. Le contrôle statique de modification sur GitHub ne remplace **ni un run UE 5.8.2 ni une validation visuelle** ; aucun nouveau run Unreal n'a été effectué ici.
+
+
+## Lot matériaux et aperçu Iris Xe — 20 septembre 2026
+
+Base inspectée : `cd42d87`, roadmap #68. UE cible : **5.8.2**.
+Le run antérieur `20260920_125428_943926` indique 36 OK, 0 WARN/FAIL/BLOCKER ;
+il précède ce lot et ne le valide pas.
+
+- `ENABLE_SLOPE_MATERIAL` distingue terre sur surfaces douces et roche sur
+  pentes raides, par un graphe sans texture, bruit procédural ni déplacement.
+- `ENABLE_MATTE_CAST` atténue le brillant du mannequin moteur (rugosité 0,88).
+  Ce matériau uni ne constitue pas un costume. Les meshes civils importés
+  conservent tous leurs matériaux. Aucun asset civil n'a été trouvé parmi
+  les sources du dossier actif ; Git ne suit que `Content/Main.umap`.
+- Les nouveaux matériaux sont isolés dans le dossier du run. Mettre les deux
+  interrupteurs à `False` puis générer un nouveau run pour comparer à l'ancien
+  aspect. Exiger `FAST_CAMERA_ONLY=False` pour cette passe.
+- Bible, trajectoires, poses, phases de marche, contacts 17 h/18 h, caméra,
+  durée du film et géométrie restent identiques. Pas de retargeting ni d'IK
+  des pieds ajoutés ; la marche accélérée et les contacts restent à contrôler.
+  La grotte et les primitives de décor ne sont pas validées par ce lot.
+
+### Prévisualisation légère, indépendante du rendu final
+
+Dans Unreal, exécuter **`Unreal/preview_quality.py`** avec Tools > Execute
+Python Script. Cela alterne aperçu allégé et restauration des valeurs
+précédentes, uniquement pour la session de l'éditeur. Aucun run n'est généré.
+La résolution interne est demandée à 60 %, la fréquence plafonnée à 30,
+les ombres conservées avec résolution réduite, Lumen et le brouillard
+volumétrique désactivés temporairement. L'éclairage change donc : ne pas
+juger le rendu final dans ce mode. Le viewport peut également imposer sa
+propre résolution ; ni 30 FPS ni une qualité finale ne sont garantis.
+
+Exécuter de nouveau le script **avant** de configurer Movie Render Queue.
+Le message de restauration confirme les valeurs relues ; en cas d'échec,
+le script conserve les anciennes valeurs pour une nouvelle tentative.
+La restauration ne crée pas de preset final et n'envoie aucun rendu.
+Les réglages permanents de ray tracing/DX12 ne sont pas modifiés ; ce mode
+ne résout pas à lui seul les limites matérielles au démarrage du projet.
+
+### Validation à effectuer dans UE 5.8.2
+
+Conserver le run de référence. Générer un seul nouveau run, contrôler son
+rapport, puis comparer les mêmes images A1 (silhouettes et pieds), A5
+(pentes), B6 (appuis sur pont), B7/B8 (contact 17 h) et A17/B1 (18 h).
+Vérifier compilation des matériaux, contrastes, absence d'effet métallique,
+ombres aux pieds et lecture de la pente. Comparer les profils sur ce même
+run ; mesurer la fluidité sans changer les temps du film. Faire ensuite un
+court export séparé après restauration. **Aucun nouveau run ni rendu Unreal
+n'a été exécuté pour ce lot** : les tests hors moteur ne valident ni les
+shaders compilés, ni les appuis, ni les performances de l'Iris Xe.
+
+Contrôles hors moteur réalisés : quatre tests `unittest` réussis (bascule,
+restauration après échec partiel, nouvelle exécution du script, compilation
+du générateur et de ses sources intégrées), `git diff --check` sans erreur.
+Comparaison AST avec la base : toutes les fonctions existantes sauf
+`prepare_human_cast` sont identiques ; sources intégrées de géographie et
+d'animation inchangées. Rejouer :
+`python -m unittest discover -s tests -p test_visual_preview.py -v`.
+
+API de référence consultée : [MaterialEditingLibrary](https://dev.epicgames.com/documentation/en-us/unreal-engine/python-api/class/MaterialEditingLibrary?application_version=5.6)
+et [PixelNormalWS](https://dev.epicgames.com/documentation/en-us/unreal-engine/python-api/class/MaterialExpressionPixelNormalWS?application_version=5.6).
+Cette documentation 5.6 ne remplace pas une exécution dans UE 5.8.2.

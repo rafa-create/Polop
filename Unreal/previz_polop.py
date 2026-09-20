@@ -56,6 +56,8 @@ ENABLE_SCENIC_RAVINE_SCREE = True  # Sparse small rocks along ravine banks.
 ENABLE_SCENIC_BRIDGE_WATER_HIGHLIGHTS = True  # Static, collision-free accents.
 ENABLE_SCENIC_BRIDGE_BANKS = True  # Low rubble on the outer banks only.
 ENABLE_SCENIC_BRIDGE_JOINTS = True  # Short stone joints below the walkable deck.
+ENABLE_SLOPE_MATERIAL = True  # Run-local earth/rock colour by surface slope.
+ENABLE_MATTE_CAST = True  # Default mannequin only; never imported clothing.
 ENABLE_SCENIC_TERRAIN_PATCHES = True  # Sparse non-colliding colour patches off trails.
 
 # False: spectator-readable narrative captions; no technical notes/spoilers in A.
@@ -5849,6 +5851,64 @@ def character_performance(name, objective_time):
                 visible=(name != "THOMAS_INVERSE" or 2.0 < t < 62.0))
 
 
+def create_surface_study(name, rgb, roughness, slope=False):
+    """Small texture-free graph, isolated in this run; no source asset edits."""
+    folder = RUN_ASSET_ROOT + "/Materials"
+    unreal.EditorAssetLibrary.make_directory(folder)
+    path = folder + "/" + name
+    if unreal.EditorAssetLibrary.does_asset_exist(path):
+        return unreal.load_asset(path)
+    material = unreal.AssetToolsHelpers.get_asset_tools().create_asset(
+        name, folder, unreal.Material, unreal.MaterialFactoryNew())
+    if material is None:
+        raise RuntimeError("Could not create surface study: " + name)
+    lib = unreal.MaterialEditingLibrary
+
+    def node(kind, x, y, **properties):
+        result = lib.create_material_expression(material, kind, x, y)
+        for key, value in properties.items():
+            result.set_editor_property(key, value)
+        return result
+
+    def connect(source, target, pin):
+        if not lib.connect_material_expressions(source, "", target, pin):
+            raise RuntimeError("Surface study connection failed: " + pin)
+
+    color = node(unreal.MaterialExpressionConstant3Vector, -600, 0,
+                 constant=unreal.LinearColor(*rgb, 1.0))
+    if slope:
+        # Upward surfaces retain earth; steep slopes expose a muted warm rock.
+        # saturate((normal.z - 0.45) * 2) gives a broad, continuous transition.
+        normal = node(unreal.MaterialExpressionPixelNormalWS, -1000, 300)
+        mask = node(unreal.MaterialExpressionComponentMask, -800, 300,
+                    r=False, g=False, b=True, a=False)
+        subtract = node(unreal.MaterialExpressionSubtract, -600, 300, const_b=0.45)
+        multiply = node(unreal.MaterialExpressionMultiply, -400, 300, const_b=2.0)
+        alpha = node(unreal.MaterialExpressionSaturate, -200, 300)
+        rock = node(unreal.MaterialExpressionConstant3Vector, -600, -180,
+                    constant=unreal.LinearColor(0.24, 0.22, 0.19, 1.0))
+        blend = node(unreal.MaterialExpressionLinearInterpolate, 0, 0)
+        for source, target, pin in ((normal, mask, ""),
+                (mask, subtract, "A"), (subtract, multiply, "A"),
+                (multiply, alpha, ""), (rock, blend, "A"),
+                (color, blend, "B"), (alpha, blend, "Alpha")):
+            connect(source, target, pin)
+        color = blend
+    outputs = [(color, unreal.MaterialProperty.MP_BASE_COLOR)]
+    for prop, value, y in ((unreal.MaterialProperty.MP_ROUGHNESS, roughness, 500),
+                           (unreal.MaterialProperty.MP_METALLIC, 0.0, 650),
+                           (unreal.MaterialProperty.MP_SPECULAR, 0.25, 800)):
+        outputs.append((node(unreal.MaterialExpressionConstant, 0, y, r=value), prop))
+    for expression, prop in outputs:
+        if not lib.connect_material_property(expression, "", prop):
+            raise RuntimeError("Surface study output connection failed: " + str(prop))
+    material.set_editor_property("used_with_skeletal_mesh", not slope)
+    lib.recompile_material(material)
+    if not unreal.EditorAssetLibrary.save_loaded_asset(material):
+        raise RuntimeError("Could not save surface study: " + name)
+    return material
+
+
 def prepare_human_cast():
     """Use the articulated tutorial mannequin shipped with Unreal; no downloaded asset."""
     a = _ANIMATION
@@ -5889,13 +5949,15 @@ def prepare_human_cast():
         component.set_skeletal_mesh_asset(chosen)
         resolved_meshes[name] = chosen.get_path_name()
         component.set_collision_enabled(unreal.CollisionEnabled.NO_COLLISION)
-        material = a["ensure_material"]("M_POLOP_CLOTH_"+name, colors[name])
-        material.set_editor_property("used_with_skeletal_mesh", True)
-        unreal.MaterialEditingLibrary.recompile_material(material)
-        unreal.EditorAssetLibrary.save_loaded_asset(material)
-        # Imported civilian meshes keep all of their authored clothing/skin
-        # materials; a solid mannequin tint is only appropriate for the default rig.
+        # Imported civilian meshes keep every authored clothing/skin material.
         if chosen == mesh:
+            if ENABLE_MATTE_CAST:
+                material = create_surface_study("M_POLOP_MATTE_"+name, colors[name], 0.88)
+            else:
+                material = a["ensure_material"]("M_POLOP_CLOTH_"+name, colors[name])
+                material.set_editor_property("used_with_skeletal_mesh", True)
+                unreal.MaterialEditingLibrary.recompile_material(material)
+                unreal.EditorAssetLibrary.save_loaded_asset(material)
             component.set_material(0, material)
         scale = a["ACTOR_HEIGHT_CM"][name]/mesh_height
         actor.set_actor_scale3d(unreal.Vector(scale, scale, scale))
@@ -5905,7 +5967,9 @@ def prepare_human_cast():
             old.set_is_temporarily_hidden_in_editor(True)
     a["human_cast"] = cast
     a["human_animations"] = {True: walk, False: idle}
-    terrain = a["ensure_material"]("M_POLOP_EARTH", (0.17, 0.20, 0.12))
+    terrain = (create_surface_study("M_POLOP_SLOPE_EARTH", (0.17, 0.20, 0.12), 0.94, slope=True)
+               if ENABLE_SLOPE_MATERIAL else
+               a["ensure_material"]("M_POLOP_EARTH", (0.17, 0.20, 0.12)))
     _GEOGRAPHY["landscape"].set_editor_property("landscape_material", terrain)
     # Soft reflected entrance light, rather than a supernatural glow.
     light_point = a["cave_ground_point"](0.25, 0.0, 2.3)
@@ -5916,6 +5980,8 @@ def prepare_human_cast():
     light.set_intensity(160.0)
     light.set_attenuation_radius(750.0)
     light.set_light_color(unreal.LinearColor(1.0, 0.84, 0.65, 1.0))
+    journal("surface_study", slope=ENABLE_SLOPE_MATERIAL, matte_cast=ENABLE_MATTE_CAST,
+            scope="generated run only; no clothing assets or foot IK added")
     journal("articulated_cast_created", mesh=mesh.get_path_name(),
             resolved_meshes=resolved_meshes,
             limitation="optional same-skeleton casting; no retargeting, final acting or asset download")
