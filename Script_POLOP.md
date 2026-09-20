@@ -1,8 +1,6 @@
 Polop
 
-**Bible narrative absolue et source canonique unique du projet.**
-
-Toute prévisualisation Unreal, storyboard, BD, schéma ou document de conception doit se conformer à ce fichier. Les anciennes versions de scénario archivées servent uniquement d’historique et ne peuvent pas le corriger silencieusement.
+Film — manuscrit.
 
 ⸻
 
@@ -54,11 +52,9 @@ A1 — 16h58 — LA RANDONNÉE
 
 EXT. MONTAGNE — FIN D’APRÈS-MIDI
 
-Thomas, Éva et Léa avancent sur l'unique chemin de randonnée, qui contourne le relief en une boucle continue.
+Thomas, Éva et Léa avancent sur un sentier à flanc de montagne.
 
-La géographie principale repose sur **un seul chemin de randonnée continu, en boucle autour du relief**. Il n'existe ni chemin A ni chemin B, ni choix entre deux itinéraires concurrents : le sentier se poursuit sur l'autre versant, même lorsque la montagne en masque la continuité. Les personnages peuvent le parcourir en sens opposés et voir, de loin, une autre portion de ce même chemin sans reconnaître immédiatement qu'il s'agit de sa suite. Dans la zone haute, la caverne traverse le relief entre deux points de la boucle : une entrée discrète s'ouvre depuis une petite plateforme ; une seconde ouverture, beaucoup plus vaste et plus loin dans la roche, débouche sur la portion du sentier de l'autre versant. Depuis la première portion et la plateforme, la montagne masque entièrement cette grande sortie.
-
-Plus bas, le sentier contourne un creux par le flanc rocheux. Un petit pont enjambe ce creux et sert de raccourci entre deux points de **la même boucle**, sans constituer un autre chemin de randonnée. Léa peut traverser le pont pour rejoindre une portion plus loin sur la boucle, puis revenir vers sa famille par le détour du flanc. Depuis le pont et le flanc, les directions et les lignes de vue doivent rester raccord avec les déplacements de Thomas, Éva et Léa.
+Un creux s'ouvre au-dessous du sentier. Un petit pont le franchit ; plus loin, le sentier longe le flanc rocheux.
 
 Le pont est étroit. Son cordage est usé, mais tient. Un mousqueton simple assure l’un de ses points d’attache.
 
@@ -74,7 +70,7 @@ Non, non. Après cette montée, il reste juste toutes les autres.
 
 Léa éclate de rire. Éva donne une petite tape sur le bras de Thomas. Il rit avec elles et reprend la marche.
 
-Léa aperçoit le pont. Sans prévenir, elle emprunte ce raccourci au-dessus du creux et rejoint, de l'autre côté, la suite du même sentier.
+Léa aperçoit le pont. Sans prévenir, elle le traverse.
 
 ÉVA
 Doucement.
@@ -99,7 +95,7 @@ Vous venez ?
 ÉVA
 On arrive. Mais tu nous fais faire le grand tour, là. Je comprends, c’est marrant de prendre le pont.
 
-Thomas reste sur leur portion du sentier, sans traverser. Éva s'est arrêtée un peu plus loin, près de l'endroit où le détour du flanc rejoint cette portion de la boucle. Elle sort son appareil et photographie le paysage. Thomas marche encore en retrait, entre le relief et elle.
+Thomas ne traverse pas. Éva s'arrête un peu plus loin et photographie le paysage. Thomas marche encore en retrait, entre le relief et elle.
 
 ⸻
 
@@ -107,11 +103,11 @@ A2 — VERS 17h00–17h01 — LE RETOUR DE LÉA
 
 La musique reste légère, dans la continuité naturelle de la randonnée.
 
-De l'autre côté du creux, Léa s'éloigne du pont. Elle descend quelques pas sur la suite du sentier, vers le détour du flanc qui la ramènera auprès de ses parents.
+De l'autre côté du creux, Léa s'éloigne du pont et descend de quelques pas.
 
-Plus bas sur la portion du sentier où elle attend Léa, près de l'arrivée du flanc, Éva prend des photos. Elle cadre la montagne, puis s'écarte du sentier pour chercher un autre angle.
+Plus bas, Éva prend des photos. Elle cadre la montagne, puis s'écarte du sentier pour chercher un autre angle.
 
-La caméra omnisciente reste d'abord avec Léa et Éva. Thomas avance seul sur sa portion du sentier, en retrait, le long du relief rocheux. Il ralentit et regarde au loin Léa qui marche sur l'autre portion visible de la même boucle, du pont vers le départ du flanc. Il s'arrête brièvement, absorbé par sa fille : son attention quitte le sentier devant lui.
+La caméra omnisciente reste d'abord avec Léa et Éva. Thomas avance seul en retrait, le long du relief rocheux. Il ralentit et regarde Léa, visible au loin entre les rochers. Il s'arrête brièvement, absorbé par sa fille : son attention quitte le sentier devant lui.
 
 À 17 h 00 exactement, l'autre Thomas surgit au dernier moment du détour du rocher et le percute accidentellement. Le même instant objectif correspond au contact de l'anneau avec Thomas, dont la trajectoire complète reste hors champ. La caméra demeure principalement avec Thomas normal et laisse le rocher masquer une partie du choc, jamais la totalité de l'image. Un bruit bref se perd parmi les voix et les pas ; Léa continue à descendre sur sa portion du sentier, sans voir l'autre Thomas.
 
@@ -133,13 +129,13 @@ C'est plus long.
 THOMAS
 Oui.
 
-Léa reprend sa descente, puis s'engage sur le détour du flanc pour rejoindre ses parents de l'autre côté du creux, sur la même boucle. La caméra accompagne brièvement son mouvement avant de retrouver Éva, qui abaisse son appareil.
+Léa reprend sa marche par le flanc rocheux pour rejoindre ses parents. La caméra accompagne brièvement son mouvement avant de retrouver Éva, qui abaisse son appareil.
 
 Éva continue tranquillement de photographier le paysage pendant que Léa contourne le creux. Thomas regarde brièvement Léa s'éloigner sur le flanc, puis rejoint Éva sans que ce choix de chemin devienne un sujet de conversation.
 
 La première lecture privilégie Éva, son appareil et son départ vers la montée. Thomas et Léa restent visibles en arrière-plan ou en bord de cadre, sans gros plan sur le trouble de Léa ni sur le signe de tête. Toutes leurs paroles sont audibles, mais le léger incident se lit d'abord comme un trébuchement et un étourdissement passager. La caméra garde le plan-séquence sans coupe et ne quitte pas l'espace continu du chemin.
 
-Quand Léa les rejoint sur leur portion du sentier, Éva s'est avancée de quelques pas pour photographier le paysage. Elle reste à portée de voix, mais à distance de Thomas et Léa. Le sentier continue en une seule boucle : « plus bas » désigne la portion qu'ils viennent de parcourir, jamais une bifurcation vers un second itinéraire.
+Quand Léa les rejoint sur leur portion du sentier, Éva s'est avancée de quelques pas pour photographier le paysage. Elle reste à portée de voix, mais à distance de Thomas et Léa. 
 
 Thomas regarde la montée vers le sommet.
 
@@ -257,7 +253,7 @@ Après, comment les gens vont savoir qu’il a souffert ?
 
 A5 — LE PAYSAGE
 
-La caméra quitte la famille et révèle progressivement la géographie : un même sentier s'enroule autour du relief et se poursuit sur l'autre versant, parfois masqué par la montagne. Plus bas, le pont relie directement deux points de ce sentier au-dessus du creux, tandis que le détour rocheux du flanc en constitue la continuation à pied. Aucun plan ne doit présenter ces portions comme deux chemins A et B entre lesquels choisir.
+La caméra quitte la famille et glisse sur le relief. Au-dessous, on retrouve le pont et le sentier qui disparaît derrière la roche.
 
 Une feuille se détache d’une branche et tombe. La caméra la suit un instant avant de retrouver la famille.
 
@@ -330,7 +326,7 @@ La caméra le montre brièvement, sans commentaire des personnages. La musique r
 
 A10 — 17h50 — LA PAUSE
 
-Le sentier unique continue en hauteur, puis contourne le relief sur l'autre versant, près de la caverne. À quelques mètres se trouve une petite zone rocheuse qui paraît fermée : quelques dizaines de mètres carrés entre la paroi et le précipice. Depuis le sentier et cette plateforme, aucune autre sortie n’est visible. La caverne traverse pourtant le relief jusqu'à une autre portion de **la même boucle**, sur le versant opposé ; son débouché lointain est entièrement caché par la montagne.
+Le sentier arrive en hauteur. À quelques mètres, une petite plateforme rocheuse se resserre entre la paroi et le précipice.
 
 L’entrée de la caverne existe dans cette zone, mais son angle est masqué par un décrochement rocheux. Depuis le sentier, elle se confond avec une partie sombre de la paroi.
 
@@ -417,9 +413,7 @@ A13 — LA RECHERCHE
 
 Éva entre dans la zone avec Léa. Elles vérifient réellement les quelques endroits accessibles derrière les rochers.
 
-La recherche est courte précisément parce que l’espace est petit. Il n’y a pas des centaines de mètres carrés à fouiller.
-
-La caverne reste naturellement manquée : son entrée près de la plateforme est masquée par l’angle du décrochement rocheux et, depuis leur trajectoire, se lit comme une continuité sombre de la paroi. Sa grande sortie débouche sur le même sentier, de l'autre côté de la montagne : elle est invisible depuis la plateforme et ne fait pas partie de l'espace qu'elles inspectent.
+Elles passent devant le décrochement sombre sans distinguer d'ouverture. Elles reviennent sur leurs pas.
 
 ÉVA
 Thomas !
@@ -462,7 +456,7 @@ D’accord.
 
 Éva et Léa commencent à descendre par le vrai chemin.
 
-Leur décision ne vient pas d’un abandon de la recherche : la géographie leur fait craindre que Thomas ait chuté.
+Éva jette un dernier regard vers le vide, prend la main de Léa et accélère.
 
 ⸻
 
@@ -476,7 +470,7 @@ Elle revient vers la petite zone rocheuse qu’elles viennent d’inspecter et a
 
 Le décrochement de la paroi révèle alors l’entrée de la caverne : c’est la même zone sombre qui avait brièvement retenu le regard de Thomas.
 
-La caméra y pénètre et découvre Thomas déjà à l’intérieur, seulement à quelques pas de l’entrée. Il n’a pas entrepris une longue exploration et rien ne l’a attiré jusque-là : il a simplement regardé dans l’ouverture puis avancé assez pour découvrir la première partie de la caverne. Plus loin, hors de son regard et derrière un coude rocheux, le passage continue vers une grande ouverture sur l'autre versant, au contact de la suite du même sentier.
+La caméra y pénètre et découvre Thomas à quelques pas de l'entrée. Il observe la cavité devant lui.
 
 La lumière du dehors reste vive derrière lui. Thomas plisse les yeux en entrant ; pendant un instant, les parois de la cavité se perdent dans le noir et seule la première fente lumineuse, près de l'anneau, se détache nettement. Le second faisceau, plus loin derrière un coude rocheux, n'est pas visible depuis sa position. La caméra reste à sa hauteur : ce qui se trouve dans les coins sombres demeure indistinct.
 
@@ -554,11 +548,11 @@ Un trait de lumière apparaît sur son épaule. Il pivote. La caméra pivote ave
 
 Derrière le coude, l'espace s'élargit. Un second jour découpe de plus en plus nettement les pierres sous ses pieds ; le bruit du vent prend de la place, sans qu'on voie encore l'extérieur. Thomas presse le pas. La caméra passe à son côté au moment où il franchit la dernière avancée rocheuse.
 
-EXT. AUTRE VERSANT DE LA BOUCLE — CONTINU
+EXT. VERSANT OPPOSÉ — CONTINU
 
 La lumière ouvre soudain tout le cadre. La caméra, sortie avec lui, poursuit son mouvement : au premier plan, Thomas ; bien plus bas, un repli du terrain, des arbres, le fond du creux ; au loin, la portion du sentier où se trouvent Éva et Léa apparaît par morceaux sur l'autre versant. La roche cache entièrement la petite plateforme et son entrée de la caverne.
 
-Thomas cligne des yeux, laisse le vent lui frapper le visage. Il se retourne : derrière lui, la grande bouche de la caverne ; aucun regard possible jusqu'à la petite entrée. Il repart. Éva et Léa ont disparu de son champ de vision ; Thomas croit qu'elles ne l'ont pas attendu et qu'elles ont poursuivi la randonnée. Il ne reconnaît pas encore que la portion qui descend devant lui est la suite de la même boucle, sur laquelle elles ont repris la direction opposée. Il presse le pas pour les rattraper dans le sens qu'il suppose être le leur. Cette erreur de direction, et non le choix d'un autre chemin, motive sa course.
+Thomas cligne des yeux, laisse le vent lui frapper le visage. Il se retourne vers la grande bouche de la caverne, puis scrute le sentier. Plus aucune trace d'Éva ni de Léa. Il regarde sa montre et se met à courir en descendant.
 
 Une goutte se détache du bord de sa manche, remonte jusqu'à une pointe de roche mouillée. Thomas la suit des yeux. Une seconde goutte fait le même trajet, puis une troisième, tout près de son visage. Il tend un doigt, le retire juste avant qu'elle ne le frôle.
 
@@ -572,11 +566,7 @@ Le sentier tourne sous une épaule rocheuse ; la portion empruntée plus tôt pa
 
 B2 — ÉVA ET LÉA
 
-Plus bas et loin devant lui, Éva et Léa apparaissent sur une autre portion visible de la même boucle, séparée de lui par le relief.
-
-Dans le temps objectif elles descendent chercher de l’aide ; pour Thomas inversé, elles semblent remonter leur trajectoire en marche arrière.
-
-Thomas est déjà en aval de leur position. Le relief les sépare. Elles ne le voient pas. Il les aperçoit par intermittence, mais leurs déplacements à reculons dans son temps inversé ne lui permettent pas encore de comprendre de quel côté elles ont réellement repris la boucle. Il continue dans la direction choisie pour les rejoindre.
+Au loin, entre deux parois, Thomas aperçoit Éva et Léa. Elles semblent remonter le sentier à reculons. Il accélère vers elles, mais le relief les dérobe à sa vue.
 
 ⸻
 
@@ -646,7 +636,7 @@ Il regarde le pont. Sa main rejoint sa montre. Son sourire s'efface. L'eau et le
 
 B5 — VERS 17h30 — LE PONT DÉCROCHÉ
 
-En poursuivant la boucle depuis la grande sortie de la caverne, Thomas arrive dans la zone basse du creux. Le pont offre un raccourci entre deux points du même sentier ; le détour par le flanc permet de continuer sans traverser.
+Thomas revient au creux. Le pont apparaît devant lui.
 
 Thomas arrive à portée visuelle du pont.
 
@@ -670,13 +660,13 @@ CLAC.
 
 Le même son métallique que lors de la traversée de Léa à 16h59.
 
-Thomas vérifie visiblement l'attache, puis se presse vers le pont et le traverse pour rejoindre la portion du sentier où se trouve Éva. Dans la chronologie objective unique, le geste de raccrochage que vit Thomas inversé correspond, en lecture normale, au décrochage du mousqueton **vers 17 h 01**, après la collision de 17 h 00. Le cordage doit rester traversable dans les deux lectures de cette même histoire. Léa reste sur le flanc et ne voit pas Thomas inversé : dans la chronologie objective, Thomas normal l'a dissuadée de reprendre le pont. Le danger que Thomas inversé anticipe ne devient donc pas une seconde traversée de Léa. De l'autre côté du creux, Éva photographie toujours le paysage, le dos tourné vers son passage.
+Thomas vérifie l'attache, traverse le pont et rejoint le sentier. De l'autre côté du creux, Éva photographie le paysage, le dos tourné vers lui.
 
 ⸻
 
 B7 — VERS 17h00 — LA CONVERGENCE
 
-Thomas inversé débouche du pont sur la portion du sentier empruntée par sa famille et se hâte le long du relief, sur **la même portion de la boucle qu'emprunte Thomas normal**, parcourue dans l'autre sens de temps. Il accélère par un réflexe simple : éviter d'être aperçu par Éva et Léa, dont il perçoit les gestes à rebours. Il ne calcule pas la boucle et ne cherche pas à en changer le cours ; devant sa famille, il se soustrait instinctivement aux regards. Éva reste plus bas sur cette portion de la boucle, absorbée par ses photos. Léa poursuit son trajet sur le flanc, de l'autre côté du creux. Ni l'une ni l'autre ne regarde vers Thomas inversé.
+Thomas débouche du pont et se hâte le long du relief. Plus bas, Éva photographie le paysage ; Léa marche sur le flanc opposé. Thomas se plaque un instant contre la roche pour ne pas être vu, puis repart.
 
 La masse du rocher lui cache physiquement Thomas normal jusqu'au dernier moment. Celui-ci ralentit puis marque une courte pause en regardant Léa au loin, sur l'autre portion visible du sentier. Du point de vue de Thomas inversé, le mouvement de son double s'effectue à rebours sur ce même sentier. Thomas inversé découvre l'autre Thomas en débouchant du détour, tente de se décaler, mais n'a plus le temps de l'éviter.
 
@@ -809,7 +799,7 @@ Puis elle commence un lent dézoom, continu, presque impossible.
 
 La famille devient plus petite dans le cadre.
 
-Le sentier apparaît progressivement dans son ensemble : il se prolonge derrière le relief et revient sur lui-même en une seule boucle. Le creux, le raccourci du pont et le détour du flanc deviennent lisibles comme les parties d'une même géographie. Plus haut, la zone du précipice et les deux ouvertures cachées l'une de l'autre de la caverne prennent leur place dans cet ensemble. Ce dézoom répond au zoom de l'ouverture : le spectateur peut enfin relier le point de départ, la sortie empruntée par Thomas et les directions opposées de la famille, sans découvrir de chemin A ou B.
+Le recul dévoile les deux versants. Le sentier réapparaît derrière la montagne et rejoint, en une seule boucle, la portion que la famille vient de parcourir. Plus haut, les deux ouvertures de la caverne se découvrent de part et d'autre du relief. Le pont et le détour rocheux se dessinent dans le même paysage. Le mouvement de caméra répond à celui de l'ouverture.
 
 Le dézoom continue encore.
 
