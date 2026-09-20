@@ -6371,8 +6371,9 @@ def build_omniscient_edit():
         return (x, y, terrain(x, y)+lift)
 
     # In Thomas's inverse-time view (62 -> 2): rocky exit, successive short
-    # hops, a staged stream crossing around 17:37-17:42, a long unseen rest
-    # in a crevice from 17:32 to 17:18, then a final approach to the 17 h rock.
+    # hops, a staged stream crossing at objective minutes 37-42 (17:35-17:40),
+    # a long unseen crevice rest at minutes 18-32 (17:16-17:30),
+    # then a final approach to the 17 h rock.
     # No water, crevice collision or deer animation is claimed by these keys.
     wedge = ring_ground(closure[0]+24.0, closure[1]+11.0)
     ring_waypoints = (
