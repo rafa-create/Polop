@@ -8033,6 +8033,11 @@ def create_optional_scenery():
                     x, y, floor+height*0.24,
                     width*1.55, width*(0.85+(index % 3)*0.12), height,
                     rock_material)
+                # Rotate each stone to break up the repeated primitive silhouette.
+                # Only optional, non-colliding generated scenery is affected.
+                actor.set_actor_rotation(unreal.Rotator(
+                    (index % 5 - 2)*4.0, (index*47) % 180, (index % 3 - 1)*6.0),
+                    False)
                 created.append(actor)
                 counts["ravine_scree"] += 1
         if ENABLE_SCENIC_TRAIL_STONES:
