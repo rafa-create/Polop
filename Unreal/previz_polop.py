@@ -6129,7 +6129,7 @@ def build_cast_closure_probe():
 def update_existing_omniscient_camera(shots, desired_pose, reveal_pose, reveal_clearance, opening_pose):
     """Fast pass: replace ONLY the existing camera's transform keys.
 
-    Keep the original film sequence, all cast tracks/poses, 17 pauses,
+    Keep the original film sequence, all cast tracks/poses and story beats,
     subtitle tracks, camera cut, world actors and Landscape untouched.
     """
     a = _ANIMATION
@@ -6397,41 +6397,41 @@ def build_omniscient_edit():
 
     # code, screen seconds, objective minute endpoints, focus, camera offset (m)\n    # Pitch rhythm: compress repetitive travel/search, not the cave contact,\n    # inverse cave exit, carabiner repair, bridge crossing or causal closure.
     shots = [
-        ("PAUSE_INTRO", 6, 0, 0, "LEA", (-8, -12, 7)),
-        ("A1", 12, 0, 2, "LEA", (-8, -12, 7)),
+        ("PAUSE_INTRO", 6, 0, 0.25, "LEA", (-8, -12, 7)),
+        ("A1", 12, 0.25, 2, "LEA", (-8, -12, 7)),
         ("A2", 18, 2, 8, "LEA", (-5, -9, 4)),
-        ("PAUSE_DETOUR", 6, 8, 8, "LEA", (-5, -9, 4)),
-        ("A3_A4", 12, 8, 20, "EVA", (-8, -10, 5)),
-        ("PAUSE_THOMAS", 5, 20, 20, "EVA", (-8, -10, 5)),
-        ("A5_GEOGRAPHIE", 7, 20, 24, "EVA", (-45, -65, 40)),
-        ("PAUSE_CHEMINS", 7, 24, 24, "EVA", (-45, -65, 40)),
-        ("A6_A8", 12, 24, 32, "THOMAS_NORMAL", (-8, -12, 6)),
+        ("PAUSE_DETOUR", 6, 8, 9, "LEA", (-5, -9, 4)),
+        ("A3_A4", 12, 9, 20, "EVA", (-8, -10, 5)),
+        ("PAUSE_THOMAS", 5, 20, 21, "EVA", (-8, -10, 5)),
+        ("A5_GEOGRAPHIE", 7, 21, 24, "EVA", (-45, -65, 40)),
+        ("PAUSE_CHEMINS", 7, 24, 25, "EVA", (-45, -65, 40)),
+        ("A6_A8", 12, 25, 32, "THOMAS_NORMAL", (-8, -12, 6)),
         ("A9_PONT", 4, 32, 32.2, "THOMAS_NORMAL", (-18, -35, 20)),
-        ("PAUSE_ATTACHE", 6, 32.2, 32.2, "THOMAS_NORMAL", (-18, -35, 20)),
-        ("A10", 10, 32.2, 52, "EVA", (-10, -12, 6)),
-        ("PAUSE_DEPART", 6, 52, 52, "EVA", (-10, -12, 6)),
-        ("A11_ATTENTE", 12, 52, 56, "EVA", (-8, -11, 4.5)),
-        ("PAUSE_ATTENTE", 7, 56, 56, "EVA", (-8, -11, 4.5)),
-        ("A12_A13", 12, 56, 59, "EVA", (9, -16, 6)),
-        ("PAUSE_RECHERCHE", 7, 59, 59, "EVA", (9, -16, 6)),
-        ("A14", 6, 59, 60, "EVA", (9, -16, 6)),
+        ("PAUSE_ATTACHE", 6, 32.2, 32.4, "THOMAS_NORMAL", (-18, -35, 20)),
+        ("A10", 10, 32.4, 52, "EVA", (-10, -12, 6)),
+        ("PAUSE_DEPART", 6, 52, 52.4, "EVA", (-10, -12, 6)),
+        ("A11_ATTENTE", 12, 52.4, 56, "EVA", (-8, -11, 4.5)),
+        ("PAUSE_ATTENTE", 7, 56, 56.15, "EVA", (-8, -11, 4.5)),
+        ("A12_A13", 12, 56.15, 59, "EVA", (9, -16, 6)),
+        ("PAUSE_RECHERCHE", 7, 59, 59.08, "EVA", (9, -16, 6)),
+        ("A14", 6, 59.08, 60, "EVA", (9, -16, 6)),
         ("A15_A16", 16, 60, 61.95, "CAVE", (0, 0, 0)),
-        ("PAUSE_REVELATION", 6, 61.95, 61.95, "CAVE", (0, 0, 0)),
-        ("A17", 5, 61.95, 62, "CAVE", (0, 0, 0)),
+        ("PAUSE_REVELATION", 6, 61.95, 61.97, "CAVE", (0, 0, 0)),
+        ("A17", 5, 61.97, 62, "CAVE", (0, 0, 0)),
         ("PAUSE_CONTACT", 7, 62, 62, "CAVE", (0, 0, 0)),
         ("B1", 16, 62, 60.2, "CAVE", (0, 0, 0)),
-        ("PAUSE_OBSCURITE", 6, 60.2, 60.2, "CAVE", (0, 0, 0)),
-        ("B2", 10, 60.2, 59.4, "THOMAS_INVERSE", (-14, 20, 9)),
-        ("PAUSE_FAMILLE", 6, 59.4, 59.4, "THOMAS_INVERSE", (-14, 20, 9)),
-        ("B3_B4", 16, 59.4, 32, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("PAUSE_OBSCURITE", 6, 60.2, 60.12, "CAVE", (0, 0, 0)),
+        ("B2", 10, 60.12, 59.4, "THOMAS_INVERSE", (-14, 20, 9)),
+        ("PAUSE_FAMILLE", 6, 59.4, 59.1, "THOMAS_INVERSE", (-14, 20, 9)),
+        ("B3_B4", 16, 59.1, 32, "THOMAS_INVERSE", (-9, 12, 5)),
         # ONE ring insert during the inverse descent; same underlying worldline.
         ("B4_ANNEAU", 6, 42, 37, "THOMAS_INVERSE", (-9, 12, 5)),
-        ("PAUSE_RETOUR", 6, 32, 32, "THOMAS_INVERSE", (-9, 12, 5)),
-        ("B5_PONT", 4, 32, 31.9, "THOMAS_INVERSE", (-12, 18, 10)),
-        ("PAUSE_PONT_RETOUR", 5, 31.9, 31.9, "THOMAS_INVERSE", (-12, 18, 10)),
+        ("PAUSE_RETOUR", 6, 32, 31.98, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("B5_PONT", 4, 31.98, 31.9, "THOMAS_INVERSE", (-12, 18, 10)),
+        ("PAUSE_PONT_RETOUR", 5, 31.9, 31.88, "THOMAS_INVERSE", (-12, 18, 10)),
         # Preserve the same 22 s B6 screen budget, but reserve six seconds
         # for the B-bank repair BEFORE crossing, in the inverse's own time.
-        ("B6_FAMILY_APPROACH", 4, 31.9, 25.5, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("B6_FAMILY_APPROACH", 4, 31.88, 25.5, "THOMAS_INVERSE", (-9, 12, 5)),
         # A moving five-second family view, NOT a freeze at 17:25.
         # Objective time decreases throughout: Eva, Lea and normal Thomas
         # walk backwards with their existing reversed skeletal animations.
@@ -6439,23 +6439,38 @@ def build_omniscient_edit():
         ("B6_FAMILY_RETURN", 4, 24.5, 24.3, "THOMAS_INVERSE", (-9, 12, 5)),
         ("B6", 12, 24.3, 3.16, "THOMAS_INVERSE", (-9, 12, 5)),
         ("B6_REPAIR", 6, 3.16, 3.0, "THOMAS_INVERSE", (-5, 5, 3)),
-        ("PAUSE_MOUSQUETON", 7, 3.0, 3.0, "THOMAS_INVERSE", (-5, 5, 3)),
-        ("B6_TRAVERSEE", 6, 3.0, 2.5, "THOMAS_INVERSE", (-6, -8, 3)),
+        ("PAUSE_MOUSQUETON", 7, 3.0, 2.98, "THOMAS_INVERSE", (-5, 5, 3)),
+        ("B6_TRAVERSEE", 6, 2.98, 2.5, "THOMAS_INVERSE", (-6, -8, 3)),
         ("B7_B8", 8, 2.5, 2, "THOMAS_INVERSE", (-6, -8, 3)),
         ("PAUSE_BOUCLE", 7, 2, 2, "THOMAS_INVERSE", (-6, -8, 3)),
         ("B9", 12, 2, 8, "THOMAS_NORMAL", (-5, -9, 4)),
-        ("PAUSE_ISSUE", 6, 8, 8, "THOMAS_NORMAL", (-5, -9, 4)),
-        ("B9_ELOIGNEMENT", 8, 8, 12, "THOMAS_NORMAL", (-45, -65, 35)),
+        ("PAUSE_ISSUE", 6, 8, 8.1, "THOMAS_NORMAL", (-5, -9, 4)),
+        ("B9_ELOIGNEMENT", 8, 8.1, 12, "THOMAS_NORMAL", (-45, -65, 35)),
     ]
+    # Retiming checks: no unintended freezes, no lost objective-time joins,
+    # no changed film length. The pre-existing B4_ANNEAU editorial repeat
+    # (42..37) and its return to t=32 are deliberately excluded from join
+    # equality; they need separate visual verification before final delivery.
+    held_contacts = {"PAUSE_CONTACT": 62.0, "PAUSE_BOUCLE": 2.0}
+    for index, (code, seconds, t0, t1, focus, offset) in enumerate(shots):
+        if code in held_contacts:
+            if t0 != t1 or t0 != held_contacts[code]:
+                raise RuntimeError("Contact hold lost objective-time anchor: " + code)
+        elif code.startswith("PAUSE_") and abs(t1-t0) < 1e-9:
+            raise RuntimeError("Narrative caption freezes ongoing action: " + code)
+        if index and code not in ("B4_ANNEAU", "PAUSE_RETOUR"):
+            previous = shots[index-1]
+            if abs(previous[3]-t0) > 1e-6:
+                raise RuntimeError("Objective-time join broken: %s -> %s" %
+                                   (previous[0], code))
+    if sum(shot[1] for shot in shots) != 349:
+        raise RuntimeError("Screen duration changed during caption retiming")
+
     # Aides de lecture pour la PREVIZ uniquement, pas des dialogues canoniques.
-    # Chaque pause maintient le temps objectif exact, y compris le casting.
-    # English-only narrative annotations. No text is shortened or repositioned
-    # to conceal a rendering problem; the screen-space renderer fixes clarity.
-    # Narrative order, all 17 pause lengths and objective-time trajectories are unchanged.\n    # Only redundant walking/search screen beats are shortened for the pitch.
-    # The fixed 17 narrative PAUSE beats stay in the film. The default text
-    # gives a first-time viewer orientation at the instant it becomes useful;
-    # it never advertises the B-side carabiner's future repair during A.
-    # Subtitle dialogue is authored separately at the actual scene beat.
+    # The 17 narrative annotations retain their screen duration, but most
+    # now accompany moving action. Contact holds are explicit exceptions.
+    # The B-side repair is never advertised during the A-side reading.
+    # Subtitle dialogue is still authored separately at the actual scene beat.
     pause_cards = {
         "PAUSE_INTRO": (
             "THOMAS, EVA & LEA",
@@ -7975,7 +7990,7 @@ def main():
             "Required native UMG/Sequencer types unavailable: " + ", ".join(missing))
     if F03_GEOMETRY_ONLY:
         unreal.log("POLOP F03: geometry-only run; no UMG subtitles generated. "
-                   "The 17 pauses remain but their texts are omitted.")
+                   "The 17 annotation beats remain but their texts are omitted.")
     journal("start", script=SOURCE_SCRIPT_PATH, engine=unreal.SystemLibrary.get_engine_version(),
             source_map=SOURCE_MAP, work_map=WORK_MAP,
             source_sha256=hashlib.sha256(open(SOURCE_SCRIPT_PATH, "rb").read()).hexdigest())
