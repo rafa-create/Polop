@@ -2,7 +2,7 @@
 
 > Source narrative canonique : `Script_POLOP.md`
 >
-> Workflow : **script → vérité physique → prévisualisation Unreal → validation → tournage réel**.
+> Workflow actuel : **affinage 3D → génération du film virtuel → revue spectateur → corrections → nouvelle génération**, en boucle jusqu'à validation explicite, puis verrouillage Unreal et tournage réel.
 
 Cette feuille remplace les anciennes étapes V8 devenues historiques. Le projet dispose déjà d'un terrain procédural, de trajectoires A/B, d'une timeline objective, de POV de contrôle, d'un montage omniscient de travail et de rapports automatiques.
 
@@ -26,7 +26,7 @@ Objectif : repartir du Git sur un autre ordinateur sans dépendre d'un ancien pr
 
 ## PHASE 2 — Vérité physique
 
-Avant davantage de polish caméra, verrouiller :
+Pendant les itérations d'affinage 3D et de revue spectateur, contrôler :
 
 - terrain / pont / flanc / routes A et B ;
 - entrée et volume de la grotte ;
@@ -92,7 +92,7 @@ Trois lectures obligatoires :
 2. spectateur puzzle ;
 3. audit causal/physique.
 
-Puis correction → nouvelle simulation → lock Unreal.
+Si la revue révèle un défaut : correction 3D / mise en scène → nouvelle génération complète → nouvelle revue spectateur. Répéter autant que nécessaire ; verrouiller Unreal seulement après validation explicite.
 
 ## PHASE 7 — Tournage réel
 
@@ -121,13 +121,27 @@ caméra, focale, rythme, occultation, lumière, son, jeu.
 
 Quand quelque chose ne marche pas à l'image, identifier d'abord **la couche responsable**. Une correction de mise en scène ne doit jamais masquer un défaut de vérité physique.
 
-## Priorité immédiate
+## État actuel — boucle d'affinage 3D et revue spectateur
 
-1. **#41** — bootstrap local livré et issue clôturée (limite : aucune validation intermachines) ;
-2. **#44** — vérité physique fermeture / anneau / mousqueton / grotte ;
-3. **#47** — séparation réelle Thomas inversé / Éva-Léa vers 17h58 et absence de révélation prématurée ;
-4. **#45** — validation automatique caméra ;
-5. **#42** — modularisation ;
-6. **#46** — film virtuel complet / polish narratif et visuel.
+**Étape active : affiner la prévisualisation 3D, la soumettre à une revue spectateur, corriger, puis recommencer jusqu'à validation explicite.** La connexion du plan-séquence a été validée par l'utilisateur ; cela ne vaut pas validation du film virtuel complet, de la géographie, de la causalité ni de la compréhension du spectateur. Le prochain rendu sert à contrôler la grotte et le précipice après le correctif géographique `fd15fd5` (issues #52 et #53).
 
-Les issues #12, #14 et #21 sont des sous-tâches de #44 ; #13 est une sous-tâche de #46 ; #29 est une idée narrative distincte, sans tâche Codex pour l'instant ; #32 est une règle transversale de validation 3D. #43 a été fusionnée dans #41.
+**Boucle de travail obligatoire, sans passage automatique au tournage :**
+
+1. **Affinage 3D / vérité physique et mise en scène** : corriger un défaut identifié, sans déplacer la causalité pour masquer un problème de caméra ou de décor. Préserver la Bible et le plan-séquence continu.
+2. **Génération du film virtuel complet** : conserver l'identifiant du run et vérifier que les modifications se retrouvent dans le rendu, pas seulement dans le code ou les rapports.
+3. **Revue spectateur** : confronter le rendu à trois lectures — naïve (compréhension sans explication), puzzle (relecture des indices) et causale/physique (temps objectif, trajectoires, géographie et contacts).
+4. **Décision documentée** : relever les défauts observés et mettre à jour les issues concernées. Si un critère échoue ou demeure non vérifié, revenir à l'étape 1 et régénérer. Ne fermer une issue que lorsque **ses propres critères** sont validés ; une caméra continue n'établit pas la validité du pont, de la grotte ou de l'anneau.
+5. **Verrouillage de la prévisualisation (« lock Unreal »)** : seulement après validation explicite du film virtuel et des trois lectures, avec les éventuels écarts résiduels acceptés et documentés. **Alors seulement préparer le tournage réel (phase 7).**
+
+### Ordre de traitement dans la boucle actuelle
+
+- **En cours :** revue du nouveau rendu grotte/précipice (#52, #53). Le correctif de géométrie publié ne constitue pas à lui seul une validation Unreal.
+- **Ensuite :** lisibilité des rives, du pont et du flanc (#51), geste du mousqueton (#55), puis rencontre et occultations de 17 h (#49, #56, #62).
+- **Puis :** trajectoire et topographie de l'anneau (#63), effets du temps inversé (#54), ouverture et décor (#60, #61), jeu familial (#50), cartons et rythme (#57, #58).
+- **En parallèle, sans changer le canon :** piste d'évolution scénaristique du galet (#64). Les contacts précis de l'anneau à 17 h et 18 h restent différés par décision de l'utilisateur.
+
+L'ordre peut évoluer selon les défauts révélés par chaque nouveau rendu. **La continuité caméra est déjà validée par l'utilisateur** ; ne pas rouvrir ce chantier sans nouvel élément. Les phases 2 à 6 ci-dessus sont désormais des axes de vérification **itératifs**, pas des portes successives à franchir une seule fois.
+
+### Passage au tournage
+
+Le tournage réel (phase 7) ne démarre pas au terme d'un nombre fixé d'itérations : il dépend du **feu vert explicite après la revue spectateur et le verrouillage de la prévisualisation**. La préparation technique du tournage peut être documentée en amont, sans considérer la simulation comme approuvée.
