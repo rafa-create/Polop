@@ -6397,7 +6397,7 @@ def build_omniscient_edit():
     a["ring_waypoints"] = ring_waypoints
     a["ring_at_objective_time"] = ring_at_objective_time
 
-    # code, screen seconds, objective minute endpoints, focus, camera offset (m)\n    # Pitch rhythm: compress repetitive travel/search, not the cave contact,\n    # inverse cave exit, carabiner repair, bridge crossing or causal closure.
+    # Code, screen seconds, objective-minute endpoints, focus, camera offset.\n    # Narrative annotations now accompany motion rather than freeze it;\n    # only the two objective-time contact anchors retain deliberate holds.
     shots = [
         ("PAUSE_INTRO", 6, 0, 0.25, "LEA", (-8, -12, 7)),
         ("A1", 12, 0.25, 2, "LEA", (-8, -12, 7)),
@@ -6425,11 +6425,11 @@ def build_omniscient_edit():
         ("PAUSE_OBSCURITE", 6, 60.2, 60.12, "CAVE", (0, 0, 0)),
         ("B2", 10, 60.12, 59.4, "THOMAS_INVERSE", (-14, 20, 9)),
         ("PAUSE_FAMILLE", 6, 59.4, 59.1, "THOMAS_INVERSE", (-14, 20, 9)),
-        ("B3_B4", 16, 59.1, 32, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("B3_B4", 16, 59.1, 42, "THOMAS_INVERSE", (-9, 12, 5)),
         # ONE ring insert during the inverse descent; same underlying worldline.
         ("B4_ANNEAU", 6, 42, 37, "THOMAS_INVERSE", (-9, 12, 5)),
-        ("PAUSE_RETOUR", 6, 32, 31.98, "THOMAS_INVERSE", (-9, 12, 5)),
-        ("B5_PONT", 4, 31.98, 31.9, "THOMAS_INVERSE", (-12, 18, 10)),
+        ("PAUSE_RETOUR", 6, 37, 36.5, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("B5_PONT", 4, 36.5, 31.9, "THOMAS_INVERSE", (-12, 18, 10)),
         ("PAUSE_PONT_RETOUR", 5, 31.9, 31.88, "THOMAS_INVERSE", (-12, 18, 10)),
         # Preserve the same 22 s B6 screen budget, but reserve six seconds
         # for the B-bank repair BEFORE crossing, in the inverse's own time.
@@ -6451,8 +6451,8 @@ def build_omniscient_edit():
     ]
     # Retiming checks: no unintended freezes, no lost objective-time joins,
     # no changed film length. The pre-existing B4_ANNEAU editorial repeat
-    # (42..37) and its return to t=32 are deliberately excluded from join
-    # equality; they need separate visual verification before final delivery.
+    # (42..37) is retained but now joins continuously to B3 and the return
+    # beat. Verify its lens reorientation and sightlines in the new render.
     held_contacts = {"PAUSE_CONTACT": 62.0, "PAUSE_BOUCLE": 2.0}
     for index, (code, seconds, t0, t1, focus, offset) in enumerate(shots):
         if code in held_contacts:
@@ -6460,7 +6460,7 @@ def build_omniscient_edit():
                 raise RuntimeError("Contact hold lost objective-time anchor: " + code)
         elif code.startswith("PAUSE_") and abs(t1-t0) < 1e-9:
             raise RuntimeError("Narrative caption freezes ongoing action: " + code)
-        if index and code not in ("B4_ANNEAU", "PAUSE_RETOUR"):
+        if index:
             previous = shots[index-1]
             if abs(previous[3]-t0) > 1e-6:
                 raise RuntimeError("Objective-time join broken: %s -> %s" %
