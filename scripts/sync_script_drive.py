@@ -16,7 +16,7 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload
 
 FOLDER_ID = "1A5LpnJh_c7cPe0xprY_r9jDFowu48tLc"
-DOC_ID = "1-3JmmVB0da-eE-ewTSjAVzANDJA6udn_lmNIEe995z4"
+DOC_ID = "1gzZ5zgLaNcuPdH4M4pfohNSP_WisfYYy6_2E0_db_fs"
 PDF_NAME = "Script_POLOP.pdf"
 SOURCE = Path("Script_POLOP.md")
 
