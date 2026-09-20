@@ -1708,12 +1708,23 @@ if _cave_shell_end_m - _CAVE_MOUTH_CLEAR_M <= 2.0:
     raise RuntimeError("F03: cave too short for a clear opening")
 _cave_mid_along = (_CAVE_MOUTH_CLEAR_M + _cave_shell_end_m)*0.5
 _cave_mid_x, _cave_mid_y = cave_xy(_cave_mid_along, 0.0)
-_cave_mid_z = terrain_z_m(_cave_mid_x, _cave_mid_y)
-_cave_rot = unreal.Rotator(0, CAVE_YAW_DEG, 0)
+# The entry/contact path is the actual authored walking line. Do not use
+# the terrain sampled at the shell midpoint as a substitute: it can put
+# the floor/roof across the actor's feet or eye line on this steep terrain.
+_cave_mid_fraction = _cave_mid_along / _CAVE_AXIS_LEN
+_cave_mid_z = (CAVE_ENTRY_POINT[2] +
+               (CAVE_CONTACT_POINT[2]-CAVE_ENTRY_POINT[2]) *
+               _cave_mid_fraction)
+_cave_pitch = math.degrees(math.atan2(
+    CAVE_CONTACT_POINT[2]-CAVE_ENTRY_POINT[2], _CAVE_AXIS_LEN))
+_cave_rot = unreal.Rotator(_cave_pitch, CAVE_YAW_DEG, 0)
 _cave_shell_length_cm = int(round(
     (_cave_shell_end_m - _CAVE_MOUTH_CLEAR_M)*100.0))
 
 # Sol fin, volontairement visible pour lire les distances.
+# Its altitude/pitch and those of the walls/roof follow the entry-contact
+# actor line, not a separate Landscape sample. This is visual blockout:
+# verify actual mesh clearances and walkability in the next Unreal run.
 spawn_box(
     "CAVE_REVIEW_FLOOR",
     V(_cave_mid_x*100, _cave_mid_y*100, _cave_mid_z*100 - 8),
@@ -1726,7 +1737,7 @@ spawn_box(
 # Parois latérales : éloignées de 2,35 m de l'axe central.
 for _side, _name in ((2.35, "CAVE_WALL_LEFT"), (-2.35, "CAVE_WALL_RIGHT")):
     _wx, _wy = cave_xy(_cave_mid_along, _side)
-    _wz = terrain_z_m(_wx, _wy) + 1.65
+    _wz = _cave_mid_z + 1.65
     spawn_box(
         _name,
         V(_wx*100, _wy*100, _wz*100),
@@ -1738,7 +1749,7 @@ for _side, _name in ((2.35, "CAVE_WALL_LEFT"), (-2.35, "CAVE_WALL_RIGHT")):
 
 # Plafond suffisamment haut pour que les caméras à 1,55–1,75 m restent libres.
 _roof_x, _roof_y = cave_xy(_cave_mid_along, 0.0)
-_roof_z = terrain_z_m(_roof_x, _roof_y) + 3.35
+_roof_z = _cave_mid_z + 3.35
 spawn_box(
     "CAVE_REVIEW_ROOF",
     V(_roof_x*100, _roof_y*100, _roof_z*100),
@@ -6874,7 +6885,7 @@ def build_omniscient_edit():
                 leg, fraction = 5, (60.28-t)/0.08
             distance_along = sum(lengths[:leg]) + lengths[leg]*max(
                 0.0, min(1.0, fraction))
-            # Follow along the SAME polyline, about 4.5 m behind the actor.
+            # Follow along the SAME 3D polyline, about 4.5 m behind the actor.
             # Unlike lerping between static stage lenses, this cannot sweep
             # through Thomas when the objective time crosses a gallery bend.
             camera_distance = max(0.0, distance_along-4.5)
@@ -6883,7 +6894,13 @@ def build_omniscient_edit():
                     u = min(1.0, camera_distance/max(0.001, segment_length))
                     x = path[i][0]+(path[i+1][0]-path[i][0])*u
                     y = path[i][1]+(path[i+1][1]-path[i][1])*u
-                    eye = (x, y, a["terrain_z_m"](x, y)+1.95)
+                    # Follow the SAME interpolated 3D polyline as the
+                    # inverse actor and the pitched gallery floor. The
+                    # Landscape may lie metres below the artificial cave
+                    # passage; sampling it put the lens inside solid rock.
+                    z = (path[i][2] +
+                         (path[i+1][2]-path[i][2])*u)
+                    eye = (x, y, z+1.95)
                     if code == "PAUSE_OBSCURITE":
                         # Normal Thomas is already outside the other exit.
                         # Favor the inverse and his onward passage, not a
