@@ -1507,6 +1507,28 @@ def ensure_material(name, rgb):
         unreal.MaterialProperty.MP_BASE_COLOR
     )
 
+    # The first finish pass gives generated props plausible non-metallic
+    # responses to light; it deliberately does not alter cast materials.
+    # This is a material study, not a photogrammetry/texture replacement.
+    finish = {
+        "M_ANIM_V05_ROCK": (0.92, 0.0),
+        "M_ANIM_V05_ROCK_READABLE": (0.87, 0.0),
+        "M_ANIM_V05_CAVE": (0.94, 0.0),
+        "M_ANIM_V05_TRAIL": (0.96, 0.0),
+        "M_ANIM_V05_TRAIL_FLANK": (0.96, 0.0),
+        "M_ANIM_V05_BRIDGE_READABLE": (0.78, 0.0),
+        "M_ANIM_V05_ANCHOR": (0.28, 0.78),
+    }
+    if name in finish:
+        roughness_value, metallic_value = finish[name]
+        for prop, value, offset in (
+                (unreal.MaterialProperty.MP_ROUGHNESS, roughness_value, 170),
+                (unreal.MaterialProperty.MP_METALLIC, metallic_value, 330)):
+            scalar = unreal.MaterialEditingLibrary.create_material_expression(
+                mat, unreal.MaterialExpressionConstant, -300, offset)
+            scalar.set_editor_property("r", value)
+            unreal.MaterialEditingLibrary.connect_material_property(
+                scalar, "", prop)
     unreal.MaterialEditingLibrary.recompile_material(mat)
     unreal.EditorAssetLibrary.save_loaded_asset(mat)
 
