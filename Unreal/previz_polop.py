@@ -6453,16 +6453,50 @@ def build_omniscient_edit():
         opening_river="A0 geometry is still absent; under-bridge t=0 is temporary",
     )
 
-    # A sphere is intentionally a legible temporary RING proxy, not the
-    # definitive ring mesh, collision response or 17 h/18 h contact pose.
-    ring_actor = a["spawn_sphere"](
-        "RING_GLOBAL_BLOCKOUT",
-        unreal.Vector(*(v*100.0 for v in ring_waypoints[0][1])),
-        16.0, a["MAT_ANCHOR"], "Objets/Anneau")
-    ring_actor.set_actor_label("PZ_ANIM_RING_GLOBAL_BLOCKOUT", True)
+    # Replace the spherical blocking marker with a small, visibly hollow
+    # sixteen-sided ring. This is a self-contained, no-download PREVIZ mesh
+    # assembled from Engine cubes, NOT a final jewellery asset or rigid body.
+    # Only its root receives Sequencer keys: the worldline and camera are intact.
+    ring_origin = unreal.Vector(*(v*100.0 for v in ring_waypoints[0][1]))
+    ring_actor = a["actors"].spawn_actor_from_class(
+        unreal.Actor, ring_origin, unreal.Rotator(0, 0, 0))
+    if ring_actor is None:
+        raise RuntimeError("Cannot spawn the ring's Sequencer root")
+    ring_actor.set_actor_label("PZ_ANIM_RING_GLOBAL", True)
     ring_actor.set_folder_path("POLOP/Objets/Anneau")
     ring_actor.set_actor_enable_collision(False)
+    ring_radius_cm = 16.0
+    ring_band_width_cm = 3.2
+    ring_band_depth_cm = 2.8
+    ring_sides = 16
+    ring_segments = []
+    for segment_index in range(ring_sides):
+        angle = 2.0*math.pi*segment_index/ring_sides
+        center_x = ring_origin.x + ring_radius_cm*math.cos(angle)
+        center_y = ring_origin.y + ring_radius_cm*math.sin(angle)
+        segment = a["spawn_box"](
+            "RING_BAND_%02d" % segment_index,
+            unreal.Vector(center_x, center_y, ring_origin.z),
+            (2.0*ring_radius_cm*math.sin(math.pi/ring_sides)+0.5,
+             ring_band_width_cm, ring_band_depth_cm),
+            a["MAT_ANCHOR"], "Objets/Anneau",
+            unreal.Rotator(0, math.degrees(angle)+90.0, 0))
+        if segment is None:
+            raise RuntimeError("Ring band segment %d could not spawn" % segment_index)
+        segment.set_actor_enable_collision(False)
+        # KEEP_WORLD retains the authored circular placement at the first
+        # frame; subsequent root transforms move the whole ring as one object.
+        segment.attach_to_actor(
+            ring_actor, "",
+            unreal.AttachmentRule.KEEP_WORLD,
+            unreal.AttachmentRule.KEEP_WORLD,
+            unreal.AttachmentRule.KEEP_WORLD,
+            False)
+        ring_segments.append(segment)
+    if len(ring_segments) != ring_sides:
+        raise RuntimeError("Ring visual assembly is incomplete")
     a["ring_actor"] = ring_actor
+    a["ring_visual_segments"] = ring_segments
     a["ring_waypoints"] = ring_waypoints
     a["ring_at_objective_time"] = ring_at_objective_time
 
