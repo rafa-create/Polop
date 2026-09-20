@@ -6399,12 +6399,12 @@ def build_omniscient_edit():
         ),
         "PAUSE_FAMILY_REVERSE": (
             "ABOUT 5:25 P.M. - HIS FAMILY BELOW",
-            "Thomas glimpses Eva, Lea and his earlier self in the distance.\n"
-            "They walk backward before his eyes; he keeps descending."
+            "Eva, Lea... and Thomas himself, far below.\n"
+            "They walk backward. He cannot reach them from here."
         ),
         "PAUSE_PONT_RETOUR": (
             "ABOUT 5:30 P.M. - THE BRIDGE",
-            "Thomas spots the loose carabiner by the bridge.\nThe game is over: Lea crossed here earlier."
+            "The loose carabiner catches Thomas\u0027s eye.\nLea crossed this bridge earlier."
         ),
         "PAUSE_MOUSQUETON": (
             "5:01 P.M. - THE BRIDGE",
@@ -6413,13 +6413,13 @@ def build_omniscient_edit():
         ),
         "PAUSE_BOUCLE": (
             "5:00 P.M. - THE SAME INSTANT",
-            "The two Thomases collide; the ring touches Thomas.\n"
-            "At 5:00 P.M., he returns to normal time. Why?"
+            "The two Thomases collide as the ring touches Thomas.\n"
+            "What restores normal time: the ring or their contact?"
         ),
         "PAUSE_ISSUE": (
             "THE SAME MOMENT AGAIN",
-            "Thomas is back on the family trail.\n"
-            "Lea is still across the bridge."
+            "Thomas is back in normal time.\n"
+            "Does he remember what is about to happen?"
         ),
     }
     if SUBTITLE_REVIEW_MODE:
@@ -7236,8 +7236,9 @@ def build_omniscient_edit():
         # B9 in the Bible leaves Thomas a step behind Eva and Lea; the
         # mountain gradually swallows the family. Keep the final image clear.
         add_speaker_cues("B9_ELOIGNEMENT", (
-            (0.65, 3.05, "Eva and Lea climb on. Thomas follows behind."),
-            (3.65, 6.35, "The mountain slowly swallows them from view."),
+            (0.35, 2.45, "Thomas hesitates. Does he dare climb again?"),
+            (2.75, 4.95, "What happened to him? Is he trapped in the loop?"),
+            (5.25, 7.55, "Was this already a repetition? For how long?"),
         ))
 
         # The father's departure and the ensuing search are otherwise only
@@ -7256,7 +7257,7 @@ def build_omniscient_edit():
             (0.55, 2.60, "B BANK: THE CARABINER IS LOOSE."),
             (3.05, 5.65, "Thomas reattaches it and checks the fastening."),
         ))
-        expected = len(flank_dialogue_a2)+len(flank_dialogue_b9)+5+4+2+2+2
+        expected = len(flank_dialogue_a2)+len(flank_dialogue_b9)+5+4+2+3+2
         if len(later_dialogue_manifest) != expected:
             raise RuntimeError("Incomplete dialogue in A2/B9, disappearance or B6")
     if not a.get("human_audit_baked"):
