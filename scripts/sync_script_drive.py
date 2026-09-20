@@ -16,6 +16,7 @@ from googleapiclient.http import MediaIoBaseUpload
 FOLDER_ID = "1A5LpnJh_c7cPe0xprY_r9jDFowu48tLc"
 DOC_ID = "1-3JmmVB0da-eE-ewTSjAVzANDJA6udn_lmNIEe995z4"
 PDF_NAME = "Script_POLOP.pdf"
+SCRIPT_NAME = "Script_POLOP.md"
 SOURCE = Path("Script_POLOP.md")
 
 SCOPES = [
@@ -113,6 +114,29 @@ def main():
     # Single batch ensures styles are anchored to the new, never old, content.
     docs.documents().batchUpdate(documentId=DOC_ID, body={"requests": requests}).execute()
 
+    # Publish the exact Markdown source as a separate, directly downloadable Drive file.
+    source_query = "name = '%s' and '%s' in parents and trashed = false" % (SCRIPT_NAME, FOLDER_ID)
+    source_matches = drive.files().list(
+        q=source_query, fields="nextPageToken,files(id,name,mimeType)", pageSize=100
+    ).execute().get("files", [])
+    if len(source_matches) > 1:
+        raise RuntimeError("Several source files have the expected name: refusing to choose one arbitrarily.")
+    if source_matches and source_matches[0]["mimeType"] != "text/markdown":
+        raise RuntimeError("Existing source file is not Markdown; refusing to overwrite.")
+    source_upload = MediaIoBaseUpload(
+        io.BytesIO(text.encode("utf-8")), mimetype="text/markdown", resumable=False
+    )
+    if source_matches:
+        source_result = drive.files().update(
+            fileId=source_matches[0]["id"], media_body=source_upload,
+            fields="id,name,webViewLink", supportsAllDrives=True
+        ).execute()
+    else:
+        source_result = drive.files().create(
+            body={"name": SCRIPT_NAME, "parents": [FOLDER_ID], "mimeType": "text/markdown"},
+            media_body=source_upload, fields="id,name,webViewLink", supportsAllDrives=True
+        ).execute()
+
     pdf = drive.files().export(fileId=DOC_ID, mimeType="application/pdf").execute()
     if not pdf.startswith(b"%PDF"):
         raise RuntimeError("Google Docs did not return a PDF; refusing to upload.")
@@ -128,6 +152,7 @@ def main():
     else:
         result = drive.files().create(body={"name": PDF_NAME, "parents": [FOLDER_ID], "mimeType": "application/pdf"}, media_body=upload, fields="id,name,webViewLink", supportsAllDrives=True).execute()
     print("Updated Google Doc:", "https://docs.google.com/document/d/" + DOC_ID + "/edit")
+    print("Updated Markdown source:", source_result.get("webViewLink", "Drive file ID " + source_result["id"]))
     print("Updated PDF:", result.get("webViewLink", "Drive file ID " + result["id"]))
 
 
