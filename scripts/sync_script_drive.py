@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """Publish the canonical POLOP script to one Google Doc and one PDF in Drive.
 
-GitHub is the source of truth. OAuth credentials belong only in GitHub Actions secrets.
+GitHub is the source of truth. The Google service account key belongs only
+in GitHub Actions secrets (GDRIVE_SA_KEY).
 """
 import io
+import json
 import os
 from pathlib import Path
 
-import google.auth.transport.requests
-from google.oauth2.credentials import Credentials
-from google.auth.exceptions import RefreshError
+from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload
 
@@ -18,87 +18,46 @@ DOC_ID = "1-3JmmVB0da-eE-ewTSjAVzANDJA6udn_lmNIEe995z4"
 PDF_NAME = "Script_POLOP.pdf"
 SOURCE = Path("Script_POLOP.md")
 
+SCOPES = [
+    "https://www.googleapis.com/auth/drive",
+    "https://www.googleapis.com/auth/documents",
+]
+
 
 def credentials():
-    """Refresh the OAuth token and give an actionable, credential-free error."""
-    names = ("GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", "GOOGLE_REFRESH_TOKEN")
-    missing = [name for name in names if not os.environ.get(name, "").strip()]
+    """Build credentials from the service account key stored in GitHub secrets."""
+    raw = os.environ.get("GDRIVE_SA_KEY", "").strip()
+    if not raw:
+        raise RuntimeError(
+            "Secret GDRIVE_SA_KEY absent ou vide. "
+            "Ouvrir Settings > Secrets and variables > Actions > Repository secrets "
+            "et coller le contenu exact du fichier de clé JSON du compte de service."
+        )
+    try:
+        info = json.loads(raw)
+    except json.JSONDecodeError:
+        raise RuntimeError(
+            "GDRIVE_SA_KEY ne contient pas un JSON valide. "
+            "Coller le contenu exact du fichier de clé téléchargé depuis "
+            "Google Cloud (IAM et administration > Comptes de service > Clés)."
+        ) from None
+
+    missing = [k for k in ("client_email", "private_key", "token_uri") if not info.get(k)]
     if missing:
         raise RuntimeError(
-            "Configuration GitHub incomplète : secret(s) absent(s) ou vide(s) : "
+            "GDRIVE_SA_KEY est un JSON incomplet, champ(s) manquant(s) : "
             + ", ".join(missing)
-            + ". Ouvrir Settings > Secrets and variables > Actions > Repository secrets."
+            + ". Retélécharger la clé JSON depuis Google Cloud."
         )
 
-    client_id = os.environ["GOOGLE_CLIENT_ID"].strip()
-    client_secret = os.environ["GOOGLE_CLIENT_SECRET"].strip()
-    refresh_token = os.environ["GOOGLE_REFRESH_TOKEN"].strip()
-    if not client_id.endswith(".apps.googleusercontent.com"):
-        raise RuntimeError(
-            "GOOGLE_CLIENT_ID ne ressemble pas à un ID client OAuth Google "
-            "(il doit se terminer par .apps.googleusercontent.com). "
-            "Ne pas utiliser l'Authorization code à la place."
-        )
-    if refresh_token.startswith("ya29."):
-        raise RuntimeError(
-            "GOOGLE_REFRESH_TOKEN contient un ACCESS token (préfixe ya29.). "
-            "Copier le champ 'Refresh token' de l'étape 2 d'OAuth Playground, "
-            "généré avec le même client OAuth que GOOGLE_CLIENT_ID et GOOGLE_CLIENT_SECRET."
-        )
-    if refresh_token.startswith("4/"):
-        raise RuntimeError(
-            "GOOGLE_REFRESH_TOKEN contient un code d'autorisation temporaire. "
-            "Utiliser le champ 'Refresh token' de l'étape 2 d'OAuth Playground."
-        )
-
-    print("OAuth Google : secrets présents, demande de renouvellement du jeton…", flush=True)
-    creds = Credentials(
-        token=None,
-        refresh_token=refresh_token,
-        token_uri="https://oauth2.googleapis.com/token",
-        client_id=client_id,
-        client_secret=client_secret,
-        scopes=["https://www.googleapis.com/auth/drive"],
-    )
+    print("Compte de service :", info["client_email"], flush=True)
     try:
-        creds.refresh(google.auth.transport.requests.Request())
-    except RefreshError as exc:
-        # Google includes response metadata as a dict in exc.args; never print
-        # the raw exception, HTTP request, authorization code or token values.
-        payload = next((arg for arg in exc.args if isinstance(arg, dict)), {})
-        error = str(payload.get("error", "")).lower()
-        details = {
-            "invalid_client": (
-                "Client OAuth introuvable ou invalide. Vérifier GOOGLE_CLIENT_ID "
-                "et GOOGLE_CLIENT_SECRET dans le même client 'Application Web' de Google Cloud."
-            ),
-            "unauthorized_client": (
-                "Client OAuth non autorisé pour ce renouvellement. Vérifier que le Refresh token "
-                "a été généré dans OAuth Playground avec 'Use your own OAuth credentials' activé "
-                "et avec EXACTEMENT le même ID client et secret que les deux secrets GitHub. "
-                "Tester 'Refresh access token' dans Playground avec ce client ; si nécessaire, "
-                "refaire Step 1 puis Step 2 et remplacer GOOGLE_REFRESH_TOKEN. "
-                "Vérifier aussi que le client OAuth existe toujours et n'est pas désactivé."
-            ),
-            "invalid_grant": (
-                "Refresh token invalide, expiré, révoqué ou émis pour un autre client. "
-                "Régénérer le Refresh token avec le même client OAuth ; si l'application "
-                "Google est en mode Testing, vérifier sa durée de validité."
-            ),
-            "invalid_scope": (
-                "Scope refusé. Autoriser https://www.googleapis.com/auth/drive "
-                "à l'étape 1 d'OAuth Playground, puis générer un nouveau Refresh token."
-            ),
-        }.get(error, (
-            "Échec du renouvellement OAuth Google. Vérifier le client OAuth, "
-            "le Refresh token et les autorisations Google Drive dans OAuth Playground."
-        ))
+        creds = service_account.Credentials.from_service_account_info(info, scopes=SCOPES)
+    except ValueError as exc:
         raise RuntimeError(
-            "::error title=Échec OAuth Google (" + (error or "erreur inconnue") + ")::"
-            + details
-            + " Aucun fichier Drive n'a été modifié."
+            "Impossible de construire les identifiants à partir de GDRIVE_SA_KEY : "
+            + str(exc)
         ) from None
-    print("OAuth Google : renouvellement réussi.", flush=True)
     return creds
 
 
@@ -158,7 +117,7 @@ def main():
     if not pdf.startswith(b"%PDF"):
         raise RuntimeError("Google Docs did not return a PDF; refusing to upload.")
     q = "name = '%s' and '%s' in parents and trashed = false" % (PDF_NAME, FOLDER_ID)
-    matches = drive.files().list(q=q, fields="nextPageToken,files(id,name,mimeType)",pageSize=100).execute().get("files", [])
+    matches = drive.files().list(q=q, fields="nextPageToken,files(id,name,mimeType)", pageSize=100).execute().get("files", [])
     if len(matches) > 1:
         raise RuntimeError("Several PDFs have the expected name: refusing to choose one arbitrarily.")
     if matches and matches[0]["mimeType"] != "application/pdf":
