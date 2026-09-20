@@ -7,6 +7,8 @@ in GitHub Actions secrets (GDRIVE_SA_KEY).
 import io
 import json
 import os
+import sys
+from xml.sax.saxutils import escape
 from pathlib import Path
 
 from google.oauth2 import service_account
@@ -16,7 +18,6 @@ from googleapiclient.http import MediaIoBaseUpload
 FOLDER_ID = "1A5LpnJh_c7cPe0xprY_r9jDFowu48tLc"
 DOC_ID = "1-3JmmVB0da-eE-ewTSjAVzANDJA6udn_lmNIEe995z4"
 PDF_NAME = "Script_POLOP.pdf"
-SCRIPT_NAME = "Script_POLOP.md"
 SOURCE = Path("Script_POLOP.md")
 
 SCOPES = [
@@ -89,71 +90,128 @@ def render_markdown(source):
     return output, styles
 
 
-def main():
-    text = SOURCE.read_text(encoding="utf-8")
-    if not text.strip():
-        raise ValueError("Canonical script is empty; refusing to overwrite Drive.")
-    creds = credentials()
-    drive = build("drive", "v3", credentials=creds, cache_discovery=False)
-    docs = build("docs", "v1", credentials=creds, cache_discovery=False)
-
-    metadata = drive.files().get(fileId=DOC_ID, fields="id,name,mimeType,parents", supportsAllDrives=True).execute()
-    if metadata.get("mimeType") != "application/vnd.google-apps.document" or FOLDER_ID not in metadata.get("parents", []):
-        raise RuntimeError("Target Google Doc is not in the intended Drive folder; refusing to write.")
+def publish_doc(text, drive, docs):
+    """Update the existing native Google Doc; never create a Markdown file."""
+    metadata = drive.files().get(
+        fileId=DOC_ID, fields="id,name,mimeType,parents", supportsAllDrives=True
+    ).execute()
+    if (metadata.get("mimeType") != "application/vnd.google-apps.document"
+            or FOLDER_ID not in metadata.get("parents", [])):
+        raise RuntimeError("Google Doc cible absent du dossier prévu ou de mauvais format.")
 
     old = docs.documents().get(documentId=DOC_ID).execute()
     content = old.get("body", {}).get("content", [])
     end_index = content[-1]["endIndex"] if content else 2
     rendered, style_requests = render_markdown(text)
-    # Deleting through endIndex-1 preserves the mandatory final newline in Google Docs.
     requests = []
     if end_index > 2:
         requests.append({"deleteContentRange": {"range": {"startIndex": 1, "endIndex": end_index - 1}}})
     requests.append({"insertText": {"location": {"index": 1}, "text": rendered}})
     requests.extend(style_requests)
-    # Single batch ensures styles are anchored to the new, never old, content.
     docs.documents().batchUpdate(documentId=DOC_ID, body={"requests": requests}).execute()
+    if metadata.get("name") != "Polop":
+        drive.files().update(
+            fileId=DOC_ID, body={"name": "Polop"}, fields="id", supportsAllDrives=True
+        ).execute()
+    print("Google Docs publié : https://docs.google.com/document/d/" + DOC_ID + "/edit", flush=True)
 
-    # Publish the exact Markdown source as a separate, directly downloadable Drive file.
-    source_query = "name = '%s' and '%s' in parents and trashed = false" % (SCRIPT_NAME, FOLDER_ID)
-    source_matches = drive.files().list(
-        q=source_query, fields="nextPageToken,files(id,name,mimeType)", pageSize=100
+
+def build_pdf(text):
+    """Render a fresh PDF from GitHub source, independently of the Google Doc."""
+    from reportlab.lib import colors
+    from reportlab.lib.enums import TA_CENTER
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib.styles import ParagraphStyle
+    from reportlab.pdfbase import pdfmetrics
+    from reportlab.pdfbase.ttfonts import TTFont
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+
+    font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+    bold_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+    pdfmetrics.registerFont(TTFont("PolopSans", font_path))
+    pdfmetrics.registerFont(TTFont("PolopSansBold", bold_path))
+    pdfmetrics.registerFontFamily("PolopSans", normal="PolopSans", bold="PolopSansBold")
+    normal = ParagraphStyle("Body", fontName="PolopSans", fontSize=10.5, leading=15, spaceAfter=4)
+    title = ParagraphStyle("Title", parent=normal, fontName="PolopSansBold",
+                           fontSize=22, leading=28, spaceAfter=18, alignment=TA_CENTER)
+    heading = ParagraphStyle("Heading", parent=normal, fontName="PolopSansBold",
+                             fontSize=13, leading=18, spaceBefore=15, spaceAfter=8,
+                             textColor=colors.black, keepWithNext=True)
+    buffer = io.BytesIO()
+    story = []
+    for index, raw in enumerate(text.splitlines()):
+        if not raw.strip():
+            story.append(Spacer(1, 6))
+            continue
+        line = raw.strip()
+        if line.startswith(("### ", "## ", "# ")):
+            line = line.lstrip("#").strip()
+            style = heading
+        elif index == 0:
+            style = title
+        elif line.startswith(("A — ", "B — ", "A0 — ", "B0 — ")):
+            style = heading
+        else:
+            style = normal
+        # Escape source markup: Markdown is input text, not ReportLab XML.
+        line = escape(line)
+        if line.startswith("**") and line.endswith("**"):
+            line = "<b>" + line[2:-2] + "</b>"
+        story.append(Paragraph(line, style))
+    SimpleDocTemplate(buffer, pagesize=A4, leftMargin=48, rightMargin=48,
+                      topMargin=50, bottomMargin=50, title="Polop").build(story)
+    pdf = buffer.getvalue()
+    if not pdf.startswith(b"%PDF"):
+        raise RuntimeError("Échec de génération du PDF depuis la source GitHub.")
+    return pdf
+
+
+def publish_pdf(text, drive):
+    pdf = build_pdf(text)
+    q = "name = '%s' and '%s' in parents and trashed = false" % (PDF_NAME, FOLDER_ID)
+    matches = drive.files().list(
+        q=q, fields="nextPageToken,files(id,name,mimeType)", pageSize=100
     ).execute().get("files", [])
-    if len(source_matches) > 1:
-        raise RuntimeError("Several source files have the expected name: refusing to choose one arbitrarily.")
-    if source_matches and source_matches[0]["mimeType"] != "text/markdown":
-        raise RuntimeError("Existing source file is not Markdown; refusing to overwrite.")
-    source_upload = MediaIoBaseUpload(
-        io.BytesIO(text.encode("utf-8")), mimetype="text/markdown", resumable=False
-    )
-    if source_matches:
-        source_result = drive.files().update(
-            fileId=source_matches[0]["id"], media_body=source_upload,
+    if len(matches) > 1 or (matches and matches[0]["mimeType"] != "application/pdf"):
+        raise RuntimeError("Cible PDF ambiguë ou de mauvais format ; aucun écrasement.")
+    upload = MediaIoBaseUpload(io.BytesIO(pdf), mimetype="application/pdf", resumable=False)
+    if matches:
+        result = drive.files().update(
+            fileId=matches[0]["id"], media_body=upload,
             fields="id,name,webViewLink", supportsAllDrives=True
         ).execute()
     else:
-        source_result = drive.files().create(
-            body={"name": SCRIPT_NAME, "parents": [FOLDER_ID], "mimeType": "text/markdown"},
-            media_body=source_upload, fields="id,name,webViewLink", supportsAllDrives=True
+        result = drive.files().create(
+            body={"name": PDF_NAME, "parents": [FOLDER_ID], "mimeType": "application/pdf"},
+            media_body=upload, fields="id,name,webViewLink", supportsAllDrives=True
         ).execute()
+    print("PDF publié :", result.get("webViewLink", "Drive file ID " + result["id"]), flush=True)
 
-    pdf = drive.files().export(fileId=DOC_ID, mimeType="application/pdf").execute()
-    if not pdf.startswith(b"%PDF"):
-        raise RuntimeError("Google Docs did not return a PDF; refusing to upload.")
-    q = "name = '%s' and '%s' in parents and trashed = false" % (PDF_NAME, FOLDER_ID)
-    matches = drive.files().list(q=q, fields="nextPageToken,files(id,name,mimeType)", pageSize=100).execute().get("files", [])
-    if len(matches) > 1:
-        raise RuntimeError("Several PDFs have the expected name: refusing to choose one arbitrarily.")
-    if matches and matches[0]["mimeType"] != "application/pdf":
-        raise RuntimeError("Existing target name is not a PDF; refusing to overwrite.")
-    upload = MediaIoBaseUpload(io.BytesIO(pdf), mimetype="application/pdf", resumable=False)
-    if matches:
-        result = drive.files().update(fileId=matches[0]["id"], media_body=upload, fields="id,name,webViewLink", supportsAllDrives=True).execute()
-    else:
-        result = drive.files().create(body={"name": PDF_NAME, "parents": [FOLDER_ID], "mimeType": "application/pdf"}, media_body=upload, fields="id,name,webViewLink", supportsAllDrives=True).execute()
-    print("Updated Google Doc:", "https://docs.google.com/document/d/" + DOC_ID + "/edit")
-    print("Updated Markdown source:", source_result.get("webViewLink", "Drive file ID " + source_result["id"]))
-    print("Updated PDF:", result.get("webViewLink", "Drive file ID " + result["id"]))
+
+def main():
+    text = SOURCE.read_text(encoding="utf-8")
+    if not text.strip():
+        raise ValueError("Script source vide : publication refusée.")
+    creds = credentials()
+    drive = build("drive", "v3", credentials=creds, cache_discovery=False)
+
+    successes = 0
+    try:
+        docs = build("docs", "v1", credentials=creds, cache_discovery=False)
+        publish_doc(text, drive, docs)
+        successes += 1
+    except Exception as exc:
+        print("::error title=Échec Google Docs::" + str(exc).replace("\\n", " "), file=sys.stderr, flush=True)
+
+    try:
+        publish_pdf(text, drive)
+        successes += 1
+    except Exception as exc:
+        print("::error title=Échec PDF::" + str(exc).replace("\\n", " "), file=sys.stderr, flush=True)
+
+    print(f"Publication : {successes}/2 format(s) réussi(s).", flush=True)
+    if not successes:
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":
