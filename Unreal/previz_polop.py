@@ -52,6 +52,7 @@ ENABLE_SCENIC_TRAIL_STONES = True
 ENABLE_SCENIC_RAVINE_MIST = True
 ENABLE_SCENIC_BRIDGE_WATER = True  # Optional still-water visual under the bridge.
 ENABLE_SCENIC_BRIDGE_MASONRY = True  # Collision-free, local generated bridge facing.
+ENABLE_SCENIC_RAVINE_SCREE = True  # Sparse small rocks along ravine banks.
 
 # False: spectator-readable narrative captions; no technical notes/spoilers in A.
 # True: optional PREVIZ diagnostic notes about unfinished effects and acting.
@@ -7937,7 +7938,7 @@ def create_optional_scenery():
     """
     if not (ENABLE_SCENIC_SPIRES or ENABLE_SCENIC_TRAIL_STONES
             or ENABLE_SCENIC_RAVINE_MIST or ENABLE_SCENIC_BRIDGE_WATER
-            or ENABLE_SCENIC_BRIDGE_MASONRY):
+            or ENABLE_SCENIC_BRIDGE_MASONRY or ENABLE_SCENIC_RAVINE_SCREE):
         journal("scenery_disabled")
         return ()
     a = _ANIMATION
@@ -7953,7 +7954,7 @@ def create_optional_scenery():
     created = []
     mist = []
     counts = dict(spires=0, trail_stones=0, mist=0, bridge_water=0,
-                  bridge_masonry=0)
+                  bridge_masonry=0, ravine_scree=0)
     try:
         if ENABLE_SCENIC_SPIRES:
             # The bridge ravine is only ~9 m below its deck. Keep the highest
@@ -7987,6 +7988,24 @@ def create_optional_scenery():
                 created.append(actor)
                 counts["spires"] += 1
 
+        if ENABLE_SCENIC_RAVINE_SCREE:
+            # Scatter short, irregular stones along the ravine banks, not the
+            # bridge landing or water centre. No landscape sculpting or collision.
+            # Deterministic placement: the same run always has the same props.
+            for index in range(24):
+                x = 879.0 + (index % 12)*3.7
+                bank = -1.0 if index < 12 else 1.0
+                y = (3.3 if bank < 0 else 21.7) + bank*(index % 3)*0.72
+                width = 0.36 + (index % 4)*0.14
+                height = 0.28 + (index % 5)*0.12
+                floor = terrain(x, y)
+                actor = _scenic_spawn(
+                    rock_mesh, "RAVINE_SCREE_%02d" % index,
+                    x, y, floor+height*0.24,
+                    width*1.55, width*(0.85+(index % 3)*0.12), height,
+                    rock_material)
+                created.append(actor)
+                counts["ravine_scree"] += 1
         if ENABLE_SCENIC_TRAIL_STONES:
             # Sample the ORIGINAL route without modifying its samples. The
             # closest stone edge is >= 6 m from its route sample; avoid all
