@@ -50,6 +50,7 @@ FAST_CAMERA_ONLY = False
 ENABLE_SCENIC_SPIRES = True
 ENABLE_SCENIC_TRAIL_STONES = True
 ENABLE_SCENIC_RAVINE_MIST = True
+ENABLE_SCENIC_BRIDGE_WATER = True  # Optional still-water visual under the bridge.
 
 # False: spectator-readable narrative captions; no technical notes/spoilers in A.
 # True: optional PREVIZ diagnostic notes about unfinished effects and acting.
@@ -7820,6 +7821,33 @@ def _scenic_mist_material():
     return material
 
 
+def _scenic_water_material():
+    """Self-contained provisional river colour; no paid/external assets."""
+    name = "M_POLOP_SCENIC_BRIDGE_WATER"
+    folder = RUN_ASSET_ROOT + "/Materials"
+    unreal.EditorAssetLibrary.make_directory(folder)
+    path = folder + "/" + name
+    if unreal.EditorAssetLibrary.does_asset_exist(path):
+        return unreal.load_asset(path)
+    material = unreal.AssetToolsHelpers.get_asset_tools().create_asset(
+        name, folder, unreal.Material, unreal.MaterialFactoryNew())
+    if material is None:
+        raise RuntimeError("Could not create optional bridge water material")
+    color = unreal.MaterialEditingLibrary.create_material_expression(
+        material, unreal.MaterialExpressionConstant3Vector, -320, 0)
+    color.set_editor_property("constant", unreal.LinearColor(0.065, 0.20, 0.24, 1.0))
+    unreal.MaterialEditingLibrary.connect_material_property(
+        color, "", unreal.MaterialProperty.MP_BASE_COLOR)
+    roughness = unreal.MaterialEditingLibrary.create_material_expression(
+        material, unreal.MaterialExpressionConstant, -320, 170)
+    roughness.set_editor_property("r", 0.19)
+    unreal.MaterialEditingLibrary.connect_material_property(
+        roughness, "", unreal.MaterialProperty.MP_ROUGHNESS)
+    unreal.MaterialEditingLibrary.recompile_material(material)
+    unreal.EditorAssetLibrary.save_loaded_asset(material)
+    return material
+
+
 def create_optional_scenery():
     """Use current run's real heightmap and authored routes, without moving them.
 
@@ -7828,7 +7856,7 @@ def create_optional_scenery():
     essential for occlusion, material and camera effects.
     """
     if not (ENABLE_SCENIC_SPIRES or ENABLE_SCENIC_TRAIL_STONES
-            or ENABLE_SCENIC_RAVINE_MIST):
+            or ENABLE_SCENIC_RAVINE_MIST or ENABLE_SCENIC_BRIDGE_WATER):
         journal("scenery_disabled")
         return ()
     a = _ANIMATION
@@ -7843,7 +7871,7 @@ def create_optional_scenery():
     terrain = a["terrain_z_m"]
     created = []
     mist = []
-    counts = dict(spires=0, trail_stones=0, mist=0)
+    counts = dict(spires=0, trail_stones=0, mist=0, bridge_water=0)
     try:
         if ENABLE_SCENIC_SPIRES:
             # The bridge ravine is only ~9 m below its deck. Keep the highest
@@ -7912,6 +7940,28 @@ def create_optional_scenery():
                     created.append(actor)
                     counts["trail_stones"] += 1
 
+        if ENABLE_SCENIC_BRIDGE_WATER:
+            # Narrow, shallow visual river on the existing ravine floor. Keep
+            # the bridge landings dry and the surface well below the deck.
+            # Three short pieces follow the floor instead of one floating slab.
+            water_mesh = unreal.load_asset("/Engine/BasicShapes/Cube.Cube")
+            if water_mesh is None:
+                raise RuntimeError("BasicShapes cube unavailable for bridge water")
+            water_material = _scenic_water_material()
+            bridge_deck = min(terrain(900.0, 0.0), terrain(900.0, 25.0))
+            for index, x in enumerate((891.0, 900.0, 909.0)):
+                y = 12.5
+                # Use the lowest bank/floor sample so the water cannot form
+                # an elevated platform on a steep gorge side.
+                floor = min(terrain(x+dx, y+dy)
+                            for dx in (-3.0, 0.0, 3.0)
+                            for dy in (-1.5, 0.0, 1.5))
+                surface = min(floor+0.10, bridge_deck-3.0)
+                actor = _scenic_spawn(
+                    water_mesh, "WATER_BRIDGE_%02d" % index,
+                    x, y, surface-0.04, 9.2, 4.5, 0.08, water_material)
+                created.append(actor)
+                counts["bridge_water"] += 1
         if ENABLE_SCENIC_RAVINE_MIST:
             material = _scenic_mist_material()
             for name, x, y, lift, width, thickness, phase in SCENIC_MIST_SPECS:
