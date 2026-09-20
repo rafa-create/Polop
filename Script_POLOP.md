@@ -139,37 +139,59 @@ Léa reprend sa descente, puis s'engage sur le détour du flanc pour rejoindre s
 
 Éva continue tranquillement de photographier le paysage pendant que Léa contourne le creux. Thomas regarde brièvement Léa s'éloigner sur le flanc, puis rejoint Éva sans que ce choix de chemin devienne un sujet de conversation.
 
-Quand Léa les rejoint sur leur portion du sentier, Thomas regarde le chemin qui monte vers la zone haute et la caverne.
+La première lecture privilégie Éva, son appareil et son départ vers la montée. Thomas et Léa restent visibles en arrière-plan ou en bord de cadre, sans gros plan sur le trouble de Léa ni sur le signe de tête. Toutes leurs paroles sont audibles, mais le léger incident se lit d'abord comme un trébuchement et un étourdissement passager. La caméra garde le plan-séquence sans coupe et ne quitte pas l'espace continu du chemin.
+
+Quand Léa les rejoint sur leur portion du sentier, Éva s'est avancée de quelques pas pour photographier le paysage. Elle reste à portée de voix, mais à distance de Thomas et Léa. Le sentier continue en une seule boucle : « plus bas » désigne la portion qu'ils viennent de parcourir, jamais une bifurcation vers un second itinéraire.
+
+Thomas regarde la montée vers le sommet.
 
 THOMAS
-On est obligés de monter jusqu’en haut ?
+C'est sûr que vous voulez aller en haut ?
 
 ÉVA
-C’était ton idée.
+C'était ton idée.
+
+THOMAS
+Attends, je vais voir un peu plus bas.
+
+Il se tourne vers Éva, comme pour lui montrer la portion du même sentier derrière eux. Lorsqu'il se retourne vers Léa, elle n'est plus à l'endroit où il l'a laissée. Elle a trébuché sur une pierre et basculé en arrière, hors de son champ de vision, sur le sol du chemin, sans tomber dans le précipice. Thomas revient aussitôt vers elle et s'accroupit.
+
+THOMAS
+Léa ? Ça va ?
 
 LÉA
-Trop tard.
+Je sais pas… J'ai eu l'impression que tout s'éloignait.
 
-La caméra reste principalement avec Léa et Éva. La phrase passe comme une petite remarque familiale.
+THOMAS
+Tu t'es fait mal ?
 
-Thomas reste silencieux. Son hésitation est présente mais n’est pas dramatisée.
+LÉA
+Non… J'arrivais plus à vous entendre. Comme si j'étais plus là.
+
+Thomas lui laisse un instant pour reprendre ses esprits. Il regarde le sommet de la montagne, puis fait un petit signe de tête, presque pour lui-même : il renonce à redescendre et accepte de poursuivre la boucle vers le haut. Aucun phénomène visuel ne prouve que ce signe agit physiquement sur Léa ; le rapprochement des deux événements appartient à la perception du spectateur.
+
+LÉA
+Ah… Je sais pas ce qui s'est passé. Ça va beaucoup mieux.
+
+Léa se relève sans aide. Thomas vérifie du regard qu'elle tient bien debout.
 
 ÉVA
-Puis on sait jamais ce qu’on pourrait rater.
-
-Thomas la regarde, mais la caméra ne s'attarde pas sur sa réaction.
-
-Éva a déjà repris sa marche.
+Alors ?
 
 LÉA
-Moi, je sais. Une montée horrible.
+Ça va, ça va.
+
+ÉVA
+Fais attention. Allez, on continue. Bien sûr qu'on va en haut.
+
+LÉA
+Une montée horrible.
 
 ÉVA
 Allez.
 
-Éva et Léa repartent dans une énergie légère. Thomas reste immobile une seconde, en retrait du centre d'attention.
+Éva reprend la montée. Léa la suit, puis Thomas. Leurs places et la durée des gestes sont fixes : c'est un seul événement objectif que la caméra retrouvera plus tard sous un autre angle.
 
-Puis il les suit.
 ⸻
 
 A3 — LA RANDONNÉE
@@ -724,49 +746,62 @@ Léa reprend sa descente et s'engage sur le flanc.
 
 Éva continue de photographier le paysage pendant que Léa revient par le flanc. Thomas la regarde brièvement, puis rejoint Éva sans que le détour fasse l'objet d'une remarque.
 
-Quand Léa les rejoint, Thomas regarde le chemin qui monte.
+La dernière lecture retrouve **exactement le même événement objectif** qu'en A2 : aucune seconde chute, aucun second dialogue, aucun temps alternatif. Dans le même plan-séquence, après la convergence à 17 h, la caméra se rapproche de Thomas et Léa au lieu de privilégier l'appareil et la marche d'Éva. Leurs voix, le hors-champ de la chute, les gestes et leurs durées restent rigoureusement raccord. Éva demeure quelques pas plus loin, visible ou audible en profondeur, passive pendant le trouble de Léa.
+
+Quand Léa les rejoint sur leur portion du sentier, Éva s'est avancée de quelques pas pour photographier le paysage. Elle reste à portée de voix, mais à distance de Thomas et Léa. Le sentier continue en une seule boucle : « plus bas » désigne la portion qu'ils viennent de parcourir, jamais une bifurcation vers un second itinéraire.
+
+Thomas regarde la montée vers le sommet.
 
 THOMAS
-On est obligés de monter jusqu’en haut ?
+C'est sûr que vous voulez aller en haut ?
 
 ÉVA
-C’était ton idée.
+C'était ton idée.
+
+THOMAS
+Attends, je vais voir un peu plus bas.
+
+Il se tourne vers Éva, comme pour lui montrer la portion du même sentier derrière eux. Lorsqu'il se retourne vers Léa, elle n'est plus à l'endroit où il l'a laissée. Elle a trébuché sur une pierre et basculé en arrière, hors de son champ de vision, sur le sol du chemin, sans tomber dans le précipice. Thomas revient aussitôt vers elle et s'accroupit.
+
+THOMAS
+Léa ? Ça va ?
 
 LÉA
-Trop tard.
+Je sais pas… J'ai eu l'impression que tout s'éloignait.
 
-Cette fois, la caméra reste sur Thomas. Son hésitation devient lisible sans que la phrase soit soulignée autrement.
+THOMAS
+Tu t'es fait mal ?
+
+LÉA
+Non… J'arrivais plus à vous entendre. Comme si j'étais plus là.
+
+Thomas lui laisse un instant pour reprendre ses esprits. Il regarde le sommet de la montagne, puis fait un petit signe de tête, presque pour lui-même : il renonce à redescendre et accepte de poursuivre la boucle vers le haut. Aucun phénomène visuel ne prouve que ce signe agit physiquement sur Léa ; le rapprochement des deux événements appartient à la perception du spectateur.
+
+LÉA
+Ah… Je sais pas ce qui s'est passé. Ça va beaucoup mieux.
+
+Léa se relève sans aide. Thomas vérifie du regard qu'elle tient bien debout.
 
 ÉVA
-Puis on sait jamais ce qu’on pourrait rater.
-
-Thomas regarde Éva. Elle reprend déjà sa marche.
+Alors ?
 
 LÉA
-Moi, je sais. Une montée horrible.
+Ça va, ça va.
+
+ÉVA
+Fais attention. Allez, on continue. Bien sûr qu'on va en haut.
+
+LÉA
+Une montée horrible.
 
 ÉVA
 Allez.
 
-Éva et Léa repartent. La caméra reste avec Thomas et les laisse s'éloigner légèrement dans la profondeur.
+Éva reprend la montée. Léa la suit, puis Thomas. Leurs places et la durée des gestes sont fixes : c'est un seul événement objectif que la caméra retrouvera plus tard sous un autre angle.
 
-Thomas reste immobile une seconde.
+Cette fois, rester sur le visage de Léa pendant ses phrases étranges, puis sur le regard de Thomas vers le sommet et son signe de tête avant le rétablissement de Léa. L'absence momentanée de Léa s'explique toujours uniquement par sa chute derrière Thomas, jamais par un effacement surnaturel. Le sens dramatique vient de la focalisation : pour Thomas comme pour le spectateur, l'idée qu'il doit poursuivre le chemin afin d'accomplir le sauvetage déjà vécu devient sensible, sans nouvelle règle de réalité changeante. Éva ne perçoit qu'un incident banal.
 
-Il porte une main à sa poche et sent la petite boîte destinée à Éva. Il la sort légèrement.
-
-Il regarde la boîte.
-
-Puis Éva.
-
-Puis Léa.
-
-Il ne propose pas.
-
-Devant lui, Éva et Léa continuent la montée.
-
-Thomas hésite encore une fraction de seconde.
-
-Puis il les suit.
+Thomas, derrière elles, porte une main à sa poche et sent la petite boîte destinée à Éva. Il la sort légèrement, la regarde, puis regarde Éva et Léa. Il ne propose pas. Il range la boîte et reprend leur marche vers le haut, sans modifier les actions et paroles de l'événement commun à A2.
 
 La musique prend progressivement de l’ampleur.
 
