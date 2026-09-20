@@ -5777,6 +5777,13 @@ def character_performance(name, objective_time):
     # normal Thomas upright in objective time. Both film readings sample this
     # one pose function; the worldline and 17:00 instant remain untouched.
     pitch, roll = 0.0, 0.0
+    # A1: Eva visibly reacts to Thomas's deliberately silly climbing joke.
+    # A restrained shoulder/body chuckle in the existing idle/walk rig;
+    # the same objective-time pose is reused in both film directions.
+    if name == "EVA" and 0.78 <= t <= 1.13:
+        chuckle = math.sin(math.pi*(t-0.78)/0.35)
+        pitch = -3.0*chuckle
+        roll = 4.0*chuckle
     if name == "THOMAS_NORMAL" and 2.0 <= t <= 2.075:
         pitch = 6.0*(1.0-cinematic_ease((t-2.0)/0.075))
     elif name == "THOMAS_INVERSE" and 2.0 < t <= 2.095:
@@ -6227,10 +6234,10 @@ def update_existing_omniscient_camera(shots, desired_pose, reveal_pose, reveal_c
 DIALOGUE_CUES = {
     'A1': (
         (0.25, 2.3, 'EVA: Is it much farther to the top?'),
-        (2.45, 4.5, 'THOMAS: Just this climb...\nand all the others.'),
-        (4.65, 5.4, 'EVA: Careful.'),
+        (2.45, 4.5, 'THOMAS (joking): Just this climb...\nand all the others.'),
+        (4.65, 5.4, 'EVA: Ha!'),
         (8.0, 9.35, 'LEA: Are you coming?'),
-        (9.5, 11.9, "EVA: We're coming. That's not our trail."),
+        (9.5, 11.9, "EVA: We're coming. But that's not our trail. Come back!"),
     ),
     'A2': (
         (4.35, 5.55, 'LEA: Can I take the bridge back?'),
@@ -6957,26 +6964,31 @@ def build_omniscient_edit():
         if code in ("B7_B8", "PAUSE_BOUCLE"):
             return f07_17h_closure_pose(t)
         if code == "A2":
-            # The normal timeline begins AT the sole collision, not before it.
-            # Start with the same OPEN view as B7/B8's last frame, then return
-            # to Lea/Eva AFTER the immediate impact; no invented second hit.
-            contact_view = f07_contact_view(t)
-            normal_view = f07_normal_view(t)
-            with_normal = blend_camera_pose(contact_view, normal_view,
-                                            (t-2.29)/0.42)
-            # After Lea has crossed on screen in A1, return to Eva and
-            # then Thomas; keep the inverse outside the opening composition.
+            # At the 17h junction do NOT return to Thomas or reveal his
+            # inverse double. Stay with Lea, who has just crossed and asks
+            # whether she may take the bridge again (A2 cue 4.35..5.55 s).
+            # A1 ends on the same Lea composition: no new camera cut.
+            lea = a["eval_actor"]("LEA", t)
+            x, y = lea[0]-7.5, lea[1]-11.0
+            lea_eye = (x, y, max(lea[2]+4.0,
+                                a["terrain_z_m"](x, y)+2.0))
+            lea_view = lea_eye, (lea[0], lea[1], lea[2]+1.1)
+            # Only after her question, recover Eva and normal Thomas for
+            # the answer. All positions and the sole 17h contact stay intact.
             eva = a["eval_actor"]("EVA", t)
             normal = a["eval_actor"]("THOMAS_NORMAL", t)
             x, y = eva[0]-8.0, eva[1]-10.0
-            eva_eye = (x, y, max(eva[2]+4.2, a["terrain_z_m"](x, y)+2.0))
+            eva_eye = (x, y, max(eva[2]+4.2,
+                                  a["terrain_z_m"](x, y)+2.0))
             eva_view = eva_eye, (eva[0], eva[1], eva[2]+1.1)
             x, y = normal[0]-8.0, normal[1]-10.0
-            thomas_eye = (x, y, max(normal[2]+4.2, a["terrain_z_m"](x, y)+2.0))
+            thomas_eye = (x, y, max(normal[2]+4.2,
+                                     a["terrain_z_m"](x, y)+2.0))
             thomas_view = thomas_eye, (normal[0], normal[1], normal[2]+1.1)
+            after_question = blend_camera_pose(
+                lea_view, eva_view, (t-3.85)/0.45)
             return blend_camera_pose(
-                blend_camera_pose(with_normal, eva_view, (t-2.65)/0.70),
-                thomas_view, (t-4.25)/0.85)
+                after_question, thomas_view, (t-4.40)/0.65)
         if code in ("PAUSE_INTRO", "A1"):
             # Used only as the END pose of the previous beat in camera handover.
             return f01_opening_pose(code, 1.0, t)
