@@ -6120,10 +6120,9 @@ def update_existing_omniscient_camera(shots, desired_pose, reveal_pose, reveal_c
             for index in range(count):
                 u = index/max(1, count-1)
                 t = t0+(t1-t0)*cinematic_ease(u)
+                # Reuse the rendered pose from the preceding frame, including
+                # the dialogue camera adjustment toward Lea.
                 moving_origin = boundary_pose
-                if previous_beat is not None:
-                    old_code, old_focus, old_offset = previous_beat
-                    moving_origin = desired_pose(old_code, old_focus, old_offset, t)
                 handover = (seconds if code in ("A5_GEOGRAPHIE", "B9_ELOIGNEMENT")
                             else min(3.0, seconds))
                 if code == "A15_A16":
@@ -6251,13 +6250,17 @@ def dialogue_camera_pose(code, screen_seconds, objective_time, eye, target, shot
             strength *= max(cinematic_ease((previous[1]+0.6-screen_seconds)/0.6),
                             cinematic_ease((screen_seconds-following[0]+0.6)/0.6))
     aimed = tuple(p+(q-p)*strength for p, q in zip(target, aim))
-    # After Thomas's final "Yes", release his close-up and follow Lea
-    # actually setting off along the flank. A2 and B9 use different screen
-    # clocks for the same objective-time action, so derive the handoff from
-    # each beat's own last dialogue cue. Do not move Lea or alter captions.
+    # After Thomas's final "Yes", follow Lea onto the flank, then return
+    # gradually to the family on A. The old handoff stayed at 100% on Lea
+    # through the final frame, causing a jump at the next beat in A2 and B9.
     if code in ("A2", "B9"):
-        handoff = cinematic_ease(
+        follow = cinematic_ease(
             (screen_seconds-(cues[-1][1]+0.12))/1.10)
+        # Give Lea the silent departure, then settle on the family's view
+        # before the next pause, without changing any actor's trajectory.
+        release = cinematic_ease(
+            (screen_seconds-(shot_seconds-2.2))/2.2)
+        handoff = follow*(1.0-release)
         if handoff > 0.0:
             lea = a["eval_actor"]("LEA", objective_time)
             lx, ly = lea[0]-5.0, lea[1]-9.0
@@ -6401,9 +6404,9 @@ def build_omniscient_edit():
             "Thomas, Eva and their daughter Lea hike together."
         ),
         "PAUSE_DETOUR": (
-            "THE LONGER WAY BACK",
-            "After crossing the bridge, Lea takes the longer trail\n"
-            "around the hillside to rejoin her parents."
+            "BACK TOGETHER",
+            "Lea has rejoined Eva and Thomas after taking the hillside trail.\n"
+            "The family prepares to continue uphill."
         ),
         "PAUSE_THOMAS": (
             "UP THE MOUNTAIN",
@@ -6928,6 +6931,9 @@ def build_omniscient_edit():
             # once Thomas has walked away from the small outcrop.
             return blend_camera_pose(f07_contact_view(t), f01_return_pose(t),
                                      (t-2.29)/0.65)
+        if code == "PAUSE_DETOUR":
+            # After Lea's return the family stays in the same moving view.
+            return f01_return_pose(t)
         if code == "PAUSE_ISSUE":
             return f01_return_pose(t)
         if code == "B9_ELOIGNEMENT":
@@ -7121,12 +7127,10 @@ def build_omniscient_edit():
             for channel, value in zip(carabiner_channels[:3], clip_xyz):
                 channel.add_key(frame, float(value*100.0),
                                 interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
-            # Both subjects keep moving during a camera handover. Blending from
-            # yesterday's fixed look target would leave the family out of frame.
+            # The previous beat's actual rendered pose includes dialogue's
+            # movement toward Lea. Rebuilding desired_pose() alone discarded
+            # it and made the camera jump at the A2/B9 boundaries.
             moving_origin = boundary_pose
-            if previous_beat is not None:
-                old_code, old_focus, old_offset = previous_beat
-                moving_origin = desired_pose(old_code, old_focus, old_offset, t)
             handover_seconds = seconds if code in ("A5_GEOGRAPHIE", "B9_ELOIGNEMENT") else min(3.0, seconds)
             if code == "A15_A16":
                 # Former generic handover moved the lens through opaque rock.
