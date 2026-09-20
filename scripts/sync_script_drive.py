@@ -109,10 +109,6 @@ def publish_doc(text, drive, docs):
     requests.append({"insertText": {"location": {"index": 1}, "text": rendered}})
     requests.extend(style_requests)
     docs.documents().batchUpdate(documentId=DOC_ID, body={"requests": requests}).execute()
-    if metadata.get("name") != "Polop":
-        drive.files().update(
-            fileId=DOC_ID, body={"name": "Polop"}, fields="id", supportsAllDrives=True
-        ).execute()
     print("Google Docs publié : https://docs.google.com/document/d/" + DOC_ID + "/edit", flush=True)
 
 
