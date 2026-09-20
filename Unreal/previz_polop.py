@@ -6769,6 +6769,18 @@ def build_omniscient_edit():
         raise RuntimeError("Unexpected F03 cave shot: " + code)
 
     def desired_pose(code, focus, offset, t):
+        if code == "PAUSE_FAMILLE":
+            # Hold on Eva and Lea descending together: the opposite-slope
+            # Thomas remains unseen, as the caption says. Keep the camera
+            # on their side of the terrain, not on the inverse's path.
+            eva = a["eval_actor"]("EVA", t)
+            lea = a["eval_actor"]("LEA", t)
+            center = tuple((eva[i]+lea[i])*0.5 for i in range(3))
+            x, y = center[0]-7.0, center[1]-9.0
+            eye = (x, y, max(center[2]+5.0,
+                             a["terrain_z_m"](x, y)+2.3))
+            target = (center[0], center[1], center[2]+1.25)
+            return eye, target
         if code in ("B5_PONT", "PAUSE_PONT_RETOUR"):
             return f05_bridge_overview(t)
         if code in ("B6_REPAIR", "PAUSE_MOUSQUETON"):
