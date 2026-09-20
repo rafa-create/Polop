@@ -453,3 +453,35 @@ les regards, la continuité des arrêts et le rejeu A2/B9. Ne pas sauvegarder le
 résultat dans `Content/Main.umap`. Aucun nouveau run Unreal n'a encore été fait
 pour cette passe. Le mousqueton reste un proxy statique et l'anneau n'est pas
 animé : la causalité complète demandée par #49 reste donc à traiter et valider.
+
+
+## Cadrage des locuteurs — 20/09/2026
+
+Les 24 répliques parlées d’A1, A2, B9, A11, A12–A13 et A14 partagent
+désormais leur calage avec la caméra via `DIALOGUE_CUES`. Les textes et horaires
+sont inchangés. La caméra vise progressivement le haut du corps du locuteur
+(Éva, Léa ou Thomas normal) et resserre optiquement jusqu’à 2,4 fois la focale
+initiale. Son trajet reste identique. Les silences longs et les limites des
+plans rendent le cadrage à l’action ; les deux indications B6 restent des
+cartons et ne déclenchent aucun cadrage de locuteur. Le zoom A9 est conservé.
+
+Une première génération **complète** (`FAST_CAMERA_ONLY=False`) avec cette
+version est nécessaire pour créer la piste de focale. Une génération déjà
+en cours continue avec la version chargée à son lancement. Le mode caméra
+seule refuse un ancien cache sans ces clés, ou des répliques dont le calage
+a changé, avant de modifier la piste caméra. Après un run complet réussi de
+cette version, il conserve la focale et recalcule les orientations.
+
+Contrôles statiques : compilation du maître et des deux sources embarquées ;
+24 répliques identiques à la version précédente ; échantillonnage des 9 900
+images avec positions de caméra conservées, zoom borné et raccords de début/
+fin inchangés ; ciblage des trois locuteurs sur positions simulées et retour
+au plan d’action pendant le silence d’A11. Sources d’animation, géométrie,
+fonctions de caméra de la grotte, ombres et contact à 18 h inchangés.
+
+**Non testé dans Unreal pour cette modification.** Sur le prochain run terminé,
+examiner les échanges A1/A2/B9, puis A11–A14 : locuteur visible, haut du corps
+dans le cadre, absence d’obstacle, transition assez douce entre les réponses
+courtes et lisibilité du chemin pendant les silences. Les tests sur positions
+simulées ne prouvent ni le cadrage réel ni l’absence d’occultation. La caméra
+de la grotte reste la prochaine passe visuelle distincte.

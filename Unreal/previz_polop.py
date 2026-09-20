@@ -6078,6 +6078,9 @@ def update_existing_omniscient_camera(shots, desired_pose, reveal_pose, reveal_c
     subtitle tracks, camera cut, world actors and Landscape untouched.
     """
     a = _ANIMATION
+    if a.get("dialogue_camera_cues") != DIALOGUE_CUES:
+        raise RuntimeError(
+            "FAST_CAMERA_ONLY: speaker framing/lens timing changed; run full mode once.")
     if tuple(shots) != a.get("omniscient_shots"):
         raise RuntimeError(
             "FAST_CAMERA_ONLY: shot timing/order changed; set False for a full run.")
@@ -6139,6 +6142,8 @@ def update_existing_omniscient_camera(shots, desired_pose, reveal_pose, reveal_c
                             previous_beat is None or previous_beat[1] != "CAVE"):
                         eye = (eye[0], eye[1],
                                max(eye[2], a["terrain_z_m"](eye[0], eye[1])+2.0))
+                eye, target, _ = dialogue_camera_pose(
+                    code, index/fps, t, eye, target, (count-1)/fps)
                 if previous_pose is not None:
                     max_step_m = max(max_step_m, math.dist(previous_pose[0], eye))
                 previous_pose = (eye, target)
@@ -6169,6 +6174,85 @@ def update_existing_omniscient_camera(shots, desired_pose, reveal_pose, reveal_c
             frames=first_frame, maximum_camera_speed_m_s=max_step_m*fps,
             scope="omniscient transform keys only; cast, captions and terrain reused")
     return seq
+
+
+# One timing source for spoken captions and speaker framing. B6 cards are not speech.
+DIALOGUE_CUES = {
+    'A1': (
+        (0.25, 2.3, 'EVA: Is it much farther to the top?'),
+        (2.45, 4.5, 'THOMAS: Just this climb...\nand all the others.'),
+        (4.65, 5.4, 'EVA: Careful.'),
+        (8.0, 9.35, 'LEA: Are you coming?'),
+        (9.5, 11.9, "EVA: We're coming. That's not our trail."),
+    ),
+    'A2': (
+        (4.35, 5.55, 'LEA: Can I take the bridge back?'),
+        (5.65, 7.15, 'THOMAS: No. Keep going. Take the hillside path.'),
+        (7.25, 8.15, "LEA: It's longer."),
+        (8.25, 9.0, 'THOMAS: Yes.'),
+    ),
+    'B9': (
+        (2.9, 3.75, 'LEA: Can I take the bridge back?'),
+        (3.85, 4.85, 'THOMAS: No. Keep going. Take the hillside path.'),
+        (4.95, 5.5, "LEA: It's longer."),
+        (5.6, 6.0, 'THOMAS: Yes.'),
+    ),
+    'A11_ATTENTE': (
+        (0.3, 1.9, 'THOMAS: I need to pee.'),
+        (2.05, 2.95, 'EVA: Now?'),
+        (3.1, 4.25, 'THOMAS: Two minutes.'),
+        (8.65, 10.4, "LEA: He's taking a while."),
+        (10.65, 11.85, 'EVA: Thomas?'),
+    ),
+    'A12_A13': (
+        (4.65, 6.1, 'EVA: Thomas!'),
+        (6.25, 7.5, 'LEA: Dad!'),
+        (8.0, 9.25, 'EVA: Thomas!'),
+        (9.5, 11.85, 'LEA: Do you think he fell?'),
+    ),
+    'A14': (
+        (0.65, 3.65, 'EVA: We should head down.\nFind some help.'),
+        (3.85, 5.15, 'LEA: Okay.'),
+    ),
+}
+
+
+def dialogue_camera_pose(code, screen_seconds, objective_time, eye, target, shot_seconds):
+    """Optical push from the existing eye; never move the lens through scenery.
+
+    Hold the speaker through short reply gaps, blend between speakers, and
+    restore the action frame at the shot edges. No character tracks change.
+    Occlusion and the resulting face sizes still require an Unreal review.
+    """
+    cues = DIALOGUE_CUES.get(code)
+    if not cues:
+        return eye, target, 1.0
+    a = _ANIMATION
+
+    def chest(text):
+        name = {"EVA": "EVA", "LEA": "LEA", "THOMAS": "THOMAS_NORMAL"}[text.split(":", 1)[0]]
+        p = a["eval_actor"](name, objective_time)
+        return (p[0], p[1], p[2] + (1.15 if name == "LEA" else 1.40))
+
+    aim = chest(cues[0][2])
+    for first, last, text in cues[1:]:
+        # A short reply must still get its own settled frame. The blend begins
+        # just before the cue, rather than chasing a speaker after they finish.
+        transition = min(0.45, (last-first)*0.6)
+        weight = cinematic_ease((screen_seconds-first+0.15)/transition)
+        next_aim = chest(text)
+        aim = tuple(p+(q-p)*weight for p, q in zip(aim, next_aim))
+    strength = min(
+        cinematic_ease((screen_seconds-max(0.0, cues[0][0]-0.6))/0.6),
+        cinematic_ease((min(shot_seconds, cues[-1][1]+0.6)-screen_seconds)/0.6))
+    # Release during long silent action, notably Thomas leaving in A11.
+    for previous, following in zip(cues, cues[1:]):
+        if following[0]-previous[1] > 1.5 and previous[1] <= screen_seconds <= following[0]:
+            strength *= max(cinematic_ease((previous[1]+0.6-screen_seconds)/0.6),
+                            cinematic_ease((screen_seconds-following[0]+0.6)/0.6))
+    aimed = tuple(p+(q-p)*strength for p, q in zip(target, aim))
+    # At most 2.4x: retain enough surroundings to read the exchange and route.
+    return eye, aimed, 1.0+1.4*strength
 
 
 def build_omniscient_edit():
@@ -6861,17 +6945,6 @@ def build_omniscient_edit():
     a9_index = next(i for i, shot in enumerate(shots) if shot[0] == "A9_PONT")
     a9_start = sum(shot[1] for shot in shots[:a9_index])*fps
     a9_end = a9_start + shots[a9_index][1]*fps
-    for frame_number, focal_mm in (
-        (0, baseline_focal),
-        (a9_start, baseline_focal),
-        (a9_start+fps, 72.0),
-        (a9_end, 72.0),
-        (a9_end+2*fps, baseline_focal),
-        (duration*fps-1, baseline_focal),
-    ):
-        lens_channel.add_key(
-            unreal.FrameNumber(frame_number), focal_mm,
-            interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
     cuts = seq.add_track(unreal.MovieSceneCameraCutTrack)
     # Remove Sequencer's auto-cut before writing the single authoritative cut.
     for automatic_cut in list(cuts.get_sections()):
@@ -6935,6 +7008,16 @@ def build_omniscient_edit():
                                                 u*seconds/handover_seconds)
                 if focus != "CAVE" and (previous_beat is None or previous_beat[1] != "CAVE"):
                     eye = (eye[0], eye[1], max(eye[2], a["terrain_z_m"](eye[0], eye[1])+2.0))
+            eye, target, dialogue_zoom = dialogue_camera_pose(
+                code, index/fps, t, eye, target, (count-1)/fps)
+            lens_frame = first_frame+index
+            bridge_zoom = baseline_focal
+            if a9_start <= lens_frame <= a9_end:
+                bridge_zoom += (72.0-baseline_focal)*min(1.0, (lens_frame-a9_start)/fps)
+            elif a9_end < lens_frame < a9_end+2*fps:
+                bridge_zoom = 72.0+(baseline_focal-72.0)*(lens_frame-a9_end)/(2*fps)
+            lens_channel.add_key(frame, bridge_zoom*dialogue_zoom,
+                                 interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
             if previous_pose is not None:
                 step = math.dist(previous_pose[0], eye)
                 max_camera_step_m = max(max_camera_step_m, step)
@@ -7016,15 +7099,7 @@ def build_omniscient_edit():
         a1_shot = next(shot for shot in manifest if shot["scene"] == "A1")
         a1_start = a1_shot["start_frame"]
         a1_end = a1_shot["end_frame"]
-        opening_cues = (
-            # Lea steps onto the bridge at objective t=.75 (A1 screen ~5 s),
-            # reaches B at t=1.25 (~7 s), then turns to address her parents.
-            (0.25, 2.30, "EVA: Is it much farther to the top?"),
-            (2.45, 4.50, "THOMAS: Just this climb...\nand all the others."),
-            (4.65, 5.40, "EVA: Careful."),
-            (8.00, 9.35, "LEA: Are you coming?"),
-            (9.50, 11.90, "EVA: We're coming. That's not our trail."),
-        )
+        opening_cues = DIALOGUE_CUES['A1']
         last_dialogue_end = a1_start
         for cue_index, (cue_start_s, cue_end_s, cue_text) in enumerate(opening_cues):
             cue_first = a1_start + int(round(cue_start_s*fps))
@@ -7100,18 +7175,8 @@ def build_omniscient_edit():
         # Both readings depict the same objective-time conversation while Lea
         # waits at the start of the flank (t=3.35..5.05). A2 lasts 18 s
         # and B9 lasts 12 s, so their local subtitle offsets must differ.
-        flank_dialogue_a2 = (
-            (4.35, 5.55, "LEA: Can I take the bridge back?"),
-            (5.65, 7.15, "THOMAS: No. Keep going. Take the hillside path."),
-            (7.25, 8.15, "LEA: It\'s longer."),
-            (8.25, 9.00, "THOMAS: Yes."),
-        )
-        flank_dialogue_b9 = (
-            (2.90, 3.75, "LEA: Can I take the bridge back?"),
-            (3.85, 4.85, "THOMAS: No. Keep going. Take the hillside path."),
-            (4.95, 5.50, "LEA: It\'s longer."),
-            (5.60, 6.00, "THOMAS: Yes."),
-        )
+        flank_dialogue_a2 = DIALOGUE_CUES['A2']
+        flank_dialogue_b9 = DIALOGUE_CUES['B9']
         add_speaker_cues("A2", flank_dialogue_a2)
         add_speaker_cues("B9", flank_dialogue_b9)
 
@@ -7120,23 +7185,9 @@ def build_omniscient_edit():
         # characters actually leave/wait/search, not during an unrelated beat.
         # Both waiting/search beats now last 12 s. Keep every cue inside
         # its beat while preserving text, order and reading duration.
-        add_speaker_cues("A11_ATTENTE", (
-            (0.30, 1.90, "THOMAS: I need to pee."),
-            (2.05, 2.95, "EVA: Now?"),
-            (3.10, 4.25, "THOMAS: Two minutes."),
-            (8.65, 10.40, "LEA: He's taking a while."),
-            (10.65, 11.85, "EVA: Thomas?"),
-        ))
-        add_speaker_cues("A12_A13", (
-            (4.65, 6.10, "EVA: Thomas!"),
-            (6.25, 7.50, "LEA: Dad!"),
-            (8.00, 9.25, "EVA: Thomas!"),
-            (9.50, 11.85, "LEA: Do you think he fell?"),
-        ))
-        add_speaker_cues("A14", (
-            (0.65, 3.65, "EVA: We should head down.\nFind some help."),
-            (3.85, 5.15, "LEA: Okay."),
-        ))
+        add_speaker_cues("A11_ATTENTE", DIALOGUE_CUES['A11_ATTENTE'])
+        add_speaker_cues("A12_A13", DIALOGUE_CUES['A12_A13'])
+        add_speaker_cues("A14", DIALOGUE_CUES['A14'])
 
         # B-side repair belongs ONLY to the second reading of the film.
         # The first cue precedes the repair and the second tracks the
@@ -7172,6 +7223,7 @@ def build_omniscient_edit():
     a["omniscient_sequence"] = seq
     a["omniscient_camera"] = cam
     a["omniscient_shots"] = tuple(shots)
+    a["dialogue_camera_cues"] = DIALOGUE_CUES
     publish_current_film(seq, cam)
     # End generation on the film, not the separate objective-time audit.
     play_omniscient_film(play=False)
