@@ -54,6 +54,9 @@ ENABLE_SCENIC_BRIDGE_WATER = True  # Optional still-water visual under the bridg
 ENABLE_SCENIC_BRIDGE_MASONRY = True  # Collision-free, local generated bridge facing.
 ENABLE_SCENIC_RAVINE_SCREE = True  # Sparse small rocks along ravine banks.
 ENABLE_SCENIC_BRIDGE_WATER_HIGHLIGHTS = True  # Static, collision-free accents.
+ENABLE_SCENIC_BRIDGE_BANKS = True  # Low rubble on the outer banks only.
+ENABLE_SCENIC_BRIDGE_JOINTS = True  # Short stone joints below the walkable deck.
+ENABLE_SCENIC_TERRAIN_PATCHES = True  # Sparse non-colliding colour patches off trails.
 
 # False: spectator-readable narrative captions; no technical notes/spoilers in A.
 # True: optional PREVIZ diagnostic notes about unfinished effects and acting.
@@ -5890,7 +5893,10 @@ def prepare_human_cast():
         material.set_editor_property("used_with_skeletal_mesh", True)
         unreal.MaterialEditingLibrary.recompile_material(material)
         unreal.EditorAssetLibrary.save_loaded_asset(material)
-        component.set_material(0, material)
+        # Imported civilian meshes keep all of their authored clothing/skin
+        # materials; a solid mannequin tint is only appropriate for the default rig.
+        if chosen == mesh:
+            component.set_material(0, material)
         scale = a["ACTOR_HEIGHT_CM"][name]/mesh_height
         actor.set_actor_scale3d(unreal.Vector(scale, scale, scale))
         cast[name] = dict(actor=actor, component=component, scale=scale)
@@ -7967,7 +7973,9 @@ def create_optional_scenery():
     if not (ENABLE_SCENIC_SPIRES or ENABLE_SCENIC_TRAIL_STONES
             or ENABLE_SCENIC_RAVINE_MIST or ENABLE_SCENIC_BRIDGE_WATER
             or ENABLE_SCENIC_BRIDGE_MASONRY or ENABLE_SCENIC_RAVINE_SCREE
-            or ENABLE_SCENIC_BRIDGE_WATER_HIGHLIGHTS):
+            or ENABLE_SCENIC_BRIDGE_WATER_HIGHLIGHTS
+            or ENABLE_SCENIC_BRIDGE_BANKS or ENABLE_SCENIC_BRIDGE_JOINTS
+            or ENABLE_SCENIC_TERRAIN_PATCHES):
         journal("scenery_disabled")
         return ()
     a = _ANIMATION
@@ -7983,8 +7991,34 @@ def create_optional_scenery():
     created = []
     mist = []
     counts = dict(spires=0, trail_stones=0, mist=0, bridge_water=0,
-                  bridge_masonry=0, ravine_scree=0, water_highlights=0)
+                  bridge_masonry=0, ravine_scree=0, water_highlights=0,
+                  bridge_banks=0, bridge_joints=0, terrain_patches=0)
     try:
+        if ENABLE_SCENIC_TERRAIN_PATCHES:
+            # Thin flat shapes cover small areas of the copied landscape without
+            # changing height, landscape material or walkable routes.
+            patch_mesh = unreal.load_asset("/Engine/BasicShapes/Sphere.Sphere")
+            if patch_mesh is None:
+                raise RuntimeError("BasicShapes sphere unavailable for terrain patches")
+            for index in range(20):
+                px = 210.0 + index*64.0
+                py = (38.0 if index % 2 else -42.0) + (index % 4)*7.0
+                # Avoid the cave/ledge, bridge and any walking route, including
+                # nearby hairpins that may pass a second time.
+                if 800.0 < px < 1010.0 or px > 1550.0:
+                    continue
+                if any(math.hypot(px-qx, py-qy) < 18.0
+                       for route in a["ROUTES"].values()
+                       for qx, qy, _ in route[::3]):
+                    continue
+                radius = 2.2 + (index % 4)*0.7
+                actor = _scenic_spawn(
+                    patch_mesh, "TERRAIN_PATCH_%02d" % index,
+                    px, py, terrain(px, py)-0.10,
+                    radius, radius*(0.75+(index % 3)*0.10), 0.19,
+                    rock_material if index % 3 == 0 else a["MAT_TRAIL_FLANK"])
+                created.append(actor)
+                counts["terrain_patches"] += 1
         if ENABLE_SCENIC_SPIRES:
             # The bridge ravine is only ~9 m below its deck. Keep the highest
             # decorative spires several metres BELOW the deck, outside the
@@ -8107,6 +8141,39 @@ def create_optional_scenery():
                     0.12, 24.0, 0.27, masonry_material)
                 created.append(actor)
                 counts["bridge_masonry"] += 1
+        if ENABLE_SCENIC_BRIDGE_JOINTS and ENABLE_SCENIC_BRIDGE_MASONRY:
+            # Small staggered seams on the outside facing: all below the deck.
+            joint_mesh = unreal.load_asset("/Engine/BasicShapes/Cube.Cube")
+            if joint_mesh is None:
+                raise RuntimeError("BasicShapes cube unavailable for bridge joints")
+            joint_material = rock_material
+            deck_level = min(terrain(900.0, 0.0), terrain(900.0, 25.0)) + 0.45
+            for side, x in enumerate((898.905, 901.095)):
+                for index in range(10):
+                    y = 2.2 + index*2.25 + (0.40 if side else 0.0)
+                    actor = _scenic_spawn(
+                        joint_mesh, "BRIDGE_JOINT_%d_%02d" % (side, index),
+                        x, y, deck_level-0.28,
+                        0.015, 0.075, 0.17, joint_material)
+                    created.append(actor)
+                    counts["bridge_joints"] += 1
+        if ENABLE_SCENIC_BRIDGE_BANKS:
+            # Low rubble stays beyond both dry landings and away from water.
+            bank_mesh = unreal.load_asset("/Engine/BasicShapes/Sphere.Sphere")
+            if bank_mesh is None:
+                raise RuntimeError("BasicShapes sphere unavailable for bridge banks")
+            for index in range(20):
+                x = 878.0 + (index % 10)*4.6
+                y = -5.4-(index % 3)*1.15 if index < 10 else 30.4+(index % 3)*1.15
+                radius = 0.33 + (index % 4)*0.09
+                actor = _scenic_spawn(
+                    bank_mesh, "BRIDGE_BANK_%02d" % index,
+                    x, y, terrain(x, y)+radius*0.18,
+                    radius*1.6, radius*0.95, radius*0.72, rock_material)
+                actor.set_actor_rotation(unreal.Rotator(
+                    (index % 4-2)*6.0, (index*41) % 180, (index % 3-1)*8.0), False)
+                created.append(actor)
+                counts["bridge_banks"] += 1
         if ENABLE_SCENIC_BRIDGE_WATER:
             # Narrow, shallow visual river on the existing ravine floor. Keep
             # the bridge landings dry and the surface well below the deck.
