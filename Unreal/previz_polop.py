@@ -6355,12 +6355,11 @@ def build_omniscient_edit():
     that props, acting, sound or the canonical opening are finished.
     """
     a = _ANIMATION
-    # Single ring worldline, keyed against OBJECTIVE time, including during B.
-    # These are provisional blocking waypoints, not resolved 17 h/18 h contacts.
-    # The under-bridge end and the cave entrance use the CURRENT landscape;
-    # #63 must validate physical slope, collision, concealment and passability.
-    # At t=2 the ring passes NEAR the convergence rock without attaching to
-    # either Thomas. At t=62 it stops NEAR the cave fissure without a hand hit.
+    # One OBJECTIVE-time ring worldline: the inverse reading samples precisely
+    # the same coordinates backwards. This is a TERRAIN-CONFORMING BLOCKOUT:
+    # not a rigid-body solver and not yet Thomas/ring, hoof or water collision.
+    # A0's river bed is not built; t=0 retains the earlier under-bridge proxy.
+    # The canonical film shows fragments of this path, never a full travel map.
     bridge = a["A_BRIDGE_POINT"]
     closure = a["CONVERGENCE_POINT"]
     entry = a["CAVE_ENTRY_POINT"]
@@ -6371,34 +6370,87 @@ def build_omniscient_edit():
     def ring_ground(x, y, lift=0.18):
         return (x, y, terrain(x, y)+lift)
 
+    # In Thomas's inverse-time view (62 -> 2): rocky exit, successive short
+    # hops, a staged stream crossing around 17:37-17:42, a long unseen rest
+    # in a crevice from 17:32 to 17:18, then a final approach to the 17 h rock.
+    # No water, crevice collision or deer animation is claimed by these keys.
+    wedge = ring_ground(closure[0]+24.0, closure[1]+11.0)
     ring_waypoints = (
         (0.0, (bridge[0], bridge[1]+12.5,
                min(terrain(bridge[0], bridge[1]),
                    terrain(bridge[0], bridge[1]+12.5))-2.0)),
         (1.0, ring_ground(bridge[0]-7.0, bridge[1]+7.0)),
-        (2.0, ring_ground(closure[0]-0.3, closure[1]+0.9, 0.28)),
-        (18.0, ring_ground(closure[0]+24.0, closure[1]+11.0)),
-        (32.0, ring_ground(closure[0]+70.0, closure[1]+17.0)),
+        (1.45, ring_ground(closure[0]-5.0, closure[1]+4.0)),
+        (2.0, ring_ground(closure[0]-0.3, closure[1]+0.9)),
+        (8.0, ring_ground(closure[0]+10.0, closure[1]+5.0)),
+        (12.0, ring_ground(closure[0]+17.0, closure[1]+9.0)),
+        (16.0, ring_ground(closure[0]+22.0, closure[1]+10.0)),
+        (18.0, wedge),
+        (32.0, wedge),  # Same position for 14 OBJECTIVE minutes; no teleport.
+        (34.0, ring_ground(closure[0]+30.0, closure[1]+12.0)),
+        (37.0, ring_ground(closure[0]+45.0, closure[1]+13.0)),
+        (39.0, ring_ground(closure[0]+56.0, closure[1]+15.0)),
+        (40.5, ring_ground(closure[0]+64.0, closure[1]+15.0)),
+        (42.0, ring_ground(closure[0]+70.0, closure[1]+17.0)),
         (47.0, ring_ground(entry[0]-11.0, entry[1]-8.0)),
+        (53.0, ring_ground(entry[0]-7.0, entry[1]-5.0)),
         (58.0, ring_ground(entry[0]-2.2, entry[1]-2.6)),
         (60.0, ring_ground(entry[0]+0.8, entry[1]+0.2)),
         (61.0, ring_ground(fissure[0], fissure[1])),
         (62.0, (cave[0]-0.7, cave[1]-0.8, cave[2])),
     )
-    if any(right[0] <= left[0] or math.dist(left[1], right[1]) < 0.01
+    if any(right[0] <= left[0]
            for left, right in zip(ring_waypoints, ring_waypoints[1:])):
-        raise RuntimeError("Ring blocking path needs ordered nonzero legs")
+        raise RuntimeError("Ring worldline has unordered objective-time keys")
+    if any(math.dist(left[1], right[1]) < 0.01
+           for left, right in zip(ring_waypoints, ring_waypoints[1:])
+           if (left[0], right[0]) != (18.0, 32.0)):
+        raise RuntimeError("Unintended stationary ring segment")
 
     def ring_at_objective_time(t):
         if t <= ring_waypoints[0][0]:
             return ring_waypoints[0][1]
         for (t0, p0), (t1, p1) in zip(ring_waypoints, ring_waypoints[1:]):
             if t <= t1:
-                # Piecewise linear and reproducible. No runtime physics,
-                # teleports, new ring or camera-dependent repositioning.
                 u = (t-t0)/(t1-t0)
-                return tuple(p0[i]+(p1[i]-p0[i])*u for i in range(3))
+                xyz = tuple(p0[i]+(p1[i]-p0[i])*u for i in range(3))
+                if 1.0 <= t0 and t1 <= 60.0:
+                    # Terrain is sampled AT EVERY frame, not only at sparse
+                    # keys. A straight chord previously crossed hillsides.
+                    # Small reversible arcs suggest contacts/rebounds; they
+                    # are editorial blocking, not simulated impacts.
+                    if p0 == p1:
+                        return p0
+                    base0 = p0[2]-terrain(p0[0], p0[1])
+                    base1 = p1[2]-terrain(p1[0], p1[1])
+                    lift = base0+(base1-base0)*u
+                    hop = 0.12*math.sin(math.pi*u)**2
+                    return (xyz[0], xyz[1],
+                            terrain(xyz[0], xyz[1])+lift+hop)
+                # The under-bridge and cave-end transitions need dedicated
+                # geometry/contact review; do not project them through the
+                # Landscape into a false cave floor.
+                return xyz
         return ring_waypoints[-1][1]
+
+    if any(math.dist(ring_at_objective_time(t), wedge) > 1e-6
+           for t in (18.0, 25.0, 32.0)):
+        raise RuntimeError("Ring crevice hold lost its fixed objective pose")
+    for quarter in range(4, 241):
+        t = quarter/4.0
+        x, y, z = ring_at_objective_time(t)
+        if z < terrain(x, y)+0.13:
+            raise RuntimeError("Ring route passes beneath open terrain at %.2f" % t)
+    ring_route_report = dict(
+        status="OBJECTIVE_WORLDLINE_BLOCKOUT_NOT_PHYSICS",
+        waypoint_minutes_and_positions_m=ring_waypoints,
+        crevice_hold_objective_minutes=[18.0, 32.0],
+        stream_fragment_objective_minutes=[37.0, 42.0],
+        continuity="one shared location per objective time in A and B",
+        cave_and_17h_contacts="pending choreography and collision review",
+        water_deer_crevice_geometry="not generated by this route",
+        opening_river="A0 geometry is still absent; under-bridge t=0 is temporary",
+    )
 
     # A sphere is intentionally a legible temporary RING proxy, not the
     # definitive ring mesh, collision response or 17 h/18 h contact pose.
@@ -6976,9 +7028,9 @@ def build_omniscient_edit():
             # below isolates this one object, then rejoin inverse Thomas.
             p = a["ring_at_objective_time"](t)
             thomas = a["eval_actor"]("THOMAS_INVERSE", t)
-            cx, cy = p[0]-9.0, p[1]-9.0
-            eye = (cx, cy, max(p[2]+8.0,
-                                a["terrain_z_m"](cx, cy)+4.0))
+            cx, cy = p[0]-6.5, p[1]-6.5
+            eye = (cx, cy, max(p[2]+4.0,
+                                a["terrain_z_m"](cx, cy)+2.5))
             # Favor the ring, while leaving some surrounding terrain visible.
             return eye, (p[0], p[1], p[2]+0.1)
         if code == "PAUSE_FAMILY_REVERSE":
@@ -7297,7 +7349,7 @@ def build_omniscient_edit():
                 bridge_zoom += (72.0-baseline_focal)*min(1.0, (lens_frame-a9_start)/fps)
             elif a9_end < lens_frame < a9_end+2*fps:
                 bridge_zoom = 72.0+(baseline_focal-72.0)*(lens_frame-a9_end)/(2*fps)
-            ring_push = (1.0 + 2.2*cinematic_ease(min(index/fps, 1.4)/1.4)
+            ring_push = (1.0 + 2.8*cinematic_ease(min(index/fps, 1.4)/1.4)
                          *cinematic_ease(min((count-1-index)/fps, 1.4)/1.4)
                          if code == "B4_ANNEAU" else 1.0)
             if code == "PAUSE_INTRO":
@@ -7523,10 +7575,11 @@ def build_omniscient_edit():
                                         source_objective_minute=echo_objective_time,
                                         duration_seconds=echo_first_end/fps),
                                     visibility_check="Unreal render pending"),
+                       ring_blockout=ring_route_report,
                        camera_sections=1, join_steps_m=join_steps_m,
                        maximum_camera_speed_m_s=max_camera_step_m*fps,
                        collision_validation="pending; interpolated paths require visual and geometry review",
-                       missing=["A0 river opening", "ring", "carabiner animation", "environment reversal",
+                       missing=["A0 river opening", "ring contacts and detailed mesh", "carabiner animation", "environment reversal",
                                 "acting and sound", "visual occlusion verification"]), output, indent=2)
     journal("omniscient_edit_created", sequence=seq.get_path_name(), duration_seconds=duration,
             status="blocking pass; canonical coverage incomplete")
