@@ -5853,7 +5853,7 @@ def prepare_human_cast():
             limitation="shared mannequin anatomy; not final human casting or acting")
 
 
-def add_human_performances(sequence, samples):
+def add_human_performances(sequence, samples, bookend_echo_frames=None):
     """Bake a pose per display frame: scrubbing/reversing cannot desynchronise joints.
 
     Animation clips are sampled with zero play rate and tick-resolution offsets.
@@ -5886,7 +5886,17 @@ def add_human_performances(sequence, samples):
         visibility_channel = visibility_section.get_all_channels()[0]
         last_yaw = None
         for frame_index, t in samples:
-            pose = character_performance(name, t)
+            # Only the opening panorama needs an editorial echo: inverse
+            # Thomas does not yet exist at objective t=0. Reuse his EXACT
+            # existing t=12 pose on B, where he will actually be at the end.
+            # No diagnostic sequence, worldline, or later cast pose is edited.
+            echo = (name == "THOMAS_INVERSE" and bookend_echo_frames is not None
+                    and (frame_index < bookend_echo_frames[0]
+                         or frame_index >= bookend_echo_frames[1]))
+            pose = character_performance(
+                name, bookend_echo_frames[2] if echo else t)
+            if echo:
+                pose = dict(pose, visible=True)
             yaw = pose["yaw"] if last_yaw is None else a["unwrap_angle"](last_yaw, pose["yaw"])
             last_yaw = yaw
             # Never shrink a body into/out of existence. Visibility represents
@@ -6656,9 +6666,31 @@ def build_omniscient_edit():
                         raise RuntimeError("F03 A15 lens looks through %s at %.3f" %
                                            (label, progress))
 
+    # First and last image share this EXACT same world-space camera pose.
+    # A high downhill panorama holds the bridge, the family's trail and both
+    # exterior cave sites in one composition. Its oblique viewpoint does not
+    # change the hidden cave mouth's visibility from Eva/Lea at eye level.
+    def bookend_landscape_pose():
+        bridge_a, bridge_b = a["A_BRIDGE_POINT"], a["B_BRIDGE_POINT"]
+        cave_a, cave_b = a["CAVE_ENTRY_POINT"], a["CAVE_EXIT_B_POINT"]
+        points = (bridge_a, bridge_b, cave_a, cave_b)
+        center = tuple(sum(p[i] for p in points)/len(points)
+                       for i in range(3))
+        span = max(math.dist(bridge_a, cave_a), math.dist(bridge_b, cave_b))
+        # Keep the viewpoint on the existing Landscape without moving any
+        # prop, rock or character to satisfy the wide establishing image.
+        x = max(120.0, min(1890.0, center[0]-max(370.0, 0.72*span)))
+        y = max(-880.0, min(880.0, center[1]-max(520.0, 0.75*span)))
+        z = max(center[2]+max(320.0, 0.76*span),
+                a["terrain_z_m"](x, y)+75.0)
+        return ((x, y, z),
+                (center[0], center[1], center[2]+20.0))
+
+    panorama_pose = bookend_landscape_pose()
+
     # F01 camera-only pass: no actor movement or retiming. At t=0 Lea
     # already walks ahead of Thomas/Eva in the existing validated blocking.
-    # Show all three honestly in a wide frame, then follow Lea to the bridge.
+    # Push from the terrain-wide bookend to the family, then follow Lea.
     def f01_family_pose(t):
         people = [a["eval_actor"](name, t)
                   for name in ("THOMAS_NORMAL", "EVA", "LEA")]
@@ -6671,11 +6703,11 @@ def build_omniscient_edit():
         return (x, y, z), (center[0], center[1], center[2]+1.15)
 
     def f01_opening_pose(code, u, t):
-        """One continuous opening: establish family, follow Lea across A->B.
+        """One continuous push: shared panorama -> family -> Lea.
 
-        The bridge crossing is at objective t=0.75..1.25 (A1 screen
-        seconds 4.5..7.5). Keep Lea in frame throughout that interval,
-        then hand back to Eva and Thomas in A2; never reveal inverse Thomas.
+        PAUSE_INTRO moves throughout its six screen seconds. During A1 the
+        camera finds Lea before she crosses at objective t=0.75. Neither
+        the actor trajectories nor the existing spoken cue timings move.
         """
         if code not in ("PAUSE_INTRO", "A1"):
             raise RuntimeError("F01 opening pose for "+code)
@@ -6690,11 +6722,10 @@ def build_omniscient_edit():
         z = max(lea[2]+4.0, a["terrain_z_m"](x, y)+2.0)
         lea_pose = ((x, y, z), (lea[0], lea[1], lea[2]+1.1))
         if code == "PAUSE_INTRO":
-            # Establish the family, then reach Lea BEFORE the A1 crossing.
-            return between(f01_family_pose(t), lea_pose, (u-0.40)/0.60)
-        # A1 is devoted to Lea: both feet crossing and her arrival on B
-        # stay visible rather than being lost during an Eva/Thomas pan.
-        return lea_pose
+            return between(panorama_pose, f01_family_pose(t), u)
+        # First A1 frame joins the family composition of PAUSE_INTRO;
+        # the remaining motion smoothly settles on Lea, with no cut.
+        return between(f01_family_pose(t), lea_pose, u*6.0)
 
     def f07_normal_view(t):
         """A2 recovery after the 17:00 contact; preserve Lea in the distance."""
@@ -6759,29 +6790,13 @@ def build_omniscient_edit():
         return (x, y, z), (target[0], target[1], target[2]+1.2)
 
     def f01_pullback_pose(t):
-        people = [a["eval_actor"](name, t)
-                  for name in ("THOMAS_NORMAL", "EVA", "LEA")]
-        center = tuple(sum(p[i] for p in people)/3.0 for i in range(3))
-        # B9_ELOIGNEMENT runs for eight screen seconds. Retain Thomas's
-        # closer B9/PAUSE_ISSUE framing for the first ~2.4 s, THEN let
-        # the camera discover all three walkers before widening to the
-        # existing mountain geography. Earlier it pulled away immediately.
-        u = cinematic_ease(((t-8.0)/4.0-0.30)/0.70)
-        thomas_eye, thomas_target = f01_return_pose(t)
-        x = thomas_eye[0]+(-14.0-58.0*u)*u
-        y = thomas_eye[1]+(-17.0-74.0*u)*u
-        # Correct the final position relative to the MOVING family, not to
-        # Thomas's earlier position. This avoids framing an empty trail.
-        wide_x = center[0]-14.0-58.0*u
-        wide_y = center[1]-17.0-74.0*u
-        x = thomas_eye[0]*(1.0-u)+wide_x*u
-        y = thomas_eye[1]*(1.0-u)+wide_y*u
-        z = max(thomas_eye[2]*(1.0-u)+(center[2]+5.0+37.0*u)*u,
-                a["terrain_z_m"](x, y)+2.0)
-        wide_target = (center[0], center[1], center[2]+1.3)
-        target = tuple(thomas_target[i]*(1.0-u)+wide_target[i]*u
-                       for i in range(3))
-        return (x, y, z), target
+        """Continue the final retreat to the exact opening panorama pose.
+
+        The family moves on its original t=8.1..12 worldline while the camera
+        widens throughout B9_ELOIGNEMENT; the end is not a frozen insert.
+        """
+        return blend_camera_pose(
+            f01_return_pose(t), panorama_pose, (t-8.1)/(12.0-8.1))
 
     def f07_17h_closure_pose(t):
         """Keep Thomas normal at the center of the SAME objective 17:00 event.
@@ -7089,9 +7104,8 @@ def build_omniscient_edit():
                 target = (900.0, 12.5, a["terrain_z_m"](900.0, 0.0)+0.59)
         return eye, (target[0], target[1], target[2]+1.1)
 
-    # Editorial durations are deliberate. Do not inflate them to accommodate
-    # unnecessary kilometre-long trips to the bridge or a distant overview.
-    # These remain narrative beats within one continuous camera binding.
+    # Preserve all story durations and one continuous physical camera binding.
+    # The matched approach and retreat occupy the existing opening/end beats.
     fps = a["FPS"]
     duration = sum(s[1] for s in shots)
     if FAST_CAMERA_ONLY:
@@ -7157,9 +7171,12 @@ def build_omniscient_edit():
     # No new proxy or human Sequencer tracks are touched.
     # A9 is hundreds of metres from the bridge: a brief optical push makes
     # the 25 m crossing legible without a rapid physical flight or a camera cut.
-    # Keep the camera's actual original focal length outside this one beat.
+    # First/last camera poses AND their optical focal lengths must match.
     baseline_focal = float(cam.get_cine_camera_component().get_editor_property(
         "current_focal_length"))
+    panorama_focal = 18.0
+    if shots[0][0] != "PAUSE_INTRO" or shots[-1][0] != "B9_ELOIGNEMENT":
+        raise RuntimeError("Bookend shot order no longer matches panorama logic")
     lens_binding = seq.add_possessable(cam.get_cine_camera_component())
     lens_track = lens_binding.add_track(unreal.MovieSceneFloatTrack)
     lens_track.set_property_name_and_path("CurrentFocalLength", "CurrentFocalLength")
@@ -7188,6 +7205,13 @@ def build_omniscient_edit():
     max_camera_step_m = 0.0
     join_steps_m = []
     performance_samples = []
+    # The canonical inverse branch is hidden at t=0. For the FIRST wide image
+    # only, its already-existing t=12 B-side body/pose is an explicitly
+    # illustrative echo: the final wide image uses the REAL inverse at t=12.
+    # This is a framing device, not a new event or new objective worldline.
+    echo_first_end = int(round(1.5*fps))
+    echo_last_start = duration*fps  # never override the real inverse at end
+    echo_objective_time = 12.0
     for code, seconds, t0, t1, focus, offset in shots:
         count = seconds*fps
         manifest.append(dict(scene=code, start_frame=first_frame, end_frame=first_frame+count,
@@ -7198,11 +7222,14 @@ def build_omniscient_edit():
             performance_samples.append((first_frame+index, t))
             frame = unreal.FrameNumber(first_frame+index)
             for name, channels, scale, converter in animated:
-                point = a["eval_actor"](name, t)
+                echo = (name == "THOMAS_INVERSE" and
+                        first_frame+index < echo_first_end)
+                sample_t = echo_objective_time if echo else t
+                point = a["eval_actor"](name, sample_t)
                 for channel, value in zip(channels[:3], converter(name, point)):
                     channel.add_key(frame, float(value), interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
                 if name == "THOMAS_INVERSE":
-                    visible = 2.0 <= t < 62.0
+                    visible = echo or 2.0 <= t < 62.0
                     for channel, value in zip(channels[6:9], scale):
                         channel.add_key(frame, float(value if visible else 0.001),
                                         interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
@@ -7237,6 +7264,12 @@ def build_omniscient_edit():
                     eye = (eye[0], eye[1], max(eye[2], a["terrain_z_m"](eye[0], eye[1])+2.0))
             eye, target, dialogue_zoom = dialogue_camera_pose(
                 code, index/fps, t, eye, target, (count-1)/fps)
+            # Avoid any terrain-clamp or handover epsilon at the two
+            # matched endpoints; their eye/aim are exactly the same tuple.
+            if ((code == "PAUSE_INTRO" and index == 0) or
+                    (code == "B9_ELOIGNEMENT" and index == count-1)):
+                eye, target = panorama_pose
+                dialogue_zoom = 1.0
             lens_frame = first_frame+index
             bridge_zoom = baseline_focal
             if a9_start <= lens_frame <= a9_end:
@@ -7246,6 +7279,12 @@ def build_omniscient_edit():
             ring_push = (1.0 + 2.2*cinematic_ease(min(index/fps, 1.4)/1.4)
                          *cinematic_ease(min((count-1-index)/fps, 1.4)/1.4)
                          if code == "B4_ANNEAU" else 1.0)
+            if code == "PAUSE_INTRO":
+                bridge_zoom = panorama_focal + (
+                    baseline_focal-panorama_focal)*cinematic_ease(u)
+            elif code == "B9_ELOIGNEMENT":
+                bridge_zoom = baseline_focal + (
+                    panorama_focal-baseline_focal)*cinematic_ease(u)
             lens_channel.add_key(frame, bridge_zoom*dialogue_zoom*ring_push,
                                  interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
             if previous_pose is not None:
@@ -7270,7 +7309,9 @@ def build_omniscient_edit():
     # premier carton orphelin si une API de texte echoue : baker d'abord
     # les mannequins articulés avant de construire les 17 annotations.
     # La fin de generation et la sauvegarde restent conditionnees au succes.
-    add_human_performances(seq, performance_samples)
+    add_human_performances(
+        seq, performance_samples,
+        bookend_echo_frames=(echo_first_end, echo_last_start, echo_objective_time))
     # F03 can be checked independently of the still-untested English/UMG
     # subtitle change. This mode does NOT replace the full-film renderer.
     card_manifest = []
@@ -7296,10 +7337,11 @@ def build_omniscient_edit():
             if not (0 <= first < last <= duration*fps):
                 raise RuntimeError("Invalid caption range: " + scene)
     
-            # Intro caption is deliberately shorter than its six-second
-            # narrative PAUSE: clear the text before the hike continues.
-            caption_last = (min(last, first + int(round(3.0*fps)))
-                            if scene == "PAUSE_INTRO" else last)
+            # Give the initial full landscape one clean second before its
+            # caption appears over the moving camera (no extra still frame).
+            if scene == "PAUSE_INTRO":
+                first += int(round(1.0*fps))
+            caption_last = last
             section = subtitle_track.add_section()
             if section is None:
                 raise RuntimeError("Cannot create UMG subtitle section: " + scene)
@@ -7452,6 +7494,15 @@ def build_omniscient_edit():
                                       normal_reading="detaches", inverse_reading="repairs",
                                       track="MOUSQUETON_PROXY", acting="blockout"),
                        note="Cartons d'aide à la lecture : uniquement pour la prévisualisation.",
+                       bookend=dict(opening_scene="PAUSE_INTRO",
+                                    closing_scene="B9_ELOIGNEMENT",
+                                    shared_camera_pose_m=panorama_pose,
+                                    shared_focal_mm=panorama_focal,
+                                    inverse_opening_echo=dict(
+                                        non_diegetic=True,
+                                        source_objective_minute=echo_objective_time,
+                                        duration_seconds=echo_first_end/fps),
+                                    visibility_check="Unreal render pending"),
                        camera_sections=1, join_steps_m=join_steps_m,
                        maximum_camera_speed_m_s=max_camera_step_m*fps,
                        collision_validation="pending; interpolated paths require visual and geometry review",
