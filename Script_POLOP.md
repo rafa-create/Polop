@@ -113,7 +113,7 @@ Au détour du rocher, une silhouette surgit et heurte Thomas. La roche masque en
 
 Thomas reste un instant immobile, troublé, puis reprend quelques pas vers Éva.
 
-Vers 17 h 01, dans la profondeur d'un plan suffisamment large, le mousqueton sur la rive opposée à Éva est décroché de son point d'ancrage : sa position reste un détail de fond, perceptible en arrêtant l'image et en l'agrandissant. Le décrochage lui-même n'est jamais montré dans la première partie, sans insert ni accent sonore. Thomas remarque discrètement l'attache, sans geste explicatif ni mouvement de caméra qui la désigne ; cette information n'est pas donnée explicitement au spectateur à ce moment. Léa, déjà sur l'autre portion de la boucle, envisage de revenir par le pont.
+Au loin, le mousqueton pend, décroché de son point d'ancrage. Thomas tourne brièvement les yeux vers le pont. Léa ralentit et regarde de son côté.
 
 Léa ralentit sur sa portion du sentier. Elle tourne légèrement la tête vers son père, sans retourner vers le pont.
 
@@ -574,15 +574,15 @@ B3 — LA PIERRE / DEUX OCCURRENCES
 
 La petite pierre quitte le sol et remonte vers son origine.
 
-Thomas inversé la suit du regard.
+Thomas la suit du regard.
 
-La caméra la suit à son tour et remonte vers Thomas normal, plus haut dans le relief.
+La caméra suit la pierre et retrouve, plus haut dans le relief, Thomas en randonnée avec Éva et Léa.
 
-Pendant quelques secondes, le geste de Thomas normal redevient lisible dans le déroulement ordinaire de la randonnée : son pied déloge la pierre.
+Son pied déloge la pierre.
 
-La caméra reste quelques secondes avec Thomas normal, puis revient vers Thomas inversé.
+La caméra reste quelques secondes avec la famille, puis revient vers Thomas, seul sur le versant opposé.
 
-Puis la caméra revient vers Thomas inversé.
+Puis la caméra retrouve Thomas sur le versant opposé.
 
 ⸻
 
