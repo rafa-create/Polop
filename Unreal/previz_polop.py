@@ -6251,7 +6251,23 @@ def dialogue_camera_pose(code, screen_seconds, objective_time, eye, target, shot
             strength *= max(cinematic_ease((previous[1]+0.6-screen_seconds)/0.6),
                             cinematic_ease((screen_seconds-following[0]+0.6)/0.6))
     aimed = tuple(p+(q-p)*strength for p, q in zip(target, aim))
-    # At most 2.4x: retain enough surroundings to read the exchange and route.
+    # After Thomas's final "Yes", release his close-up and follow Lea
+    # actually setting off along the flank. A2 and B9 use different screen
+    # clocks for the same objective-time action, so derive the handoff from
+    # each beat's own last dialogue cue. Do not move Lea or alter captions.
+    if code in ("A2", "B9"):
+        handoff = cinematic_ease(
+            (screen_seconds-(cues[-1][1]+0.12))/1.10)
+        if handoff > 0.0:
+            lea = a["eval_actor"]("LEA", objective_time)
+            lx, ly = lea[0]-5.0, lea[1]-9.0
+            lea_eye = (lx, ly, max(lea[2]+4.0,
+                                    a["terrain_z_m"](lx, ly)+2.0))
+            lea_target = (lea[0], lea[1], lea[2]+1.1)
+            eye = tuple(p+(q-p)*handoff for p, q in zip(eye, lea_eye))
+            aimed = tuple(p+(q-p)*handoff for p, q in zip(aimed, lea_target))
+            strength *= 1.0-handoff
+    # At most 2.4x during dialogue; widen again for Lea's departure.
     return eye, aimed, 1.0+1.4*strength
 
 
