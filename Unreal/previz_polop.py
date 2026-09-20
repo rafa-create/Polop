@@ -57,6 +57,17 @@ ENABLE_SCENIC_BRIDGE_WATER = True  # Optional still-water visual under the bridg
 # Changing this setting (or any subtitles) requires FAST_CAMERA_ONLY=False.
 SUBTITLE_REVIEW_MODE = False
 
+# Optional locally imported civilian cast. Leave blank to keep the proven
+# tutorial mannequin. Overrides must use the SAME skeleton as TutorialTPP;
+# retargeting is a separate production step, never silently improvised.
+# Paths are Unreal asset paths (/Game/...), not filesystem or paid downloads.
+CIVILIAN_CAST_MESHES = {
+    "THOMAS_NORMAL": "",
+    "THOMAS_INVERSE": "",
+    "EVA": "",
+    "LEA": "",
+}
+
 # Unreal restores/removes __file__ once Execute Python Script returns. Slate
 # callbacks run later, so retain our own immutable source path while it exists.
 SOURCE_SCRIPT_PATH = os.path.abspath(__file__)
@@ -5843,16 +5854,34 @@ def prepare_human_cast():
     idle = unreal.load_asset(root+"Tutorial_Idle")
     if not all((mesh, walk, idle)):
         raise RuntimeError("Unreal tutorial skeletal character/animations missing; install Engine Content")
-    mesh_height = mesh.get_bounds().box_extent.z*2.0
+    default_skeleton = mesh.get_editor_property("skeleton")
     colors = {"THOMAS_NORMAL": (0.10, 0.19, 0.27), "THOMAS_INVERSE": (0.10, 0.19, 0.27),
               "EVA": (0.38, 0.19, 0.12), "LEA": (0.32, 0.43, 0.18)}
     cast = {}
+    resolved_meshes = {}
     for name in POV_ORDER:
+        requested = CIVILIAN_CAST_MESHES.get(name, "").strip()
+        chosen = mesh
+        if requested:
+            candidate = unreal.load_asset(requested)
+            if not isinstance(candidate, unreal.SkeletalMesh):
+                raise RuntimeError("Civilian cast %s: missing SkeletalMesh %s" % (name, requested))
+            candidate_skeleton = candidate.get_editor_property("skeleton")
+            if (candidate_skeleton is None or default_skeleton is None
+                    or candidate_skeleton.get_path_name() != default_skeleton.get_path_name()):
+                raise RuntimeError(
+                    "Civilian cast %s: skeleton differs from TutorialTPP; "
+                    "retarget walk/idle before using this asset" % name)
+            chosen = candidate
+        mesh_height = chosen.get_bounds().box_extent.z*2.0
+        if mesh_height <= 1.0:
+            raise RuntimeError("Civilian cast %s: invalid mesh height" % name)
         actor = actors.spawn_actor_from_class(unreal.SkeletalMeshActor, unreal.Vector(0, 0, 0))
         actor.set_actor_label("PZ_ANIM_HUMAN_"+name)
         actor.set_folder_path("POLOP/Personnages")
         component = actor.get_component_by_class(unreal.SkeletalMeshComponent)
-        component.set_skeletal_mesh_asset(mesh)
+        component.set_skeletal_mesh_asset(chosen)
+        resolved_meshes[name] = chosen.get_path_name()
         component.set_collision_enabled(unreal.CollisionEnabled.NO_COLLISION)
         material = a["ensure_material"]("M_POLOP_CLOTH_"+name, colors[name])
         material.set_editor_property("used_with_skeletal_mesh", True)
@@ -5879,7 +5908,8 @@ def prepare_human_cast():
     light.set_attenuation_radius(750.0)
     light.set_light_color(unreal.LinearColor(1.0, 0.84, 0.65, 1.0))
     journal("articulated_cast_created", mesh=mesh.get_path_name(),
-            limitation="shared mannequin anatomy; not final human casting or acting")
+            resolved_meshes=resolved_meshes,
+            limitation="optional same-skeleton casting; no retargeting, final acting or asset download")
 
 
 def add_human_performances(sequence, samples, bookend_echo_frames=None):
