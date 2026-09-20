@@ -324,11 +324,9 @@ La caméra le montre brièvement, sans commentaire des personnages. La musique r
 
 ⸻
 
-A10 — 17h50 — LA PAUSE
+A10 — 17h55 — LA PAUSE
 
-Le sentier arrive en hauteur. À quelques mètres, une petite plateforme rocheuse se resserre entre la paroi et le précipice.
-
-L’entrée de la caverne existe dans cette zone, mais son angle est masqué par un décrochement rocheux. Depuis le sentier, elle se confond avec une partie sombre de la paroi.
+Le sentier arrive en hauteur. À quelques mètres, une petite plateforme rocheuse se resserre entre la paroi et le précipice. Un décrochement sombre coupe la paroi au fond de cette petite zone.
 
 THOMAS
 Je vais faire une pause pipi.
@@ -339,59 +337,68 @@ Maintenant ?
 THOMAS
 Deux minutes.
 
-Thomas s’écarte de quelques mètres et entre dans cette petite zone, sans descendre vers le pont.
-
-À l’abri des regards, il ralentit devant un décrochement sombre de la paroi. Quelque chose dans la forme du rocher retient simplement son attention. Il regarde une seconde dans cette direction.
-
-La caméra ne révèle pas encore ce qu’il voit et revient naturellement vers Éva et Léa. Rien ne signale un phénomène ni ne semble appeler Thomas.
-
-Éva le regarde partir, amusée.
+Thomas s'écarte vers la plateforme. Éva et Léa restent sur le sentier, d'où elles voient le seul passage par lequel il pourrait revenir.
 
 ÉVA
 Fais gaffe aux rafales de vent.
 
-THOMAS
-Ça va.
+THOMAS, déjà derrière le rocher
+Ça va !
+
+À l'abri des regards, Thomas sort ses écouteurs de sa poche. Il regarde un instant son téléphone : une musique interrompue pendant la randonnée. Il relance le morceau, range le téléphone et met les écouteurs. Un instant, la musique prend la place du vent dans la bande-son, au plus près de lui.
+
+Il se tourne vers la roche, ouvre son pantalon et commence réellement à uriner. La caméra reste derrière lui, sur son épaule et la pierre humide devant ses chaussures. Le jet s'entend nettement.
+
+Retour vers Éva et Léa. Le bruit du pipi leur parvient depuis la plateforme. Léa retient un sourire.
 
 LÉA
 Il va vraiment faire pipi ?
 
 ÉVA
-Apparemment.
+Tu l'entends, non ?
 
-Éva et Léa restent sur le vrai chemin, près de l’unique passage par lequel Thomas devrait revenir. Elles ne repartent pas immédiatement.
+Retour vers Thomas. Il urine encore. Il lève les yeux vers une forme sombre dans la paroi, sans bouger de sa place. La musique continue dans ses oreilles.
 
-Aucun changement musical dramatique. Aucun gros plan inquiétant sur le vide.
+Retour vers Éva et Léa. Elles échangent un regard amusé. On entend toujours le jet, puis il s'interrompt.
 
 ⸻
 
-A11 — 17h52 / 17h54 — L’ATTENTE
+A11 — 17h55 — LE SILENCE
 
-Éva et Léa attendent encore. Elles parlent quelques instants, tranquillement.
-
-Leur position leur permet de garder naturellement dans leur champ la sortie de la petite zone rocheuse et le chemin descendant. Elles ne surveillent pas Thomas comme des gardes, mais il ne pourrait pas ressortir et redescendre sans passer devant elles.
-
-La caméra reste avec elles suffisamment longtemps pour que cette continuité soit claire. Pas d’ellipse permettant à Thomas de les contourner.
-
-Léa regarde vers l’endroit où son père est parti.
+Léa tourne la tête vers la plateforme.
 
 LÉA
-Il est long, son pipi.
+Papa ?
 
-Éva sourit d’abord, puis regarde à son tour.
+Éva attend une seconde.
 
 ÉVA
-Thomas ?
+Thomas, c'est bon ?
 
 Pas de réponse.
 
-L’entrée de la caverne n’est toujours pas identifiée comme un passage. La caméra ne montre pas Thomas y entrer : elle a seulement montré qu’un détail banal de la paroi avait retenu son attention avant de revenir vers Éva et Léa.
+Du côté de Thomas, le morceau continue dans ses écouteurs. Il referme son pantalon, remet son téléphone en poche et se rapproche de la paroi sombre. La caméra reste près de son visage et ne révèle pas ce qu'il regarde.
+
+ÉVA, hors champ, plus fort
+Thomas ?
+
+Il ne se retourne pas.
+
+Retour vers Éva et Léa. Éva cherche du regard le passage par lequel il devrait ressortir. Personne.
+
+LÉA
+Il nous entend pas ?
+
+ÉVA
+Thomas !
+
+Éva prend la main de Léa et marche vers la plateforme. Elles n'ont pas quitté le sentier des yeux depuis son départ.
 
 ⸻
 
-A12 — 17h55 — L’ABSENCE
+A12 — 17h56 — L'ABSENCE
 
-Éva et Léa reviennent vers la petite zone rocheuse.
+Éva et Léa arrivent dans la petite zone rocheuse.
 
 ÉVA
 Thomas !
@@ -401,11 +408,9 @@ Papa !
 
 Aucune réponse.
 
-Elles voient immédiatement que l’espace est limité : la paroi, quelques rochers, le précipice. Thomas ne peut pas avoir continué dans une autre direction visible.
+La paroi, quelques rochers, le précipice. Thomas n'est pas là. Éva vérifie d'un regard le passage vers le sentier ; personne n'est redescendu devant elles.
 
-Éva regarde derrière elle vers le chemin qu’elles viennent de surveiller. Personne n’est passé.
-
-Son inquiétude change de nature.
+Éva avance vers le bord, puis s'arrête. Léa la rejoint.
 
 ⸻
 
