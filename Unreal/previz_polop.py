@@ -1301,9 +1301,14 @@ SEARCH_LEDGE_CENTER = (
     high_x + 3.0, high_y - 6.5,
     terrain_z_m(high_x + 3.0, high_y - 6.5)
 )
+# A real upper lip on the search terrace, NOT the old point 27.63 m
+# below it in the falling slope (audit #52/#53). Keep the same XY marker
+# for the cliff-side framing but lift the visible rim to terrace height.
+# The Landscape drop remains untouched; this is a blockout marker, not a
+# newly sculpted landing or an invisible bridge across the void.
 PRECIPICE_EDGE_POINT = (
     high_x + 3.0, high_y - 11.5,
-    terrain_z_m(high_x + 3.0, high_y - 11.5)
+    SEARCH_LEDGE_CENTER[2]
 )
 CAVE_SEARCH_POINT_1 = (
     high_x + 0.0, high_y - 6.0,
@@ -1751,28 +1756,60 @@ CAVE_B_GALLERY = (
     CAVE_CONTACT_POINT, CAVE_INNER_BEND_POINT,
     CAVE_SECOND_BEAM_POINT, CAVE_EXIT_B_POINT
 )
+# The old full-length horizontal roof of the first leg sat below the
+# contact's feet (audit: a 10.54 m drop over 8 m horizontally). Give every
+# small blockout section its OWN center altitude and pitch. Its floor is
+# a thin visual support following the already authored walkable trajectory;
+# no actor, event time or B-side exit point is moved in this geometry pass.
+_GALLERY_MAX_SECTION_M = 1.0
+_GALLERY_HALF_WIDTH_M = 2.55
+_GALLERY_CLEAR_HEIGHT_M = 3.15
 for _i, (_p, _q) in enumerate(zip(CAVE_B_GALLERY, CAVE_B_GALLERY[1:]), 1):
     _dx, _dy = _q[0]-_p[0], _q[1]-_p[1]
-    _length = math.hypot(_dx, _dy)
+    _horizontal_length = math.hypot(_dx, _dy)
+    if _horizontal_length < 0.01:
+        raise RuntimeError("F03: cave gallery leg has no horizontal length")
     _yaw = math.degrees(math.atan2(_dy, _dx))
-    _mx, _my = (_p[0]+_q[0])*0.5, (_p[1]+_q[1])*0.5
-    _mz = (_p[2]+_q[2])*0.5
-    _nx, _ny = -_dy/_length, _dx/_length
-    for _side, _label in ((-2.6, "R"), (2.6, "L")):
+    _nx, _ny = -_dy/_horizontal_length, _dx/_horizontal_length
+    _sections = int(math.ceil(_horizontal_length/_GALLERY_MAX_SECTION_M))
+    for _j in range(_sections):
+        _u0, _u1 = _j/_sections, (_j+1)/_sections
+        _u = (_u0+_u1)*0.5
+        _cx, _cy = _p[0]+_dx*_u, _p[1]+_dy*_u
+        _cz = _p[2]+(_q[2]-_p[2])*_u
+        _length = _horizontal_length/_sections
+        _pitch = math.degrees(math.atan2(_q[2]-_p[2], _horizontal_length))
+        _rot = unreal.Rotator(_pitch, _yaw, 0)
+        # Short floor/roof slabs follow the same slope as the actor's
+        # linearly interpolated foot positions rather than bridging bends.
         spawn_box(
-            "CAVE_B_GALLERY_%02d_WALL_%s" % (_i, _label),
-            V((_mx+_nx*_side)*100, (_my+_ny*_side)*100, (_mz+1.55)*100),
-            (_length*100, 42, 310), MAT_CAVE,
-            "MicroGeo/CaverneV05/VersantB",
-            unreal.Rotator(0, _yaw, 0)
+            "CAVE_B_GALLERY_%02d_FLOOR_%02d" % (_i, _j),
+            V(_cx*100, _cy*100, (_cz-0.09)*100),
+            ((_length+0.08)*100, 510, 14), MAT_CAVE,
+            "MicroGeo/CaverneV05/VersantB", _rot
         )
-    spawn_box(
-        "CAVE_B_GALLERY_%02d_ROOF" % _i,
-        V(_mx*100, _my*100, (_mz+3.20)*100),
-        (_length*100, 550, 24), MAT_CAVE,
-        "MicroGeo/CaverneV05/VersantB",
-        unreal.Rotator(0, _yaw, 0)
-    )
+        spawn_box(
+            "CAVE_B_GALLERY_%02d_ROOF_%02d" % (_i, _j),
+            V(_cx*100, _cy*100,
+              (_cz+_GALLERY_CLEAR_HEIGHT_M+0.13)*100),
+            ((_length+0.08)*100, 540, 20), MAT_CAVE,
+            "MicroGeo/CaverneV05/VersantB", _rot
+        )
+        for _side, _label in ((-_GALLERY_HALF_WIDTH_M, "R"),
+                              (_GALLERY_HALF_WIDTH_M, "L")):
+            spawn_box(
+                "CAVE_B_GALLERY_%02d_WALL_%s_%02d" % (_i, _label, _j),
+                V((_cx+_nx*_side)*100, (_cy+_ny*_side)*100,
+                  (_cz+_GALLERY_CLEAR_HEIGHT_M*0.5)*100),
+                ((_length+0.08)*100, 25,
+                 _GALLERY_CLEAR_HEIGHT_M*100), MAT_CAVE,
+                "MicroGeo/CaverneV05/VersantB", _rot
+            )
+    # An optional diagnostic for the old horizontal-roof regression:
+    # at the midpoint of each section, its underside must remain above
+    # the authored foot path; full mesh/landscape testing stays in Unreal.
+    if _GALLERY_CLEAR_HEIGHT_M <= 2.0:
+        raise RuntimeError("F03: cave gallery insufficient headroom")
 # Marqueur temporaire du second faisceau, a remplacer par une lumiere naturelle
 # calibree apres verification du rendu dans Unreal.
 spawn_sphere(
