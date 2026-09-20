@@ -6431,10 +6431,13 @@ def build_omniscient_edit():
         ("PAUSE_PONT_RETOUR", 5, 31.9, 31.9, "THOMAS_INVERSE", (-12, 18, 10)),
         # Preserve the same 22 s B6 screen budget, but reserve six seconds
         # for the B-bank repair BEFORE crossing, in the inverse's own time.
-        ("B6_FAMILY_APPROACH", 4, 31.9, 25.0, "THOMAS_INVERSE", (-9, 12, 5)),
-        ("PAUSE_FAMILY_REVERSE", 5, 25.0, 25.0, "THOMAS_INVERSE", (-9, 12, 5)),
-        ("B6_FAMILY_RETURN", 4, 25.0, 24.8, "THOMAS_INVERSE", (-9, 12, 5)),
-        ("B6", 12, 24.8, 3.16, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("B6_FAMILY_APPROACH", 4, 31.9, 25.5, "THOMAS_INVERSE", (-9, 12, 5)),
+        # A moving five-second family view, NOT a freeze at 17:25.
+        # Objective time decreases throughout: Eva, Lea and normal Thomas
+        # walk backwards with their existing reversed skeletal animations.
+        ("PAUSE_FAMILY_REVERSE", 5, 25.5, 24.5, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("B6_FAMILY_RETURN", 4, 24.5, 24.3, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("B6", 12, 24.3, 3.16, "THOMAS_INVERSE", (-9, 12, 5)),
         ("B6_REPAIR", 6, 3.16, 3.0, "THOMAS_INVERSE", (-5, 5, 3)),
         ("PAUSE_MOUSQUETON", 7, 3.0, 3.0, "THOMAS_INVERSE", (-5, 5, 3)),
         ("B6_TRAVERSEE", 6, 3.0, 2.5, "THOMAS_INVERSE", (-6, -8, 3)),
@@ -6934,10 +6937,11 @@ def build_omniscient_edit():
             # Favor the ring, while leaving some surrounding terrain visible.
             return eye, (p[0], p[1], p[2]+0.1)
         if code == "PAUSE_FAMILY_REVERSE":
-            # At 17:25 objective time, show the three NORMAL-time walkers
-            # together from afar, without bringing inverse Thomas into view.
-            # Their motion appears reversed because this part of the film
-            # samples objective time backward; actor animations are unchanged.
+            # Around 17:25 objective time, show the three NORMAL-time walkers
+            # together from afar without inverse Thomas in the frame.
+            # This beat now samples a full minute of objective time BACKWARD
+            # instead of freezing all three characters at t=25. Their existing
+            # worldlines and skeletal poses are evaluated in reverse order.
             family = [a["eval_actor"](name, t)
                       for name in ("EVA", "LEA", "THOMAS_NORMAL")]
             center = tuple(sum(p[i] for p in family)/3.0 for i in range(3))
