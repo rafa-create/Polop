@@ -7118,18 +7118,20 @@ def build_omniscient_edit():
         # The father's departure and the ensuing search are otherwise only
         # described by late summary cards. Label canonical speech when the
         # characters actually leave/wait/search, not during an unrelated beat.
+        # Both waiting/search beats now last 12 s. Keep every cue inside
+        # its beat while preserving text, order and reading duration.
         add_speaker_cues("A11_ATTENTE", (
             (0.30, 1.90, "THOMAS: I need to pee."),
             (2.05, 2.95, "EVA: Now?"),
             (3.10, 4.25, "THOMAS: Two minutes."),
             (8.65, 10.40, "LEA: He's taking a while."),
-            (11.65, 12.85, "EVA: Thomas?"),
+            (10.65, 11.85, "EVA: Thomas?"),
         ))
         add_speaker_cues("A12_A13", (
-            (6.55, 8.00, "EVA: Thomas!"),
-            (8.15, 9.40, "LEA: Dad!"),
-            (11.15, 12.40, "EVA: Thomas!"),
-            (13.50, 15.85, "LEA: Do you think he fell?"),
+            (4.65, 6.10, "EVA: Thomas!"),
+            (6.25, 7.50, "LEA: Dad!"),
+            (8.00, 9.25, "EVA: Thomas!"),
+            (9.50, 11.85, "LEA: Do you think he fell?"),
         ))
         add_speaker_cues("A14", (
             (0.65, 3.65, "EVA: We should head down.\nFind some help."),
