@@ -6284,7 +6284,9 @@ def dialogue_camera_pose(code, screen_seconds, objective_time, eye, target, shot
     a = _ANIMATION
 
     def chest(text):
-        name = {"EVA": "EVA", "LEA": "LEA", "THOMAS": "THOMAS_NORMAL"}[text.split(":", 1)[0]]
+        # Dialogue labels may include a delivery note, e.g. "THOMAS (joking):".
+        speaker = text.split(":", 1)[0].split("(", 1)[0].strip()
+        name = {"EVA": "EVA", "LEA": "LEA", "THOMAS": "THOMAS_NORMAL"}[speaker]
         p = a["eval_actor"](name, objective_time)
         return (p[0], p[1], p[2] + (1.15 if name == "LEA" else 1.40))
 
