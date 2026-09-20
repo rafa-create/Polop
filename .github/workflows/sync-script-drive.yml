@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - Script_POLOP.md
+      - scripts/sync_script_drive.py
+      - .github/workflows/sync-script-drive.yml
   workflow_dispatch:
 
 permissions:
@@ -42,7 +44,7 @@ jobs:
           fi
         shell: bash
 
-      - name: Mettre à jour le Google Doc et son PDF
+      - name: Mettre à jour le Google Doc, le script Polop et son PDF
         env:
           GDRIVE_SA_KEY: ${{ secrets.GDRIVE_SA_KEY }}
         run: python scripts/sync_script_drive.py
