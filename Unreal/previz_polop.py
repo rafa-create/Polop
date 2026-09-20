@@ -7232,6 +7232,14 @@ def build_omniscient_edit():
         add_speaker_cues("A2", flank_dialogue_a2)
         add_speaker_cues("B9", flank_dialogue_b9)
 
+        # Closing pullback: brief narrative captions, NOT new spoken lines.
+        # B9 in the Bible leaves Thomas a step behind Eva and Lea; the
+        # mountain gradually swallows the family. Keep the final image clear.
+        add_speaker_cues("B9_ELOIGNEMENT", (
+            (0.65, 3.05, "Eva and Lea climb on. Thomas follows behind."),
+            (3.65, 6.35, "The mountain slowly swallows them from view."),
+        ))
+
         # The father's departure and the ensuing search are otherwise only
         # described by late summary cards. Label canonical speech when the
         # characters actually leave/wait/search, not during an unrelated beat.
@@ -7248,7 +7256,7 @@ def build_omniscient_edit():
             (0.55, 2.60, "B BANK: THE CARABINER IS LOOSE."),
             (3.05, 5.65, "Thomas reattaches it and checks the fastening."),
         ))
-        expected = len(flank_dialogue_a2)+len(flank_dialogue_b9)+5+4+2+2
+        expected = len(flank_dialogue_a2)+len(flank_dialogue_b9)+5+4+2+2+2
         if len(later_dialogue_manifest) != expected:
             raise RuntimeError("Incomplete dialogue in A2/B9, disappearance or B6")
     if not a.get("human_audit_baked"):
