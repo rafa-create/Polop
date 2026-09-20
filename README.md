@@ -26,7 +26,8 @@ L'ancien dossier `E:/perso/polop/polop/` reste une **sauvegarde du WIP Unreal lo
 
 - `Unreal/README_PREVIZ.md` : fonctionnement du générateur, rapports, limites narratives ;
 - `docs/ENVIRONNEMENT_REPRODUCTIBILITE.md` : prérequis, dossiers, installation, Git LFS ;
-- `pland_route.md` : ordre des prochains chantiers ;
-- GitHub Issues : travaux nécessitant Codex/Unreal, après clôture du jalon bootstrap #41.
+- [Feuille de route — issue #74](https://github.com/rafa-create/Polop/issues/74) : historique des phases et liens vers les chantiers à suivre ;
+- [Critique spectateur V12 — #71](https://github.com/rafa-create/Polop/issues/71), [schéma narratif historique — #72](https://github.com/rafa-create/Polop/issues/72), [idées d’effets visuels — #73](https://github.com/rafa-create/Polop/issues/73) : anciens documents de travail migrés vers les issues ;
+- [GitHub Issues](https://github.com/rafa-create/Polop/issues) : suivi actualisé des travaux scénaristiques et Unreal (jalon bootstrap #41 clôturé).
 
 Toujours séparer la **vérité physique du monde** de la **mise en scène** : une caméra peut cacher une information narrative, jamais un bug physique.
