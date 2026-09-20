@@ -6313,7 +6313,10 @@ def build_omniscient_edit():
         ("PAUSE_PONT_RETOUR", 5, 31.9, 31.9, "THOMAS_INVERSE", (-12, 18, 10)),
         # Preserve the same 22 s B6 screen budget, but reserve six seconds
         # for the B-bank repair BEFORE crossing, in the inverse's own time.
-        ("B6", 12, 31.9, 3.16, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("B6_FAMILY_APPROACH", 4, 31.9, 25.0, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("PAUSE_FAMILY_REVERSE", 5, 25.0, 25.0, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("B6_FAMILY_RETURN", 4, 25.0, 24.8, "THOMAS_INVERSE", (-9, 12, 5)),
+        ("B6", 12, 24.8, 3.16, "THOMAS_INVERSE", (-9, 12, 5)),
         ("B6_REPAIR", 6, 3.16, 3.0, "THOMAS_INVERSE", (-5, 5, 3)),
         ("PAUSE_MOUSQUETON", 7, 3.0, 3.0, "THOMAS_INVERSE", (-5, 5, 3)),
         ("B6_TRAVERSEE", 6, 3.0, 2.5, "THOMAS_INVERSE", (-6, -8, 3)),
@@ -6393,6 +6396,11 @@ def build_omniscient_edit():
         "PAUSE_RETOUR": (
             "THOMAS MOVES INTO THE PAST",
             "The world runs backward around Thomas.\nBewildered at first, he starts to enjoy it."
+        ),
+        "PAUSE_FAMILY_REVERSE": (
+            "ABOUT 5:25 P.M. - HIS FAMILY BELOW",
+            "Thomas glimpses Eva, Lea and his earlier self in the distance.\n"
+            "They walk backward before his eyes; he keeps descending."
         ),
         "PAUSE_PONT_RETOUR": (
             "ABOUT 5:30 P.M. - THE BRIDGE",
@@ -6785,6 +6793,18 @@ def build_omniscient_edit():
         raise RuntimeError("Unexpected F03 cave shot: " + code)
 
     def desired_pose(code, focus, offset, t):
+        if code == "PAUSE_FAMILY_REVERSE":
+            # At 17:25 objective time, show the three NORMAL-time walkers
+            # together from afar, without bringing inverse Thomas into view.
+            # Their motion appears reversed because this part of the film
+            # samples objective time backward; actor animations are unchanged.
+            family = [a["eval_actor"](name, t)
+                      for name in ("EVA", "LEA", "THOMAS_NORMAL")]
+            center = tuple(sum(p[i] for p in family)/3.0 for i in range(3))
+            x, y = center[0]-15.0, center[1]-19.0
+            eye = (x, y, max(center[2]+11.0,
+                             a["terrain_z_m"](x, y)+3.0))
+            return eye, (center[0], center[1], center[2]+1.1)
         if code == "PAUSE_FAMILLE":
             # Hold on Eva and Lea descending together: the opposite-slope
             # Thomas remains unseen, as the caption says. Keep the camera
