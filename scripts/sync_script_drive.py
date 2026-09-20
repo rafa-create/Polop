@@ -5,13 +5,11 @@ GitHub is the source of truth. OAuth credentials belong only in GitHub Actions s
 """
 import io
 import os
-import re
-import sys
-import time
 from pathlib import Path
 
 import google.auth.transport.requests
 from google.oauth2.credentials import Credentials
+from google.auth.exceptions import RefreshError
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload
 
@@ -22,19 +20,85 @@ SOURCE = Path("Script_POLOP.md")
 
 
 def credentials():
+    """Refresh the OAuth token and give an actionable, credential-free error."""
     names = ("GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", "GOOGLE_REFRESH_TOKEN")
-    missing = [name for name in names if not os.environ.get(name)]
+    missing = [name for name in names if not os.environ.get(name, "").strip()]
     if missing:
-        raise RuntimeError("Missing GitHub Actions secrets: " + ", ".join(missing))
+        raise RuntimeError(
+            "Configuration GitHub incomplète : secret(s) absent(s) ou vide(s) : "
+            + ", ".join(missing)
+            + ". Ouvrir Settings > Secrets and variables > Actions > Repository secrets."
+        )
+
+    client_id = os.environ["GOOGLE_CLIENT_ID"].strip()
+    client_secret = os.environ["GOOGLE_CLIENT_SECRET"].strip()
+    refresh_token = os.environ["GOOGLE_REFRESH_TOKEN"].strip()
+    if not client_id.endswith(".apps.googleusercontent.com"):
+        raise RuntimeError(
+            "GOOGLE_CLIENT_ID ne ressemble pas à un ID client OAuth Google "
+            "(il doit se terminer par .apps.googleusercontent.com). "
+            "Ne pas utiliser l'Authorization code à la place."
+        )
+    if refresh_token.startswith("ya29."):
+        raise RuntimeError(
+            "GOOGLE_REFRESH_TOKEN contient un ACCESS token (préfixe ya29.). "
+            "Copier le champ 'Refresh token' de l'étape 2 d'OAuth Playground, "
+            "généré avec le même client OAuth que GOOGLE_CLIENT_ID et GOOGLE_CLIENT_SECRET."
+        )
+    if refresh_token.startswith("4/"):
+        raise RuntimeError(
+            "GOOGLE_REFRESH_TOKEN contient un code d'autorisation temporaire. "
+            "Utiliser le champ 'Refresh token' de l'étape 2 d'OAuth Playground."
+        )
+
+    print("OAuth Google : secrets présents, demande de renouvellement du jeton…", flush=True)
     creds = Credentials(
         token=None,
-        refresh_token=os.environ["GOOGLE_REFRESH_TOKEN"],
+        refresh_token=refresh_token,
         token_uri="https://oauth2.googleapis.com/token",
-        client_id=os.environ["GOOGLE_CLIENT_ID"],
-        client_secret=os.environ["GOOGLE_CLIENT_SECRET"],
+        client_id=client_id,
+        client_secret=client_secret,
         scopes=["https://www.googleapis.com/auth/drive"],
     )
-    creds.refresh(google.auth.transport.requests.Request())
+    try:
+        creds.refresh(google.auth.transport.requests.Request())
+    except RefreshError as exc:
+        # Google includes response metadata as a dict in exc.args; never print
+        # the raw exception, HTTP request, authorization code or token values.
+        payload = next((arg for arg in exc.args if isinstance(arg, dict)), {})
+        error = str(payload.get("error", "")).lower()
+        details = {
+            "invalid_client": (
+                "Client OAuth introuvable ou invalide. Vérifier GOOGLE_CLIENT_ID "
+                "et GOOGLE_CLIENT_SECRET dans le même client 'Application Web' de Google Cloud."
+            ),
+            "unauthorized_client": (
+                "Client OAuth non autorisé pour ce renouvellement. Vérifier que le Refresh token "
+                "a été généré dans OAuth Playground avec 'Use your own OAuth credentials' activé "
+                "et avec EXACTEMENT le même ID client et secret que les deux secrets GitHub. "
+                "Tester 'Refresh access token' dans Playground avec ce client ; si nécessaire, "
+                "refaire Step 1 puis Step 2 et remplacer GOOGLE_REFRESH_TOKEN. "
+                "Vérifier aussi que le client OAuth existe toujours et n'est pas désactivé."
+            ),
+            "invalid_grant": (
+                "Refresh token invalide, expiré, révoqué ou émis pour un autre client. "
+                "Régénérer le Refresh token avec le même client OAuth ; si l'application "
+                "Google est en mode Testing, vérifier sa durée de validité."
+            ),
+            "invalid_scope": (
+                "Scope refusé. Autoriser https://www.googleapis.com/auth/drive "
+                "à l'étape 1 d'OAuth Playground, puis générer un nouveau Refresh token."
+            ),
+        }.get(error, (
+            "Échec du renouvellement OAuth Google. Vérifier le client OAuth, "
+            "le Refresh token et les autorisations Google Drive dans OAuth Playground."
+        ))
+        raise RuntimeError(
+            "::error title=Échec OAuth Google (" + (error or "erreur inconnue") + ")::"
+            + details
+            + " Aucun fichier Drive n'a été modifié."
+        ) from None
+    print("OAuth Google : renouvellement réussi.", flush=True)
     return creds
 
 
