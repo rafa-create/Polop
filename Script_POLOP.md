@@ -109,9 +109,9 @@ Plus bas, Éva prend des photos. Elle cadre la montagne, puis s'écarte du senti
 
 La caméra omnisciente reste d'abord avec Léa et Éva. Thomas avance seul en retrait, le long du relief rocheux. Il ralentit et regarde Léa, visible au loin entre les rochers. Il s'arrête brièvement, absorbé par sa fille : son attention quitte le sentier devant lui.
 
-À 17 h 00 exactement, l'autre Thomas surgit au dernier moment du détour du rocher et le percute accidentellement. Le même instant objectif correspond au contact de l'anneau avec Thomas, dont la trajectoire complète reste hors champ. La caméra demeure principalement avec Thomas normal et laisse le rocher masquer une partie du choc, jamais la totalité de l'image. Un bruit bref se perd parmi les voix et les pas ; Léa continue à descendre sur sa portion du sentier, sans voir l'autre Thomas.
+Au détour du rocher, une silhouette surgit et heurte Thomas. La roche masque en partie le choc. Un bruit bref se perd parmi les voix et les pas ; Léa poursuit sa marche, sans voir ce qui vient de se passer.
 
-Thomas normal reste un instant immobile, troublé, puis reprend quelques pas vers Éva et l'arrivée du flanc. Le même mouvement et le même instant de collision seront retrouvés en B7–B9, sans inventer une seconde rencontre.
+Thomas reste un instant immobile, troublé, puis reprend quelques pas vers Éva.
 
 Vers 17 h 01, dans la profondeur d'un plan suffisamment large, le mousqueton sur la rive opposée à Éva est décroché de son point d'ancrage : sa position reste un détail de fond, perceptible en arrêtant l'image et en l'agrandissant. Le décrochage lui-même n'est jamais montré dans la première partie, sans insert ni accent sonore. Thomas remarque discrètement l'attache, sans geste explicatif ni mouvement de caméra qui la désigne ; cette information n'est pas donnée explicitement au spectateur à ce moment. Léa, déjà sur l'autre portion de la boucle, envisage de revenir par le pont.
 
@@ -133,7 +133,7 @@ Léa reprend sa marche par le flanc rocheux pour rejoindre ses parents. La camé
 
 Éva continue tranquillement de photographier le paysage pendant que Léa contourne le creux. Thomas regarde brièvement Léa s'éloigner sur le flanc, puis rejoint Éva sans que ce choix de chemin devienne un sujet de conversation.
 
-La première lecture privilégie Éva, son appareil et son départ vers la montée. Thomas et Léa restent visibles en arrière-plan ou en bord de cadre, sans gros plan sur le trouble de Léa ni sur le signe de tête. Toutes leurs paroles sont audibles, mais le léger incident se lit d'abord comme un trébuchement et un étourdissement passager. La caméra garde le plan-séquence sans coupe et ne quitte pas l'espace continu du chemin.
+La caméra accompagne Éva, son appareil et son départ vers la montée. Thomas et Léa restent en arrière-plan ou en bord de cadre. Leurs voix demeurent audibles. Sans coupe, la caméra poursuit sa marche sur le sentier.
 
 Quand Léa les rejoint sur leur portion du sentier, Éva s'est avancée de quelques pas pour photographier le paysage. Elle reste à portée de voix, mais à distance de Thomas et Léa. 
 
@@ -162,7 +162,7 @@ Tu t'es fait mal ?
 LÉA
 Non… J'arrivais plus à vous entendre. Comme si j'étais plus là.
 
-Thomas lui laisse un instant pour reprendre ses esprits. Il regarde le sommet de la montagne, puis fait un petit signe de tête, presque pour lui-même : il renonce à redescendre et accepte de poursuivre la boucle vers le haut. Aucun phénomène visuel ne prouve que ce signe agit physiquement sur Léa ; le rapprochement des deux événements appartient à la perception du spectateur.
+Thomas lui laisse un instant pour reprendre ses esprits. Il regarde le sommet de la montagne, puis fait un petit signe de tête, presque pour lui-même.
 
 LÉA
 Ah… Je sais pas ce qui s'est passé. Ça va beaucoup mieux.
@@ -534,7 +534,7 @@ B — LE TEMPS INVERSÉ
 
 B1 — LA SECONDE LUMIÈRE / LE GRAND DEHORS
 
-INT. CAVERNE — 18h00 — TEMPS DE THOMAS INVERSÉ
+INT. CAVERNE — 18h00
 
 La goutte reprend son chemin vers la roche. L'anneau s'éloigne en contrebas, de contact en contact, sans quitter la fissure. Thomas suit son petit bruit jusqu'à ce qu'il se perde dans la pierre.
 
@@ -588,7 +588,7 @@ Puis la caméra revient vers Thomas inversé.
 
 B4 — LA DESCENTE / LE JEU
 
-EXT. VERSANT B — DE 18h00 VERS 17h30 — TEMPS DE THOMAS INVERSÉ
+EXT. VERSANT DE LA MONTAGNE — FIN D’APRÈS-MIDI
 
 Une feuille quitte les pierres du sentier et remonte devant Thomas. La caméra monte avec elle, jusqu'à une branche au-dessus de sa tête. Quand elle retrouve sa place, Thomas est déjà passé sous l'arbre. La caméra redescend : il regarde derrière lui, amusé malgré lui.
 
@@ -644,7 +644,7 @@ Le cordage est détendu. Son mousqueton est décroché de son point d’ancrage,
 
 Il ne se raccroche pas spontanément.
 
-Thomas aperçoit le pont mais poursuit sa progression vers 17h00. Il ne comprend pas encore la situation de Léa ni la portée du mousqueton décroché. Le film ne donne encore aucune explication au mouvement de caméra de la première partie.
+Thomas aperçoit le pont mais poursuit sa progression vers 17h00. Il ne comprend pas encore la situation de Léa ni la portée du mousqueton décroché. 
 
 ⸻
 
@@ -668,7 +668,7 @@ B7 — VERS 17h00 — LA CONVERGENCE
 
 Thomas débouche du pont et se hâte le long du relief. Plus bas, Éva photographie le paysage ; Léa marche sur le flanc opposé. Thomas se plaque un instant contre la roche pour ne pas être vu, puis repart.
 
-La masse du rocher lui cache physiquement Thomas normal jusqu'au dernier moment. Celui-ci ralentit puis marque une courte pause en regardant Léa au loin, sur l'autre portion visible du sentier. Du point de vue de Thomas inversé, le mouvement de son double s'effectue à rebours sur ce même sentier. Thomas inversé découvre l'autre Thomas en débouchant du détour, tente de se décaler, mais n'a plus le temps de l'éviter.
+Le rocher lui cache quelqu'un qui approche. Thomas débouche du détour et découvre soudain son propre visage. Il tente de se décaler, trop tard.
 
 Au même instant, l'anneau arrive contre la paroi.
 
@@ -676,7 +676,7 @@ Au même instant, l'anneau arrive contre la paroi.
 
 B8 — 17h00 — LA FERMETURE
 
-Thomas inversé percute accidentellement Thomas normal près du rocher, à **17 h 00 exactement**. Le spectateur reste principalement avec Thomas normal : son autre occurrence surgit au dernier moment. Le rocher masque le point d'approche du regard de Thomas inversé, sans boucher entièrement la collision pour la caméra.
+Les deux Thomas se heurtent près du rocher. La caméra retrouve l'angle du choc entrevu plus tôt : le relief cache encore une partie de leurs corps.
 
 L'anneau touche Thomas au même instant objectif.
 
@@ -706,15 +706,15 @@ On ne cherche pas à cartographier chaque mètre ni chaque minute. Le film étab
 
 Un autre fragment retrouve l’anneau immobilisé dans une anfractuosité. Le film ne précise pas depuis combien de temps. Un chevreuil, perçu en mouvement inversé dans l’orientation temporelle de Thomas, passe à proximité. L’un de ses appuis provoque à rebours une petite vibration / remise en place du terrain qui libère physiquement l’anneau. L’animal poursuit sa trajectoire sans lui prêter attention. L’ellipse explique une grande partie de la durée sans montrer toute l’heure.
 
-À l’approche de 17h00, ses apparitions peuvent devenir légèrement plus rapprochées jusqu’à son arrivée au relief de la fermeture. Le petit bruit métallique de la première lecture peut alors trouver rétrospectivement son origine sans flashback explicatif.
+Les apparitions de l'anneau se rapprochent. Un petit bruit métallique retentit près de la roche.
 
 B9 — VERS 17h00–17h01 — LE RETOUR / LE DÉCLIC
 
 Le même moment et les mêmes mouvements que dans A2, revus sans changer l'heure ni les positions de la famille. Le regard de la caméra et la musique rendent cette fois plus sensible le trouble de Thomas.
 
-La scène reprend **les mêmes mouvements et la même collision à 17 h 00 qu'en A2**, sans seconde occurrence de l'accident : Thomas normal ralentit, regarde Léa sur l'autre portion visible du sentier, est heurté par surprise près du rocher, demeure un instant immobile et repart vers Éva, occupée à prendre des photos plus bas sur leur portion de la boucle. De l'autre côté du creux, Léa descend vers le détour du flanc.
+La caméra retrouve Thomas près du rocher, au moment du choc déjà entrevu. Il ralentit en regardant Léa, est heurté par surprise, demeure un instant immobile puis repart vers Éva, absorbée par ses photos. De l'autre côté du creux, Léa descend vers le flanc.
 
-Vers 17 h 01, le mousqueton sur la rive opposée à Éva est décroché dans la profondeur du cadre. Thomas normal le remarque discrètement, sans geste explicatif ; la caméra continue sans coupe et sans désigner le pont. Dans la première partie A, le détail reste accessible seulement en arrêtant l'image et en l'agrandissant : aucun gros plan, mouvement dédié ou accent sonore ne révèle l'attache, et le décrochage n'est jamais montré. C'est la réparation par Thomas inversé en B6, clairement présentée dans la seconde partie, qui donne rétrospectivement sa portée à cet indice.
+Au loin, le mousqueton pend, décroché. Thomas tourne brièvement les yeux vers le pont. La caméra poursuit son mouvement sans s'y arrêter.
 
 Léa ralentit, puis tourne légèrement la tête vers son père.
 
@@ -734,9 +734,9 @@ Léa reprend sa descente et s'engage sur le flanc.
 
 Éva continue de photographier le paysage pendant que Léa revient par le flanc. Thomas la regarde brièvement, puis rejoint Éva sans que le détour fasse l'objet d'une remarque.
 
-La dernière lecture retrouve **exactement le même événement objectif** qu'en A2 : aucune seconde chute, aucun second dialogue, aucun temps alternatif. Dans le même plan-séquence, après la convergence à 17 h, la caméra se rapproche de Thomas et Léa au lieu de privilégier l'appareil et la marche d'Éva. Leurs voix, le hors-champ de la chute, les gestes et leurs durées restent rigoureusement raccord. Éva demeure quelques pas plus loin, visible ou audible en profondeur, passive pendant le trouble de Léa.
+La caméra se rapproche maintenant de Thomas et Léa. Éva reste quelques pas plus loin, absorbée par ses photos. Derrière Thomas, Léa trébuche hors champ. Il se retourne vers elle.
 
-Quand Léa les rejoint sur leur portion du sentier, Éva s'est avancée de quelques pas pour photographier le paysage. Elle reste à portée de voix, mais à distance de Thomas et Léa. Le sentier continue en une seule boucle : « plus bas » désigne la portion qu'ils viennent de parcourir, jamais une bifurcation vers un second itinéraire.
+Quand Léa les rejoint sur leur portion du sentier, Éva s'est avancée de quelques pas pour photographier le paysage. Elle reste à portée de voix, mais à distance de Thomas et Léa. 
 
 Thomas regarde la montée vers le sommet.
 
@@ -763,7 +763,7 @@ Tu t'es fait mal ?
 LÉA
 Non… J'arrivais plus à vous entendre. Comme si j'étais plus là.
 
-Thomas lui laisse un instant pour reprendre ses esprits. Il regarde le sommet de la montagne, puis fait un petit signe de tête, presque pour lui-même : il renonce à redescendre et accepte de poursuivre la boucle vers le haut. Aucun phénomène visuel ne prouve que ce signe agit physiquement sur Léa ; le rapprochement des deux événements appartient à la perception du spectateur.
+Thomas lui laisse un instant pour reprendre ses esprits. Il regarde le sommet de la montagne, puis fait un petit signe de tête, presque pour lui-même.
 
 LÉA
 Ah… Je sais pas ce qui s'est passé. Ça va beaucoup mieux.
@@ -787,7 +787,7 @@ Allez.
 
 Éva reprend la montée. Léa la suit, puis Thomas. Leurs places et la durée des gestes sont fixes : c'est un seul événement objectif que la caméra retrouvera plus tard sous un autre angle.
 
-Cette fois, rester sur le visage de Léa pendant ses phrases étranges, puis sur le regard de Thomas vers le sommet et son signe de tête avant le rétablissement de Léa. L'absence momentanée de Léa s'explique toujours uniquement par sa chute derrière Thomas, jamais par un effacement surnaturel. Le sens dramatique vient de la focalisation : pour Thomas comme pour le spectateur, l'idée qu'il doit poursuivre le chemin afin d'accomplir le sauvetage déjà vécu devient sensible, sans nouvelle règle de réalité changeante. Éva ne perçoit qu'un incident banal.
+La caméra reste sur le visage de Léa pendant ses paroles. Thomas regarde le sommet, puis hoche la tête. Léa reprend peu à peu ses esprits. Plus loin, Éva abaisse son appareil et les rejoint.
 
 Thomas, derrière elles, porte une main à sa poche et sent la petite boîte destinée à Éva. Il la sort légèrement, la regarde, puis regarde Éva et Léa. Il ne propose pas. Il range la boîte et reprend leur marche vers le haut, sans modifier les actions et paroles de l'événement commun à A2.
 
