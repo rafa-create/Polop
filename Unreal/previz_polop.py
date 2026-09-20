@@ -16,7 +16,7 @@ The editor stays responsive while Landscape layers/collision finish rebuilding.
 
 Current milestone: terrain correction and objective-time animated blockout.
 The 65-second review sequence is NOT yet the complete cinematic adaptation.
-Ring, environmental effects and full A/B/B9 film edit are subsequent milestones.
+The ring has a global objective-time blocking path, pending terrain/contact review.\nEnvironmental effects and full A/B/B9 film edit are subsequent milestones.
 """
 
 import hashlib
@@ -6279,6 +6279,64 @@ def build_omniscient_edit():
     that props, acting, sound or the canonical opening are finished.
     """
     a = _ANIMATION
+    # Single ring worldline, keyed against OBJECTIVE time, including during B.
+    # These are provisional blocking waypoints, not resolved 17 h/18 h contacts.
+    # The under-bridge end and the cave entrance use the CURRENT landscape;
+    # #63 must validate physical slope, collision, concealment and passability.
+    # At t=2 the ring passes NEAR the convergence rock without attaching to
+    # either Thomas. At t=62 it stops NEAR the cave fissure without a hand hit.
+    bridge = a["A_BRIDGE_POINT"]
+    closure = a["CONVERGENCE_POINT"]
+    entry = a["CAVE_ENTRY_POINT"]
+    fissure = a["CAVE_FISSURE_POINT"]
+    cave = a["CAVE_CONTACT_POINT"]
+    terrain = a["terrain_z_m"]
+
+    def ring_ground(x, y, lift=0.18):
+        return (x, y, terrain(x, y)+lift)
+
+    ring_waypoints = (
+        (0.0, (bridge[0], bridge[1]+12.5,
+               min(terrain(bridge[0], bridge[1]),
+                   terrain(bridge[0], bridge[1]+12.5))-2.0)),
+        (1.0, ring_ground(bridge[0]-7.0, bridge[1]+7.0)),
+        (2.0, ring_ground(closure[0]-0.3, closure[1]+0.9, 0.28)),
+        (18.0, ring_ground(closure[0]+24.0, closure[1]+11.0)),
+        (32.0, ring_ground(closure[0]+70.0, closure[1]+17.0)),
+        (47.0, ring_ground(entry[0]-11.0, entry[1]-8.0)),
+        (58.0, ring_ground(entry[0]-2.2, entry[1]-2.6)),
+        (60.0, ring_ground(entry[0]+0.8, entry[1]+0.2)),
+        (61.0, ring_ground(fissure[0], fissure[1])),
+        (62.0, (cave[0]-0.7, cave[1]-0.8, cave[2])),
+    )
+    if any(right[0] <= left[0] or math.dist(left[1], right[1]) < 0.01
+           for left, right in zip(ring_waypoints, ring_waypoints[1:])):
+        raise RuntimeError("Ring blocking path needs ordered nonzero legs")
+
+    def ring_at_objective_time(t):
+        if t <= ring_waypoints[0][0]:
+            return ring_waypoints[0][1]
+        for (t0, p0), (t1, p1) in zip(ring_waypoints, ring_waypoints[1:]):
+            if t <= t1:
+                # Piecewise linear and reproducible. No runtime physics,
+                # teleports, new ring or camera-dependent repositioning.
+                u = (t-t0)/(t1-t0)
+                return tuple(p0[i]+(p1[i]-p0[i])*u for i in range(3))
+        return ring_waypoints[-1][1]
+
+    # A sphere is intentionally a legible temporary RING proxy, not the
+    # definitive ring mesh, collision response or 17 h/18 h contact pose.
+    ring_actor = a["spawn_sphere"](
+        "RING_GLOBAL_BLOCKOUT",
+        unreal.Vector(*(v*100.0 for v in ring_waypoints[0][1])),
+        16.0, a["MAT_ANCHOR"], "Objets/Anneau")
+    ring_actor.set_actor_label("PZ_ANIM_RING_GLOBAL_BLOCKOUT", True)
+    ring_actor.set_folder_path("POLOP/Objets/Anneau")
+    ring_actor.set_actor_enable_collision(False)
+    a["ring_actor"] = ring_actor
+    a["ring_waypoints"] = ring_waypoints
+    a["ring_at_objective_time"] = ring_at_objective_time
+
     # code, screen seconds, objective minute endpoints, focus, camera offset (m)\n    # Pitch rhythm: compress repetitive travel/search, not the cave contact,\n    # inverse cave exit, carabiner repair, bridge crossing or causal closure.
     shots = [
         ("PAUSE_INTRO", 6, 0, 0, "LEA", (-8, -12, 7)),
@@ -6308,6 +6366,8 @@ def build_omniscient_edit():
         ("B2", 10, 60.2, 59.4, "THOMAS_INVERSE", (-14, 20, 9)),
         ("PAUSE_FAMILLE", 6, 59.4, 59.4, "THOMAS_INVERSE", (-14, 20, 9)),
         ("B3_B4", 16, 59.4, 32, "THOMAS_INVERSE", (-9, 12, 5)),
+        # ONE ring insert during the inverse descent; same underlying worldline.
+        ("B4_ANNEAU", 6, 42, 37, "THOMAS_INVERSE", (-9, 12, 5)),
         ("PAUSE_RETOUR", 6, 32, 32, "THOMAS_INVERSE", (-9, 12, 5)),
         ("B5_PONT", 4, 32, 31.9, "THOMAS_INVERSE", (-12, 18, 10)),
         ("PAUSE_PONT_RETOUR", 5, 31.9, 31.9, "THOMAS_INVERSE", (-12, 18, 10)),
@@ -6392,6 +6452,11 @@ def build_omniscient_edit():
             "ON OPPOSITE SIDES",
             "Eva and Lea head downhill to seek help.\n"
             "Unseen, Thomas emerges on the opposite slope."
+        ),
+        "B4_ANNEAU": (
+            "THE RING IS DESCENDING TOO",
+            "At the same time as Thomas, the ring descends the mountain.\n"
+            "It follows its own path, not his footsteps."
         ),
         "PAUSE_RETOUR": (
             "THOMAS MOVES INTO THE PAST",
@@ -6793,6 +6858,17 @@ def build_omniscient_edit():
         raise RuntimeError("Unexpected F03 cave shot: " + code)
 
     def desired_pose(code, focus, offset, t):
+        if code == "B4_ANNEAU":
+            # Sole deliberate ring reveal. Stay in a high, open blocking
+            # overview to avoid a long physical camera flight; optical push
+            # below isolates this one object, then rejoin inverse Thomas.
+            p = a["ring_at_objective_time"](t)
+            thomas = a["eval_actor"]("THOMAS_INVERSE", t)
+            cx, cy = p[0]-9.0, p[1]-9.0
+            eye = (cx, cy, max(p[2]+8.0,
+                                a["terrain_z_m"](cx, cy)+4.0))
+            # Favor the ring, while leaving some surrounding terrain visible.
+            return eye, (p[0], p[1], p[2]+0.1)
         if code == "PAUSE_FAMILY_REVERSE":
             # At 17:25 objective time, show the three NORMAL-time walkers
             # together from afar, without bringing inverse Thomas into view.
@@ -6926,6 +7002,8 @@ def build_omniscient_edit():
     fps = a["FPS"]
     duration = sum(s[1] for s in shots)
     if FAST_CAMERA_ONLY:
+        raise RuntimeError("Ring actor/track and new captions require FAST_CAMERA_ONLY=False; run full mode.")
+    if FAST_CAMERA_ONLY:
         return update_existing_omniscient_camera(
             shots, desired_pose, f03_reveal_pose, f03_reveal_clearance,
             f01_opening_pose)
@@ -6964,6 +7042,8 @@ def build_omniscient_edit():
     # Single physical B-bank clip, evaluated at each objective time in the
     # same omniscient sequence for A, inverted B and normal-time B9.
     _, carabiner_channels, _ = track_for(a["MOUSQUETON_PROXY"])
+    # One bound ring actor with one transform track throughout the FULL film.
+    _, ring_channels, _ = track_for(a["ring_actor"])
     animated = []
     for name in POV_ORDER:
         for objects, converter in ((a["actor_objects"], a["actor_location_from_foot"]),
@@ -7033,6 +7113,10 @@ def build_omniscient_edit():
                     for channel, value in zip(channels[6:9], scale):
                         channel.add_key(frame, float(value if visible else 0.001),
                                         interpolation=unreal.MovieSceneKeyInterpolation.CONSTANT)
+            ring_xyz = a["ring_at_objective_time"](t)
+            for channel, value in zip(ring_channels[:3], ring_xyz):
+                channel.add_key(frame, float(value*100.0),
+                                interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
             clip_xyz = a["carabiner_point_at_objective_time"](t)
             for channel, value in zip(carabiner_channels[:3], clip_xyz):
                 channel.add_key(frame, float(value*100.0),
@@ -7068,7 +7152,10 @@ def build_omniscient_edit():
                 bridge_zoom += (72.0-baseline_focal)*min(1.0, (lens_frame-a9_start)/fps)
             elif a9_end < lens_frame < a9_end+2*fps:
                 bridge_zoom = 72.0+(baseline_focal-72.0)*(lens_frame-a9_end)/(2*fps)
-            lens_channel.add_key(frame, bridge_zoom*dialogue_zoom,
+            ring_push = (1.0 + 2.2*cinematic_ease(min(index/fps, 1.4)/1.4)
+                         *cinematic_ease(min((count-1-index)/fps, 1.4)/1.4)
+                         if code == "B4_ANNEAU" else 1.0)
+            lens_channel.add_key(frame, bridge_zoom*dialogue_zoom*ring_push,
                                  interpolation=unreal.MovieSceneKeyInterpolation.LINEAR)
             if previous_pose is not None:
                 step = math.dist(previous_pose[0], eye)
@@ -7527,7 +7614,7 @@ def finish_generation():
         limitations=[
             "articulated engine mannequin; provisional gait and acting",
             "omniscient blocking edit exists; cinematic coverage and framing not yet validated",
-            "ring and environmental effects not yet animated",
+            "ring has one objective-time blocking track; physical contacts, terrain and environmental effects still pending",
         ],
     )
     # Only a fully successful, saved run may be reused by the opt-in camera
