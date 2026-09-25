@@ -35,8 +35,11 @@ const seek = async (page, second) => {
     element.value = String(t);
     element.dispatchEvent(new Event("input", { bubbles: true }));
   }, second);
-  await page.waitForFunction(t => document.getElementById("timecode").textContent
-    .startsWith("00:" + String(t).padStart(2, "0")), second);
+  await page.waitForFunction(t => {
+    const mm = String(Math.floor(t / 60)).padStart(2, "0");
+    const ss = String(Math.floor(t % 60)).padStart(2, "0");
+    return document.getElementById("timecode").textContent.startsWith(mm + ":" + ss);
+  }, second);
   await page.waitForTimeout(180);
 };
 let browser;
