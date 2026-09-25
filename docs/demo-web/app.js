@@ -776,6 +776,7 @@ function setupControls() {
     updatePeople(elapsed);
     updateCinematicCamera();
     updateDisplay();
+    renderer.render(scene, camera);
   });
   soundButton.addEventListener("click", () => { void toggleSound(); });
   fullscreenButton.addEventListener("click", toggleFullscreen);
@@ -788,7 +789,12 @@ function setupControls() {
   timeline.addEventListener("input", () => {
     elapsed = clamp(Number(timeline.value), 0, DURATION);
     if (freeView) freeView = false;
+    // A seek changes the actual 3D state immediately, not only the caption.
+    // In a busy mobile/WebGL renderer, the next animation frame can be delayed.
+    updatePeople(elapsed);
+    updateCinematicCamera();
     updateDisplay();
+    renderer.render(scene, camera);
   });
   window.addEventListener("keydown", event => {
     if (event.target instanceof HTMLElement && ["INPUT", "SELECT", "BUTTON", "TEXTAREA"].includes(event.target.tagName)) return;
