@@ -33,3 +33,11 @@ button[aria-pressed=true]{background:#456968;border-color:#d0e4d3}
 .note{margin-top:6px;color:#93a9b2}
 @media(max-width:700px){.app{padding:10px;gap:10px}.scene{min-height:380px;border-radius:14px}.topbar{top:24px;left:25px;right:25px}.brand span:not(.brand-mark){font-size:.59rem;max-width:160px}.brand-mark{font-size:1.7rem}.chip{display:none}.scene-caption{left:18px;bottom:18px}.controls{padding:15px}.button-row button{flex:1 1 42%;padding:8px}.speed-label{width:100%;justify-content:space-between;margin:2px 0 0}.hint{font-size:.72rem}}
 @media(prefers-reduced-motion:reduce){button,select{transition:none}}
+
+/* V2 : conserver les contrôles visibles dans le mode plein écran. */
+.scene canvas{touch-action:none}
+.app:fullscreen{width:100vw;max-width:none;height:100dvh;min-height:0;padding:12px}
+.app:fullscreen .scene{min-height:0;flex:1}
+.app:fullscreen .controls{flex-shrink:0}
+.app:fullscreen .topbar{top:26px;left:30px;right:30px}
+@media(max-width:700px){.app:fullscreen{padding:5px}.app:fullscreen .scene{min-height:0}.app:fullscreen .controls{padding:9px}.app:fullscreen .hint,.app:fullscreen .note{display:none}.app:fullscreen .topbar{top:20px;left:19px;right:19px}}

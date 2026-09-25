@@ -1,4 +1,7 @@
-import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js";
+import * as THREE from "three";
+// Optional GLB/GLTF replacements; no network request for absent model files.
+// Example: Thomas: { url: "./assets/thomas.glb", scale: 1 }
+const CHARACTER_ASSETS = Object.freeze({ Thomas: null, "Éva": null, "Léa": null });
 
 const sceneHost = document.getElementById("scene");
 const loading = document.getElementById("loading");
@@ -10,14 +13,18 @@ const playPause = document.getElementById("play-pause");
 const replay = document.getElementById("replay");
 const cameraMode = document.getElementById("camera-mode");
 const speedControl = document.getElementById("speed");
-const DURATION = 24;
+const DURATION = 15;
+const fullscreenButton = document.getElementById("fullscreen");
+const appRoot = document.getElementById("app");
 const TAU = Math.PI * 2;
 const clamp = THREE.MathUtils.clamp;
 const mix = THREE.MathUtils.lerp;
-let renderer, scene, camera, people = [];
+let renderer, scene, camera, people = [], riverRing;
 let elapsed = 0, lastFrame = 0, playing = true, freeView = false;
 let orbitYaw = -0.65, orbitPitch = 0.33, orbitDistance = 13;
-let dragStart = null, reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let dragStart = null, lastPinchDistance = 0;
+const pointers = new Map();
+const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
 let seed = 5318;
 const random = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296);
 const v = (x, y, z) => new THREE.Vector3(x, y, z);
@@ -148,9 +155,9 @@ function drawNature() {
     stone.position.set(x, -2.27, z);
     stone.scale.y = .55;
   }
-  const ring = mesh(new THREE.TorusGeometry(.19, .028, 9, 22), material(0xb2a36d, .32, { metalness: .42 }));
-  ring.position.set(-15.1, -2.18, 20.5);
-  ring.rotation.set(-.3, .4, .25);
+  riverRing = mesh(new THREE.TorusGeometry(.19, .028, 9, 22), material(0xb2a36d, .32, { metalness: .42 }));
+  riverRing.position.set(-15.1, -2.18, 20.5);
+  riverRing.rotation.set(-.3, .4, .25);
   for (let i = 0; i < 24; i++) {
     const x = -18.8 + random() * 7.6, z = 12 + random() * 31;
     const h = .28 + random() * .75, plant = material(0x426f60, 1, { side: THREE.DoubleSide });
@@ -163,9 +170,12 @@ function makePerson(name, coatColor, xOffset, startZ, pace) {
   const hair = material(0x332b29), pack = material(0x6c5842);
   const body = mesh(new THREE.CapsuleGeometry(.25, .72, 4, 8), coat, figure);
   body.position.y = 1.19;
-  const head = mesh(new THREE.SphereGeometry(.23, 12, 9), skin, figure);
-  head.position.set(0, 1.92, -.015);
-  const haircap = mesh(new THREE.SphereGeometry(.238, 12, 8, 0, TAU, 0, Math.PI * .46), hair, figure);
+  const headPivot = new THREE.Group();
+  headPivot.position.set(0, 1.78, 0);
+  figure.add(headPivot);
+  const head = mesh(new THREE.SphereGeometry(.23, 12, 9), skin, headPivot);
+  head.position.set(0, .14, -.015);
+  const haircap = mesh(new THREE.SphereGeometry(.238, 12, 8, 0, TAU, 0, Math.PI * .46), hair, headPivot);
   haircap.position.copy(head.position);
   const backpack = mesh(new THREE.BoxGeometry(.42, .62, .2), pack, figure);
   backpack.position.set(0, 1.26, .29);
@@ -187,30 +197,85 @@ function makePerson(name, coatColor, xOffset, startZ, pace) {
     legs.push(leg);
   }
   figure.scale.setScalar(name === "Léa" ? .78 : name === "Éva" ? .94 : 1.04);
-  figure.userData = { name, xOffset, startZ, pace, arms, legs };
+  const modelHolder = new THREE.Group();
+  figure.add(modelHolder);
+  figure.userData = { name, xOffset, startZ, pace, arms, legs, headPivot, modelHolder,
+    proceduralParts: figure.children.filter(part => part !== modelHolder), mixer: null, actions: null };
   scene.add(figure);
   return figure;
 }
+// Animations évaluées à temps absolu : pause et retour arrière déterministes.
 function updatePeople(seconds) {
+  const travelTime = Math.min(seconds, 13.2);
+  const walkWeight = clamp((13.6 - seconds) / .6, 0, 1);
   for (const person of people) {
-    const p = person.userData, progress = Math.min(seconds * .13 * p.pace, 4.1);
-    const z = p.startZ - progress, x = trailX(z) + p.xOffset;
+    const p = person.userData;
+    const z = p.startZ - travelTime * .19 * p.pace;
+    const x = trailX(z) + p.xOffset;
     const stride = seconds * 5.2 * p.pace + p.startZ;
-    person.position.set(x, heightAt(x, z) + .13 + .024 * Math.sin(stride * 2), z);
+    person.position.set(x, heightAt(x, z) + .13 +
+      .009 * Math.sin(seconds * 2 + p.startZ) +
+      walkWeight * .024 * Math.sin(stride * 2), z);
     person.rotation.y = -.12 * Math.cos(z * .115);
-    p.arms[0].rotation.x = Math.sin(stride) * .40;
-    p.arms[1].rotation.x = -Math.sin(stride) * .40;
-    p.legs[0].rotation.x = -Math.sin(stride) * .34;
-    p.legs[1].rotation.x = Math.sin(stride) * .34;
+    p.arms[0].rotation.x = walkWeight * Math.sin(stride) * .40;
+    p.arms[1].rotation.x = -walkWeight * Math.sin(stride) * .40;
+    p.legs[0].rotation.x = -walkWeight * Math.sin(stride) * .34;
+    p.legs[1].rotation.x = walkWeight * Math.sin(stride) * .34;
+    p.headPivot.rotation.y = .15 * Math.sin(seconds * .95 + p.startZ) +
+      (p.name === "Thomas" ? .2 * ease(clamp((seconds - 11.8) / 2, 0, 1)) : 0);
+    p.headPivot.rotation.x = .045 * Math.sin(seconds * 1.35 + p.startZ);
+    if (p.mixer && p.actions) {
+      p.actions.walk?.setEffectiveWeight(walkWeight);
+      p.actions.idle?.setEffectiveWeight(1 - walkWeight);
+      p.mixer.setTime(seconds);
+    }
+  }
+  if (riverRing) riverRing.rotation.z = .25 + .065 * Math.sin(seconds * 2.1) *
+    Math.exp(-Math.max(0, seconds - .5));
+}
+
+// Seuls les modèles explicitement configurés sont demandés au navigateur.
+// En cas d'absence ou d'erreur le personnage procédural est conservé.
+async function loadCharacterModels() {
+  if (!Object.values(CHARACTER_ASSETS).some(Boolean)) return;
+  const { GLTFLoader } = await import("three/addons/loaders/GLTFLoader.js");
+  const loader = new GLTFLoader();
+  for (const person of people) {
+    const config = CHARACTER_ASSETS[person.userData.name];
+    if (!config?.url) continue;
+    try {
+      const gltf = await loader.loadAsync(config.url);
+      const model = gltf.scene;
+      model.scale.setScalar(config.scale ?? 1);
+      model.rotation.y = config.rotationY ?? 0;
+      model.position.y = config.yOffset ?? 0;
+      person.userData.modelHolder.add(model);
+      const clips = gltf.animations || [];
+      if (clips.length) {
+        const mixer = new THREE.AnimationMixer(model);
+        const walk = clips.find(clip => /walk|marche/i.test(clip.name)) ?? clips[0];
+        const idle = clips.find(clip => /idle|rest|repos/i.test(clip.name));
+        const walkAction = mixer.clipAction(walk);
+        walkAction.play();
+        const idleAction = idle && idle !== walk ? mixer.clipAction(idle) : null;
+        idleAction?.play();
+        person.userData.mixer = mixer;
+        person.userData.actions = { walk: walkAction, idle: idleAction };
+      }
+      for (const part of person.userData.proceduralParts) part.visible = false;
+    } catch (error) {
+      console.warn("Modèle externe indisponible : silhouette conservée pour " + person.userData.name, error);
+    }
   }
 }
+
 function buildScene() {
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0x98b6b7);
   scene.fog = new THREE.FogExp2(0x9bb6b5, .012);
   camera = new THREE.PerspectiveCamera(60, 1, .08, 230);
   renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
-  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.8));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, window.innerWidth < 700 ? 1.25 : 1.65));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.35;
@@ -221,7 +286,7 @@ function buildScene() {
   const sun = new THREE.DirectionalLight(0xffe4b5, 2.35);
   sun.position.set(-18, 36, -15);
   sun.castShadow = true;
-  sun.shadow.mapSize.set(1024, 1024);
+  sun.shadow.mapSize.set(window.innerWidth < 700 ? 512 : 1024, window.innerWidth < 700 ? 512 : 1024);
   sun.shadow.camera.left = -44; sun.shadow.camera.right = 44;
   sun.shadow.camera.top = 48; sun.shadow.camera.bottom = -48;
   sun.shadow.camera.near = 1; sun.shadow.camera.far = 105;
@@ -236,17 +301,22 @@ function buildScene() {
     makePerson("Léa", 0xb7a46b, -.08, 5.9, 1.13)
   ];
 }
+// A0 → A1 : 0–3 s rivière, 3–7,5 s vallée, 7,5–11 s relief,
+// 11–15 s rapprochement du groupe. Mouvement continu sans coupe.
 const cameraStops = [
-  { t: 0, pos: v(-15.0, -1.92, 28.4), look: v(-15.1, -2.22, 20.5), fov: 53 },
-  { t: .17, pos: v(-14.9, -1.38, 23.0), look: v(-15.1, -1.95, 17.0), fov: 59 },
-  { t: .34, pos: v(-15.0, 1.8, 17.2), look: v(-8, 3.3, -5), fov: 65 },
-  { t: .58, pos: v(-9.0, 6.4, 17.8), look: v(8, 6.8, -4), fov: 58 },
-  { t: .82, pos: v(1.4, 9.3, 20.2), look: v(9, heightAt(9, 8) + 1.8, 8), fov: 54 },
-  { t: 1, pos: v(6.6, heightAt(6.6, 19) + 4.25, 19), look: v(9.4, heightAt(9.4, 8) + 1.5, 8), fov: 48 }
+  { t: 0, pos: v(-15, -1.92, 28.4), look: v(-15.1, -2.22, 20.5), fov: 53 },
+  { t: 2, pos: v(-14.95, -1.45, 23.3), look: v(-15.05, -1.95, 17.5), fov: 57 },
+  { t: 3.1, pos: v(-14.85, .45, 19.5), look: v(-11, 1.1, 9), fov: 62 },
+  { t: 5.3, pos: v(-13, 4.9, 19.4), look: v(-5, 6, -8), fov: 65 },
+  { t: 7.5, pos: v(-5, 9.2, 19.8), look: v(9, 11, -8), fov: 60 },
+  { t: 9.5, pos: v(1.3, heightAt(1.3, 20) + 8, 20), look: v(9.7, heightAt(9.7, 8) + 1.7, 8), fov: 56 },
+  { t: 11.3, pos: v(5.5, heightAt(5.5, 17) + 6, 17), look: v(9.4, heightAt(9.4, 7) + 1.5, 7), fov: 51 },
+  { t: 13.2, pos: v(6.6, heightAt(6.6, 12) + 3.8, 12), look: v(trailX(6), heightAt(trailX(6), 6) + 1.4, 6), fov: 47 },
+  { t: 15, pos: v(7.4, heightAt(7.4, 9) + 2.9, 9), look: v(trailX(5), heightAt(trailX(5), 5) + 1.5, 5), fov: 43 }
 ];
 function ease(s) { return s * s * (3 - 2 * s); }
 function updateCinematicCamera() {
-  const t = clamp(elapsed / DURATION, 0, 1);
+  const t = clamp(elapsed, 0, DURATION);
   let a = cameraStops[0], b = cameraStops[cameraStops.length - 1];
   for (let i = 0; i < cameraStops.length - 1; i++) {
     if (t >= cameraStops[i].t && t <= cameraStops[i + 1].t) {
@@ -259,13 +329,13 @@ function updateCinematicCamera() {
   camera.fov = mix(a.fov, b.fov, s);
   camera.updateProjectionMatrix();
   sceneHost.classList.toggle("underwater", camera.position.y < -1.05);
-  if (t < .29) caption.textContent = "La rivière · 16 h 58";
-  else if (t < .60) caption.textContent = "La vallée · un seul mouvement de caméra";
+  if (t < 3) caption.textContent = "La rivière · 16 h 58";
+  else if (t < 7.5) caption.textContent = "La vallée · le plan continue";
+  else if (t < 11) caption.textContent = "La montagne · le sentier";
   else caption.textContent = "Thomas, Éva et Léa · la randonnée";
 }
 function updateOrbitCamera() {
-  const targetZ = 7.1, targetX = trailX(targetZ);
-  const target = v(targetX, heightAt(targetX, targetZ) + 1.5, targetZ);
+  const target = people[0].position.clone().add(v(0, 1.5, 0));
   const cp = Math.cos(orbitPitch);
   camera.position.copy(target).add(v(
     orbitDistance * cp * Math.sin(orbitYaw),
@@ -280,12 +350,14 @@ function updateOrbitCamera() {
 function updateDisplay() {
   timeline.value = elapsed.toFixed(2);
   const n = Math.min(Math.floor(elapsed), DURATION);
-  timecode.textContent = "00:" + String(n).padStart(2, "0") + " / 00:24";
+  timecode.textContent = "00:" + String(n).padStart(2, "0") + " / 00:15";
   playPause.textContent = playing ? "⏸ Pause" : "▶ Reprendre";
   playPause.setAttribute("aria-pressed", String(!playing));
   cameraMode.textContent = freeView ? "◉ Vue caméra" : "◎ Vue libre";
   cameraMode.setAttribute("aria-pressed", String(freeView));
   sceneHost.classList.toggle("free-view", freeView);
+  fullscreenButton.setAttribute("aria-pressed", String(Boolean(document.fullscreenElement)));
+  fullscreenButton.textContent = document.fullscreenElement ? "⛶ Quitter le plein écran" : "⛶ Plein écran";
 }
 function resize() {
   const rect = sceneHost.getBoundingClientRect();
@@ -300,9 +372,9 @@ function tick(now) {
   if (playing) {
     const speed = Number(speedControl.value);
     if (elapsed < DURATION) elapsed = Math.min(DURATION, elapsed + delta * speed);
+    if (elapsed >= DURATION) playing = false;
   }
-  const motionTime = reducedMotion ? 0 : elapsed;
-  updatePeople(motionTime);
+  updatePeople(elapsed);
   if (freeView) updateOrbitCamera(); else updateCinematicCamera();
   updateDisplay();
   renderer.render(scene, camera);
@@ -311,10 +383,25 @@ function tick(now) {
 function toggleView() {
   freeView = !freeView;
   dragStart = null;
+  pointers.clear();
+  lastPinchDistance = 0;
   if (freeView) orbitYaw = -.65;
   updateDisplay();
 }
+async function toggleFullscreen() {
+  try {
+    if (document.fullscreenElement) await document.exitFullscreen();
+    else if (appRoot.requestFullscreen) await appRoot.requestFullscreen();
+    else throw new Error("Fullscreen API unavailable");
+  } catch (error) {
+    console.warn("Mode plein écran indisponible", error);
+    document.getElementById("hint").textContent = "Plein écran indisponible sur ce navigateur.";
+  }
+  updateDisplay();
+}
 function setupControls() {
+  fullscreenButton.addEventListener("click", toggleFullscreen);
+  document.addEventListener("fullscreenchange", () => { resize(); updateDisplay(); });
   playPause.addEventListener("click", () => { playing = !playing; updateDisplay(); });
   replay.addEventListener("click", () => {
     elapsed = 0; playing = true; freeView = false; updateDisplay();
@@ -330,24 +417,41 @@ function setupControls() {
     if (event.code === "Space") { event.preventDefault(); playing = !playing; }
     if (event.key.toLowerCase() === "r") { elapsed = 0; playing = true; freeView = false; }
     if (event.key.toLowerCase() === "v") toggleView();
+    if (event.key.toLowerCase() === "f") void toggleFullscreen();
     if (freeView && event.code === "ArrowLeft") orbitYaw -= .1;
     if (freeView && event.code === "ArrowRight") orbitYaw += .1;
   });
-  sceneHost.addEventListener("pointerdown", event => {
-    if (!freeView || event.target !== renderer.domElement) return;
+  renderer.domElement.addEventListener("pointerdown", event => {
+    if (!freeView) return;
+    pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
     dragStart = { x: event.clientX, y: event.clientY };
     sceneHost.classList.add("is-dragging");
     renderer.domElement.setPointerCapture(event.pointerId);
+    lastPinchDistance = 0;
   });
   renderer.domElement.addEventListener("pointermove", event => {
-    if (!freeView || !dragStart) return;
-    orbitYaw -= (event.clientX - dragStart.x) * .007;
-    orbitPitch = clamp(orbitPitch + (event.clientY - dragStart.y) * .005, -.1, 1.27);
-    dragStart = { x: event.clientX, y: event.clientY };
+    if (!freeView || !pointers.has(event.pointerId)) return;
+    const prev = pointers.get(event.pointerId);
+    pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (pointers.size >= 2) {
+      const [first, second] = [...pointers.values()];
+      const distance = Math.hypot(first.x - second.x, first.y - second.y);
+      if (lastPinchDistance > 0 && distance > 0)
+        orbitDistance = clamp(orbitDistance * lastPinchDistance / distance, 4, 34);
+      lastPinchDistance = distance;
+    } else {
+      orbitYaw -= (event.clientX - prev.x) * .007;
+      orbitPitch = clamp(orbitPitch + (event.clientY - prev.y) * .005, -.1, 1.27);
+    }
   });
   for (const kind of ["pointerup", "pointercancel", "lostpointercapture"]) {
-    renderer.domElement.addEventListener(kind, () => {
-      dragStart = null; sceneHost.classList.remove("is-dragging");
+    renderer.domElement.addEventListener(kind, event => {
+      pointers.delete(event.pointerId);
+      lastPinchDistance = 0;
+      if (!pointers.size) {
+        dragStart = null;
+        sceneHost.classList.remove("is-dragging");
+      }
     });
   }
   renderer.domElement.addEventListener("wheel", event => {
@@ -361,9 +465,10 @@ try {
   buildScene();
   setupControls();
   resize();
-  if (reducedMotion) { elapsed = 16; playing = false; }
+  if (reducedMotion) { elapsed = 0; playing = false; }
   loading.hidden = true;
   requestAnimationFrame(tick);
+  void loadCharacterModels().catch(error => console.warn("Modèles externes indisponibles ; silhouettes conservées.", error));
 } catch (error) {
   console.error("POLOP : impossible de lancer la démo 3D", error);
   loading.hidden = true;
