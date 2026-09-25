@@ -61,6 +61,8 @@ try {
   assert.equal(await page.locator("#replay").count(), 1);
   assert.equal(await page.locator("#camera-mode").count(), 1);
   assert.equal(await page.locator("#fullscreen").count(), 1);
+  assert.equal(await page.locator("#sound").count(), 1);
+  assert.equal(await page.locator("#sound").getAttribute("aria-pressed"), "false");
   const canvas = page.locator("#scene canvas");
   const viewport = await canvas.boundingBox();
   assert.ok(viewport?.width > 100 && viewport?.height > 100, "Invisible 3D canvas");
@@ -76,6 +78,10 @@ try {
   await seek(page, 4);
   const frameC = sha(await canvas.screenshot());
   assert.notEqual(frameC, frameB, "Backwards scrubbing did not change the frame");
+  await page.locator("#sound").click();
+  await page.waitForFunction(() => document.getElementById("sound").getAttribute("aria-pressed") === "true", null, { timeout: 10000 });
+  await page.locator("#sound").click();
+  assert.equal(await page.locator("#sound").getAttribute("aria-pressed"), "false");
   await page.locator("#camera-mode").click();
   assert.equal(await page.locator("#camera-mode").getAttribute("aria-pressed"), "true");
   const box = await canvas.boundingBox();
@@ -117,7 +123,7 @@ try {
   assert.deepEqual(mobileErrors, [], "Uncaught mobile browser errors");
   await mobile.close();
   await page.close();
-  console.log("PASS: Chromium WebGL launch, 3D frames, scrubbing, replay, free camera, fullscreen control, mobile touch.");
+  console.log("PASS: Chromium WebGL launch, moving 3D frames, scrubbing, replay, free camera, optional Web Audio, fullscreen control, mobile touch.");
 } finally {
   await browser?.close();
   await new Promise(resolveClosed => server.close(resolveClosed));

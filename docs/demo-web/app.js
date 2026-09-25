@@ -15,11 +15,15 @@ const cameraMode = document.getElementById("camera-mode");
 const speedControl = document.getElementById("speed");
 const DURATION = 15;
 const fullscreenButton = document.getElementById("fullscreen");
+const soundButton = document.getElementById("sound");
 const appRoot = document.getElementById("app");
 const TAU = Math.PI * 2;
 const clamp = THREE.MathUtils.clamp;
 const mix = THREE.MathUtils.lerp;
-let renderer, scene, camera, people = [], riverRing;
+let renderer, scene, camera, people = [], riverRing, riverSurface, sunLight;
+const riverParticles = [];
+const daylight = new THREE.Color(0x98b6b7), submergedLight = new THREE.Color(0x356c78);
+let soundEnabled = false, audioContext, riverGain, windGain;
 let elapsed = 0, lastFrame = 0, playing = true, freeView = false;
 let orbitYaw = -0.65, orbitPitch = 0.33, orbitDistance = 13;
 let dragStart = null, lastPinchDistance = 0;
@@ -81,12 +85,12 @@ function drawGround() {
   geometry.computeVertexNormals();
   const ground = mesh(geometry, material(0xffffff, 1, { vertexColors: true, side: THREE.DoubleSide }));
   ground.castShadow = false;
-  const water = mesh(new THREE.PlaneGeometry(8.4, 124), material(0x4f9b9f, .23, {
+  riverSurface = mesh(new THREE.PlaneGeometry(8.4, 124), material(0x4f9b9f, .23, {
     transparent: true, opacity: .72, depthWrite: false, side: THREE.DoubleSide, metalness: .06
   }));
-  water.rotation.x = -Math.PI / 2;
-  water.position.set(-15, -1.05, 0);
-  water.castShadow = false;
+  riverSurface.rotation.x = -Math.PI / 2;
+  riverSurface.position.set(-15, -1.05, 0);
+  riverSurface.castShadow = false;
 }
 function drawTrailAndBridge() {
   const path = [], color = material(0xb7ad88);
@@ -158,6 +162,18 @@ function drawNature() {
   riverRing = mesh(new THREE.TorusGeometry(.19, .028, 9, 22), material(0xb2a36d, .32, { metalness: .42 }));
   riverRing.position.set(-15.1, -2.18, 20.5);
   riverRing.rotation.set(-.3, .4, .25);
+  // Water motes are real meshes in the river, animated at absolute film time.
+  const moteGeometry = new THREE.SphereGeometry(.022, 5, 4);
+  const moteMaterial = material(0xb7ded2, 1, { transparent: true, opacity: .48, depthWrite: false });
+  for (let i = 0; i < 65; i++) {
+    const mote = mesh(moteGeometry, moteMaterial);
+    const x = -18.4 + random() * 6.8, z = 12 + random() * 31;
+    const y = -1.45 - random() * 1.10, phase = random() * TAU;
+    mote.position.set(x, y, z);
+    mote.castShadow = false;
+    mote.userData = { x, y, z, phase };
+    riverParticles.push(mote);
+  }
   for (let i = 0; i < 24; i++) {
     const x = -18.8 + random() * 7.6, z = 12 + random() * 31;
     const h = .28 + random() * .75, plant = material(0x426f60, 1, { side: THREE.DoubleSide });
@@ -206,10 +222,13 @@ function makePerson(name, coatColor, xOffset, startZ, pace) {
 }
 // Animations évaluées à temps absolu : pause et retour arrière déterministes.
 function updatePeople(seconds) {
-  const travelTime = Math.min(seconds, 13.2);
-  const walkWeight = clamp((13.6 - seconds) / .6, 0, 1);
   for (const person of people) {
     const p = person.userData;
+    // Thomas and Léa keep walking; Éva slows to survey the landscape at the end.
+    const slowing = p.name === "Éva" ? ease(clamp((seconds - 13.2) / 1.2, 0, 1)) : 0;
+    const travelTime = p.name === "Éva" ? Math.min(seconds, 13.2) +
+      Math.min(Math.max(seconds - 13.2, 0), 1.2) * (1 - slowing * .5) : seconds;
+    const walkWeight = 1 - slowing;
     const z = p.startZ - travelTime * .19 * p.pace;
     const x = trailX(z) + p.xOffset;
     const stride = seconds * 5.2 * p.pace + p.startZ;
@@ -232,6 +251,12 @@ function updatePeople(seconds) {
   }
   if (riverRing) riverRing.rotation.z = .25 + .065 * Math.sin(seconds * 2.1) *
     Math.exp(-Math.max(0, seconds - .5));
+  if (riverSurface) riverSurface.position.y = -1.05 + .012 * Math.sin(seconds * 1.7);
+  for (const mote of riverParticles) {
+    const p = mote.userData;
+    mote.position.set(p.x + .11 * Math.sin(seconds * .8 + p.phase),
+      p.y + .035 * Math.sin(seconds * 1.2 + p.phase), p.z - seconds * .04);
+  }
 }
 
 // Seuls les modèles explicitement configurés sont demandés au navigateur.
@@ -271,7 +296,7 @@ async function loadCharacterModels() {
 
 function buildScene() {
   scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x98b6b7);
+  scene.background = daylight.clone();
   scene.fog = new THREE.FogExp2(0x9bb6b5, .012);
   camera = new THREE.PerspectiveCamera(60, 1, .08, 230);
   renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
@@ -283,15 +308,15 @@ function buildScene() {
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   sceneHost.prepend(renderer.domElement);
   scene.add(new THREE.HemisphereLight(0xe5f2eb, 0x50604f, 2.1));
-  const sun = new THREE.DirectionalLight(0xffe4b5, 2.35);
-  sun.position.set(-18, 36, -15);
-  sun.castShadow = true;
-  sun.shadow.mapSize.set(window.innerWidth < 700 ? 512 : 1024, window.innerWidth < 700 ? 512 : 1024);
-  sun.shadow.camera.left = -44; sun.shadow.camera.right = 44;
-  sun.shadow.camera.top = 48; sun.shadow.camera.bottom = -48;
-  sun.shadow.camera.near = 1; sun.shadow.camera.far = 105;
-  sun.shadow.bias = -.0003;
-  scene.add(sun);
+  sunLight = new THREE.DirectionalLight(0xffe4b5, 2.35);
+  sunLight.position.set(-18, 36, -15);
+  sunLight.castShadow = true;
+  sunLight.shadow.mapSize.set(window.innerWidth < 700 ? 512 : 1024, window.innerWidth < 700 ? 512 : 1024);
+  sunLight.shadow.camera.left = -44; sunLight.shadow.camera.right = 44;
+  sunLight.shadow.camera.top = 48; sunLight.shadow.camera.bottom = -48;
+  sunLight.shadow.camera.near = 1; sunLight.shadow.camera.far = 105;
+  sunLight.shadow.bias = -.0003;
+  scene.add(sunLight);
   drawGround();
   drawTrailAndBridge();
   drawNature();
@@ -315,20 +340,65 @@ const cameraStops = [
   { t: 15, pos: v(7.4, heightAt(7.4, 9) + 2.9, 9), look: v(trailX(5), heightAt(trailX(5), 5) + 1.5, 5), fov: 43 }
 ];
 function ease(s) { return s * s * (3 - 2 * s); }
+// Cubic Hermite interpolation preserves a continuous velocity at every
+// camera marker. V2's smoothstep paused for an instant at EACH marker.
+function scalarTangent(index, key) {
+  const left = cameraStops[Math.max(0, index - 1)];
+  const right = cameraStops[Math.min(cameraStops.length - 1, index + 1)];
+  return (right[key] - left[key]) / (right.t - left.t);
+}
+function vectorTangent(index, key) {
+  const left = cameraStops[Math.max(0, index - 1)];
+  const right = cameraStops[Math.min(cameraStops.length - 1, index + 1)];
+  return right[key].clone().sub(left[key]).multiplyScalar(1 / (right.t - left.t));
+}
+function hermite(a, b, tangentA, tangentB, u, duration) {
+  const u2 = u * u, u3 = u2 * u;
+  return (2 * u3 - 3 * u2 + 1) * a + (u3 - 2 * u2 + u) * duration * tangentA +
+    (-2 * u3 + 3 * u2) * b + (u3 - u2) * duration * tangentB;
+}
+function poseAt(seconds) {
+  const t = clamp(seconds, 0, DURATION);
+  let i = cameraStops.length - 2;
+  for (let j = 0; j < cameraStops.length - 1; j++) {
+    if (t <= cameraStops[j + 1].t) { i = j; break; }
+  }
+  const a = cameraStops[i], b = cameraStops[i + 1];
+  const duration = b.t - a.t, u = clamp((t - a.t) / duration, 0, 1);
+  const interpolateVector = key => {
+    const left = vectorTangent(i, key), right = vectorTangent(i + 1, key);
+    return v(
+      hermite(a[key].x, b[key].x, left.x, right.x, u, duration),
+      hermite(a[key].y, b[key].y, left.y, right.y, u, duration),
+      hermite(a[key].z, b[key].z, left.z, right.z, u, duration)
+    );
+  };
+  return {
+    pos: interpolateVector("pos"),
+    look: interpolateVector("look"),
+    fov: hermite(a.fov, b.fov, scalarTangent(i, "fov"),
+      scalarTangent(i + 1, "fov"), u, duration)
+  };
+}
+function applyAtmosphere() {
+  // The water line is spatial, not based on the caption/timeline chapter.
+  const surfaceY = riverSurface?.position.y ?? -1.05;
+  const submersion = 1 - ease(clamp((camera.position.y - surfaceY + .20) / .40, 0, 1));
+  scene.background.lerpColors(daylight, submergedLight, submersion);
+  scene.fog.color.lerpColors(new THREE.Color(0x9bb6b5), submergedLight, submersion);
+  scene.fog.density = mix(.012, .070, submersion);
+  sunLight.intensity = mix(2.35, 1.20, submersion);
+  renderer.toneMappingExposure = mix(1.35, 1.12, submersion);
+  sceneHost.classList.toggle("underwater", submersion > .5);
+}
 function updateCinematicCamera() {
   const t = clamp(elapsed, 0, DURATION);
-  let a = cameraStops[0], b = cameraStops[cameraStops.length - 1];
-  for (let i = 0; i < cameraStops.length - 1; i++) {
-    if (t >= cameraStops[i].t && t <= cameraStops[i + 1].t) {
-      a = cameraStops[i]; b = cameraStops[i + 1]; break;
-    }
-  }
-  const s = ease(clamp((t - a.t) / (b.t - a.t), 0, 1));
-  camera.position.copy(a.pos).lerp(b.pos, s);
-  camera.lookAt(a.look.clone().lerp(b.look, s));
-  camera.fov = mix(a.fov, b.fov, s);
+  const pose = poseAt(t);
+  camera.position.copy(pose.pos);
+  camera.lookAt(pose.look);
+  camera.fov = pose.fov;
   camera.updateProjectionMatrix();
-  sceneHost.classList.toggle("underwater", camera.position.y < -1.05);
+  applyAtmosphere();
   if (t < 3) caption.textContent = "La rivière · 16 h 58";
   else if (t < 7.5) caption.textContent = "La vallée · le plan continue";
   else if (t < 11) caption.textContent = "La montagne · le sentier";
@@ -345,7 +415,63 @@ function updateOrbitCamera() {
   camera.lookAt(target);
   camera.fov = 52;
   camera.updateProjectionMatrix();
+  applyAtmosphere();
   caption.textContent = "Vue libre · la randonnée";
+}
+// Opt-in, locally synthesized ambience: no music licensing or remote audio.
+function createNoiseLoop(context, type, frequency) {
+  const buffer = context.createBuffer(1, context.sampleRate * 2, context.sampleRate);
+  const data = buffer.getChannelData(0);
+  let previous = 0;
+  for (let i = 0; i < data.length; i++) {
+    const white = Math.random() * 2 - 1;
+    previous = (previous + .04 * white) / 1.04;
+    data[i] = previous * 3;
+  }
+  const source = context.createBufferSource();
+  source.buffer = buffer;
+  source.loop = true;
+  const filter = context.createBiquadFilter();
+  filter.type = type;
+  filter.frequency.value = frequency;
+  const gain = context.createGain();
+  gain.gain.value = 0;
+  source.connect(filter).connect(gain).connect(context.destination);
+  source.start();
+  return gain;
+}
+async function toggleSound() {
+  if (soundEnabled) {
+    soundEnabled = false;
+    updateSound();
+    updateDisplay();
+    return;
+  }
+  try {
+    if (!audioContext) {
+      const AudioContextType = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextType) throw new Error("Web Audio unavailable");
+      audioContext = new AudioContextType();
+      riverGain = createNoiseLoop(audioContext, "lowpass", 650);
+      windGain = createNoiseLoop(audioContext, "bandpass", 380);
+    }
+    await audioContext.resume();
+    soundEnabled = true;
+  } catch (error) {
+    soundEnabled = false;
+    console.warn("Ambiance sonore indisponible", error);
+    document.getElementById("hint").textContent =
+      "Ce navigateur ne permet pas de démarrer l’ambiance sonore. Le film reste utilisable sans son.";
+  }
+  updateSound();
+  updateDisplay();
+}
+function updateSound() {
+  if (!audioContext || !riverGain || !windGain) return;
+  const now = audioContext.currentTime, active = soundEnabled && playing ? 1 : 0;
+  const waterMix = 1 - ease(clamp((elapsed - 2.35) / 2, 0, 1));
+  riverGain.gain.setTargetAtTime(active * mix(.075, .18, waterMix), now, .12);
+  windGain.gain.setTargetAtTime(active * mix(.11, .025, waterMix), now, .12);
 }
 function updateDisplay() {
   timeline.value = elapsed.toFixed(2);
@@ -356,6 +482,9 @@ function updateDisplay() {
   cameraMode.textContent = freeView ? "◉ Vue caméra" : "◎ Vue libre";
   cameraMode.setAttribute("aria-pressed", String(freeView));
   sceneHost.classList.toggle("free-view", freeView);
+  soundButton.textContent = soundEnabled ? "♫ Couper le son" : "♫ Activer le son";
+  soundButton.setAttribute("aria-pressed", String(soundEnabled));
+  soundButton.setAttribute("aria-label", soundEnabled ? "Couper l’ambiance sonore" : "Activer l’ambiance sonore");
   fullscreenButton.setAttribute("aria-pressed", String(Boolean(document.fullscreenElement)));
   fullscreenButton.textContent = document.fullscreenElement ? "⛶ Quitter le plein écran" : "⛶ Plein écran";
 }
@@ -377,6 +506,7 @@ function tick(now) {
   updatePeople(elapsed);
   if (freeView) updateOrbitCamera(); else updateCinematicCamera();
   updateDisplay();
+  updateSound();
   renderer.render(scene, camera);
   requestAnimationFrame(tick);
 }
@@ -400,6 +530,7 @@ async function toggleFullscreen() {
   updateDisplay();
 }
 function setupControls() {
+  soundButton.addEventListener("click", () => { void toggleSound(); });
   fullscreenButton.addEventListener("click", toggleFullscreen);
   document.addEventListener("fullscreenchange", () => { resize(); updateDisplay(); });
   playPause.addEventListener("click", () => { playing = !playing; updateDisplay(); });

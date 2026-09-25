@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#101b24">
   <meta name="description" content="POLOP — prévisualisation 3D interactive de l'ouverture du film.">
-  <title>POLOP — Démo 3D interactive</title>
+  <title>POLOP — Film 3D interactif · V3</title>
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -17,7 +17,7 @@
       <div class="scene-error" id="scene-error" role="alert" hidden></div>
     </div>
     <header class="topbar">
-      <div class="brand"><span class="brand-mark" aria-hidden="true">◌</span><div><strong>POLOP</strong><span>Démo web · V2 · 15 secondes</span></div></div>
+      <div class="brand"><span class="brand-mark" aria-hidden="true">◌</span><div><strong>POLOP</strong><span>Démo web · V3 · 15 secondes</span></div></div>
       <div class="chip">OUVERTURE · A0 — A1</div>
     </header>
     <section class="controls" aria-label="Commandes de la prévisualisation">
@@ -31,10 +31,11 @@
         <button id="replay" type="button">↺ Recommencer</button>
         <button id="camera-mode" type="button" aria-pressed="false">◎ Vue libre</button>
         <button id="fullscreen" type="button" aria-pressed="false">⛶ Plein écran</button>
+        <button id="sound" type="button" aria-pressed="false" aria-label="Activer l’ambiance sonore">♫ Activer le son</button>
         <label class="speed-label" for="speed">Vitesse <select id="speed" aria-label="Vitesse de lecture"><option value="0.5">× 0,5</option><option value="1" selected>× 1</option><option value="1.5">× 1,5</option></select></label>
       </div>
       <p class="hint" id="hint">Vue libre : souris ou doigt pour tourner, pincement ou molette pour zoomer. Espace : pause · R : recommencer · V : vue · F : plein écran.</p>
-      <p class="note">V2 · plan continu A0 → début A1 : rivière, montagne et famille. Personnages et géographie provisoires ; rendu web indépendant du projet Unreal.</p>
+      <p class="note">V3 · plan continu A0 → début A1 : rivière, montagne et famille. Personnages et géographie provisoires ; rendu web indépendant du projet Unreal.</p>
     </section>
   </main>
   <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/"}}</script>

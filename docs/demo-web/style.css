@@ -41,3 +41,7 @@ button[aria-pressed=true]{background:#456968;border-color:#d0e4d3}
 .app:fullscreen .controls{flex-shrink:0}
 .app:fullscreen .topbar{top:26px;left:30px;right:30px}
 @media(max-width:700px){.app:fullscreen{padding:5px}.app:fullscreen .scene{min-height:0}.app:fullscreen .controls{padding:9px}.app:fullscreen .hint,.app:fullscreen .note{display:none}.app:fullscreen .topbar{top:20px;left:19px;right:19px}}
+
+/* V3 : passage eau/air, sans masquer la scène 3D ni les commandes. */
+.scene.underwater::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(#2e899450,#153e6490);mix-blend-mode:multiply}
+#sound[aria-pressed="true"]{background:#42695f;border-color:#c5e2d3}
