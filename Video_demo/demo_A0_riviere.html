@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>POLOP — Démo A0 / La rivière</title>
+<style>
+:root{color-scheme:dark;--ink:#e8ece7;--muted:#aab7b5;--glass:rgba(11,19,25,.8)}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#080f15;color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;display:grid;place-items:center}
+main{width:min(1120px,100%);padding:clamp(12px,3vw,32px)}
+.header{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:14px}
+.eyebrow{font-size:10px;letter-spacing:.28em;color:#c3ae88}.header h1{font-size:clamp(20px,3vw,29px);font-weight:400;letter-spacing:.13em;margin:5px 0 0}.tag{font-size:11px;letter-spacing:.12em;border:1px solid #50616b;color:#b4c3c2;border-radius:20px;padding:7px 11px;white-space:nowrap}
+.screen{position:relative;aspect-ratio:16/9;overflow:hidden;background:#142a35;box-shadow:0 25px 90px #0009;border:1px solid #263943}
+canvas{width:100%;height:100%;display:block}.grain{position:absolute;inset:0;pointer-events:none;opacity:.17;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E")}
+.vignette{position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 145px 35px #0005}
+.titlecard{position:absolute;top:7%;left:6%;pointer-events:none;text-shadow:0 2px 18px #0008;transition:opacity .35s}.titlecard b{display:block;font-weight:500;letter-spacing:.34em;font-size:clamp(12px,2vw,23px)}.titlecard small{display:block;margin-top:8px;font-size:clamp(8px,1.05vw,12px);letter-spacing:.2em;color:#dce3df}
+.caption{position:absolute;left:6%;bottom:7%;font-size:clamp(8px,1vw,12px);letter-spacing:.18em;color:#edf2e7;text-shadow:0 1px 8px #000b;pointer-events:none}
+.corner{position:absolute;right:5%;bottom:6%;font-size:clamp(9px,.9vw,12px);font-variant-numeric:tabular-nums;color:#e4e9e0aa}
+.controls{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:17px 0 8px}
+button{background:#d6be91;color:#101a1f;border:0;padding:10px 16px;min-width:92px;border-radius:3px;cursor:pointer;font-weight:650}
+button:focus-visible,input:focus-visible{outline:2px solid white;outline-offset:3px}
+input[type=range]{min-width:170px;flex:1;accent-color:#d6be91;cursor:pointer}
+.time{font-variant-numeric:tabular-nums;color:var(--muted);font-size:12px;min-width:78px;text-align:right}
+.note{font-size:12px;line-height:1.55;color:#a9b7b8;margin:7px 0 0}
+@media(max-width:600px){.tag{display:none}.controls{gap:9px}button{min-width:78px;padding:9px}main{padding:8px}.note{font-size:11px}}
+</style>
+</head>
+<body>
+<main>
+ <div class="header"><div><div class="eyebrow">FILM · ANIMATIQUE EXPÉRIMENTALE</div><h1>POLOP / LA RIVIÈRE</h1></div><div class="tag">DÉMO A0 · 30 SECONDES</div></div>
+ <div class="screen" role="img" aria-label="Animation stylisée de l'ouverture du film : fond de rivière et anneau, remontée vers la vallée et approche de trois randonneurs en montagne.">
+  <canvas id="film" width="1280" height="720"></canvas><div class="grain"></div><div class="vignette"></div>
+  <div id="titlecard" class="titlecard"><b>POLOP</b><small>LA RIVIÈRE · 16H58</small></div>
+  <div id="caption" class="caption">SOUS LA SURFACE</div><div id="counter" class="corner">00:00 / 00:30</div>
+ </div>
+ <div class="controls"><button id="toggle" type="button" aria-label="Mettre en pause">Pause</button><button id="restart" type="button">Revoir</button><input id="timeline" type="range" min="0" max="30" value="0" step=".01" aria-label="Position de l'animation en secondes"><span id="time" class="time">00:00 / 00:30</span></div>
+ <p class="note">Prototype 2D silencieux, sans dépendance et sans asset Unreal. Il illustre le mouvement et l'ambiance du plan A0 ; le passage sous l'eau / hors de l'eau est une transition graphique, pas encore une caméra 3D validée en plan-séquence.</p>
+</main>
+<script>
+(function(){
+"use strict";
+var canvas=document.getElementById("film"),ctx=canvas.getContext("2d");
+var toggle=document.getElementById("toggle"),restart=document.getElementById("restart"),slider=document.getElementById("timeline");
+var counter=document.getElementById("counter"),time=document.getElementById("time"),caption=document.getElementById("caption"),titlecard=document.getElementById("titlecard");
+var W=1280,H=720,DURATION=30,t=0,playing=true,last=null;
+var clamp=function(x){return Math.max(0,Math.min(1,x));};
+var smooth=function(a,b,x){var v=clamp((x-a)/(b-a));return v*v*(3-2*v);};
+var mix=function(a,b,v){return a+(b-a)*v;};
+var rnd=function(n){return (Math.sin(n*91.17+12.2)*43758.5453)%1;};
+function path(points,color){ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(points[0][0],points[0][1]);for(var i=1;i<points.length;i++)ctx.lineTo(points[i][0],points[i][1]);ctx.closePath();ctx.fill();}
+function ellipse(x,y,rx,ry,color){ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();}
+function stroke(points,color,width){ctx.beginPath();ctx.moveTo(points[0][0],points[0][1]);for(var i=1;i<points.length;i++)ctx.lineTo(points[i][0],points[i][1]);ctx.lineWidth=width;ctx.strokeStyle=color;ctx.stroke();}
+function grad(top,bottom){var g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,top);g.addColorStop(1,bottom);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);}
+function stone(x,y,r){ctx.save();ctx.translate(x,y);ctx.scale(1,.53);ellipse(0,0,r,r,"#273e43");ellipse(-r*.14,-r*.22,r*.76,r*.57,"#4e6060");ellipse(-r*.2,-r*.43,r*.35,r*.11,"#87938a55");ctx.restore();}
+function reed(x,y,h,phase){ctx.beginPath();ctx.moveTo(x,y);ctx.quadraticCurveTo(x-5+Math.sin(t*.9+phase)*10,y-h*.55,x+Math.sin(t*.9+phase)*20,y-h);ctx.lineWidth=2.5;ctx.strokeStyle="#6c8a76b0";ctx.stroke();ctx.beginPath();ctx.moveTo(x,y-h*.18);ctx.quadraticCurveTo(x-19+Math.sin(t*.8+phase)*9,y-h*.57,x-23+Math.sin(t*.8+phase)*12,y-h*.77);ctx.strokeStyle="#91a58a88";ctx.lineWidth=2;ctx.stroke();}
+function underwater(){
+ grad("#0b343d","#355657");
+ var ray=ctx.createLinearGradient(0,0,0,570);ray.addColorStop(0,"#e0e4bd24");ray.addColorStop(1,"#a1c2a600");
+ ctx.save();ctx.globalCompositeOperation="screen";
+ for(var i=0;i<6;i++){var x=100+i*255-t*8;path([[x,0],[x+60,0],[x+290,620],[x+130,620]],ray);}
+ ctx.restore();
+ ctx.beginPath();ctx.moveTo(0,42);
+ for(var x=0;x<=W;x+=8)ctx.lineTo(x,42+Math.sin(x*.016+t*.7)*7+Math.sin(x*.041+t*.5)*2);
+ ctx.lineTo(W,0);ctx.lineTo(0,0);ctx.fillStyle="#bed4bc18";ctx.fill();
+ path([[0,548],[210,521],[465,555],[780,526],[1010,557],[1280,529],[1280,720],[0,720]],"#253f42");
+ path([[0,618],[180,585],[460,633],[730,580],[1090,613],[1280,584],[1280,720],[0,720]],"#38534f");
+ for(var j=0;j<21;j++){var k=j*102.3+22;var sx=((k-t*52)%1500+1500)%1500-100;var sy=598+Math.sin(j*3.1)*40;stone(sx,sy,11+(j%5)*7);}
+ for(var p=0;p<16;p++){var px=((p*111.7-t*48)%1500+1500)%1500-90;reed(px,620+(p%4)*15,28+(p%5)*21,p*.43);}
+ // The ring is a background object, not a dramatic insert.
+ var ringX=1060-t*151,ringY=573+Math.sin(t*.7)*2+(smooth(4.1,4.3,t)-smooth(4.6,4.9,t))*4;
+ if(ringX>-80&&ringX<1360){ctx.save();ctx.translate(ringX,ringY);ctx.rotate(-.28);ctx.scale(1,.55);
+ ctx.strokeStyle="#d5c69a";ctx.lineWidth=4.5;ctx.beginPath();ctx.ellipse(0,0,14,11,0,0,Math.PI*2);ctx.stroke();
+ ctx.strokeStyle="#67746a";ctx.lineWidth=1.2;ctx.beginPath();ctx.ellipse(0,0,14,11,0,2.5,5.8);ctx.stroke();ctx.restore();}
+ for(var q=0;q<120;q++){var px2=((rnd(q+4)*W+t*(8+(q%4)*7))%W+W)%W;var py2=((rnd(q+7)*H-t*(4+q%8))%H+H)%H;ellipse(px2,py2,.6+(q%4)*.36,.6+(q%4)*.36,"#d9e9dc"+(q%3===0?"63":"30"));}
+ var shade=ctx.createLinearGradient(0,0,W,0);shade.addColorStop(0,"#09252a77");shade.addColorStop(.5,"#09252a00");shade.addColorStop(1,"#09252a80");ctx.fillStyle=shade;ctx.fillRect(0,0,W,H);
+}
+function hiker(x,y,s,coat,walk){
+ ctx.save();ctx.translate(x,y+Math.sin(walk)*1.3*s);ctx.scale(s,s);
+ ctx.lineCap="round";ctx.strokeStyle="#25333a";ctx.lineWidth=2.1;
+ ctx.beginPath();ctx.moveTo(-2,1);ctx.lineTo(-5+Math.sin(walk)*3,10);ctx.moveTo(2,1);ctx.lineTo(5-Math.sin(walk)*3,10);ctx.stroke();
+ ctx.strokeStyle=coat;ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(0,-11);ctx.lineTo(0,2);ctx.stroke();
+ ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,-8);ctx.lineTo(-5+Math.sin(walk)*2,0);ctx.moveTo(0,-8);ctx.lineTo(5-Math.sin(walk)*2,0);ctx.stroke();
+ ellipse(0,-15,3.5,4.3,"#c5ad98");ellipse(-2,-17,2,1.4,"#354047");ctx.restore();
+}
+function landscape(){
+ grad("#d9b98b","#9daea2");
+ var sun=ctx.createRadialGradient(1045,125,8,1045,125,510);sun.addColorStop(0,"#f8dfacbd");sun.addColorStop(.45,"#f7d2a831");sun.addColorStop(1,"#f4d9ad00");ctx.fillStyle=sun;ctx.fillRect(0,0,W,H);
+ path([[0,290],[120,263],[260,300],[420,218],[555,261],[755,173],[882,212],[1030,135],[1145,200],[1280,148],[1280,720],[0,720]],"#9caaa0");
+ path([[0,364],[145,333],[295,388],[445,313],[600,354],[805,257],[940,299],[1118,214],[1280,250],[1280,720],[0,720]],"#798f88");
+ path([[0,451],[143,416],[265,457],[409,388],[580,425],[782,347],[950,382],[1100,324],[1280,359],[1280,720],[0,720]],"#54746e");
+ // One landscape is enlarged gradually as the camera leaves the valley for the path.
+ var z=mix(.94,2.25,smooth(15.5,30,t));
+ ctx.save();ctx.translate(640,361);ctx.scale(z,z);ctx.translate(-815,-411);
+ path([[0,590],[160,488],[285,516],[438,430],[560,469],[727,338],[881,146],[965,207],[1043,285],[1148,294],[1280,354],[1280,720],[0,720]],"#385d59");
+ path([[727,338],[881,146],[965,207],[1043,285],[948,259],[865,215],[797,311]],"#73827a");
+ path([[0,636],[226,553],[375,568],[555,476],[711,456],[833,433],[988,458],[1280,395],[1280,720],[0,720]],"#263e3e");
+ path([[0,717],[120,673],[410,659],[579,592],[752,573],[945,558],[1120,574],[1280,536],[1280,720],[0,720]],"#1c3437");
+ // Path occupies a real place on the slope in this illustrative 2D plate.
+ ctx.beginPath();ctx.moveTo(564,482);ctx.bezierCurveTo(655,451,724,431,818,410);ctx.bezierCurveTo(898,393,999,409,1118,379);
+ ctx.strokeStyle="#aeaa8b";ctx.lineWidth=9;ctx.stroke();ctx.strokeStyle="#e2cba1a0";ctx.lineWidth=2;ctx.stroke();
+ // Tiny walkers remain on the same path while the framing approaches.
+ hiker(805,411,1.05,"#5c6c6f",t*1.8);hiker(831,407,.94,"#bd785f",t*1.8+.8);hiker(852,406,.80,"#c8b584",t*1.8+1.4);
+ ctx.restore();
+ // Valley river foreground falls outside the field as the camera approaches.
+ ctx.save();ctx.globalAlpha=1-smooth(15,23,t);
+ ctx.beginPath();ctx.moveTo(0,720);ctx.bezierCurveTo(255,670,340,604,470,572);ctx.bezierCurveTo(636,516,693,500,660,445);ctx.bezierCurveTo(648,413,665,396,710,377);
+ ctx.lineTo(780,385);ctx.bezierCurveTo(741,432,809,464,756,508);ctx.bezierCurveTo(688,563,572,597,497,633);ctx.bezierCurveTo(368,688,322,714,290,720);ctx.closePath();ctx.fillStyle="#9bb8af";ctx.fill();
+ ctx.beginPath();ctx.moveTo(46,720);ctx.bezierCurveTo(320,632,390,582,520,553);ctx.bezierCurveTo(659,500,725,463,688,427);ctx.lineWidth=8;ctx.strokeStyle="#e6d7b34d";ctx.stroke();ctx.restore();
+ for(var i=0;i<15;i++){var xx=i*95+(i%3)*21;var yy=624+(i%5)*21;var sz=12+i%5*4;ctx.save();ctx.globalAlpha=1-smooth(17,23,t);ellipse(xx,yy,sz,sz*1.8,"#1e403c");ctx.restore();}
+}
+function surface(){
+ ctx.save();var a=smooth(8.5,13,t);ctx.globalAlpha=a;landscape();ctx.restore();
+ if(t>8.5&&t<13){ctx.save();ctx.globalAlpha=(1-a)*.55;var y=mix(30,745,smooth(8.5,12.5,t));
+ ctx.fillStyle="#dce7d3";ctx.beginPath();ctx.moveTo(0,y);
+ for(var x=0;x<=W;x+=12)ctx.lineTo(x,y+Math.sin(x*.026+t*2)*5);
+ ctx.lineTo(W,y+6);ctx.lineTo(0,y+6);ctx.fill();ctx.restore();}
+}
+function render(){
+ ctx.clearRect(0,0,W,H);
+ if(t<13){underwater();surface();}else landscape();
+ var phase=t<9?"SOUS LA SURFACE":t<13?"ÉMERGENCE":t<21?"LA VALLÉE":"VERS LE SENTIER";
+ caption.textContent=phase;titlecard.style.opacity=String(1-smooth(1.8,4,t));
+ var stamp="00:"+String(Math.min(30,Math.floor(t))).padStart(2,"0")+" / 00:30";
+ counter.textContent=stamp;time.textContent=stamp;slider.value=String(t);
+}
+function updateControls(){toggle.textContent=playing?"Pause":"Lire";toggle.setAttribute("aria-label",playing?"Mettre en pause":"Reprendre la lecture");}
+function tick(now){if(last===null)last=now;var dt=Math.min(.1,(now-last)/1000);last=now;
+ if(playing){t=Math.min(DURATION,t+dt);if(t>=DURATION)playing=false;render();updateControls();}
+ requestAnimationFrame(tick);}
+toggle.addEventListener("click",function(){playing=!playing;if(playing&&t>=DURATION)t=0;last=null;updateControls();render();});
+restart.addEventListener("click",function(){t=0;playing=true;last=null;updateControls();render();});
+slider.addEventListener("input",function(){t=Number(slider.value);playing=false;last=null;updateControls();render();});
+document.addEventListener("keydown",function(e){if(e.code==="Space"&&e.target!==slider&&e.target.tagName!=="BUTTON"){e.preventDefault();toggle.click();}});
+document.addEventListener("visibilitychange",function(){last=null;});
+render();updateControls();requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>
