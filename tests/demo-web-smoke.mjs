@@ -89,8 +89,10 @@ try {
   await seek(page, 4);
   const frameC = sha(await canvas.screenshot());
   assert.notEqual(frameC, frameB, "Backwards scrubbing did not change the frame");
-  await page.locator("#chapters").selectOption("272");
-  await page.waitForFunction(() => document.getElementById("timecode").textContent.startsWith("04:32"));
+  await page.locator("#chapters").selectOption("259");
+  await page.waitForFunction(() => document.getElementById("timecode").textContent.startsWith("04:19"));
+  assert.equal(await page.locator("#scene").getAttribute("data-scene"), "B5");
+  await seek(page, 272);
   assert.equal(await page.locator("#scene").getAttribute("data-scene"), "B6");
   await seek(page, 285);
   assert.equal(await page.locator("#scene").getAttribute("data-second-thomas"), "true", "Two 3D Thomas occurrences missing at convergence");
