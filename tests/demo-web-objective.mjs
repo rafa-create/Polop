@@ -60,8 +60,9 @@ const bEarly=worldAtFilmTime(195),bLater=worldAtFilmTime(210);
 for(const who of ["Eva","Lea"]) {
   assert.ok(bLater[who].z<bEarly[who].z-3.5,
     who+" doit REVENIR à reculons sur la pente, pas rester immobilisée");
-  assert.ok(bEarly[who].heading>3 && bLater[who].heading>3,
-    who+" doit conserver son orientation objective pendant la marche arrière");
+  assert.ok(Math.cos(bEarly[who].heading)<-.5 &&
+    Math.cos(bLater[who].heading)<-.5,
+    who+" doit rester globalement tournée vers la descente pendant la marche arrière");
 }
 for(let t=90;t<=99;t+=.05) {
   const world=worldAt(t);

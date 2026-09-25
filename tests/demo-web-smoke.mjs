@@ -138,8 +138,9 @@ try {
   }
   assert.ok(evaAt210.value.z < evaAt195.value.z - 3.5,
     "Éva must move visibly uphill BACKWARDS in the inverted world");
-  assert.ok(evaAt195.value.yaw > 3 && evaAt210.value.yaw > 3,
-    "Éva must keep her forward-time orientation when her movements reverse");
+  assert.ok(Math.cos(evaAt195.value.yaw) < -.5 &&
+    Math.cos(evaAt210.value.yaw) < -.5,
+    "Éva must keep her objective downhill orientation while moving uphill backwards");
   await seek(page, 272);
   assert.equal(await page.locator("#scene").getAttribute("data-scene"), "B6");
   await seek(page, 285);
