@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101b24">
+  <meta name="description" content="POLOP — prévisualisation 3D interactive de l'ouverture du film.">
+  <title>POLOP — Démo 3D interactive</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="app">
+    <div id="scene" class="scene" role="img" aria-label="Paysage 3D animé : rivière, vallée, montagne et famille sur un sentier.">
+      <div class="vignette" aria-hidden="true"></div>
+      <div class="scene-caption" id="scene-caption" aria-live="polite">La rivière · 16 h 58</div>
+      <div class="loading" id="loading" role="status">Préparation de la vallée en 3D…</div>
+      <div class="scene-error" id="scene-error" role="alert" hidden></div>
+    </div>
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">◌</span><div><strong>POLOP</strong><span>Démo web · première prévisualisation</span></div></div>
+      <div class="chip">OUVERTURE · A0 — A1</div>
+    </header>
+    <section class="controls" aria-label="Commandes de la prévisualisation">
+      <div class="timeline-row">
+        <label for="timeline">Déplacement de caméra</label>
+        <output id="timecode" for="timeline">00:00 / 00:24</output>
+      </div>
+      <input id="timeline" type="range" min="0" max="24" value="0" step="0.05" aria-label="Avancement de la caméra, en secondes">
+      <div class="button-row">
+        <button id="play-pause" type="button" aria-pressed="false">⏸ Pause</button>
+        <button id="replay" type="button">↺ Recommencer</button>
+        <button id="camera-mode" type="button" aria-pressed="false">◎ Vue libre</button>
+        <label class="speed-label" for="speed">Vitesse <select id="speed" aria-label="Vitesse de lecture"><option value="0.5">× 0,5</option><option value="1" selected>× 1</option><option value="1.5">× 1,5</option></select></label>
+      </div>
+      <p class="hint" id="hint">Vue libre : glissez pour tourner autour de la famille, molette pour zoomer. Espace : pause · R : recommencer · V : changer de vue.</p>
+      <p class="note">Esquisse 3D de l’ouverture, inspirée du manuscrit. Décor, personnages et animation provisoires ; ce n’est pas un rendu Unreal ni une scène finale du film.</p>
+    </section>
+  </main>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
