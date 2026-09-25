@@ -1,0 +1,35 @@
+name: Vérifier la démo web 3D
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - docs/demo-web/**
+      - tests/demo-web-smoke.mjs
+      - .github/workflows/demo-web-smoke.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  chromium-webgl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Récupérer les sources
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Préparer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Vérifier la syntaxe
+        run: node --check docs/demo-web/app.js && node --check tests/demo-web-smoke.mjs
+      - name: Installer Playwright et Chromium
+        run: |
+          npm install --no-save --ignore-scripts playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Tester la démo 3D dans Chromium
+        run: node tests/demo-web-smoke.mjs
