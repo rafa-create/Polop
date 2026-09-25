@@ -6,6 +6,7 @@ on:
     paths:
       - docs/demo-web/**
       - tests/demo-web-smoke.mjs
+      - tests/demo-web-story.mjs
       - .github/workflows/demo-web-smoke.yml
   workflow_dispatch:
 
@@ -26,7 +27,9 @@ jobs:
         with:
           node-version: '22'
       - name: Vérifier la syntaxe
-        run: node --check docs/demo-web/app.js && node --check tests/demo-web-smoke.mjs
+        run: node --check docs/demo-web/app.js && node --check docs/demo-web/storyboard.js && node --check tests/demo-web-smoke.mjs && node --check tests/demo-web-story.mjs
+      - name: Valider le scénario et les cinq minutes
+        run: node tests/demo-web-story.mjs
       - name: Installer Playwright et Chromium
         run: |
           npm install --no-save --ignore-scripts playwright@1.56.1

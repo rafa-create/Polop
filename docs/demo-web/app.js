@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { DURATION, BEATS, CHAPTERS, beatAt, formatTime } from "./storyboard.js";
 // Optional GLB/GLTF replacements; no network request for absent model files.
 // Example: Thomas: { url: "./assets/thomas.glb", scale: 1 }
 const CHARACTER_ASSETS = Object.freeze({ Thomas: null, "Éva": null, "Léa": null });
@@ -13,14 +14,19 @@ const playPause = document.getElementById("play-pause");
 const replay = document.getElementById("replay");
 const cameraMode = document.getElementById("camera-mode");
 const speedControl = document.getElementById("speed");
-const DURATION = 15;
 const fullscreenButton = document.getElementById("fullscreen");
 const soundButton = document.getElementById("sound");
+const chapters = document.getElementById("chapters");
+const subtitle = document.getElementById("film-subtitle");
+const storyNote = document.getElementById("film-note");
+const curtain = document.getElementById("final-curtain");
 const appRoot = document.getElementById("app");
 const TAU = Math.PI * 2;
 const clamp = THREE.MathUtils.clamp;
 const mix = THREE.MathUtils.lerp;
 let renderer, scene, camera, people = [], riverRing, riverSurface, sunLight;
+let reverseThomas, caveRing, collisionRing, bridgeHook, rearEntrance;
+const reverseEffects = [], panoramaTrail = [];
 const riverParticles = [];
 const daylight = new THREE.Color(0x98b6b7), submergedLight = new THREE.Color(0x356c78);
 let soundEnabled = false, audioContext, riverGain, windGain;
@@ -221,44 +227,150 @@ function makePerson(name, coatColor, xOffset, startZ, pace) {
   return figure;
 }
 // Animations évaluées à temps absolu : pause et retour arrière déterministes.
-function updatePeople(seconds) {
-  for (const person of people) {
-    const p = person.userData;
-    // Thomas and Léa keep walking; Éva slows to survey the landscape at the end.
-    const slowing = p.name === "Éva" ? ease(clamp((seconds - 13.2) / 1.2, 0, 1)) : 0;
-    const travelTime = p.name === "Éva" ? Math.min(seconds, 13.2) +
-      Math.min(Math.max(seconds - 13.2, 0), 1.2) * (1 - slowing * .5) : seconds;
-    const walkWeight = 1 - slowing;
-    const z = p.startZ - travelTime * .19 * p.pace;
-    const x = trailX(z) + p.xOffset;
-    const stride = seconds * 5.2 * p.pace + p.startZ;
-    person.position.set(x, heightAt(x, z) + .13 +
-      .009 * Math.sin(seconds * 2 + p.startZ) +
-      walkWeight * .024 * Math.sin(stride * 2), z);
-    person.rotation.y = -.12 * Math.cos(z * .115);
-    p.arms[0].rotation.x = walkWeight * Math.sin(stride) * .40;
-    p.arms[1].rotation.x = -walkWeight * Math.sin(stride) * .40;
-    p.legs[0].rotation.x = -walkWeight * Math.sin(stride) * .34;
-    p.legs[1].rotation.x = walkWeight * Math.sin(stride) * .34;
-    p.headPivot.rotation.y = .15 * Math.sin(seconds * .95 + p.startZ) +
-      (p.name === "Thomas" ? .2 * ease(clamp((seconds - 11.8) / 2, 0, 1)) : 0);
-    p.headPivot.rotation.x = .045 * Math.sin(seconds * 1.35 + p.startZ);
-    if (p.mixer && p.actions) {
-      p.actions.walk?.setEffectiveWeight(walkWeight);
-      p.actions.idle?.setEffectiveWeight(1 - walkWeight);
-      p.mixer.setTime(seconds);
-    }
+// Spatial blockout of the same family, cave, bridge and reverse traversal.
+// It is not a certified physical simulation of all the manuscript's causal events.
+const CAVE_FRONT_Z = -28;
+const bridgeX = trailX(-12.5);
+function between(t, a, b) { return clamp((t - a) / (b - a), 0, 1); }
+function move2(a, b, fraction) {
+  const f = ease(between(fraction, 0, 1));
+  return [mix(a[0], b[0], f), mix(a[1], b[1], f)];
+}
+function familySnapshot(t) {
+  // Forward film time. On the reversed leg we replay the *same* forward poses
+  // at their earlier objective instant rather than inventing a second family.
+  if (t < 36) return [trailX(10), 10];
+  if (t < 57) { const z = mix(10, -9, ease(between(t, 36, 57))); return [trailX(z), z]; }
+  if (t < 90) return [trailX(-9), -9];
+  if (t < 106) { const z = mix(-9, -26, ease(between(t, 90, 106))); return [trailX(z), z]; }
+  return [trailX(-26), -26];
+}
+const OBJECTIVE_REPLAY = [
+  [179, 166], [195, 143], [210, 121], [225, 105],
+  [245, 92], [259, 88], [272, 77], [282, 81], [288, 83], [295, 93]
+];
+function normalFilmTime(t) {
+  if (t < 179) return t;
+  for (let i = 0; i < OBJECTIVE_REPLAY.length - 1; i++) {
+    const [s, a] = OBJECTIVE_REPLAY[i], [e, b] = OBJECTIVE_REPLAY[i + 1];
+    if (t <= e) return mix(a, b, between(t, s, e));
   }
-  if (riverRing) riverRing.rotation.z = .25 + .065 * Math.sin(seconds * 2.1) *
-    Math.exp(-Math.max(0, seconds - .5));
-  if (riverSurface) riverSurface.position.y = -1.05 + .012 * Math.sin(seconds * 1.7);
-  for (const mote of riverParticles) {
-    const p = mote.userData;
-    mote.position.set(p.x + .11 * Math.sin(seconds * .8 + p.phase),
-      p.y + .035 * Math.sin(seconds * 1.2 + p.phase), p.z - seconds * .04);
+  return 93 + (t - 295);
+}
+function placePerson(person, x, z, filmTime, heading = 0, walk = 1) {
+  const p = person.userData;
+  const step = filmTime * 5.1 * p.pace + p.startZ;
+  person.visible = true;
+  person.position.set(x, heightAt(x, z) + .16 + .013 * Math.sin(step * 2) * walk, z);
+  person.rotation.y = heading;
+  p.arms[0].rotation.x = walk * Math.sin(step) * .42;
+  p.arms[1].rotation.x = -walk * Math.sin(step) * .42;
+  p.legs[0].rotation.x = -walk * Math.sin(step) * .35;
+  p.legs[1].rotation.x = walk * Math.sin(step) * .35;
+  p.headPivot.rotation.y = .12 * Math.sin(filmTime * .75 + p.startZ);
+  p.headPivot.rotation.x = .05 * Math.sin(filmTime * 1.1 + p.startZ);
+  if (p.mixer && p.actions) {
+    p.actions.walk?.setEffectiveWeight(walk);
+    p.actions.idle?.setEffectiveWeight(1 - walk);
+    p.mixer.setTime(filmTime);
   }
 }
-
+function updatePeople(seconds) {
+  const t = clamp(seconds, 0, DURATION);
+  const replayTime = normalFilmTime(t), [normalX, normalZ] = familySnapshot(replayTime);
+  const [thomas, eva, lea] = people;
+  let thomasX = normalX - .42, thomasZ = normalZ + 1.3;
+  let evaX = normalX + .38, evaZ = normalZ -.45;
+  let leaX = normalX -.15, leaZ = normalZ - 1.2;
+  const hiking = t < 36 ? 0 : 1;
+  if (replayTime >= 57 && replayTime < 72) {
+    leaZ = mix(-10.3, -14.7, ease(between(replayTime, 57, 72)));
+    leaX = trailX(leaZ);
+  } else if (replayTime >= 72 && replayTime < 90) {
+    const u = ease(between(replayTime, 72, 90));
+    leaZ = mix(-14.7, -9.4, u);
+    leaX = trailX(leaZ) + 2.7 * Math.sin(Math.PI * u);
+    thomasZ = -8.5;
+  }
+  if (replayTime >= 106 && replayTime < 136) {
+    evaZ = -26.3; leaZ = -25.3;
+    if (replayTime >= 121) {
+      const u = between(replayTime, 121, 136);
+      evaX = normalX + 1 + .9 * Math.sin(u * 6);
+      leaX = normalX + .2 + .7 * Math.sin(u * 7);
+    }
+    const u = ease(between(replayTime, 106, 128));
+    thomasX = mix(thomasX, trailX(CAVE_FRONT_Z) + 1.6, u);
+    thomasZ = mix(thomasZ, CAVE_FRONT_Z, u);
+  } else if (replayTime >= 136) {
+    const u = ease(between(replayTime, 136, 165));
+    thomasX = mix(trailX(CAVE_FRONT_Z) + 1.6, 17.8, u);
+    thomasZ = mix(CAVE_FRONT_Z, -27.2, u);
+    const womenLeave = ease(between(replayTime, 134, 151));
+    evaZ = mix(-26, -19, womenLeave);
+    leaZ = evaZ + 1;
+  }
+  if (replayTime >= 166) {
+    thomasX = 17.8; thomasZ = -27.2;
+  }
+  // The normal occurrence remains physically present in its objective time;
+  // distance/relief may conceal it, but no character is removed to resolve a collision.
+  placePerson(thomas, thomasX, thomasZ, replayTime, 0, hiking);
+  placePerson(eva, evaX, evaZ, replayTime, 0, replayTime >= 121 ? .25 : hiking);
+  placePerson(lea, leaX, leaZ, replayTime, 0, replayTime >= 121 ? .3 : hiking);
+  // Same collision, seen first in A2 and again in B7/B8.
+  const earlyCollision = t >= 80 && t <= 87;
+  const reversedLeg = t >= 179 && t <= 288;
+  reverseThomas.visible = earlyCollision || reversedLeg;
+  if (earlyCollision) {
+    const u = between(t, 80, 87);
+    placePerson(reverseThomas, trailX(-8.5) + mix(1.6, -.42, u),
+      mix(-10, -8.5, u), 282 + 6 * u, Math.PI, 1);
+    reverseThomas.visible = true;
+  } else if (reversedLeg) {
+    let route;
+    if (t < 195) route = move2([17.8, -27.2], [32, -26], between(t, 179, 195));
+    else if (t < 210) route = move2([32, -26], [42, -16], between(t, 195, 210));
+    else if (t < 225) route = move2([42, -16], [39, -4], between(t, 210, 225));
+    else if (t < 245) route = move2([39, -4], [27, -8], between(t, 225, 245));
+    else if (t < 259) route = move2([27, -8], [19, -12], between(t, 245, 259));
+    else if (t < 272) route = move2([19, -12], [bridgeX, -14.7], between(t, 259, 272));
+    else if (t < 282) route = move2([bridgeX, -14.7], [trailX(-9), -9], between(t, 272, 282));
+    else route = move2([trailX(-9), -9], [trailX(-8.5) - .42, -8.5], between(t, 282, 288));
+    placePerson(reverseThomas, route[0], route[1], t, Math.PI, t >= 259 ? 1 : .85);
+  }
+  const caveFocus = t >= 151 && t < 195;
+  caveRing.visible = caveFocus;
+  // Simple physical direction cue: ring rises before contact, falls afterwards.
+  caveRing.position.set(18.25, heightAt(18.25, -27.5) + .7 +
+    (t < 166 ? .35 * between(t, 151, 166) : 1.1 - .45 * between(t, 166, 195)), -27.5);
+  collisionRing.visible = earlyCollision || (t >= 282 && t < 289);
+  collisionRing.position.set(trailX(-8.5) - .2,
+    heightAt(trailX(-8.5), -8.5) + 1.1, -8.5);
+  // The hook starts attached, is detached in forward time, and is attached
+  // by Thomas during the inverse passage; it never spontaneously snaps shut.
+  const hooked = t < 78 || (t >= 278 && t < 288);
+  bridgeHook.position.set(bridgeX + .94, heightAt(bridgeX, -10.3) + (hooked ? 1.1 : .3), -10.3);
+  bridgeHook.rotation.x = hooked ? .25 : 1.55;
+  riverRing.visible = t < 36;
+  const reverseNow = reversedLeg || (t >= 166 && t < 179);
+  for (const effect of reverseEffects) {
+    effect.visible = reverseNow;
+    if (!reverseNow) continue;
+    const p = effect.userData;
+    const s = (t - 166) * .8 + p.phase;
+    effect.position.set(p.x + .09 * Math.sin(s), p.y + .18 * Math.abs(Math.sin(s * .9)), p.z);
+  }
+  if (riverSurface) riverSurface.position.y = -1.05 + .012 * Math.sin(t * 1.7);
+  for (const mote of riverParticles) {
+    const p = mote.userData;
+    mote.position.set(p.x + .11 * Math.sin(t * .8 + p.phase),
+      p.y + .035 * Math.sin(t * 1.2 + p.phase), p.z - t * .012);
+  }
+  // The full topological loop and both mouths are revealed at the ending.
+  rearEntrance.visible = t >= 179;
+  for (const segment of panoramaTrail) segment.visible = t >= 295;
+}
 // Seuls les modèles explicitement configurés sont demandés au navigateur.
 // En cas d'absence ou d'erreur le personnage procédural est conservé.
 async function loadCharacterModels() {
@@ -294,6 +406,85 @@ async function loadCharacterModels() {
   }
 }
 
+function buildNarrativeSetpieces() {
+  const stone = material(0x626a60), darkRock = material(0x353d3a);
+  const mouth = material(0x1b292a, 1, { side: THREE.DoubleSide });
+  const mouthFront = new THREE.Group();
+  const cx = trailX(CAVE_FRONT_Z) + 1.6;
+  mouthFront.position.set(cx, heightAt(cx, CAVE_FRONT_Z) + .6, CAVE_FRONT_Z);
+  for (const side of [-1, 1]) {
+    const rock = mesh(new THREE.DodecahedronGeometry(1.7, 1), darkRock, mouthFront);
+    rock.position.set(side * 1.25, 1.2, -.4);
+    rock.scale.set(.75, 1.15, 1);
+  }
+  const roof = mesh(new THREE.DodecahedronGeometry(1.7, 1), stone, mouthFront);
+  roof.position.set(0, 2.65, -.35);
+  roof.scale.set(1.5, .38, 1);
+  const shadow = mesh(new THREE.PlaneGeometry(1.9, 2.7), mouth, mouthFront);
+  shadow.position.set(0, 1.2, -.72);
+  shadow.castShadow = false;
+  scene.add(mouthFront);
+  const rear = new THREE.Group();
+  rear.position.set(32, heightAt(32, -26) + .6, -26);
+  const shadowRear = mesh(new THREE.PlaneGeometry(3.5, 3.4), mouth, rear);
+  shadowRear.position.y = 1.5;
+  shadowRear.castShadow = false;
+  for (const side of [-1, 1]) {
+    const rock = mesh(new THREE.DodecahedronGeometry(1.7, 0), stone, rear);
+    rock.position.set(side * 2, 1, -.45);
+    rock.scale.set(.65, 1.6, 1);
+  }
+  const lintel = mesh(new THREE.DodecahedronGeometry(2, 0), stone, rear);
+  lintel.position.set(0, 3.1, -.4);
+  lintel.scale.set(1.45, .42, .85);
+  scene.add(rear);
+  rearEntrance = rear;
+  // Two rock mouths and suggestive dark walls are a blockout, not a tested
+  // collision-safe, hidden passage through the source Unreal landscape.
+  const corridor = material(0x3d4846);
+  for (let i = 0; i <= 9; i++) {
+    const u = i / 9, x = mix(cx + .5, 31, u), z = mix(-28, -26, u);
+    const floor = heightAt(x, z) + .07;
+    const left = mesh(new THREE.DodecahedronGeometry(1.15, 0), corridor);
+    left.position.set(x, floor + .8, z - 1.5);
+    left.scale.set(.66, 1.15, .9);
+    const right = mesh(new THREE.DodecahedronGeometry(1.15, 0), corridor);
+    right.position.set(x, floor + .8, z + 1.5);
+    right.scale.set(.66, 1.15, .9);
+  }
+  caveRing = mesh(new THREE.TorusGeometry(.22, .034, 9, 22), material(0xb7a978, .35, { metalness: .42 }));
+  collisionRing = mesh(new THREE.TorusGeometry(.12, .023, 7, 20), material(0xb7a978, .35, { metalness: .42 }));
+  bridgeHook = mesh(new THREE.TorusGeometry(.16, .033, 7, 20), material(0xb4a49b, .45, { metalness: .4 }));
+  const reverseStone = material(0xc2bdb1);
+  for (let i = 0; i < 45; i++) {
+    const x = 15 + random() * 29, z = -26 + random() * 30;
+    const particle = mesh(new THREE.DodecahedronGeometry(.025 + random() * .03, 0), reverseStone);
+    particle.castShadow = false;
+    particle.userData = { x, y: heightAt(x, z) + .15, z, phase: random() * TAU };
+    reverseEffects.push(particle);
+  }
+  // The same path encircling the mountain; only revealed in the final pullback.
+  const pathMat = material(0xa79b77);
+  const points = [
+    [trailX(-29), -29], [14, -35], [25, -38], [39, -28],
+    [47, -12], [42, 5], [29, 16], [17, 19], [trailX(16), 16]
+  ];
+  for (let j = 0; j < points.length - 1; j++) {
+    const a = points[j], b = points[j + 1];
+    for (let k = 0; k < 15; k++) {
+      const u = k / 15, x = mix(a[0], b[0], u), z = mix(a[1], b[1], u);
+      const slab = mesh(new THREE.BoxGeometry(1.25, .06, 1.25), pathMat);
+      slab.castShadow = false;
+      slab.position.set(x, heightAt(x, z) + .08, z);
+      panoramaTrail.push(slab);
+    }
+  }
+  const rock = mesh(new THREE.DodecahedronGeometry(1.45, 1), stone);
+  rock.position.set(trailX(-8.5) + 1.1, heightAt(trailX(-8.5), -8.5) + .65, -8.5);
+  rock.scale.set(1, 1.2, 1.15);
+  reverseThomas = makePerson("Thomas", 0x8b4f3b, -.42, 8.4, .85);
+  reverseThomas.visible = false;
+}
 function buildScene() {
   scene = new THREE.Scene();
   scene.background = daylight.clone();
@@ -325,19 +516,55 @@ function buildScene() {
     makePerson("Éva", 0x8c9076, .24, 7.3, 1),
     makePerson("Léa", 0xb7a46b, -.08, 5.9, 1.13)
   ];
+  buildNarrativeSetpieces();
 }
-// A0 → A1 : 0–3 s rivière, 3–7,5 s vallée, 7,5–11 s relief,
-// 11–15 s rapprochement du groupe. Mouvement continu sans coupe.
+// Continuous shot, compressed dramaturgy. No new portal or invented causality.
 const cameraStops = [
   { t: 0, pos: v(-15, -1.92, 28.4), look: v(-15.1, -2.22, 20.5), fov: 53 },
-  { t: 2, pos: v(-14.95, -1.45, 23.3), look: v(-15.05, -1.95, 17.5), fov: 57 },
-  { t: 3.1, pos: v(-14.85, .45, 19.5), look: v(-11, 1.1, 9), fov: 62 },
-  { t: 5.3, pos: v(-13, 4.9, 19.4), look: v(-5, 6, -8), fov: 65 },
-  { t: 7.5, pos: v(-5, 9.2, 19.8), look: v(9, 11, -8), fov: 60 },
-  { t: 9.5, pos: v(1.3, heightAt(1.3, 20) + 8, 20), look: v(9.7, heightAt(9.7, 8) + 1.7, 8), fov: 56 },
-  { t: 11.3, pos: v(5.5, heightAt(5.5, 17) + 6, 17), look: v(9.4, heightAt(9.4, 7) + 1.5, 7), fov: 51 },
-  { t: 13.2, pos: v(6.6, heightAt(6.6, 12) + 3.8, 12), look: v(trailX(6), heightAt(trailX(6), 6) + 1.4, 6), fov: 47 },
-  { t: 15, pos: v(7.4, heightAt(7.4, 9) + 2.9, 9), look: v(trailX(5), heightAt(trailX(5), 5) + 1.5, 5), fov: 43 }
+  { t: 12, pos: v(-14.95, -1.52, 23.2), look: v(-15.1, -1.95, 17.4), fov: 58 },
+  { t: 18, pos: v(-14.85, .45, 19.5), look: v(-11, 1.1, 9), fov: 62 },
+  { t: 28, pos: v(-13, 4.9, 19.4), look: v(-5, 6, -8), fov: 65 },
+  { t: 36, pos: v(-5, 9.2, 19.8), look: v(9, 11, -8), fov: 60 },
+  { t: 49, pos: v(5, heightAt(5, 12) + 4, 12), look: v(trailX(0), heightAt(trailX(0), 0) + 1.2, 0), fov: 50 },
+  { t: 57, pos: v(trailX(-8) - 4, heightAt(trailX(-8), -8) + 3.2, -5),
+    look: v(bridgeX, heightAt(bridgeX, -12.5) + .8, -12.5), fov: 48 },
+  { t: 72, pos: v(bridgeX - 3, heightAt(bridgeX, -12.5) + 2.5, -11),
+    look: v(bridgeX, heightAt(bridgeX, -12.5) + .7, -12.5), fov: 44 },
+  { t: 83, pos: v(trailX(-8.5) - 2.5, heightAt(trailX(-8.5), -8.5) + 2.1, -6),
+    look: v(trailX(-8.5), heightAt(trailX(-8.5), -8.5) + 1.3, -8.5), fov: 45 },
+  { t: 90, pos: v(trailX(-9) - 4, heightAt(trailX(-9), -9) + 4, -3),
+    look: v(trailX(-9), heightAt(trailX(-9), -9) + 1.5, -9), fov: 52 },
+  { t: 106, pos: v(trailX(-25) - 5, heightAt(trailX(-25), -25) + 4, -18),
+    look: v(trailX(-26), heightAt(trailX(-26), -26) + 1.5, -26), fov: 50 },
+  { t: 121, pos: v(trailX(-26) - 2.6, heightAt(trailX(-26), -26) + 2.4, -22),
+    look: v(trailX(-26), heightAt(trailX(-26), -26) + 1.5, -26), fov: 44 },
+  { t: 136, pos: v(trailX(-26) - 2.2, heightAt(trailX(-26), -26) + 2.9, -24),
+    look: v(trailX(-26), heightAt(trailX(-26), -26) + 1.2, -26), fov: 47 },
+  { t: 151, pos: v(trailX(-28) + 1, heightAt(trailX(-28) + 1, -28) + 1.8, -27),
+    look: v(17.8, heightAt(17.8, -27.2) + .8, -27.2), fov: 49 },
+  { t: 166, pos: v(15.5, heightAt(15.5, -27.2) + 1.8, -25.7),
+    look: v(18.25, heightAt(18.25, -27.5) + .8, -27.5), fov: 38 },
+  { t: 179, pos: v(17, heightAt(17, -27.2) + 2, -25.1),
+    look: v(20, heightAt(20, -27.2) + 1.2, -27.2), fov: 47 },
+  { t: 195, pos: v(29, heightAt(29, -26) + 2.3, -24),
+    look: v(32, heightAt(32, -26) + 1.5, -26), fov: 55 },
+  { t: 210, pos: v(36, heightAt(36, -22) + 4, -19),
+    look: v(42, heightAt(42, -16) + 1.6, -16), fov: 56 },
+  { t: 225, pos: v(35, heightAt(35, -4) + 6, 2),
+    look: v(39, heightAt(39, -4) + 1.3, -4), fov: 56 },
+  { t: 245, pos: v(24, heightAt(24, -8) + 4, -3),
+    look: v(27, heightAt(27, -8) + 1.5, -8), fov: 50 },
+  { t: 259, pos: v(18, heightAt(18, -12) + 3.4, -9),
+    look: v(19, heightAt(19, -12) + 1.1, -12), fov: 50 },
+  { t: 272, pos: v(bridgeX - 3, heightAt(bridgeX, -12.5) + 3.1, -10),
+    look: v(bridgeX, heightAt(bridgeX, -12.5) + .8, -12.5), fov: 42 },
+  { t: 282, pos: v(bridgeX - 1.6, heightAt(bridgeX - 1.6, -10) + 3.4, -10),
+    look: v(bridgeX + .9, heightAt(bridgeX, -10.3) + 1, -10.3), fov: 41 },
+  { t: 288, pos: v(trailX(-8.5) - 2.3, heightAt(trailX(-8.5), -8.5) + 2, -6),
+    look: v(trailX(-8.5), heightAt(trailX(-8.5), -8.5) + 1.3, -8.5), fov: 43 },
+  { t: 295, pos: v(trailX(-8) - 4, heightAt(trailX(-8), -8) + 3.7, 1),
+    look: v(trailX(-8), heightAt(trailX(-8), -8) + 1.5, -8), fov: 52 },
+  { t: 300, pos: v(-25, 54, 41), look: v(16, 5, -12), fov: 66 }
 ];
 function ease(s) { return s * s * (3 - 2 * s); }
 // Cubic Hermite interpolation preserves a continuous velocity at every
@@ -386,7 +613,7 @@ function applyAtmosphere() {
   const submersion = 1 - ease(clamp((camera.position.y - surfaceY + .20) / .40, 0, 1));
   scene.background.lerpColors(daylight, submergedLight, submersion);
   scene.fog.color.lerpColors(new THREE.Color(0x9bb6b5), submergedLight, submersion);
-  scene.fog.density = mix(.012, .070, submersion);
+  scene.fog.density = mix(elapsed >= 295 ? .0035 : .012, .070, submersion);
   sunLight.intensity = mix(2.35, 1.20, submersion);
   renderer.toneMappingExposure = mix(1.35, 1.12, submersion);
   sceneHost.classList.toggle("underwater", submersion > .5);
@@ -399,13 +626,11 @@ function updateCinematicCamera() {
   camera.fov = pose.fov;
   camera.updateProjectionMatrix();
   applyAtmosphere();
-  if (t < 3) caption.textContent = "La rivière · 16 h 58";
-  else if (t < 7.5) caption.textContent = "La vallée · le plan continue";
-  else if (t < 11) caption.textContent = "La montagne · le sentier";
-  else caption.textContent = "Thomas, Éva et Léa · la randonnée";
+  caption.textContent = beatAt(t).title;
 }
 function updateOrbitCamera() {
-  const target = people[0].position.clone().add(v(0, 1.5, 0));
+  const focus = elapsed >= 179 && elapsed < 288 ? reverseThomas : people[0];
+  const target = focus.position.clone().add(v(0, 1.5, 0));
   const cp = Math.cos(orbitPitch);
   camera.position.copy(target).add(v(
     orbitDistance * cp * Math.sin(orbitYaw),
@@ -416,7 +641,7 @@ function updateOrbitCamera() {
   camera.fov = 52;
   camera.updateProjectionMatrix();
   applyAtmosphere();
-  caption.textContent = "Vue libre · la randonnée";
+  caption.textContent = "Vue libre · " + beatAt(elapsed).title;
 }
 // Opt-in, locally synthesized ambience: no music licensing or remote audio.
 function createNoiseLoop(context, type, frequency) {
@@ -469,19 +694,28 @@ async function toggleSound() {
 function updateSound() {
   if (!audioContext || !riverGain || !windGain) return;
   const now = audioContext.currentTime, active = soundEnabled && playing ? 1 : 0;
-  const waterMix = 1 - ease(clamp((elapsed - 2.35) / 2, 0, 1));
+  const waterMix = 1 - ease(clamp((elapsed - 24) / 18, 0, 1));
+  const inverseMix = elapsed >= 166 && elapsed < 288 ? .65 : 1;
   riverGain.gain.setTargetAtTime(active * mix(.075, .18, waterMix), now, .12);
-  windGain.gain.setTargetAtTime(active * mix(.11, .025, waterMix), now, .12);
+  windGain.gain.setTargetAtTime(active * mix(.11, .025, waterMix) * inverseMix, now, .12);
 }
 function updateDisplay() {
   timeline.value = elapsed.toFixed(2);
-  const n = Math.min(Math.floor(elapsed), DURATION);
-  timecode.textContent = "00:" + String(n).padStart(2, "0") + " / 00:15";
+  timecode.textContent = formatTime(elapsed) + " / " + formatTime(DURATION);
+  const beat = beatAt(elapsed);
+  subtitle.textContent = beat.caption;
+  storyNote.textContent = beat.note;
+  const chapter = [...CHAPTERS].reverse().find(c => c.time <= elapsed);
+  if (chapter && chapters.value !== String(chapter.time)) chapters.value = String(chapter.time);
+  curtain.style.opacity = String(ease(between(elapsed, 299.3, 300)));
   playPause.textContent = playing ? "⏸ Pause" : "▶ Reprendre";
   playPause.setAttribute("aria-pressed", String(!playing));
   cameraMode.textContent = freeView ? "◉ Vue caméra" : "◎ Vue libre";
   cameraMode.setAttribute("aria-pressed", String(freeView));
   sceneHost.classList.toggle("free-view", freeView);
+  sceneHost.dataset.scene = beat.scene;
+  sceneHost.dataset.act = beat.act;
+  sceneHost.dataset.secondThomas = String(reverseThomas?.visible ?? false);
   soundButton.textContent = soundEnabled ? "♫ Couper le son" : "♫ Activer le son";
   soundButton.setAttribute("aria-pressed", String(soundEnabled));
   soundButton.setAttribute("aria-label", soundEnabled ? "Couper l’ambiance sonore" : "Activer l’ambiance sonore");
@@ -530,6 +764,19 @@ async function toggleFullscreen() {
   updateDisplay();
 }
 function setupControls() {
+  for (const chapter of CHAPTERS) {
+    const option = document.createElement("option");
+    option.value = String(chapter.time);
+    option.textContent = chapter.label;
+    chapters.append(option);
+  }
+  chapters.addEventListener("change", () => {
+    elapsed = Number(chapters.value);
+    freeView = false;
+    updatePeople(elapsed);
+    updateCinematicCamera();
+    updateDisplay();
+  });
   soundButton.addEventListener("click", () => { void toggleSound(); });
   fullscreenButton.addEventListener("click", toggleFullscreen);
   document.addEventListener("fullscreenchange", () => { resize(); updateDisplay(); });
@@ -539,7 +786,7 @@ function setupControls() {
   });
   cameraMode.addEventListener("click", toggleView);
   timeline.addEventListener("input", () => {
-    elapsed = Number(timeline.value);
+    elapsed = clamp(Number(timeline.value), 0, DURATION);
     if (freeView) freeView = false;
     updateDisplay();
   });

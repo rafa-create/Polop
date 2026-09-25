@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#101b24">
-  <meta name="description" content="POLOP — prévisualisation 3D interactive de l'ouverture du film.">
-  <title>POLOP — Film 3D interactif · V3</title>
+  <meta name="description" content="POLOP — adaptation 3D interactive de cinq minutes du scénario complet, du début à la boucle finale.">
+  <title>POLOP — Film 3D interactif · V4 (5 min)</title>
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -13,19 +13,23 @@
     <div id="scene" class="scene" role="region" aria-label="Paysage 3D animé : rivière, vallée, montagne et famille sur un sentier.">
       <div class="vignette" aria-hidden="true"></div>
       <div class="scene-caption" id="scene-caption" aria-live="polite">La rivière · 16 h 58</div>
+      <div class="film-subtitle" id="film-subtitle" aria-live="off">Sous l’eau, un anneau repose entre deux pierres.</div>
+      <div class="film-note" id="film-note" aria-live="off">L’anneau bouge à peine. La caméra continue.</div>
+      <div class="final-curtain" id="final-curtain" aria-hidden="true"></div>
       <div class="loading" id="loading" role="status">Préparation de la vallée en 3D…</div>
       <div class="scene-error" id="scene-error" role="alert" hidden></div>
     </div>
     <header class="topbar">
-      <div class="brand"><span class="brand-mark" aria-hidden="true">◌</span><div><strong>POLOP</strong><span>Démo web · V3 · 15 secondes</span></div></div>
-      <div class="chip">OUVERTURE · A0 — A1</div>
+      <div class="brand"><span class="brand-mark" aria-hidden="true">◌</span><div><strong>POLOP</strong><span>Prévisualisation 3D · V4 · 5 minutes</span></div></div>
+      <div class="chip">LE FILM · A0 — B9</div>
     </header>
     <section class="controls" aria-label="Commandes de la prévisualisation">
       <div class="timeline-row">
-        <label for="timeline">Plan-séquence · 15 secondes</label>
-        <output id="timecode" for="timeline">00:00 / 00:15</output>
+        <label for="timeline">Chronologie du film · 5 minutes</label>
+        <output id="timecode" for="timeline">00:00 / 05:00</output>
       </div>
-      <input id="timeline" type="range" min="0" max="15" value="0" step="0.05" aria-label="Avancement de la caméra, en secondes">
+      <input id="timeline" type="range" min="0" max="300" value="0" step="0.05" aria-label="Avancement de la caméra, en secondes">
+      <div class="chapters-row"><label for="chapters">Aller à une scène</label><select id="chapters" aria-label="Aller au chapitre du film"></select></div>
       <div class="button-row">
         <button id="play-pause" type="button" aria-pressed="false">⏸ Pause</button>
         <button id="replay" type="button">↺ Recommencer</button>
@@ -35,7 +39,7 @@
         <label class="speed-label" for="speed">Vitesse <select id="speed" aria-label="Vitesse de lecture"><option value="0.5">× 0,5</option><option value="1" selected>× 1</option><option value="1.5">× 1,5</option></select></label>
       </div>
       <p class="hint" id="hint">Vue libre : souris ou doigt pour tourner, pincement ou molette pour zoomer. Espace : pause · R : recommencer · V : vue · F : plein écran.</p>
-      <p class="note">V3 · plan continu A0 → début A1 : rivière, montagne et famille. Personnages et géographie provisoires ; rendu web indépendant du projet Unreal.</p>
+      <p class="note">V4 · adaptation condensée A0 → B9, sans voix ni prises de vues réelles : décors et personnages 3D provisoires. Les raccords physiques de la grotte et les deux lectures du temps devront être validés dans Unreal.</p>
     </section>
   </main>
   <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/"}}</script>

@@ -45,3 +45,13 @@ button[aria-pressed=true]{background:#456968;border-color:#d0e4d3}
 /* V3 : passage eau/air, sans masquer la scène 3D ni les commandes. */
 .scene.underwater::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(#2e899450,#153e6490);mix-blend-mode:multiply}
 #sound[aria-pressed="true"]{background:#42695f;border-color:#c5e2d3}
+
+/* V4 — affichage des scènes du film, contraste et chapitrage mobile. */
+.scene-caption{bottom:auto;top:110px;font-size:clamp(.83rem,1.7vw,1.15rem);max-width:min(90%,780px);color:#e3f0ed}
+.film-subtitle,.film-note{pointer-events:none;position:absolute;z-index:4;left:50%;transform:translateX(-50%);text-align:center;width:min(94%,800px);font-size:clamp(.92rem,2.2vw,1.32rem);font-weight:600;line-height:1.45;text-shadow:0 2px 5px #061218,0 4px 14px #061218;background:linear-gradient(90deg,transparent,#0a17249c 18%,#0a17249c 82%,transparent);padding:8px 18px}
+.film-subtitle{bottom:56px}.film-note{bottom:15px;font-size:clamp(.69rem,1.4vw,.96rem);font-weight:400;color:#e1d7b8;max-width:700px}
+.final-curtain{position:absolute;inset:0;z-index:5;background:#020404;opacity:0;pointer-events:none}
+.chapters-row{display:flex;align-items:center;gap:10px;margin-bottom:13px;font-size:.78rem;color:#d9e5e8}
+.chapters-row label{white-space:nowrap}.chapters-row select{flex:1;min-width:0;min-height:38px;max-width:420px}
+@media(max-width:700px){.scene-caption{top:74px;left:18px;font-size:.80rem}.film-subtitle{bottom:48px}.film-note{bottom:10px}.chapters-row{align-items:stretch}.chapters-row label{padding-top:10px}.chapters-row select{max-width:none}}
+@media(max-height:690px){.app:fullscreen .film-subtitle{bottom:36px}.app:fullscreen .film-note{bottom:5px}.app:fullscreen .scene-caption{top:62px}}
