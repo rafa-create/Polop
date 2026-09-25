@@ -16,7 +16,7 @@ export function baseHeight(x,z) {
 export function heightAt(x,z) {
   // Le creux est LOCALISÉ sous le pont. V4 le prolongeait sur 16 mètres
   // transversalement et faisait tomber même les marcheurs du détour.
-  const across = Math.exp(-Math.pow((x - trailX(-12.5)) / 2.4, 4));
+  const across = Math.exp(-Math.pow((x - trailX(-12.5)) / 1.95, 4));
   const longitudinal = clamp(Math.abs((z + 12.5) / 2.2),0,1);
   const along = Math.pow(1 - longitudinal * longitudinal, 2);
   return baseHeight(x,z) - 5.5 * across * along;

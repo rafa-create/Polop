@@ -106,7 +106,7 @@ try {
     assert.equal(await page.locator("#scene").getAttribute("data-lea-surface"), "terrain",
       "The return path must be on the flank, not the bridge");
   }
-  for (const seconds of [276, 279, 281]) {
+  for (const seconds of [279, 280, 281]) {
     await seek(page, seconds);
     assert.equal(await page.locator("#scene").getAttribute("data-thomas-inverse-surface"), "bridge",
       "Inverted Thomas must cross the actual bridge deck");
@@ -114,6 +114,32 @@ try {
     assert.ok(gap >= .035 && gap <= .08,
       "Inverted Thomas floats or sinks on the bridge: " + gap);
   }
+  await seek(page, 276);
+  assert.equal(await page.locator("#scene").getAttribute("data-hook-attached"), "false",
+    "At objective 17 h 01 the hook is detached until Thomas reconnects it");
+  await seek(page, 279);
+  assert.equal(await page.locator("#scene").getAttribute("data-hook-attached"), "true",
+    "The hook must be attached before inverted Thomas crosses");
+  // Same objective instant => SAME positions, orientations and walking
+  // phases, including the two Thomas occurrences, whichever way we seek.
+  const evaAt195 = {}, evaAt210 = {};
+  for (const [normalTime, inverseTime] of
+    [[160,195],[143,210],[108,245],[98,259],[87,272],[85,278],[84,282],[81,288]]) {
+    await seek(page, normalTime);
+    const forward = JSON.parse(await page.locator("#scene").getAttribute("data-family-poses"));
+    await seek(page, inverseTime);
+    const backward = JSON.parse(await page.locator("#scene").getAttribute("data-family-poses"));
+    assert.equal(await page.locator("#scene").getAttribute("data-objective"),
+      normalTime.toFixed(5), "Wrong shared objective time at "+inverseTime);
+    assert.deepEqual(backward, forward,
+      "Objective family poses differ between A and B at "+normalTime);
+    if (inverseTime === 195) evaAt195.value = backward[1];
+    if (inverseTime === 210) evaAt210.value = backward[1];
+  }
+  assert.ok(evaAt210.value.z < evaAt195.value.z - 3.5,
+    "Éva must move visibly uphill BACKWARDS in the inverted world");
+  assert.ok(evaAt195.value.yaw > 3 && evaAt210.value.yaw > 3,
+    "Éva must keep her forward-time orientation when her movements reverse");
   await seek(page, 272);
   assert.equal(await page.locator("#scene").getAttribute("data-scene"), "B6");
   await seek(page, 285);

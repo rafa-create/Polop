@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { DURATION, BEATS, CHAPTERS, beatAt, formatTime } from "./storyboard.js";
 import { BRIDGE_NEAR_Z, BRIDGE_FAR_Z, trailX, baseHeight, heightAt, bridgeDeckPoint, bridgeDeckAt, detourPoint, supportAt } from "./bridge-geometry.js";
+import { CONTACT_CAVE, CONTACT_ROCK, objectiveAt, playbackDirection, worldAtFilmTime } from "./objective-timeline.js";
 // Optional GLB/GLTF replacements; no network request for absent model files.
 // Example: Thomas: { url: "./assets/thomas.glb", scale: 1 }
 const CHARACTER_ASSETS = Object.freeze({ Thomas: null, "Éva": null, "Léa": null });
@@ -224,158 +225,89 @@ function makePerson(name, coatColor, xOffset, startZ, pace) {
   scene.add(figure);
   return figure;
 }
-// Animations évaluées à temps absolu : pause et retour arrière déterministes.
-// Spatial blockout of the same family, cave, bridge and reverse traversal.
-// It is not a certified physical simulation of all the manuscript's causal events.
+// Le temps du FILM pilote seulement le point de vue. Positions et gestes
+// proviennent de worldAt(objectiveAt(film)) pour les DEUX lectures temporelles.
 const CAVE_FRONT_Z = -28;
 const bridgeX = trailX(-12.5);
 function between(t, a, b) { return clamp((t - a) / (b - a), 0, 1); }
-function move2(a, b, fraction) {
-  const f = ease(between(fraction, 0, 1));
-  return [mix(a[0], b[0], f), mix(a[1], b[1], f)];
-}
-function familySnapshot(t) {
-  // Forward film time. On the reversed leg we replay the *same* forward poses
-  // at their earlier objective instant rather than inventing a second family.
-  if (t < 36) return [trailX(10), 10];
-  if (t < 57) { const z = mix(10, -9, ease(between(t, 36, 57))); return [trailX(z), z]; }
-  if (t < 90) return [trailX(-9), -9];
-  if (t < 106) { const z = mix(-9, -26, ease(between(t, 90, 106))); return [trailX(z), z]; }
-  return [trailX(-26), -26];
-}
-const OBJECTIVE_REPLAY = [
-  [179, 166], [195, 143], [210, 121], [225, 105],
-  [245, 92], [259, 88], [272, 77], [282, 81], [288, 83], [295, 93]
-];
-function normalFilmTime(t) {
-  if (t < 179) return t;
-  for (let i = 0; i < OBJECTIVE_REPLAY.length - 1; i++) {
-    const [s, a] = OBJECTIVE_REPLAY[i], [e, b] = OBJECTIVE_REPLAY[i + 1];
-    if (t <= e) return mix(a, b, between(t, s, e));
-  }
-  return 93 + (t - 295);
-}
-function placePerson(person, x, z, filmTime, heading = 0, walk = 1, surface = "terrain") {
+function placePerson(person, pose, objective, isInverse = false) {
   const p = person.userData;
-  const step = filmTime * 5.1 * p.pace + p.startZ;
+  const walk = pose.walk;
+  // En B, la famille joue ses propres phases objectives dans l'ordre inverse.
+  // Thomas inversé, lui, anime ses pas vers l'avant dans SON sens de temps.
+  const animationTime = isInverse ? CONTACT_CAVE - objective : objective;
+  const step = animationTime * 5.1 * p.pace + p.startZ;
   person.visible = true;
-  const supportY = supportAt(x,z,surface);
-  person.position.set(x, supportY + .055 + .013 * Math.sin(step * 2) * walk, z);
-  p.support = { surface, supportY, footGap: person.position.y - supportY };
-  person.rotation.y = heading;
+  person.position.set(pose.x, pose.y + .055 + .013 * Math.sin(step * 2) * walk, pose.z);
+  person.rotation.y = pose.heading;
+  p.support = { surface: pose.surface, supportY: pose.y,
+    footGap: person.position.y - pose.y };
   p.arms[0].rotation.x = walk * Math.sin(step) * .42;
   p.arms[1].rotation.x = -walk * Math.sin(step) * .42;
   p.legs[0].rotation.x = -walk * Math.sin(step) * .35;
   p.legs[1].rotation.x = walk * Math.sin(step) * .35;
-  p.headPivot.rotation.y = .12 * Math.sin(filmTime * .75 + p.startZ);
-  p.headPivot.rotation.x = .05 * Math.sin(filmTime * 1.1 + p.startZ);
+  p.headPivot.rotation.y = .12 * Math.sin(objective * .75 + p.startZ);
+  p.headPivot.rotation.x = .05 * Math.sin(objective * 1.1 + p.startZ);
   if (p.mixer && p.actions) {
     p.actions.walk?.setEffectiveWeight(walk);
     p.actions.idle?.setEffectiveWeight(1 - walk);
-    p.mixer.setTime(filmTime);
+    p.mixer.setTime(animationTime);
   }
 }
-function updatePeople(seconds) {
-  const t = clamp(seconds, 0, DURATION);
-  const replayTime = normalFilmTime(t), [normalX, normalZ] = familySnapshot(replayTime);
+function updatePeople(filmSeconds) {
+  const filmTime = clamp(filmSeconds, 0, DURATION);
+  const world = worldAtFilmTime(filmTime);
+  const objective = world.objective;
   const [thomas, eva, lea] = people;
-  let thomasX = normalX - .42, thomasZ = normalZ + 1.3;
-  let evaX = normalX + .38, evaZ = normalZ -.45;
-  let leaX = normalX -.15, leaZ = normalZ - 1.2;
-  const hiking = t < 36 ? 0 : 1;
-  const leaOnBridge = replayTime >= 57 && replayTime < 72;
-  if (leaOnBridge) {
-    const p = bridgeDeckPoint(ease(between(replayTime, 57, 72)));
-    leaZ = p.z; leaX = p.x;
-  } else if (replayTime >= 72 && replayTime < 90) {
-    const p = detourPoint(ease(between(replayTime, 72, 90)));
-    leaZ = p.z; leaX = p.x;
-    thomasZ = -8.5;
-  }
-  if (replayTime >= 106 && replayTime < 136) {
-    evaZ = -26.3; leaZ = -25.3;
-    if (replayTime >= 121) {
-      const u = between(replayTime, 121, 136);
-      evaX = normalX + 1 + .9 * Math.sin(u * 6);
-      leaX = normalX + .2 + .7 * Math.sin(u * 7);
-    }
-    const u = ease(between(replayTime, 106, 128));
-    thomasX = mix(thomasX, trailX(CAVE_FRONT_Z) + 1.6, u);
-    thomasZ = mix(thomasZ, CAVE_FRONT_Z, u);
-  } else if (replayTime >= 136) {
-    const u = ease(between(replayTime, 136, 165));
-    thomasX = mix(trailX(CAVE_FRONT_Z) + 1.6, 17.8, u);
-    thomasZ = mix(CAVE_FRONT_Z, -27.2, u);
-    const womenLeave = ease(between(replayTime, 134, 151));
-    evaZ = mix(-26, -19, womenLeave);
-    leaZ = evaZ + 1;
-  }
-  if (replayTime >= 166) {
-    thomasX = 17.8; thomasZ = -27.2;
-  }
-  // The normal occurrence remains physically present in its objective time;
-  // distance/relief may conceal it, but no character is removed to resolve a collision.
-  placePerson(thomas, thomasX, thomasZ, replayTime, 0, hiking);
-  placePerson(eva, evaX, evaZ, replayTime, 0, replayTime >= 121 ? .25 : hiking);
-  placePerson(lea, leaX, leaZ, replayTime, 0, replayTime >= 121 ? .3 : hiking, leaOnBridge ? "bridge" : "terrain");
-  // Same collision, seen first in A2 and again in B7/B8.
-  const earlyCollision = t >= 80 && t <= 87;
-  const reversedLeg = t >= 179 && t <= 288;
-  reverseThomas.visible = earlyCollision || reversedLeg;
-  if (earlyCollision) {
-    const u = between(t, 80, 87);
-    placePerson(reverseThomas, trailX(-8.5) + mix(1.6, -.42, u),
-      mix(-10, -8.5, u), 282 + 6 * u, Math.PI, 1);
-    reverseThomas.visible = true;
-  } else if (reversedLeg) {
-    let route;
-    if (t < 195) route = move2([17.8, -27.2], [32, -26], between(t, 179, 195));
-    else if (t < 210) route = move2([32, -26], [42, -16], between(t, 195, 210));
-    else if (t < 225) route = move2([42, -16], [39, -4], between(t, 210, 225));
-    else if (t < 245) route = move2([39, -4], [27, -8], between(t, 225, 245));
-    else if (t < 259) route = move2([27, -8], [19, -12], between(t, 245, 259));
-    else if (t < 272) route = move2([19, -12], [trailX(-15.3), -15.3], between(t, 259, 272));
-    else if (t < 276) route = move2([trailX(-15.3), -15.3], [trailX(BRIDGE_FAR_Z), BRIDGE_FAR_Z], between(t,272,276));
-    else if (t < 282) {
-      const p = bridgeDeckPoint(1 - ease(between(t,276,282)));
-      route = [p.x,p.z];
-    } else route = move2([trailX(BRIDGE_NEAR_Z), BRIDGE_NEAR_Z], [trailX(-8.5) - .42, -8.5], between(t, 282, 288));
-    placePerson(reverseThomas, route[0], route[1], t, Math.PI, t >= 259 ? 1 : .85,
-      t >= 276 && t < 282 ? "bridge" : "terrain");
-  }
-  const caveFocus = t >= 151 && t < 195;
+  placePerson(thomas, world.Thomas, objective);
+  placePerson(eva, world.Eva, objective);
+  placePerson(lea, world.Lea, objective);
+  // La seconde occurrence existe aux mêmes instants objectifs dans A et B ;
+  // elle n'est pas supprimée artificiellement pour simplifier un cadrage.
+  if (world.reverseThomas) placePerson(reverseThomas, world.reverseThomas, objective, true);
+  else reverseThomas.visible = false;
+  const caveFocus = objective >= 151 && objective <= CONTACT_CAVE;
   caveRing.visible = caveFocus;
-  // Simple physical direction cue: ring rises before contact, falls afterwards.
   caveRing.position.set(18.25, heightAt(18.25, -27.5) + .7 +
-    (t < 166 ? .35 * between(t, 151, 166) : 1.1 - .45 * between(t, 166, 195)), -27.5);
-  collisionRing.visible = earlyCollision || (t >= 282 && t < 289);
+    (objective < 166 ? .35 * between(objective, 151, 166)
+      : 1.1 - .45 * between(objective, 166, CONTACT_CAVE)), -27.5);
+  // Un SEUL événement à 17 h 00, vu deux fois : A2 et B8.
+  collisionRing.visible = Math.abs(objective - CONTACT_ROCK) < .48;
   collisionRing.position.set(trailX(-8.5) - .2,
     heightAt(trailX(-8.5), -8.5) + 1.1, -8.5);
-  // The hook starts attached, is detached in forward time, and is attached
-  // by Thomas during the inverse passage; it never spontaneously snaps shut.
-  const hooked = t < 78 || (t >= 278 && t < 288);
-  // The hook is on Thomas's arrival bank (the far bank for Léa's first crossing).
   const anchor = bridgeDeckPoint(1);
-  bridgeHook.position.set(anchor.x + .96, anchor.y + (hooked ? 1.1 : .30), anchor.z);
-  bridgeHook.rotation.x = hooked ? .25 : 1.55;
-  riverRing.visible = t < 36;
-  const reverseNow = reversedLeg || (t >= 166 && t < 179);
+  bridgeHook.position.set(anchor.x + .96, anchor.y + (world.hookAttached ? 1.1 : .30), anchor.z);
+  bridgeHook.rotation.x = world.hookAttached ? .25 : 1.55;
+  riverRing.visible = objective < 36;
+  const reverseNow = playbackDirection(filmTime) === -1;
   for (const effect of reverseEffects) {
     effect.visible = reverseNow;
     if (!reverseNow) continue;
     const p = effect.userData;
-    const s = (t - 166) * .8 + p.phase;
-    effect.position.set(p.x + .09 * Math.sin(s), p.y + .18 * Math.abs(Math.sin(s * .9)), p.z);
+    const s = objective * .8 + p.phase;
+    effect.position.set(p.x + .09 * Math.sin(s),
+      p.y + .18 * Math.abs(Math.sin(s * .9)), p.z);
   }
-  if (riverSurface) riverSurface.position.y = -1.05 + .012 * Math.sin(t * 1.7);
+  if (riverSurface) riverSurface.position.y = -1.05 + .012 * Math.sin(objective * 1.7);
   for (const mote of riverParticles) {
     const p = mote.userData;
-    mote.position.set(p.x + .11 * Math.sin(t * .8 + p.phase),
-      p.y + .035 * Math.sin(t * 1.2 + p.phase), p.z - t * .012);
+    mote.position.set(p.x + .11 * Math.sin(objective * .8 + p.phase),
+      p.y + .035 * Math.sin(objective * 1.2 + p.phase), p.z - objective * .012);
   }
-  // The full topological loop and both mouths are revealed at the ending.
-  rearEntrance.visible = t >= 179;
-  for (const segment of panoramaTrail) segment.visible = t >= 295;
+  // Les ouvertures et le sentier existent à toutes les heures ; leur
+  // découverte doit relever du cadrage, pas d'une apparition géométrique.
+  rearEntrance.visible = true;
+  for (const segment of panoramaTrail) segment.visible = true;
+  sceneHost.dataset.objective = objective.toFixed(5);
+  sceneHost.dataset.temporalDirection = String(playbackDirection(filmTime));
+  sceneHost.dataset.hookAttached = String(world.hookAttached);
+  sceneHost.dataset.familyPoses = JSON.stringify(people.map(person => ({
+    x: person.position.x, y: person.position.y, z: person.position.z,
+    yaw: person.rotation.y,
+    arms: person.userData.arms.map(arm => arm.rotation.x),
+    legs: person.userData.legs.map(leg => leg.rotation.x),
+    surface: person.userData.support.surface
+  })));
 }
 // Seuls les modèles explicitement configurés sont demandés au navigateur.
 // En cas d'absence ou d'erreur le personnage procédural est conservé.
@@ -552,10 +484,18 @@ const cameraStops = [
     look: v(18.25, heightAt(18.25, -27.5) + .8, -27.5), fov: 38 },
   { t: 179, pos: v(17, heightAt(17, -27.2) + 2, -25.1),
     look: v(20, heightAt(20, -27.2) + 1.2, -27.2), fov: 47 },
-  { t: 195, pos: v(29, heightAt(29, -26) + 2.3, -24),
+  // B2 : le regard quitte brièvement Thomas pour MONTRER la même famille
+  // qui remonte sa trajectoire passée à reculons sur l'autre versant.
+  { t: 188, pos: v(26, heightAt(26, -24) + 7, -22),
     look: v(32, heightAt(32, -26) + 1.5, -26), fov: 55 },
-  { t: 210, pos: v(36, heightAt(36, -22) + 4, -19),
-    look: v(42, heightAt(42, -16) + 1.6, -16), fov: 56 },
+  { t: 195, pos: v(23, heightAt(23, -22) + 5, -21),
+    look: v(32, heightAt(32, -26) + 1.5, -26), fov: 55 },
+  { t: 202, pos: v(13, heightAt(13, -21) + 4, -18),
+    look: v(trailX(-23), heightAt(trailX(-23), -23) + 1.4, -23), fov: 46 },
+  { t: 210, pos: v(12, heightAt(12, -22) + 3.8, -18),
+    look: v(trailX(-26), heightAt(trailX(-26), -26) + 1.4, -26), fov: 43 },
+  { t: 219, pos: v(20, heightAt(20, -18) + 7, -14),
+    look: v(32, heightAt(32, -10) + 1.5, -10), fov: 53 },
   { t: 225, pos: v(35, heightAt(35, -4) + 6, 2),
     look: v(39, heightAt(39, -4) + 1.3, -4), fov: 56 },
   { t: 245, pos: v(24, heightAt(24, -8) + 4, -3),

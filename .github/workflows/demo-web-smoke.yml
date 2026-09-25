@@ -8,6 +8,7 @@ on:
       - tests/demo-web-smoke.mjs
       - tests/demo-web-story.mjs
       - tests/demo-web-bridge.mjs
+      - tests/demo-web-objective.mjs
       - .github/workflows/demo-web-smoke.yml
   workflow_dispatch:
 
@@ -28,11 +29,13 @@ jobs:
         with:
           node-version: '22'
       - name: Vérifier la syntaxe
-        run: node --check docs/demo-web/app.js && node --check docs/demo-web/storyboard.js && node --check docs/demo-web/bridge-geometry.js && node --check tests/demo-web-smoke.mjs && node --check tests/demo-web-story.mjs && node --check tests/demo-web-bridge.mjs
+        run: node --check docs/demo-web/app.js && node --check docs/demo-web/storyboard.js && node --check docs/demo-web/bridge-geometry.js && node --check docs/demo-web/objective-timeline.js && node --check tests/demo-web-smoke.mjs && node --check tests/demo-web-story.mjs && node --check tests/demo-web-bridge.mjs && node --check tests/demo-web-objective.mjs
       - name: Valider le scénario et les cinq minutes
         run: node tests/demo-web-story.mjs
       - name: Contrôler les appuis du pont et du détour
         run: node tests/demo-web-bridge.mjs
+      - name: Valider les deux lectures d'une seule chronologie objective
+        run: node tests/demo-web-objective.mjs
       - name: Installer Playwright et Chromium
         run: |
           npm install --no-save --ignore-scripts playwright@1.56.1
