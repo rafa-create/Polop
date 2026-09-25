@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { DURATION, BEATS, CHAPTERS, beatAt, formatTime } from "./storyboard.js";
+import { BRIDGE_NEAR_Z, BRIDGE_FAR_Z, trailX, baseHeight, heightAt, bridgeDeckPoint, bridgeDeckAt, detourPoint, supportAt } from "./bridge-geometry.js";
 // Optional GLB/GLTF replacements; no network request for absent model files.
 // Example: Thomas: { url: "./assets/thomas.glb", scale: 1 }
 const CHARACTER_ASSETS = Object.freeze({ Thomas: null, "Éva": null, "Léa": null });
@@ -38,20 +39,6 @@ const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").ma
 let seed = 5318;
 const random = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296);
 const v = (x, y, z) => new THREE.Vector3(x, y, z);
-const trailX = z => 8.7 + Math.sin(z * .115) * 2.0;
-
-function baseHeight(x, z) {
-  const peak = 19 * Math.exp(-((x - 18) ** 2 / 550 + (z + 24) ** 2 / 850));
-  const shoulder = 10 * Math.exp(-((x - 32) ** 2 / 950 + (z - 5) ** 2 / 1600));
-  const far = 4 * Math.exp(-((x + 27) ** 2 / 950 + (z + 37) ** 2 / 900));
-  const relief = .45 * Math.sin(x * .23) * Math.cos(z * .18);
-  return -1.65 + peak + shoulder + far + relief
-    - 4.2 * Math.exp(-((x + 15) ** 2 / 35));
-}
-function heightAt(x, z) {
-  const gorge = (x > 2 && x < 18) ? 5.5 * Math.exp(-((z + 12.5) ** 2 / 2.4)) : 0;
-  return baseHeight(x, z) - gorge;
-}
 function material(color, roughness = 1, extras = {}) {
   return new THREE.MeshStandardMaterial({ color, roughness, ...extras });
 }
@@ -99,35 +86,46 @@ function drawGround() {
   riverSurface.castShadow = false;
 }
 function drawTrailAndBridge() {
-  const path = [], color = material(0xb7ad88);
+  const color = material(0xb7ad88);
   for (let z = 25; z >= -33; z -= .65) {
-    if (z < -10.3 && z > -14.7) continue;
-    const x = trailX(z), y = heightAt(x, z) + .09;
-    path.push(v(x, y, z));
+    if (z < BRIDGE_NEAR_Z && z > BRIDGE_FAR_Z) continue;
+    const x = trailX(z), y = heightAt(x, z) + .05;
     const slab = mesh(new THREE.BoxGeometry(1.42, .075, .76), color);
     slab.position.set(x, y, z);
     slab.rotation.y = -.08 * Math.cos(z * .115);
     slab.castShadow = false;
   }
-  const startZ = -10.3, endZ = -14.7;
-  const start = v(trailX(startZ), baseHeight(trailX(startZ), startZ) + .22, startZ);
-  const end = v(trailX(endZ), baseHeight(trailX(endZ), endZ) + .22, endZ);
+  // Chemin de détour visible et physiquement hors du creux : Léa le prend
+  // après le pont, Éva et Thomas restent sur leur rive lors de la traversée.
+  for (let i = 0; i <= 48; i++) {
+    const point = detourPoint(i / 48);
+    const slab = mesh(new THREE.BoxGeometry(1.42, .08, .34), color);
+    slab.position.set(point.x, point.y + .04, point.z);
+    const ahead = detourPoint(Math.min(1, (i + 1) / 48));
+    slab.rotation.y = -Math.atan2(ahead.x - point.x, ahead.z - point.z);
+    slab.castShadow = false;
+  }
+  const start = bridgeDeckPoint(0), end = bridgeDeckPoint(1);
   const plank = material(0x745642), rope = material(0xb9a78c), post = material(0x645040);
-  for (let i = 0; i <= 20; i++) {
-    const t = i / 20, point = start.clone().lerp(end, t);
-    point.y -= .35 * Math.sin(Math.PI * t);
-    const board = mesh(new THREE.BoxGeometry(1.85, .13, .21), plank);
-    board.position.copy(point);
+  for (let i = 0; i <= 24; i++) {
+    const p = bridgeDeckPoint(i / 24);
+    const board = mesh(new THREE.BoxGeometry(1.85, .13, .25), plank);
+    board.position.set(p.x,p.y,p.z);
     board.rotation.y = -.04;
+  }
+  // Des paliers solides raccordent le dessus des planches au sentier.
+  for (const landing of [start,end]) {
+    const platform = mesh(new THREE.BoxGeometry(2.05,.18,.7),plank);
+    platform.position.set(landing.x, landing.y-.025, landing.z);
+    platform.castShadow = false;
   }
   for (const side of [-1, 1]) {
     const rail = [];
-    for (let i = 0; i <= 12; i++) {
-      const t = i / 12, point = start.clone().lerp(end, t);
-      point.x += side * .96;
-      point.y += 1.13 - .33 * Math.sin(Math.PI * t);
+    for (let i = 0; i <= 16; i++) {
+      const p = bridgeDeckPoint(i / 16);
+      const point = v(p.x + side * .96, p.y + 1.13, p.z);
       rail.push(point);
-      if (i % 3 === 0) cylinderBetween(point.clone().add(v(0, -.98, 0)), point, .055, post);
+      if (i % 4 === 0) cylinderBetween(point.clone().add(v(0,-.98,0)), point, .055, post);
     }
     tube(rail, .026, rope);
   }
@@ -257,11 +255,13 @@ function normalFilmTime(t) {
   }
   return 93 + (t - 295);
 }
-function placePerson(person, x, z, filmTime, heading = 0, walk = 1) {
+function placePerson(person, x, z, filmTime, heading = 0, walk = 1, surface = "terrain") {
   const p = person.userData;
   const step = filmTime * 5.1 * p.pace + p.startZ;
   person.visible = true;
-  person.position.set(x, heightAt(x, z) + .16 + .013 * Math.sin(step * 2) * walk, z);
+  const supportY = supportAt(x,z,surface);
+  person.position.set(x, supportY + .055 + .013 * Math.sin(step * 2) * walk, z);
+  p.support = { surface, supportY, footGap: person.position.y - supportY };
   person.rotation.y = heading;
   p.arms[0].rotation.x = walk * Math.sin(step) * .42;
   p.arms[1].rotation.x = -walk * Math.sin(step) * .42;
@@ -283,13 +283,13 @@ function updatePeople(seconds) {
   let evaX = normalX + .38, evaZ = normalZ -.45;
   let leaX = normalX -.15, leaZ = normalZ - 1.2;
   const hiking = t < 36 ? 0 : 1;
-  if (replayTime >= 57 && replayTime < 72) {
-    leaZ = mix(-10.3, -14.7, ease(between(replayTime, 57, 72)));
-    leaX = trailX(leaZ);
+  const leaOnBridge = replayTime >= 57 && replayTime < 72;
+  if (leaOnBridge) {
+    const p = bridgeDeckPoint(ease(between(replayTime, 57, 72)));
+    leaZ = p.z; leaX = p.x;
   } else if (replayTime >= 72 && replayTime < 90) {
-    const u = ease(between(replayTime, 72, 90));
-    leaZ = mix(-14.7, -9.4, u);
-    leaX = trailX(leaZ) + 2.7 * Math.sin(Math.PI * u);
+    const p = detourPoint(ease(between(replayTime, 72, 90)));
+    leaZ = p.z; leaX = p.x;
     thomasZ = -8.5;
   }
   if (replayTime >= 106 && replayTime < 136) {
@@ -317,7 +317,7 @@ function updatePeople(seconds) {
   // distance/relief may conceal it, but no character is removed to resolve a collision.
   placePerson(thomas, thomasX, thomasZ, replayTime, 0, hiking);
   placePerson(eva, evaX, evaZ, replayTime, 0, replayTime >= 121 ? .25 : hiking);
-  placePerson(lea, leaX, leaZ, replayTime, 0, replayTime >= 121 ? .3 : hiking);
+  placePerson(lea, leaX, leaZ, replayTime, 0, replayTime >= 121 ? .3 : hiking, leaOnBridge ? "bridge" : "terrain");
   // Same collision, seen first in A2 and again in B7/B8.
   const earlyCollision = t >= 80 && t <= 87;
   const reversedLeg = t >= 179 && t <= 288;
@@ -334,10 +334,14 @@ function updatePeople(seconds) {
     else if (t < 225) route = move2([42, -16], [39, -4], between(t, 210, 225));
     else if (t < 245) route = move2([39, -4], [27, -8], between(t, 225, 245));
     else if (t < 259) route = move2([27, -8], [19, -12], between(t, 245, 259));
-    else if (t < 272) route = move2([19, -12], [bridgeX, -14.7], between(t, 259, 272));
-    else if (t < 282) route = move2([bridgeX, -14.7], [trailX(-9), -9], between(t, 272, 282));
-    else route = move2([trailX(-9), -9], [trailX(-8.5) - .42, -8.5], between(t, 282, 288));
-    placePerson(reverseThomas, route[0], route[1], t, Math.PI, t >= 259 ? 1 : .85);
+    else if (t < 272) route = move2([19, -12], [trailX(-15.3), -15.3], between(t, 259, 272));
+    else if (t < 276) route = move2([trailX(-15.3), -15.3], [trailX(BRIDGE_FAR_Z), BRIDGE_FAR_Z], between(t,272,276));
+    else if (t < 282) {
+      const p = bridgeDeckPoint(1 - ease(between(t,276,282)));
+      route = [p.x,p.z];
+    } else route = move2([trailX(BRIDGE_NEAR_Z), BRIDGE_NEAR_Z], [trailX(-8.5) - .42, -8.5], between(t, 282, 288));
+    placePerson(reverseThomas, route[0], route[1], t, Math.PI, t >= 259 ? 1 : .85,
+      t >= 276 && t < 282 ? "bridge" : "terrain");
   }
   const caveFocus = t >= 151 && t < 195;
   caveRing.visible = caveFocus;
@@ -350,7 +354,9 @@ function updatePeople(seconds) {
   // The hook starts attached, is detached in forward time, and is attached
   // by Thomas during the inverse passage; it never spontaneously snaps shut.
   const hooked = t < 78 || (t >= 278 && t < 288);
-  bridgeHook.position.set(bridgeX + .94, heightAt(bridgeX, -10.3) + (hooked ? 1.1 : .3), -10.3);
+  // The hook is on Thomas's arrival bank (the far bank for Léa's first crossing).
+  const anchor = bridgeDeckPoint(1);
+  bridgeHook.position.set(anchor.x + .96, anchor.y + (hooked ? 1.1 : .30), anchor.z);
   bridgeHook.rotation.x = hooked ? .25 : 1.55;
   riverRing.visible = t < 36;
   const reverseNow = reversedLeg || (t >= 166 && t < 179);
@@ -527,9 +533,9 @@ const cameraStops = [
   { t: 36, pos: v(-5, 9.2, 19.8), look: v(9, 11, -8), fov: 60 },
   { t: 49, pos: v(5, heightAt(5, 12) + 4, 12), look: v(trailX(0), heightAt(trailX(0), 0) + 1.2, 0), fov: 50 },
   { t: 57, pos: v(trailX(-8) - 4, heightAt(trailX(-8), -8) + 3.2, -5),
-    look: v(bridgeX, heightAt(bridgeX, -12.5) + .8, -12.5), fov: 48 },
-  { t: 72, pos: v(bridgeX - 3, heightAt(bridgeX, -12.5) + 2.5, -11),
-    look: v(bridgeX, heightAt(bridgeX, -12.5) + .7, -12.5), fov: 44 },
+    look: v(bridgeX, bridgeDeckPoint(.5).y + 1, -12.5), fov: 48 },
+  { t: 72, pos: v(bridgeX - 3, bridgeDeckPoint(.5).y + 3.2, -11),
+    look: v(bridgeX, bridgeDeckPoint(.5).y + .8, -12.5), fov: 44 },
   { t: 83, pos: v(trailX(-8.5) - 2.5, heightAt(trailX(-8.5), -8.5) + 2.1, -6),
     look: v(trailX(-8.5), heightAt(trailX(-8.5), -8.5) + 1.3, -8.5), fov: 45 },
   { t: 90, pos: v(trailX(-9) - 4, heightAt(trailX(-9), -9) + 4, -3),
@@ -556,10 +562,10 @@ const cameraStops = [
     look: v(27, heightAt(27, -8) + 1.5, -8), fov: 50 },
   { t: 259, pos: v(18, heightAt(18, -12) + 3.4, -9),
     look: v(19, heightAt(19, -12) + 1.1, -12), fov: 50 },
-  { t: 272, pos: v(bridgeX - 3, heightAt(bridgeX, -12.5) + 3.1, -10),
-    look: v(bridgeX, heightAt(bridgeX, -12.5) + .8, -12.5), fov: 42 },
+  { t: 272, pos: v(bridgeX - 3, bridgeDeckPoint(.5).y + 3.4, -10),
+    look: v(bridgeX, bridgeDeckPoint(.5).y + 1, -12.5), fov: 42 },
   { t: 282, pos: v(bridgeX - 1.6, heightAt(bridgeX - 1.6, -10) + 3.4, -10),
-    look: v(bridgeX + .9, heightAt(bridgeX, -10.3) + 1, -10.3), fov: 41 },
+    look: v(bridgeDeckPoint(0).x, bridgeDeckPoint(0).y + 1, BRIDGE_NEAR_Z), fov: 41 },
   { t: 288, pos: v(trailX(-8.5) - 2.3, heightAt(trailX(-8.5), -8.5) + 2, -6),
     look: v(trailX(-8.5), heightAt(trailX(-8.5), -8.5) + 1.3, -8.5), fov: 43 },
   { t: 295, pos: v(trailX(-8) - 4, heightAt(trailX(-8), -8) + 3.7, 1),
@@ -716,6 +722,11 @@ function updateDisplay() {
   sceneHost.dataset.scene = beat.scene;
   sceneHost.dataset.act = beat.act;
   sceneHost.dataset.secondThomas = String(reverseThomas?.visible ?? false);
+  // Machine-readable footing for the browser regression tests.
+  sceneHost.dataset.leaSurface = people[2]?.userData.support?.surface ?? "";
+  sceneHost.dataset.leaFootGap = String(people[2]?.userData.support?.footGap ?? NaN);
+  sceneHost.dataset.thomasInverseSurface = reverseThomas?.visible ? reverseThomas.userData.support.surface : "";
+  sceneHost.dataset.thomasInverseFootGap = String(reverseThomas?.visible ? reverseThomas.userData.support.footGap : NaN);
   soundButton.textContent = soundEnabled ? "♫ Couper le son" : "♫ Activer le son";
   soundButton.setAttribute("aria-pressed", String(soundEnabled));
   soundButton.setAttribute("aria-label", soundEnabled ? "Couper l’ambiance sonore" : "Activer l’ambiance sonore");

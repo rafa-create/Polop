@@ -92,6 +92,28 @@ try {
   await page.locator("#chapters").selectOption("259");
   await page.waitForFunction(() => document.getElementById("timecode").textContent.startsWith("04:19"));
   assert.equal(await page.locator("#scene").getAttribute("data-scene"), "B5");
+  // User-reported regression: people were placed at the bottom of the ravine
+  // instead of standing on the bridge deck and the visible bypass path.
+  for (const seconds of [59, 64, 68, 71]) {
+    await seek(page, seconds);
+    assert.equal(await page.locator("#scene").getAttribute("data-lea-surface"), "bridge",
+      "Léa must be grounded on bridge planks at " + seconds + " s");
+    const gap = Number(await page.locator("#scene").getAttribute("data-lea-foot-gap"));
+    assert.ok(gap >= .035 && gap <= .08, "Léa's feet float or sink at " + seconds + " s: " + gap);
+  }
+  for (const seconds of [75, 80, 85]) {
+    await seek(page, seconds);
+    assert.equal(await page.locator("#scene").getAttribute("data-lea-surface"), "terrain",
+      "The return path must be on the flank, not the bridge");
+  }
+  for (const seconds of [276, 279, 281]) {
+    await seek(page, seconds);
+    assert.equal(await page.locator("#scene").getAttribute("data-thomas-inverse-surface"), "bridge",
+      "Inverted Thomas must cross the actual bridge deck");
+    const gap = Number(await page.locator("#scene").getAttribute("data-thomas-inverse-foot-gap"));
+    assert.ok(gap >= .035 && gap <= .08,
+      "Inverted Thomas floats or sinks on the bridge: " + gap);
+  }
   await seek(page, 272);
   assert.equal(await page.locator("#scene").getAttribute("data-scene"), "B6");
   await seek(page, 285);
